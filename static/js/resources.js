@@ -29,7 +29,9 @@ function renderTable(data) {
         row.id = `row-${safeName}`;
 
         row.innerHTML = `
-            <td class="res-name">${res.name}</td>
+            <td class="res-name">
+				<a class="res-link" onclick="openResourceModal('${res.name.replace(/'/g, "\\'")}')">${res.name}</a>
+			</td>
             <td class="res-type">${res.type}</td>
             <td class="col-stat">${res.res_oq || '-'}</td>
             <td class="col-stat">${res.res_cd || '-'}</td>
@@ -295,7 +297,9 @@ async function refreshSingleRow(resourceName) {
 		}).join(' ');
 
 		row.innerHTML = `
-				<td class="res-name">${res.name}</td>
+				<td class="res-name">
+					<a class="res-link" onclick="openResourceModal('${res.name.replace(/'/g, "\\'")}')">${res.name}</a>
+				</td>
 				<td class="res-type">${res.type}</td>
 				<td class="col-stat">${res.res_oq || '-'}</td>
 				<td class="col-stat">${res.res_cd || '-'}</td>
@@ -420,4 +424,38 @@ async function handleBadgeClick(event, resourceName, planetValue) {
 	} catch (e) {
 		console.error("Error removing planet:", e);
 	}
+}
+
+function openResourceModal(resourceName) {
+    const res = rawResourceData.find(r => r.name === resourceName);
+    if (!res) return;
+
+    document.getElementById('modal-title').textContent = res.name;
+    
+    const body = document.getElementById('modal-body');
+    // Map the keys you want to show
+    const fields = [
+        { label: 'Type', val: res.type },
+        { label: 'Overall Quality', val: res.res_oq },
+        { label: 'Conductivity', val: res.res_cd },
+        { label: 'Decay Resistance', val: res.res_dr },
+        { label: 'Flavor', val: res.res_fl },
+        { label: 'Heat Resistance', val: res.res_hr },
+        { label: 'Malleability', val: res.res_ma },
+        { label: 'Potential Energy', val: res.res_pe },
+        { label: 'Unit Toughness', val: res.res_ut },
+        { label: 'DateReported', val: res.date_reported },
+        { label: 'Status', val: res.is_active ? 'Active' : 'Inactive' }
+    ];
+
+    body.innerHTML = fields.map(f => `
+        <div style="color: var(--text-dim)">${f.label}:</div>
+        <div style="color: var(--text-main)">${f.val || '-'}</div>
+    `).join('');
+
+    document.getElementById('resource-modal').style.display = 'flex';
+}
+
+function closeModal(event = null) {
+    document.getElementById('resource-modal').style.display = 'none';
 }

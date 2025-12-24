@@ -14,31 +14,81 @@
 }
 
 .resource-filters-row .search-input {
-	font-size: 16px; /* Allow search input to take remaining space */
+	background-color: #000;
+    color: var(--text-main);
+    border: 1px solid var(--border-color);
+    padding: 8px 12px;
+    border-radius: 4px;
+    font-family: 'Rajdhani', sans-serif;
+    width: 250px;
 }
 
-/* Refine table spacing now that filters are above it */
-.resource-table {
-    margin-top: 0;
+.resource-filters-row.search-input:focus {
+    border-color: var(--accent-blue);
+    outline: none;
 }
 
 /* --- Table Structure --- */
 .resource-table {
-    width: auto;
+	margin-top: 0;
+    width: 100%;
+    min-width: 800px;
     border-collapse: collapse;
+    font-size: 0.95rem;
     table-layout: fixed;
+    margin-left: 0;
 }
 
 .resource-table th {
     background-color: #000;
     color: var(--accent-blue);
     font-size: 14px;
-    padding: 0;
+	font-weight: 600;
 	vertical-align: stretch;;
-    border-bottom: 2px solid var(--border-color);
-	/* position: relative; */
     text-transform: uppercase;
-	/* outline: 1px solid rgba(255, 0, 0, 0.5) !important; */
+}
+
+.resource-table th, .resource-table td {
+    padding: 10px;
+    border-bottom: 1px solid var(--border-color);
+    /*height: 40px;*/
+}
+
+.resource-table th.stat-header, .stat-cell {
+    width: 30px !important;
+    text-align: center;
+}
+
+.resource-table th.status-header, .status-cell {
+    width: 110px;
+    text-align: center;
+}
+
+.resource-table th.location-header, .location-cell {
+    text-align: right;
+    width: 180px;
+}
+
+.resource-table th.date-header, .date-cell {
+    width: 100px;
+    text-align: center;
+    color: var(--text-dim);
+    font-family: monospace;
+}
+
+.resource-table th:nth-child(1),
+.resource-table td:nth-child(1) {
+    width: 100px;
+    text-align: left;
+    padding-right: 0;
+    /*padding-left: 10px;*/
+}
+
+.resource-table th:nth-child(2),
+.resource-table td:nth-child(2) {
+    width: 200px;
+    text-align: left;
+    padding-left: 0;
 }
 
 /* --- Consolidated Column Widths --- */
@@ -69,18 +119,24 @@
 }
 
 .sort-header {
+	display: flex;
+	align-items: center;
+	width: 100%;
+	cursor: pointer;
+	gap: 4px;
     justify-content: center !important;
 	padding-left: 12px;
 }
 
 .sort-btns {
-	/* display: flex; */
+	display: flex;
 	float: left;
 	flex-direction: column;
-	font-size: 12px;
-	line-height: 0.7;
+	justify-content: center;
+	font-size: 8px;
+	line-height: 1;
 	color: var(--text-dim);
-	width: 100%;
+	width: 10px;
 	height: 100%;
 	/* flex-shrink: 0; */
 	cursor: pointer;
@@ -91,32 +147,120 @@
 
 .sort-btns span {
     font-size: 12px;        /* Increased size to match/complement header text */
-    /* height: 100%; */
+    height: 7px;
+	cursor: pointer;
+	transition: all 0.2s;
 	/* vertical-align: middle; */
     /* display: inline-flex; */
 }
 
-.sort-btns span.active-up, .sort-btns span.active-down { color: var(--stat-high) !important; text-shadow: 0 0 8px var(--stat-high) !important; }
+.sort-btns span.active-up, .sort-btns span.active-down { color: var(--stat-high); text-shadow: 0 0 8px var(--stat-high); }
+
+.custom-dropdown {
+    position: relative;
+    width: 250px;
+    font-family: 'Rajdhani', sans-serif;
+    background: #000;
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    cursor: pointer;
+    z-index: 1000;
+}
 
 .custom-dropdown .dropdown-list {
     position: absolute;
     top: 100%;
+    left: -1px;
     width: 100%;
     max-height: 400px;
     overflow-y: auto;
     background: #000;
-    display: none;
     border: 1px solid var(--border-color);
+    display: none; /* Hidden by default */;
 }
 
+.dropdown-item {
+    padding: 6px 10px;
+    display: flex;
+    align-items: center;
+    transition: background 0.2s;
+}
+
+.dropdown-item:hover { background: #1a1f26; }
+
+.dropdown-selected { padding: 8px 12px; color: var(--text-main); }
+
+.toggle-icon {
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    margin-right: 5px;
+    text-align: center;
+    line-height: 16px;
+    font-size: 10px;
+    color: var(--accent-blue);
+    transition: transform 0.2s;
+}
+
+.toggle-icon.collapsed { transform: rotate(-90deg); }
+
+/* This hides children when the parent is collapsed */
+.branch-container.hidden { display: none; }
+
 /* --- Planets & Status --- */
+.planets-container {
+    display: inline-flex;
+    /*flex-direction: row;*/
+    gap: 4px;
+    /*vertical-align: middle;*/
+    justify-content: flex-end;
+}
+
+.planet-controls {
+    display: inline-block;
+    margin-left: 2px;
+    /*min-width: 24px;*/
+    vertical-align: middle;
+}
+
+/* Style the select to look like a small '+' button */
+.planet-select {
+    background: #1e293b;
+    color: var(--accent-blue);
+    border: 1px dashed var(--border-color);
+    border-radius: 4px;
+    font-size: 12px;
+    font-weight: bold;
+    /*padding: 0 2px;*/
+    cursor: pointer;
+    width: 20px;
+    height: 18px;
+    appearance: none; /* Removes default arrow */
+    text-align: center;
+    visibility: visible;
+    transition: all 0.2s;
+}
+
+.planet-select:hover {
+    border-color: var(--accent-blue);
+    color: #000;
+}
+
 .planet {
     font-size: 12px;
     border-radius: 4px;
-    padding: 0 4px;
+    padding: 0 3px;
     height: 18px;
+    line-height: 18px;
     cursor: pointer;
     display: inline-block;
+    position: relative;
+    user-select: none;
+}
+
+.planet:hover {
+    filter: brightness(1.2);
+    text-decoration: line-through; /* Visual cue for deletion */
 }
 
 .planet::after {
@@ -148,8 +292,72 @@
     visibility: visible;
 }
 
+.status-text {
+    min-width: fit-content;
+    font-weight: bold;
+}
+
 .status-text.active { color: var(--stat-high); }
 .status-text.inactive { color: #ef4444; text-shadow: 0 0 5px rgba(255,0,0,0.3); }
+
+.status-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;  /* Pushes text left and button right */
+    gap: 6px;
+}
+
+.toggle-status-btn {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%; /* Makes it a circular light */
+    border: 1px solid rgba(255,255,255,0.2);
+    cursor: pointer;
+    padding: 0;
+    transition: background-color 0.3s, box-shadow 0.3s;
+    position: relative; /* For the tooltip to work */
+}
+
+.status-text {
+    min-width: fit-content;
+    font-weight: bold;
+}
+
+/* Red button when status is Active (Action: "Kill" spawn) */
+.status-text.active + .toggle-status-btn {
+    background-color: #ef4444; 
+    box-shadow: 0 0 8px rgba(239, 68, 68, 0.5);
+}
+
+/* Green button when status is Inactive (Action: "Revive" spawn) */
+.status-text.inactive + .toggle-status-btn {
+    background-color: var(--stat-high);
+    box-shadow: 0 0 8px rgba(0, 255, 157, 0.5);
+}
+
+/* Re-use your tooltip logic for the button */
+.toggle-status-btn::after {
+    content: attr(data-tooltip);
+    position: absolute;
+    bottom: 150%;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #000;
+    color: var(--accent-blue);
+    padding: 4px 8px;
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    font-size: 11px;
+    white-space: nowrap;
+    opacity: 0;
+    visibility: hidden;
+    z-index: 100;
+}
+
+.toggle-status-btn:hover::after {
+    opacity: 1;
+    visibility: visible;
+}
 
 /* Planet Colors remain the same... */
 .corellia {background: #2190ac; color: #000000; }
@@ -164,3 +372,68 @@
 .talus { background: #677449; color: #000000;}
 .tatooine { background: #e0c37b; color: #000000;}
 .yavin { background: #71bb9a; color: #000000;}
+
+
+/* Modal Overlay */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.85);
+    display: none; /* Hidden by default */
+    justify-content: center;
+    align-items: center;
+    z-index: 2000;
+}
+
+/* Modal Box */
+.modal-content {
+    background: var(--panel-bg);
+    border: 2px solid var(--accent-blue);
+    box-shadow: 0 0 20px rgba(0, 212, 255, 0.2);
+    width: 450px;
+    padding: 10px;
+    border-radius: 4px;
+    position: relative;
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1px solid var(--border-color);
+    margin-bottom: 15px;
+    padding-bottom: 10px;
+}
+
+.modal-header h2 {
+    margin: 0;
+    color: var(--accent-blue);
+    font-family: 'Orbitron', sans-serif;
+    font-size: 1.2rem;
+}
+
+.close-btn {
+    background: none;
+    border: none;
+    color: var(--text-dim);
+    font-size: 24px;
+    cursor: pointer;
+}
+
+.modal-body-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 5px;
+}
+
+.res-link {
+    color: var(--accent-blue);
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.res-link:hover {
+    text-shadow: 0 0 10px var(--accent-blue);
+}
