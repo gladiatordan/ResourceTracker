@@ -1,6 +1,6 @@
 async function loadResources() {
     try {
-        const response = await fetch('/api/resources');
+        const response = await fetch('/api/resource_log');
         rawResourceData = await response.json();
         // applyAllTableTransforms is defined in resources.js
         applyAllTableTransforms(); 

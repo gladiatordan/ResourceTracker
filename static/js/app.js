@@ -18,6 +18,11 @@ function initTabs() {
     });
 }
 
+function initListeners() {
+	document.querySelector('.search-input').addEventListener('input', applyFilters);
+    document.querySelector('.dropdown-selected').addEventListener('change', applyFilters);
+}
+
 // Global UI toggle for dropdown
 function toggleDropdown() {
     const list = document.getElementById('taxonomy-list');
