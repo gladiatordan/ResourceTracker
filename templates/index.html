@@ -17,21 +17,17 @@
 				<button class="nav-btn active" data-target="resources-container">RESOURCES</button>
 				<button class="nav-btn" data-target="schematics-container">SCHEMATICS</button>
 			</nav>
-			
-			<div class="header-controls">
-				<div class="search-group">
-					<div class="custom-dropdown" id="taxonomy-dropdown" onclick="toggleDropdown()">
-						<div class="dropdown-selected">All Resources</div>
-						<div class="dropdown-list" id="taxonomy-list">
-							</div>
-					</div>
-					<input type="text" class="search-input" placeholder="Search resources...">
-				</div>
-			</div>
 		</header>
 
 		<main id="main-content">
 			<section id="resources-container" class="page-container active">
+				<div class="resource-filters-row">
+					<div class="custom-dropdown" id="taxonomy-dropdown" onclick="toggleDropdown()">
+						<div class="dropdown-selected">All Resources</div>
+						<div class="dropdown-list" id="taxonomy-list"></div>
+					</div>
+					<input type="text" class="search-input" placeholder="Search resources...">
+				</div>
 				<table class="resource-table">
 					<thead>
 						<tr>
