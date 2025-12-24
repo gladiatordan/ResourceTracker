@@ -60,22 +60,6 @@
 				<div class="placeholder-msg">Schematics functionality coming soon...</div>
 			</section>
 		</main>
-
-        <div class="workspace">
-            <main class="log-container">
-                <table class="resource-table">
-                    <thead>
-						<tr>
-							<th class="col-name"><div class="sort-header" onclick="toggleSort('name')">NAME...</div></th>
-							<th class="col-type"><div class="sort-header" onclick="toggleSort('type')">TYPE...</div></th>
-							<th class="col-stat"><div class="sort-header" onclick="toggleSort('res_oq')">OQ...</div></th>
-							<th class="col-stat"><div class="sort-header" onclick="toggleSort('res_cd')">CD...</div></th>
-						</tr>
-					</thead>
-                    <tbody id="resource-log-body"></tbody>
-                </table>
-            </main>
-        </div>
     </div>
 <script src="{{ url_for('static', filename='js/config.js') }}"></script>
 <script src="{{ url_for('static', filename='js/api.js') }}"></script>

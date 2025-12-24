@@ -1,15 +1,25 @@
 function initTabs() {
-    document.querySelectorAll('.nav-btn').forEach(btn => {
+    const navButtons = document.querySelectorAll('.nav-btn');
+    const containers = document.querySelectorAll('.page-container');
+    const controls = document.querySelector('.header-controls');
+
+    navButtons.forEach(btn => {
         btn.addEventListener('click', () => {
             const target = btn.getAttribute('data-target');
-            document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
-            document.querySelectorAll('.page-container').forEach(c => c.classList.remove('active'));
-            
+
+            // Toggle Active Classes
+            navButtons.forEach(b => b.classList.remove('active'));
+            containers.forEach(c => c.classList.remove('active'));
+
             btn.classList.add('active');
             document.getElementById(target).classList.add('active');
-            
-            // Hide filters if not on resources
-            document.querySelector('.header-controls').style.display = (target === 'resources-container') ? 'flex' : 'none';
+
+            // Ensure filters only show for Resources
+            if (target === 'resources-container') {
+                controls.style.display = 'flex';
+            } else {
+                controls.style.display = 'none';
+            }
         });
     });
 }

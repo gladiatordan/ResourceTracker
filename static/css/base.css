@@ -30,7 +30,7 @@ body {
 .top-nav {
     display: flex;
     gap: 20px;
-    margin-left: 40px;
+    margin-left: 0;
 }
 
 .nav-btn {
@@ -63,4 +63,23 @@ body {
     padding: 8px 12px;
     border-radius: 4px;
     font-family: 'Rajdhani', sans-serif;
+}
+
+/* Base Container Logic */
+.page-container {
+    display: none; 
+    padding: 20px;
+    height: calc(100vh - 80px); /* Subtract header height */
+    overflow-y: auto;
+}
+
+.page-container.active {
+    display: block; 
+}
+
+/* Ensure header controls are aligned */
+.header-controls {
+    display: flex;
+    align-items: center;
+    gap: 15px;
 }
