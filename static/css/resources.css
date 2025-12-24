@@ -35,7 +35,7 @@
 }
 
 /* --- Consolidated Column Widths --- */
-.col-name { width: 140px; }
+.col-name { width: 150px; }
 .col-type { width: 150px; }
 .col-stat { width: 45px; text-align: center; } /* Replaces nth-child(3-10) */
 .col-loc  { width: 180px; text-align: right; }

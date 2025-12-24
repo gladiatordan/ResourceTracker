@@ -27,18 +27,11 @@ body {
     border-bottom: 2px solid var(--border-color);
 }
 
-/* Ensure header controls are aligned */
-.header-controls {
-	margin-left: auto;
-    display: flex;
-    align-items: center;
-    gap: 15px;
-}
 
 .top-nav {
     display: flex;
     gap: 20px;
-    margin-left: 0;
+    /* margin-left: 0; */
 	align-items: center;
 }
 
