@@ -4,7 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Resource Tracker</title>
-    <link rel="stylesheet" href="/static/style.css">
+    <link rel="stylesheet" href="/static/css/base.css">
+    <link rel="stylesheet" href="/static/css/resources.css">
+    <link rel="stylesheet" href="/static/css/schematics.css">
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Rajdhani:wght@300;500;700&display=swap" rel="stylesheet">
 </head>
 <body>
@@ -42,26 +44,13 @@
             <main class="log-container">
                 <table class="resource-table">
                     <thead>
-                        <thead>
-                            <tr>
-                                <th class="col-name"><div class="sort-header" onclick="toggleSort('name')">NAME <div class="sort-btns"><span class="up">▲</span><span class="down">▼</span></div></div></th>
-                                <th class="col-type"><div class="sort-header" onclick="toggleSort('type')">TYPE <div class="sort-btns"><span class="up">▲</span><span class="down">▼</span></div></div></th>
-                                
-                                <th class="col-stat"><div class="sort-header" onclick="toggleSort('res_oq')">OQ <div class="sort-btns"><span class="up">▲</span><span class="down">▼</span></div></div></th>
-                                <th class="col-stat"><div class="sort-header" onclick="toggleSort('res_cd')">CD <div class="sort-btns"><span class="up">▲</span><span class="down">▼</span></div></div></th>
-                                <th class="col-stat"><div class="sort-header" onclick="toggleSort('res_dr')">DR <div class="sort-btns"><span class="up">▲</span><span class="down">▼</span></div></div></th>
-                                <th class="col-stat"><div class="sort-header" onclick="toggleSort('res_fl')">FL <div class="sort-btns"><span class="up">▲</span><span class="down">▼</span></div></div></th>
-                                <th class="col-stat"><div class="sort-header" onclick="toggleSort('res_hr')">HR <div class="sort-btns"><span class="up">▲</span><span class="down">▼</span></div></div></th>
-                                <th class="col-stat"><div class="sort-header" onclick="toggleSort('res_ma')">MA <div class="sort-btns"><span class="up">▲</span><span class="down">▼</span></div></div></th>
-                                <th class="col-stat"><div class="sort-header" onclick="toggleSort('res_pe')">PE <div class="sort-btns"><span class="up">▲</span><span class="down">▼</span></div></div></th>
-                                <th class="col-stat"><div class="sort-header" onclick="toggleSort('res_ut')">UT <div class="sort-btns"><span class="up">▲</span><span class="down">▼</span></div></div></th>
-                                
-                                <th class="col-loc">LOCATION</th>
-                                <th class="col-date"><div class="sort-header" onclick="toggleSort('spawned_at')">DATE <div class="sort-btns"><span class="up">▲</span><span class="down">▼</span></div></div></th>
-                                <th class="col-status"><div class="sort-header" onclick="toggleSort('is_active')">STATUS <div class="sort-btns"><span class="up">▲</span><span class="down">▼</span></div></div></th>
-                                <th class="col-spacer"></th>
-                            </tr>
-                        </thead>
+						<tr>
+							<th class="col-name"><div class="sort-header" onclick="toggleSort('name')">NAME...</div></th>
+							<th class="col-type"><div class="sort-header" onclick="toggleSort('type')">TYPE...</div></th>
+							<th class="col-stat"><div class="sort-header" onclick="toggleSort('res_oq')">OQ...</div></th>
+							<th class="col-stat"><div class="sort-header" onclick="toggleSort('res_cd')">CD...</div></th>
+						</tr>
+					</thead>
                     <tbody id="resource-log-body"></tbody>
                 </table>
             </main>
