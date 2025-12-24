@@ -1,25 +1,19 @@
 function initTabs() {
     const navButtons = document.querySelectorAll('.nav-btn');
     const containers = document.querySelectorAll('.page-container');
-    const controls = document.querySelector('.header-controls');
 
     navButtons.forEach(btn => {
         btn.addEventListener('click', () => {
             const target = btn.getAttribute('data-target');
 
-            // Toggle Active Classes
             navButtons.forEach(b => b.classList.remove('active'));
             containers.forEach(c => c.classList.remove('active'));
 
             btn.classList.add('active');
             document.getElementById(target).classList.add('active');
-
-            // Ensure filters only show for Resources
-            if (target === 'resources-container') {
-                controls.style.display = 'flex';
-            } else {
-                controls.style.display = 'none';
-            }
+            
+            // Note: .header-controls logic is no longer needed if 
+            // the filters are inside the page-container!
         });
     });
 }

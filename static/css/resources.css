@@ -1,3 +1,23 @@
+/* Container for the filter row inside resources */
+.resource-filters-row {
+    display: flex;
+    gap: 15px;
+    padding: 10px 0 20px 0; /* Space below header and above table */
+    align-items: center;
+    background: transparent;
+}
+
+/* Ensure the inputs don't stretch excessively */
+.resource-filters-row .custom-dropdown,
+.resource-filters-row .search-input {
+    width: 250px;
+}
+
+/* Refine table spacing now that filters are above it */
+.resource-table {
+    margin-top: 0;
+}
+
 /* --- Table Structure --- */
 .resource-table {
     width: 100%;
