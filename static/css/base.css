@@ -20,7 +20,7 @@ body {
 /* --- Layout & SPA Navigation --- */
 .main-header {
     background: var(--panel-bg);
-    padding: 0.5rem 2rem;
+    padding: 1rem 2rem;
     display: flex;
     justify-content: flex-start;
     align-items: center;
@@ -31,8 +31,8 @@ body {
 .top-nav {
     display: flex;
     gap: 20px;
-    /* margin-left: 0; */
-	align-items: center;
+    margin-left: 20px;
+	align-items: left;
 }
 
 .nav-btn {
