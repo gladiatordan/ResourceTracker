@@ -12,25 +12,54 @@
 <body>
     <div class="app-container">
         <header class="main-header">
-            <div class="logo">RESOURCE TRACKER</div>
-            <nav class="top-nav">
-                <button class="nav-btn active" data-target="resources-container">RESOURCES</button>
-                <button class="nav-btn" data-target="schematics-container">SCHEMATICS</button>
-            </nav>
-            <div class="header-controls">
-                </div>
-        </header>
+			<div class="logo">CU <span>TRACKER</span></div>
+			<nav class="top-nav">
+				<button class="nav-btn active" data-target="resources-container">RESOURCES</button>
+				<button class="nav-btn" data-target="schematics-container">SCHEMATICS</button>
+			</nav>
+			
+			<div class="header-controls">
+				<div class="search-group">
+					<div class="custom-dropdown" id="taxonomy-dropdown" onclick="toggleDropdown()">
+						<div class="dropdown-selected">All Resources</div>
+						<div class="dropdown-list" id="taxonomy-list">
+							</div>
+					</div>
+					<input type="text" class="search-input" placeholder="Search resources...">
+				</div>
+			</div>
+		</header>
 
-        <main id="main-content">
-            <section id="resources-container" class="page-container active">
-                <table class="resource-table">
-                    </table>
-            </section>
+		<main id="main-content">
+			<section id="resources-container" class="page-container active">
+				<table class="resource-table">
+					<thead>
+						<tr>
+							<th class="col-name"><div class="sort-header" onclick="toggleSort('name')">NAME <div class="sort-btns"><span class="up">▲</span><span class="down">▼</span></div></div></th>
+							<th class="col-type"><div class="sort-header" onclick="toggleSort('type')">TYPE <div class="sort-btns"><span class="up">▲</span><span class="down">▼</span></div></div></th>
+							<th class="col-stat"><div class="sort-header" onclick="toggleSort('res_oq')">OQ <div class="sort-btns"><span class="up">▲</span><span class="down">▼</span></div></div></th>
+							<th class="col-stat"><div class="sort-header" onclick="toggleSort('res_cd')">CD <div class="sort-btns"><span class="up">▲</span><span class="down">▼</span></div></div></th>
+							<th class="col-stat"><div class="sort-header" onclick="toggleSort('res_dr')">DR <div class="sort-btns"><span class="up">▲</span><span class="down">▼</span></div></div></th>
+							<th class="col-stat"><div class="sort-header" onclick="toggleSort('res_fl')">FL <div class="sort-btns"><span class="up">▲</span><span class="down">▼</span></div></div></th>
+							<th class="col-stat"><div class="sort-header" onclick="toggleSort('res_hr')">HR <div class="sort-btns"><span class="up">▲</span><span class="down">▼</span></div></div></th>
+							<th class="col-stat"><div class="sort-header" onclick="toggleSort('res_ma')">MA <div class="sort-btns"><span class="up">▲</span><span class="down">▼</span></div></div></th>
+							<th class="col-stat"><div class="sort-header" onclick="toggleSort('res_pe')">PE <div class="sort-btns"><span class="up">▲</span><span class="down">▼</span></div></div></th>
+							<th class="col-stat"><div class="sort-header" onclick="toggleSort('res_ut')">UT <div class="sort-btns"><span class="up">▲</span><span class="down">▼</span></div></div></th>
+							<th class="col-loc">LOCATION</th>
+							<th class="col-date"><div class="sort-header" onclick="toggleSort('spawned_at')">DATE <div class="sort-btns"><span class="up">▲</span><span class="down">▼</span></div></div></th>
+							<th class="col-status"><div class="sort-header" onclick="toggleSort('is_active')">STATUS <div class="sort-btns"><span class="up">▲</span><span class="down">▼</span></div></div></th>
+							<th class="col-spacer"></th>
+						</tr>
+					</thead>
+					<tbody id="resource-log-body">
+						</tbody>
+				</table>
+			</section>
 
-            <section id="schematics-container" class="page-container">
-                <div class="placeholder-msg">Schematics functionality coming soon...</div>
-            </section>
-        </main>
+			<section id="schematics-container" class="page-container">
+				<div class="placeholder-msg">Schematics functionality coming soon...</div>
+			</section>
+		</main>
 
         <div class="workspace">
             <main class="log-container">
