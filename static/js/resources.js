@@ -149,7 +149,7 @@ function applyAllTableTransforms() {
                 let valA = a[sort.key] ?? -1;
                 let valB = b[sort.key] ?? -1;
                 if (valA !== valB) {
-                    return sort.direction === 'asc' ? (valA > valB ? 1 : -1) : (valA < valB ? 1 : -1);
+                    return sort.direction === 'desc' ? (valA > valB ? 1 : -1) : (valA < valB ? 1 : -1);
                 }
             }
             return 0;
@@ -194,7 +194,7 @@ function updateSortVisuals() {
 	});
 
 	sortStack.forEach(sort => {
-		const headerDiv = document.querySelector(`.sort-header[onclick*="'${sort.key}'"]`);
+		const headerDiv = document.querySelector(`.sort-header[onclick*="'${sort.key}'"], .sort-header-left[onclick*="'${sort.key}'"]`);
 		if (headerDiv) {
 			const btn = sort.direction === 'asc' ? headerDiv.querySelector('.up') : headerDiv.querySelector('.down');
 			btn.classList.add(sort.direction === 'asc' ? 'active-up' : 'active-down');
@@ -268,8 +268,14 @@ async function refreshSingleRow(resourceName) {
 		const year = rawDate.getUTCFullYear();
 		const formattedDate = `${day}/${month}/${year}`;
 
-		const statusText = res.is_active ? "Active" : "Inactive";
-		const statusClass = res.is_active ? "active" : "inactive";
+		// 1. UPDATE THE SOURCE DATA
+        // Find the index of the resource in your main data array
+        const dataIndex = rawResourceData.findIndex(item => item.name === resourceName);
+        
+        if (dataIndex !== -1) {
+            // Update the object in rawResourceData with the new data from the server
+            rawResourceData[dataIndex] = res;
+        }
 
 		if (!row) return;
 
@@ -317,6 +323,9 @@ async function refreshSingleRow(resourceName) {
 				</td>
 				<td class="col-spacer"></td>
 			`;
+		if (sortStack.length > 0) {
+            applyAllTableTransforms();
+        }
 	} catch (e) {
 		console.error("Error refreshing row:", e);
 	}

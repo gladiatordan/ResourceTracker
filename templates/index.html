@@ -32,8 +32,8 @@
 				<table class="resource-table">
 					<thead>
 						<tr>
-							<th class="col-name"><div class="sort-header" onclick="toggleSort('name')">NAME <div class="sort-btns"><span class="up">▲</span><span class="down">▼</span></div></div></th>
-							<th class="col-type"><div class="sort-header" onclick="toggleSort('type')">TYPE <div class="sort-btns"><span class="up">▲</span><span class="down">▼</span></div></div></th>
+							<th class="col-name"><div class="sort-header-left" onclick="toggleSort('name')">NAME <div class="sort-btns"><span class="up">▲</span><span class="down">▼</span></div></div></th>
+							<th class="col-type"><div class="sort-header-left" onclick="toggleSort('type')">TYPE <div class="sort-btns"><span class="up">▲</span><span class="down">▼</span></div></div></th>
 							<th class="col-stat"><div class="sort-header" onclick="toggleSort('res_oq')">OQ <div class="sort-btns"><span class="up">▲</span><span class="down">▼</span></div></div></th>
 							<th class="col-stat"><div class="sort-header" onclick="toggleSort('res_cd')">CD <div class="sort-btns"><span class="up">▲</span><span class="down">▼</span></div></div></th>
 							<th class="col-stat"><div class="sort-header" onclick="toggleSort('res_dr')">DR <div class="sort-btns"><span class="up">▲</span><span class="down">▼</span></div></div></th>
@@ -48,8 +48,7 @@
 							<th class="col-spacer"></th>
 						</tr>
 					</thead>
-					<tbody id="resource-log-body">
-						</tbody>
+					<tbody id="resource-log-body"></tbody>
 				</table>
 			</section>
 
@@ -76,6 +75,7 @@
             loadTaxonomy()
         ]);
         
+		updateSortVisuals();
         // 3. Set initial UI state
         console.log("Resource Tracker Initialized");
     });

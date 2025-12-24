@@ -13,6 +13,10 @@
     width: 250px;
 }
 
+.resource-filters-row .search-input {
+	font-size: 16px; /* Allow search input to take remaining space */
+}
+
 /* Refine table spacing now that filters are above it */
 .resource-table {
     margin-top: 0;
@@ -20,7 +24,7 @@
 
 /* --- Table Structure --- */
 .resource-table {
-    width: 100%;
+    width: auto;
     border-collapse: collapse;
     table-layout: fixed;
 }
@@ -28,32 +32,71 @@
 .resource-table th {
     background-color: #000;
     color: var(--accent-blue);
-    font-size: 12px;
-    padding: 10px;
+    font-size: 14px;
+    padding: 0;
+	vertical-align: stretch;;
     border-bottom: 2px solid var(--border-color);
+	/* position: relative; */
     text-transform: uppercase;
+	/* outline: 1px solid rgba(255, 0, 0, 0.5) !important; */
 }
 
 /* --- Consolidated Column Widths --- */
 .col-name { width: 150px; }
-.col-type { width: 150px; }
+.col-type { width: 150px; font-size: 16px !important; }
 .col-stat { width: 45px; text-align: center; } /* Replaces nth-child(3-10) */
-.col-loc  { width: 180px; text-align: right; }
+.col-loc  { width: 180px; text-align: right; font-size: 18px !important;}
 .col-date { width: 90px; text-align: center; color: var(--text-dim); }
 .col-status { width: 100px; text-align: center; }
 .col-spacer { width: 20px; }
 
 /* --- Sorting & Taxonomy --- */
-.sort-header {
+.sort-header, 
+.sort-header-left {
     display: flex;
-    align-items: center;
-    justify-content: flex-start;
+    align-items: center; /* Vertically center the text */
+    box-sizing: border-box; /* Ensures border/outline stays inside the width */
     width: 100%;
-    cursor: pointer;
+    height: 100%;
+	font-size: 18px;
+	padding: 0;
+    /* Remove float: left; as it interferes with Flexbox */
 }
 
-.sort-btns span.active-up { color: var(--stat-high); text-shadow: 0 0 8px var(--stat-high); }
-.sort-btns span.active-down { color: var(--accent-blue); text-shadow: 0 0 8px var(--accent-blue); }
+.sort-header-left {
+    justify-content: left !important;
+    /* padding-right: 12px; */
+}
+
+.sort-header {
+    justify-content: center !important;
+	padding-left: 12px;
+}
+
+.sort-btns {
+	/* display: flex; */
+	float: left;
+	flex-direction: column;
+	font-size: 12px;
+	line-height: 0.7;
+	color: var(--text-dim);
+	width: 100%;
+	height: 100%;
+	/* flex-shrink: 0; */
+	cursor: pointer;
+	padding-left: 4px;
+	gap: 4px;
+	padding-bottom: 2px;
+}
+
+.sort-btns span {
+    font-size: 12px;        /* Increased size to match/complement header text */
+    /* height: 100%; */
+	/* vertical-align: middle; */
+    /* display: inline-flex; */
+}
+
+.sort-btns span.active-up, .sort-btns span.active-down { color: var(--stat-high) !important; text-shadow: 0 0 8px var(--stat-high) !important; }
 
 .custom-dropdown .dropdown-list {
     position: absolute;
