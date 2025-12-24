@@ -20,17 +20,26 @@ body {
 /* --- Layout & SPA Navigation --- */
 .main-header {
     background: var(--panel-bg);
-    padding: 1rem 2rem;
+    padding: 0.5rem 2rem;
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-start;
     align-items: center;
     border-bottom: 2px solid var(--border-color);
+}
+
+/* Ensure header controls are aligned */
+.header-controls {
+	margin-left: auto;
+    display: flex;
+    align-items: center;
+    gap: 15px;
 }
 
 .top-nav {
     display: flex;
     gap: 20px;
     margin-left: 0;
+	align-items: center;
 }
 
 .nav-btn {
@@ -41,7 +50,7 @@ body {
     font-size: 18px;
     font-weight: 700;
     cursor: pointer;
-    padding: 10px 5px;
+    padding: 10px 10px;
     transition: all 0.3s ease;
     border-bottom: 2px solid transparent;
 }
@@ -77,9 +86,3 @@ body {
     display: block; 
 }
 
-/* Ensure header controls are aligned */
-.header-controls {
-    display: flex;
-    align-items: center;
-    gap: 15px;
-}
