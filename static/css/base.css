@@ -27,12 +27,16 @@ body {
     border-bottom: 2px solid var(--border-color);
 }
 
+.logo {
+	flex-shrink: 0;
+}
 
 .top-nav {
     display: flex;
     gap: 20px;
     margin-left: 20px;
-	align-items: left;
+	margin-right: auto;
+	/* align-items: left; */
 }
 
 .nav-btn {
