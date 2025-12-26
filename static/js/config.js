@@ -16,3 +16,4 @@ let taxonomyMap = {};
 let currentPage = 1;
 let resultsPerPage = 50;
 let filteredData = []; // To store data after filters but before pagination
+let isNewResource = false;

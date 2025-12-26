@@ -22,13 +22,6 @@ function openResourceModal(resourceName) {
     document.getElementById('resource-modal').style.display = 'flex';
 }
 
-function resetModalUI() {
-    document.getElementById('modal-status-bar').textContent = '';
-    document.getElementById('btn-edit').disabled = false;
-    document.getElementById('btn-save').disabled = true;
-    document.getElementById('btn-cancel').disabled = true;
-}
-
 function enterEditMode() {
     document.getElementById('modal-status-bar').textContent = '';
     renderModalContent(originalModalData, true);
@@ -179,4 +172,53 @@ function closeModal(event = null) {
 function toggleModalDropdown() {
     const list = document.getElementById('modal-taxonomy-list');
     list.style.display = list.style.display === 'block' ? 'none' : 'block';
+}
+
+function openAddResourceModal() {
+    isNewResource = true;
+    const emptyData = {
+        name: '',
+        type: 'Resources',
+        res_rating: 0, res_oq: 0, res_cr: 0, res_cd: 0, 
+        res_dr: 0, res_fl: 0, res_hr: 0, res_ma: 0, 
+        res_pe: 0, res_sr: 0, res_ut: 0,
+        notes: '',
+        planets: []
+    };
+
+    document.getElementById('modal-title').textContent = "Add New Resource";
+    
+    // Render in edit mode immediately
+    renderModalContent(emptyData, true);
+    
+    // Override the "Type" field to allow Name editing for new resources
+    const nameLabel = document.querySelector('.modal-label'); // First label
+    const nameValue = nameLabel.nextElementSibling;
+    
+    // We need to add the Name field at the top since it's required for new spawns
+    const body = document.getElementById('modal-body');
+    body.insertAdjacentHTML('afterbegin', `
+        <div class="modal-label">Name</div>
+        <div class="modal-value">
+            <input type="text" data-key="name" placeholder="Resource Name..." oninput="onModalInputChange()">
+        </div>
+    `);
+
+    // UI Adjustments for Add Mode
+    document.getElementById('btn-edit').style.display = 'none';
+    document.getElementById('btn-save').disabled = true;
+    document.getElementById('btn-cancel').style.display = 'none';
+    document.getElementById('resource-modal').style.display = 'flex';
+
+	// TODO: ADD FUNCTIONALITY TO SAVE NEW RESOURCE
+}
+
+// Update the close/cancel logic to restore the "Edit" button visibility
+function resetModalUI() {
+    document.getElementById('modal-status-bar').textContent = '';
+    document.getElementById('btn-edit').style.display = 'block'; // Ensure it's back
+    document.getElementById('btn-edit').disabled = false;
+    document.getElementById('btn-save').disabled = true;
+    document.getElementById('btn-cancel').disabled = true;
+    isNewResource = false;
 }
