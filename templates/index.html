@@ -28,24 +28,49 @@
                         </div>
                     </div>
                     <input type="text" placeholder="Search resources..." class="search-input">
+					<div class="pagination-stack">
+						<div class="pagination-controls">
+							<label for="results-per-page">Show Results:</label>
+							<select id="results-per-page" class="results-select" onchange="changeResultsPerPage()">
+								<option value="10">10</option>
+								<option value="25">25</option>
+								<option value="50" selected>50</option>
+								<option value="100">100</option>
+							</select>
+						</div>
+
+						<div id="page-nav-container" class="page-nav-container">
+							<button id="btn-first" class="page-nav-btn" onclick="goToPage('first')">«</button>
+							<button id="btn-prev" class="page-nav-btn" onclick="goToPage('prev')">‹</button>
+							
+							<select id="page-select" class="results-select" onchange="goToPage(this.value)">
+								</select>
+							
+							<button id="btn-next" class="page-nav-btn" onclick="goToPage('next')">›</button>
+							<button id="btn-last" class="page-nav-btn" onclick="goToPage('last')">»</button>
+						</div>
+					</div>
 				</div>
 				<table class="resource-table">
 					<thead>
 						<tr>
-							<th class="col-name"><div class="sort-header-left" onclick="toggleSort('name')">NAME <div class="sort-btns"><span class="up">▲</span><span class="down">▼</span></div></div></th>
-							<th class="col-type"><div class="sort-header-left" onclick="toggleSort('type')">TYPE <div class="sort-btns"><span class="up">▲</span><span class="down">▼</span></div></div></th>
-							<th class="col-stat"><div class="sort-header" onclick="toggleSort('res_oq')">OQ <div class="sort-btns"><span class="up">▲</span><span class="down">▼</span></div></div></th>
-							<th class="col-stat"><div class="sort-header" onclick="toggleSort('res_cd')">CD <div class="sort-btns"><span class="up">▲</span><span class="down">▼</span></div></div></th>
-							<th class="col-stat"><div class="sort-header" onclick="toggleSort('res_dr')">DR <div class="sort-btns"><span class="up">▲</span><span class="down">▼</span></div></div></th>
-							<th class="col-stat"><div class="sort-header" onclick="toggleSort('res_fl')">FL <div class="sort-btns"><span class="up">▲</span><span class="down">▼</span></div></div></th>
-							<th class="col-stat"><div class="sort-header" onclick="toggleSort('res_hr')">HR <div class="sort-btns"><span class="up">▲</span><span class="down">▼</span></div></div></th>
-							<th class="col-stat"><div class="sort-header" onclick="toggleSort('res_ma')">MA <div class="sort-btns"><span class="up">▲</span><span class="down">▼</span></div></div></th>
-							<th class="col-stat"><div class="sort-header" onclick="toggleSort('res_pe')">PE <div class="sort-btns"><span class="up">▲</span><span class="down">▼</span></div></div></th>
-							<th class="col-stat"><div class="sort-header" onclick="toggleSort('res_ut')">UT <div class="sort-btns"><span class="up">▲</span><span class="down">▼</span></div></div></th>
+							<th class="col-name" onclick="toggleSort('name')"><div class="sort-header-left">NAME <div class="sort-btns"><span class="up">▲</span><span class="down">▼</span></div></div></th>
+							<th class="col-type" onclick="toggleSort('type')"><div class="sort-header-left">TYPE <div class="sort-btns"><span class="up">▲</span><span class="down">▼</span></div></div></th>
+							<th class="col-stat" onclick="toggleSort('res_rating')"><div class="sort-header">Rating <div class="sort-btns"><span class="up">▲</span><span class="down">▼</span></div></div></th>
+							<th class="col-stat" onclick="toggleSort('res_oq')"><div class="sort-header">OQ <div class="sort-btns"><span class="up">▲</span><span class="down">▼</span></div></div></th>
+							<th class="col-stat" onclick="toggleSort('res_cr')"><div class="sort-header">CR <div class="sort-btns"><span class="up">▲</span><span class="down">▼</span></div></div></th>
+							<th class="col-stat" onclick="toggleSort('res_cd')"><div class="sort-header">CD <div class="sort-btns"><span class="up">▲</span><span class="down">▼</span></div></div></th>
+							<th class="col-stat" onclick="toggleSort('res_dr')"><div class="sort-header">DR <div class="sort-btns"><span class="up">▲</span><span class="down">▼</span></div></div></th>
+							<th class="col-stat" onclick="toggleSort('res_fl')"><div class="sort-header">FL <div class="sort-btns"><span class="up">▲</span><span class="down">▼</span></div></div></th>
+							<th class="col-stat" onclick="toggleSort('res_hr')"><div class="sort-header">HR <div class="sort-btns"><span class="up">▲</span><span class="down">▼</span></div></div></th>
+							<th class="col-stat" onclick="toggleSort('res_ma')"><div class="sort-header">MA <div class="sort-btns"><span class="up">▲</span><span class="down">▼</span></div></div></th>
+							<th class="col-stat" onclick="toggleSort('res_pe')"><div class="sort-header">PE <div class="sort-btns"><span class="up">▲</span><span class="down">▼</span></div></div></th>
+							<th class="col-stat" onclick="toggleSort('res_sr')"><div class="sort-header">SR <div class="sort-btns"><span class="up">▲</span><span class="down">▼</span></div></div></th>
+							<th class="col-stat" onclick="toggleSort('res_ut')"><div class="sort-header">UT <div class="sort-btns"><span class="up">▲</span><span class="down">▼</span></div></div></th>
 							<th class="col-loc">LOCATION</th>
-							<th class="col-date"><div class="sort-header" onclick="toggleSort('spawned_at')">DATE <div class="sort-btns"><span class="up">▲</span><span class="down">▼</span></div></div></th>
-							<th class="col-status"><div class="sort-header" onclick="toggleSort('is_active')">STATUS <div class="sort-btns"><span class="up">▲</span><span class="down">▼</span></div></div></th>
-							<th class="col-spacer"></th>
+							<th class="col-date" onclick="toggleSort('date_reported')"><div class="sort-header">DATE <div class="sort-btns"><span class="up">▲</span><span class="down">▼</span></div></div></th>
+							<th class="col-status" onclick="toggleSort('is_active')"><div class="sort-header">STATUS <div class="sort-btns"><span class="up">▲</span><span class="down">▼</span></div></div></th>
+							<!-- <th class="col-spacer"></th> -->
 						</tr>
 					</thead>
 					<tbody id="resource-log-body"></tbody>
@@ -57,8 +82,15 @@
 						<h2 id="modal-title">Resource Details</h2>
 						<button class="close-btn" onclick="closeModal()">×</button>
 					</div>
-					<div id="modal-body" class="modal-body-grid">
-						</div>
+					<div id="modal-body" class="modal-body-grid"></div>
+					
+					<div id="modal-status-bar" class="status-bar"></div>
+					
+					<div class="modal-action-bar">
+						<button id="btn-edit" onclick="enterEditMode()">Edit Values</button>
+						<button id="btn-save" onclick="saveResourceEdits()" disabled>Save</button>
+						<button id="btn-cancel" onclick="cancelEditMode()" disabled>Cancel</button>
+					</div>
 				</div>
 			</div>
 

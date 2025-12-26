@@ -7,7 +7,12 @@
     --border-color: #2d3748;
     --stat-high: #00ff9d;
     --stat-mid: #ffcc00;
+	
 }
+
+.stat-red { color: #ff4444 !important; font-weight: 700; }
+.stat-yellow { color: #ffcc00 !important; font-weight: 600; }
+.stat-green { color: #00ff9d !important; }
 
 body {
     background-color: var(--bg-dark);

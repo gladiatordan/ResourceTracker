@@ -401,10 +401,12 @@
 
 .modal-header {
     display: flex;
-    justify-content: space-between;
+    align-items: center; /* Vertically center items */
+    justify-content: center; /* Horizontally center the title */
     border-bottom: 1px solid var(--border-color);
     margin-bottom: 15px;
     padding-bottom: 10px;
+    position: relative; /* Essential for absolute positioning of the close button */
 }
 
 .modal-header h2 {
@@ -412,6 +414,8 @@
     color: var(--accent-blue);
     font-family: 'Orbitron', sans-serif;
     font-size: 1.2rem;
+    text-align: center;
+    flex: 1; /* Allow the title to take up the space to ensure centering */
 }
 
 .close-btn {
@@ -420,12 +424,36 @@
     color: var(--text-dim);
     font-size: 24px;
     cursor: pointer;
+    position: absolute; /* Take the button out of the flex flow */
+    right: 0; /* Pin it to the far right of the header */
+    top: 50%;
+    transform: translateY(-50%); /* Perfectly center vertically */
+	padding-bottom: 10px;
 }
 
 .modal-body-grid {
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 5px;
+    grid-template-columns: 0.8fr 1.8fr;
+    gap: 8px 15px;
+	padding: 10px 0;
+}
+
+.modal-label {
+	color: var(--text-dim);
+    text-align: right; /* Right-align labels */
+    font-weight: 500;
+    text-transform: uppercase;
+    font-size: 14px;
+}
+
+.modal-value {
+    color: var(--text-main);
+    text-align: left; /* Left-align values */
+    font-weight: 700;
+    font-size: 16px;
+	padding-right: 2px;
+	display: flex;
+	align-items: center;
 }
 
 .res-link {
@@ -436,4 +464,193 @@
 
 .res-link:hover {
     text-shadow: 0 0 10px var(--accent-blue);
+}
+
+.status-bar {
+    height: 20px;
+    margin-top: 15px;
+    text-align: center;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.status-success { color: var(--stat-high); }
+.status-error { color: #ef4444; }
+
+.modal-action-bar {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 10px;
+    padding-top: 10px;
+    border-top: 1px solid var(--border-color);
+}
+
+.modal-action-bar button {
+    padding: 6px 12px;
+    font-family: 'Rajdhani', sans-serif;
+    text-transform: uppercase;
+    cursor: pointer;
+    background: #1a1f26;
+    color: var(--text-main);
+    border: 1px solid var(--border-color);
+}
+
+.modal-action-bar button:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+}
+
+.modal-action-bar button:not(:disabled):hover {
+    border-color: var(--accent-blue);
+}
+
+/* Style for editable inputs */
+.modal-value input {
+    background: #000;
+    color: var(--accent-blue);
+    border: 1px solid var(--border-color);
+    width: 100%;
+    padding: 2px 5px;
+    font-family: inherit;
+    font-size: inherit;
+}
+
+.modal-type-select {
+    background: #000;
+    color: var(--accent-blue);
+    border: 1px solid var(--border-color);
+    width: 100%;
+    padding: 2px 5px;
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 14px;
+    cursor: pointer;
+	box-sizing: border-box;
+}
+
+.modal-type-select option {
+    background: #14181f;
+    color: var(--text-main);
+}
+
+.modal-dropdown {
+    width: 100% !important;
+    z-index: 3000; /* Ensure it stays above modal content */
+}
+
+.modal-dropdown .dropdown-list {
+    position: absolute;
+    background: #000;
+    border: 1px solid var(--border-color);
+    max-height: 200px;
+    overflow-y: auto;
+    width: 100%;
+    left: 0;
+}
+
+/* Ensure the modal-value cell can contain the dropdown overflow */
+.modal-value {
+    position: relative;
+    overflow: visible !important;
+}
+
+/* Persistent Row Highlight */
+.resource-table tr.highlighted-row {
+    background-color: rgba(0, 212, 255, 0.15) !important; /* Subtle blue tint */
+    box-shadow: inset 0 0 10px rgba(0, 212, 255, 0.1);
+    transition: background-color 0.2s ease;
+}
+
+/* Optional: Add a small border accent to the left of the highlighted row */
+.resource-table tr.highlighted-row td:first-child {
+    border-left: 3px solid var(--accent-blue);
+}
+
+/* resources.css */
+.pagination-controls {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--text-dim);
+    font-size: 14px;
+}
+
+.results-select {
+    background: #000;
+    color: var(--accent-blue);
+    border: 1px solid var(--border-color);
+    padding: 4px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.page-nav-container {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    margin-left: auto; /* Pushes pagination to the right */
+}
+
+.page-nav-btn {
+    background: #1a1f26;
+    color: var(--accent-blue);
+    border: 1px solid var(--border-color);
+    padding: 4px 8px;
+    cursor: pointer;
+    border-radius: 4px;
+    font-weight: bold;
+    transition: all 0.2s;
+}
+
+.page-nav-btn:hover:not(:disabled) {
+    border-color: var(--accent-blue);
+    box-shadow: 0 0 5px var(--accent-blue);
+}
+
+.page-nav-btn:disabled {
+    opacity: 0.2;
+    cursor: not-allowed;
+    color: var(--text-dim);
+}
+
+#page-select {
+    min-width: 80px;
+    text-align: center;
+}
+
+/* resources.css */
+
+.pagination-stack {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end; /* Align both sections to the right */
+    gap: 8px;
+    margin-left: auto; /* Pushes the whole stack to the right */
+}
+
+.pagination-controls {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--text-dim);
+    font-size: 13px;
+    text-transform: uppercase;
+}
+
+.page-nav-container {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+/* Ensure consistent sizing for both selects */
+.results-select {
+    background: #000;
+    color: var(--accent-blue);
+    border: 1px solid var(--border-color);
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-family: 'Rajdhani', sans-serif;
+    cursor: pointer;
+    font-size: 14px;
 }
