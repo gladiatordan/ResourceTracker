@@ -75,12 +75,25 @@ function renderTable(data) {
 		const weightColor = getStatColorClass(res.res_weight_rating);
 
 		const statCells = statPairs.map(([valKey, ratKey]) => {
-            const val = res[valKey] || '-';
-            const rating = res[ratKey]; 
-            const colorClass = getStatColorClass(rating);
-            return `<td class="col-stat ${colorClass}">${val}</td>`;
-        }).join('');
+			const rawVal = res[valKey];
+			const rating = res[ratKey]; 
+			
+			// Logic for the cell text: show the value or a hyphen if null
+			const isEmpty = rawVal === null || rawVal === undefined || rawVal === '-';
+			const displayVal = isEmpty ? '-' : rawVal;
+			
+			const colorClass = getStatColorClass(rating);
+			
+			// Logic for the tooltip: only create the attribute if there is a rating
+			let tooltipAttr = '';
+			if (!isEmpty && rating !== null && rating !== undefined) {
+				const pct = (rating * 100).toFixed(1) + '%';
+				tooltipAttr = `data-tooltip="${pct}"`;
+			}
 
+			return `<td class="col-stat ${colorClass}" ${tooltipAttr}>${displayVal}</td>`;
+		}).join('');
+		
         row.innerHTML = `
             <td class="res-name">
 				<a class="res-link" onclick="openResourceModal('${res.name.replace(/'/g, "\\'")}')">${res.name}</a>
@@ -465,11 +478,26 @@ async function refreshSingleRow(resourceName) {
 		const weightColor = getStatColorClass(res.res_weight_rating);
 
 		const statCells = statPairs.map(([valKey, ratKey]) => {
-            const val = res[valKey] || '-';
-            const rating = res[ratKey]; 
-            const colorClass = getStatColorClass(rating);
-            return `<td class="col-stat ${colorClass}">${val}</td>`;
-        }).join('');
+			const rawVal = res[valKey];
+			const rating = res[ratKey]; 
+			
+			// Logic for the cell text: show the value or a hyphen if null
+			const isEmpty = rawVal === null || rawVal === undefined || rawVal === '-';
+			const displayVal = isEmpty ? '-' : rawVal;
+			
+			const colorClass = getStatColorClass(rating);
+			
+			// Logic for the tooltip: only create the attribute if there is a rating
+			let tooltipAttr = '';
+			if (!isEmpty && rating !== null && rating !== undefined) {
+				const pct = (rating * 100).toFixed(1) + '%';
+				tooltipAttr = `data-tooltip="${pct}"`;
+			}
+
+			return `<td class="col-stat ${colorClass}" ${tooltipAttr}>${displayVal}</td>`;
+		}).join('');
+
+		
 
 		row.innerHTML = `
 				<td class="res-name">

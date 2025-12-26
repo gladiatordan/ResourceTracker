@@ -94,11 +94,73 @@
 /* --- Consolidated Column Widths --- */
 .col-name { width: 150px; }
 .col-type { width: 150px; font-size: 16px !important; }
-.col-stat { width: 45px; text-align: center; } /* Replaces nth-child(3-10) */
+.col-stat { width: 45px; text-align: center; position: relative;} /* Replaces nth-child(3-10) */
 .col-loc  { width: 180px; text-align: right; font-size: 18px !important;}
 .col-date { width: 90px; text-align: center; color: var(--text-dim); }
 .col-status { width: 100px; text-align: center; }
 .col-spacer { width: 20px; }
+
+td.col-stat[data-tooltip] {
+    position: relative;
+    /* cursor: help; */
+}
+
+td.col-stat[data-tooltip]::after {
+    content: attr(data-tooltip);
+    position: absolute;
+    bottom: 125%; 
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #000;
+    padding: 4px 8px;
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    font-size: 12px;
+    white-space: nowrap;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.2s ease;
+    z-index: 100;
+}
+
+/* Show only when hovered AND attribute is present */
+td.col-stat[data-tooltip]:hover::after {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* Ensure color classes apply to the tooltip text as well */
+td.col-stat.stat-red[data-tooltip]::after { color: #ff4444; border-color: #ff4444; }
+td.col-stat.stat-yellow[data-tooltip]::after { color: #ffcc00; border-color: #ffcc00; }
+td.col-stat.stat-green[data-tooltip]::after { color: #00ff9d; border-color: #00ff9d; }
+
+/* Target only table cells, not headers */
+td.col-stat {
+    position: relative;
+    /* cursor: help; */
+}
+
+/* Ensure the tooltip only appears for elements that actually have the attribute */
+td.col-stat[data-tooltip]:hover::after {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* Inherit the text color from the parent TD class (stat-red, etc.) */
+.col-stat.stat-red::after { color: #ff4444; border-color: #ff4444; }
+.col-stat.stat-yellow::after { color: #ffcc00; border-color: #ffcc00; }
+.col-stat.stat-green::after { color: #00ff9d; border-color: #00ff9d; }
+
+.col-stat:hover::after {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* Add a safeguard to prevent headers from ever showing tooltips */
+th.col-stat::after {
+    content: none !important;
+    display: none !important;
+}
 
 /* --- Sorting & Taxonomy --- */
 .sort-header, 
