@@ -192,16 +192,16 @@ async function initTaxonomyDropdown() {
 }
 
 function applyAllTableTransforms() {
-    // 1. Always start with a fresh copy of the Master List
-    let dataToDisplay = [...rawResourceData]; 
+    // 1. Always start from the Master List to prevent data loss
+    let transformed = [...rawResourceData];
 
-    // 2. Apply Sorting
+    // 2. Apply Sorting based on the centralized sortStack
     if (sortStack.length > 0) {
-        dataToDisplay.sort((a, b) => {
+        transformed.sort((a, b) => {
             for (let sort of sortStack) {
                 let valA = a[sort.key];
                 let valB = b[sort.key];
-                const type = columnTypes[sort.key];
+                const type = columnTypes[sort.key] || 'alpha';
 
                 if (type === 'alpha') {
                     valA = (valA || "").toLowerCase();
@@ -210,10 +210,8 @@ function applyAllTableTransforms() {
                         return sort.direction === 'asc' ? (valA > valB ? 1 : -1) : (valA < valB ? 1 : -1);
                     }
                 } else {
-                    // Logic for numbers/booleans/dates
                     valA = (sort.key === 'is_active') ? (valA ? 1 : 0) : (valA ?? -1);
                     valB = (sort.key === 'is_active') ? (valB ? 1 : 0) : (valB ?? -1);
-                    
                     if (valA !== valB) {
                         return sort.direction === 'desc' ? (valB - valA) : (valA - valB);
                     }
@@ -223,10 +221,10 @@ function applyAllTableTransforms() {
         });
     }
 
-    // 3. Update the global filteredData used by pagination
-    filteredData = dataToDisplay; 
+    // 3. Move the sorted data into filteredData for the filter to use
+    filteredData = transformed; 
     
-    // 4. Trigger Filters and Table Rendering
+    // 4. Final step: Run the filter logic
     applyFilters(); 
 }
 
@@ -293,19 +291,22 @@ function changeResultsPerPage() {
 
 function applyFilters() {
     const searchTerm = document.querySelector('.search-input').value.toLowerCase();
-    const isRoot = currentSelectedId === 1;
-    const validLabels = isRoot ? [] : [currentSelectedLabel, ...getDescendantLabels(currentSelectedId)];
+    const isRoot = currentSelectedId === 1; //
+    const validLabels = isRoot ? [] : [currentSelectedLabel, ...getDescendantLabels(currentSelectedId)]; //
 
-    // Filter the ALREADY SORTED data instead of rawResourceData
+    // Filter the ALREADY SORTED data
     filteredData = filteredData.filter(res => {
-        const matchesSearch = res.name.toLowerCase().includes(searchTerm) || 
-                             res.type.toLowerCase().includes(searchTerm);
-        const matchesCategory = isRoot || validLabels.includes(res.type.toLowerCase());
+        const name = (res.name || "").toLowerCase();
+        const type = (res.type || "").toLowerCase();
+        
+        const matchesSearch = name.includes(searchTerm) || type.includes(searchTerm);
+        const matchesCategory = isRoot || validLabels.includes(type);
+        
         return matchesSearch && matchesCategory;
     });
 
     currentPage = 1; 
-    renderPaginatedTable();
+    renderPaginatedTable(); //
 }
 
 function renderPaginatedTable() {

@@ -19,8 +19,8 @@ function initTabs() {
 }
 
 function initListeners() {
-	document.querySelector('.search-input').addEventListener('input', applyFilters);
-    document.querySelector('.dropdown-selected').addEventListener('change', applyFilters);
+	document.querySelector('.search-input').addEventListener('input', applyAllTableTransforms);
+    document.querySelector('.dropdown-selected').addEventListener('change', applyAllTableTransforms);
 }
 
 // Global UI toggle for dropdown
