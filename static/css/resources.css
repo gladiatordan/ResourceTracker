@@ -96,7 +96,6 @@
     width: 100px;
     text-align: left;
     padding-right: 0;
-    /*padding-left: 10px;*/
 }
 
 .resource-table th:nth-child(2),
@@ -109,10 +108,10 @@
 /* --- Consolidated Column Widths --- */
 .col-name { width: 150px; }
 .col-type { width: 150px; font-size: 16px !important; }
-.col-stat { width: 45px; text-align: center; position: relative;} /* Replaces nth-child(3-10) */
+.col-stat { width: 45px; text-align: center; position: relative; font-size: 16px;} /* Replaces nth-child(3-10) */
 .col-loc  { width: 180px; text-align: right; font-size: 18px !important;}
 .col-date { width: 90px; text-align: center; color: var(--text-dim); }
-.col-status { width: 100px; text-align: center; }
+.col-status { width: 90px; text-align: center; }
 .col-spacer { width: 20px; }
 
 td.col-stat[data-tooltip] {
