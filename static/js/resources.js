@@ -1,7 +1,7 @@
 const columnTypes = {
     name: 'alpha',
     type: 'alpha',
-	res_rating: 'numeric',
+	res_weight_rating: 'numeric',
     res_oq: 'numeric',
     res_cr: 'numeric',
     res_cd: 'numeric',
@@ -191,13 +191,13 @@ async function initTaxonomyDropdown() {
 	}
 }
 
-// resources.js
-
 function applyAllTableTransforms() {
-    let data = [...rawResourceData];
+    // 1. Always start with a fresh copy of the Master List
+    let dataToDisplay = [...rawResourceData]; 
 
+    // 2. Apply Sorting
     if (sortStack.length > 0) {
-        data.sort((a, b) => {
+        dataToDisplay.sort((a, b) => {
             for (let sort of sortStack) {
                 let valA = a[sort.key];
                 let valB = b[sort.key];
@@ -206,14 +206,11 @@ function applyAllTableTransforms() {
                 if (type === 'alpha') {
                     valA = (valA || "").toLowerCase();
                     valB = (valB || "").toLowerCase();
-
-					
                     if (valA !== valB) {
                         return sort.direction === 'asc' ? (valA > valB ? 1 : -1) : (valA < valB ? 1 : -1);
                     }
                 } else {
-                    // Numeric/Date logic: desc = High to Low, asc = Low to High
-                    // For dates, spawned_at (timestamp) is numeric
+                    // Logic for numbers/booleans/dates
                     valA = (sort.key === 'is_active') ? (valA ? 1 : 0) : (valA ?? -1);
                     valB = (sort.key === 'is_active') ? (valB ? 1 : 0) : (valB ?? -1);
                     
@@ -226,8 +223,11 @@ function applyAllTableTransforms() {
         });
     }
 
-    rawResourceData = data;
-    applyFilters();
+    // 3. Update the global filteredData used by pagination
+    filteredData = dataToDisplay; 
+    
+    // 4. Trigger Filters and Table Rendering
+    applyFilters(); 
 }
 
 function selectCategory(id, classLabel, displayLabel = null) {
@@ -292,18 +292,19 @@ function changeResultsPerPage() {
 }
 
 function applyFilters() {
-   const searchTerm = document.querySelector('.search-input').value.toLowerCase();
+    const searchTerm = document.querySelector('.search-input').value.toLowerCase();
     const isRoot = currentSelectedId === 1;
     const validLabels = isRoot ? [] : [currentSelectedLabel, ...getDescendantLabels(currentSelectedId)];
 
-    filteredData = rawResourceData.filter(res => {
+    // Filter the ALREADY SORTED data instead of rawResourceData
+    filteredData = filteredData.filter(res => {
         const matchesSearch = res.name.toLowerCase().includes(searchTerm) || 
                              res.type.toLowerCase().includes(searchTerm);
         const matchesCategory = isRoot || validLabels.includes(res.type.toLowerCase());
         return matchesSearch && matchesCategory;
     });
 
-    currentPage = 1; // Reset to page 1 whenever filters change
+    currentPage = 1; 
     renderPaginatedTable();
 }
 
@@ -641,7 +642,7 @@ function onModalInputChange() {
 function renderModalContent(data, isEditable = false) {
     const body = document.getElementById('modal-body');
     // Identify which keys should be treated as numeric quality stats
-    const numericKeys = ['res_rating', 'res_oq', 'res_cr', 'res_cd', 'res_dr', 'res_fl', 'res_hr', 'res_ma', 'res_pe', 'res_sr', 'res_ut'];
+    const numericKeys = ['res_weight_rating', 'res_oq', 'res_cr', 'res_cd', 'res_dr', 'res_fl', 'res_hr', 'res_ma', 'res_pe', 'res_sr', 'res_ut'];
     
 	// 1. Build the Type Display
     let typeDisplay;
@@ -660,7 +661,7 @@ function renderModalContent(data, isEditable = false) {
     // 2. Define the field mapping
     const fields = [
         { label: 'Type', key: 'type', val: typeDisplay, isCustom: true },
-        { label: 'Rating', key: 'res_rating', val: data.res_rating },
+        { label: 'Rating', key: 'res_weight_rating', val: data.res_weight_rating },
         { label: 'Overall Quality', key: 'res_oq', val: data.res_oq },
         { label: 'Cold Resistance', key: 'res_cr', val: data.res_cr },
         { label: 'Conductivity', key: 'res_cd', val: data.res_cd },
