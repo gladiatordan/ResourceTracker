@@ -662,7 +662,7 @@ function renderModalContent(data, isEditable = false) {
     // 2. Define the field mapping
     const fields = [
         { label: 'Type', key: 'type', val: typeDisplay, isCustom: true },
-        { label: 'Rating', key: 'res_weight_rating', val: data.res_weight_rating },
+        { label: 'Rating', key: 'res_weight_rating', val: parseInt(data.res_weight_rating * 1000) },
         { label: 'Overall Quality', key: 'res_oq', val: data.res_oq },
         { label: 'Cold Resistance', key: 'res_cr', val: data.res_cr },
         { label: 'Conductivity', key: 'res_cd', val: data.res_cd },
