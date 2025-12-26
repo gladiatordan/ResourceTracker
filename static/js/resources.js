@@ -1,7 +1,7 @@
 const columnTypes = {
     name: 'alpha',
     type: 'alpha',
-	res_weight_rating: 'numeric',
+	res_rating: 'numeric',
     res_oq: 'numeric',
     res_cr: 'numeric',
     res_cd: 'numeric',
@@ -206,6 +206,8 @@ function applyAllTableTransforms() {
                 if (type === 'alpha') {
                     valA = (valA || "").toLowerCase();
                     valB = (valB || "").toLowerCase();
+
+					
                     if (valA !== valB) {
                         return sort.direction === 'asc' ? (valA > valB ? 1 : -1) : (valA < valB ? 1 : -1);
                     }
