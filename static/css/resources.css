@@ -518,6 +518,24 @@ th.col-stat::after {
 	align-items: center;
 }
 
+.modal-textarea {
+    background: #000;
+    color: var(--accent-blue);
+    border: 1px solid var(--border-color);
+    width: 100%;
+    min-height: 80px;
+    padding: 5px;
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 14px;
+    resize: vertical; /* Allows users to expand the box if needed */
+    box-sizing: border-box;
+}
+
+/* Ensure the modal grid cell doesn't clip the textarea */
+.modal-value {
+    align-items: flex-start !important;
+}
+
 .res-link {
     color: var(--accent-blue);
     text-decoration: none;

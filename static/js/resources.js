@@ -631,6 +631,9 @@ function openResourceModal(resourceName) {
     const row = document.getElementById(rowId);
     highlightRow(row);
 
+	// Update the modal title with the resource name
+    document.getElementById('modal-title').textContent = `Details - ${resourceName}`;
+
     originalModalData = { ...res }; // Store original data
     renderModalContent(res);
     resetModalUI();
@@ -689,7 +692,7 @@ function renderModalContent(data, isEditable = false) {
     // 2. Define the field mapping
     const fields = [
         { label: 'Type', key: 'type', val: typeDisplay, isCustom: true },
-        { label: 'Rating', key: 'res_weight_rating', val: parseInt(data.res_weight_rating * 1000) },
+        { label: 'Rating', key: 'res_weight_rating', val: parseInt(data.res_weight_rating * 1000), skipEdit: true },
         { label: 'Overall Quality', key: 'res_oq', val: data.res_oq },
         { label: 'Cold Resistance', key: 'res_cr', val: data.res_cr },
         { label: 'Conductivity', key: 'res_cd', val: data.res_cd },
@@ -702,7 +705,7 @@ function renderModalContent(data, isEditable = false) {
         { label: 'Unit Toughness', key: 'res_ut', val: data.res_ut },
         { label: 'Date Reported', key: 'date_reported', val: formatDate(data.date_reported), skipEdit: true },
         { label: 'Status', key: 'is_active', val: data.is_active ? 'Active' : 'Inactive', skipEdit: true },
-		{ label: 'Notes', key: 'notes', val: data.notes || '', skipEdit: false }
+		{ label: 'Notes', key: 'notes', val: (data.notes || '').replace(/,/g, '\n'), isTextArea: true }
     ];
 
     // 3. Render the grid
@@ -711,10 +714,23 @@ function renderModalContent(data, isEditable = false) {
         if (f.isCustom) {
             valueHTML = f.val;
         } else if (isEditable && !f.skipEdit) {
-            const isNumeric = numericKeys.includes(f.key);
-            valueHTML = `<input type="${isNumeric ? 'number' : 'text'}" step="1" value="${f.val || ''}" oninput="onModalInputChange()" data-key="${f.key}">`;
+            if (f.isTextArea) {
+                // Formatting for Notes in Edit Mode
+                const textareaVal = String(f.val || '').replace(/,/g, '\n');
+                valueHTML = `<textarea oninput="onModalInputChange()" data-key="${f.key}" class="modal-textarea">${textareaVal}</textarea>`;
+            } else {
+                // Formatting for standard numeric/text inputs
+                const isNumeric = numericKeys.includes(f.key);
+                valueHTML = `<input type="${isNumeric ? 'number' : 'text'}" step="1" value="${f.val !== null && f.val !== undefined ? f.val : ''}" oninput="onModalInputChange()" data-key="${f.key}">`;
+            }
         } else {
-            valueHTML = f.val || '-';
+            // Formatting for Display Mode
+            if (f.key === 'notes') {
+                const displayStr = String(f.val || '').replace(/,/g, '\n');
+                valueHTML = displayStr ? displayStr.replace(/\n/g, '<br>') : '-';
+            } else {
+                valueHTML = f.val !== null && f.val !== undefined ? f.val : '-';
+            }
         }
         return `<div class="modal-label">${f.label}</div><div class="modal-value">${valueHTML}</div>`;
     }).join('');
@@ -726,7 +742,7 @@ function renderModalContent(data, isEditable = false) {
 }
 
 async function saveResourceEdits() {
-    const inputs = document.querySelectorAll('.modal-value input, #modal-type-value');
+    const inputs = document.querySelectorAll('.modal-value input, .modal-value textarea, #modal-type-value');
     const updatedData = { ...originalModalData };
     const statusBox = document.getElementById('modal-status-bar');
     
@@ -736,16 +752,17 @@ async function saveResourceEdits() {
         const key = input.getAttribute('data-key');
         let val = input.value;
 
-        // If it's a numeric field, ensure it's a whole number
-        if (input.type === 'number') {
+        // Special handling for notes: convert newlines to commas
+        if (key === 'notes') {
+            val = val.replace(/\n/g, ',');
+        } else if (input.type === 'number') {
             const numVal = Number(val);
-            // Check if it's an integer and not empty
             if (val === '' || !Number.isInteger(numVal) || numVal < 0 || numVal > 1000) {
                 isValid = false;
-                input.style.borderColor = "#ef4444"; // Visual error cue
+                input.style.borderColor = "#ef4444";
             } else {
                 input.style.borderColor = "var(--border-color)";
-                val = parseInt(val, 10); // Ensure it's stored as an integer
+                val = parseInt(val, 10);
             }
         }
         updatedData[key] = val;
