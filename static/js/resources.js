@@ -93,7 +93,6 @@ function renderTable(data) {
 
 			return `<td class="col-stat ${colorClass}" ${tooltipAttr}>${displayVal}</td>`;
 		}).join('');
-		
         row.innerHTML = `
             <td class="res-name">
 				<a class="res-link" onclick="openResourceModal('${res.name.replace(/'/g, "\\'")}')">${res.name}</a>
@@ -252,7 +251,7 @@ function selectCategory(id, classLabel, displayLabel = null) {
 	document.getElementById('taxonomy-list').style.display = 'none';
 	
 	// Trigger the combined filter
-	applyFilters();
+	applyAllTableTransforms();
 }
 
 function getDescendantLabels(parentId) {
