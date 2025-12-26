@@ -49,7 +49,7 @@ function onModalInputChange() {
 
 function renderModalContent(data, isEditable = false) {
     const body = document.getElementById('modal-body');
-    const numericKeys = ['res_rating', 'res_oq', 'res_cr', 'res_cd', 'res_dr', 'res_fl', 'res_hr', 'res_ma', 'res_pe', 'res_sr', 'res_ut'];
+    const numericKeys = ['res_weight_rating', 'res_oq', 'res_cr', 'res_cd', 'res_dr', 'res_fl', 'res_hr', 'res_ma', 'res_pe', 'res_sr', 'res_ut'];
     
     let typeDisplay;
     if (isEditable) {
@@ -65,7 +65,7 @@ function renderModalContent(data, isEditable = false) {
 
     const fields = [
         { label: 'Type', key: 'type', val: typeDisplay, isCustom: true },
-        { label: 'Rating', key: 'res_rating', val: data.res_rating },
+        { label: 'Rating', key: 'res_weight_rating', val: parseInt(data.res_weight_rating * 1000), skipEdit: true },
         { label: 'Overall Quality', key: 'res_oq', val: data.res_oq },
         { label: 'Cold Resistance', key: 'res_cr', val: data.res_cr },
         { label: 'Conductivity', key: 'res_cd', val: data.res_cd },
@@ -78,22 +78,26 @@ function renderModalContent(data, isEditable = false) {
         { label: 'Unit Toughness', key: 'res_ut', val: data.res_ut },
         { label: 'Date Reported', key: 'date_reported', val: formatDate(data.date_reported), skipEdit: true },
         { label: 'Status', key: 'is_active', val: data.is_active ? 'Active' : 'Inactive', skipEdit: true },
-        { label: 'Notes', key: 'notes', val: data.notes, isTextArea: true }
+        { label: 'Notes', key: 'notes', val: (data.notes || '').replace(/,/g, '\n'), isTextArea: true }
     ];
 
+    // 3. Render the grid
     body.innerHTML = fields.map(f => {
         let valueHTML;
         if (f.isCustom) {
             valueHTML = f.val;
         } else if (isEditable && !f.skipEdit) {
             if (f.isTextArea) {
+                // Formatting for Notes in Edit Mode
                 const textareaVal = String(f.val || '').replace(/,/g, '\n');
                 valueHTML = `<textarea oninput="onModalInputChange()" data-key="${f.key}" class="modal-textarea">${textareaVal}</textarea>`;
             } else {
+                // Formatting for standard numeric/text inputs
                 const isNumeric = numericKeys.includes(f.key);
                 valueHTML = `<input type="${isNumeric ? 'number' : 'text'}" step="1" value="${f.val !== null && f.val !== undefined ? f.val : ''}" oninput="onModalInputChange()" data-key="${f.key}">`;
             }
         } else {
+            // Formatting for Display Mode
             if (f.key === 'notes') {
                 const displayStr = String(f.val || '').replace(/,/g, '\n');
                 valueHTML = displayStr ? displayStr.replace(/\n/g, '<br>') : '-';
@@ -104,7 +108,10 @@ function renderModalContent(data, isEditable = false) {
         return `<div class="modal-label">${f.label}</div><div class="modal-value">${valueHTML}</div>`;
     }).join('');
 
-    if (isEditable) initModalTaxonomy();
+    // If we are in edit mode, populate the custom dropdown tree
+    if (isEditable) {
+        initModalTaxonomy();
+    }
 }
 
 async function saveResourceEdits() {
