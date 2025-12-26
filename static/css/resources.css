@@ -325,35 +325,6 @@ th.col-stat::after {
     text-decoration: line-through; /* Visual cue for deletion */
 }
 
-.planet::after {
-    content: attr(data-tooltip);
-    position: absolute;
-    bottom: 125%; /* Sits above the letter */
-    left: 50%;
-    transform: translateX(-50%);
-    
-    /* Styling the box */
-    background-color: #000;
-    color: var(--accent-blue);
-    padding: 4px 8px;
-    border: 1px solid var(--border-color);
-    border-radius: 4px;
-    font-size: 12px;
-    white-space: nowrap;
-    
-    /* Hidden by default */
-    opacity: 0;
-    visibility: hidden;
-    transition: opacity 0.2s ease;
-    z-index: 10;
-}
-
-/* 3. Show it on hover */
-.planet:hover::after {
-    opacity: 1;
-    visibility: visible;
-}
-
 .status-text {
     min-width: fit-content;
     font-weight: bold;
@@ -395,30 +366,6 @@ th.col-stat::after {
 .status-text.inactive + .toggle-status-btn {
     background-color: var(--stat-high);
     box-shadow: 0 0 8px rgba(0, 255, 157, 0.5);
-}
-
-/* Re-use your tooltip logic for the button */
-.toggle-status-btn::after {
-    content: attr(data-tooltip);
-    position: absolute;
-    bottom: 150%;
-    left: 50%;
-    transform: translateX(-50%);
-    background: #000;
-    color: var(--accent-blue);
-    padding: 4px 8px;
-    border: 1px solid var(--border-color);
-    border-radius: 4px;
-    font-size: 11px;
-    white-space: nowrap;
-    opacity: 0;
-    visibility: hidden;
-    z-index: 100;
-}
-
-.toggle-status-btn:hover::after {
-    opacity: 1;
-    visibility: visible;
 }
 
 /* Planet Colors remain the same... */

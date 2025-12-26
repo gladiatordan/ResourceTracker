@@ -1,0 +1,46 @@
+:root {
+    --bg-dark: #0a0c10;
+    --panel-bg: #14181f;
+    --accent-blue: #00d4ff;
+    --text-main: #e0e0e0;
+    --text-dim: #94a3b8;
+    --border-color: #2d3748;
+    --stat-high: #00ff9d;
+    --stat-mid: #ffcc00;
+    --stat-low: #ff4444;
+}
+
+/* Global Utility Classes */
+.stat-red { color: var(--stat-low) !important; font-weight: 700; }
+.stat-yellow { color: var(--stat-mid) !important; font-weight: 600; }
+.stat-green { color: var(--stat-high) !important; }
+
+/* Shared Tooltip Logic (Consolidated from Planets and Stats) */
+[data-tooltip] {
+    position: relative;
+    cursor: help;
+}
+
+[data-tooltip]::after {
+    content: attr(data-tooltip);
+    position: absolute;
+    bottom: 125%;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #000;
+    color: var(--accent-blue);
+    padding: 4px 8px;
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    font-size: 12px;
+    white-space: nowrap;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.2s ease;
+    z-index: 1000;
+}
+
+[data-tooltip]:hover::after {
+    opacity: 1;
+    visibility: visible;
+}
