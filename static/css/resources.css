@@ -1,20 +1,21 @@
-/* Container for the filter row inside resources */
+/* =========================================
+   1. Filters & Controls
+   ========================================= */
 .resource-filters-row {
     display: flex;
     gap: 15px;
-    padding: 10px 0 20px 0; /* Space below header and above table */
+    padding: 10px 0 20px 0;
     align-items: center;
     background: transparent;
 }
 
-/* Ensure the inputs don't stretch excessively */
 .resource-filters-row .custom-dropdown,
 .resource-filters-row .search-input {
     width: 250px;
 }
 
 .resource-filters-row .search-input {
-	background-color: #000;
+    background-color: #000;
     color: var(--text-main);
     border: 1px solid var(--border-color);
     padding: 8px 12px;
@@ -23,215 +24,149 @@
     width: 250px;
 }
 
-.resource-filters-row.search-input:focus {
+.resource-filters-row .search-input:focus {
     border-color: var(--accent-blue);
     outline: none;
 }
 
-/* --- Table Structure --- */
+/* Add Resource Button */
+.add-resource-btn {
+    background: #1a1f26;
+    color: var(--accent-blue);
+    border: 1px solid var(--border-color);
+    padding: 8px 16px;
+    border-radius: 4px;
+    font-family: 'Rajdhani', sans-serif;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s;
+    white-space: nowrap;
+}
+
+.add-resource-btn:hover {
+    border-color: var(--accent-blue);
+    box-shadow: 0 0 10px rgba(0, 212, 255, 0.2);
+}
+
+/* =========================================
+   2. Table Layout & Base
+   ========================================= */
 .resource-table {
-	margin-top: 0;
     width: 100%;
     min-width: 800px;
     border-collapse: collapse;
+    table-layout: fixed; /* Critical for precise column widths */
     font-size: 0.95rem;
-    table-layout: fixed;
-    margin-left: 0;
+    margin-top: 0;
+}
+
+.resource-table th, 
+.resource-table td {
+    padding: 0; /* padding handled by internal wrappers/divs for hit-testing */
+    border-bottom: 1px solid var(--border-color);
+    height: 45px; /* Uniform row height */
+    vertical-align: middle;
+	font-size: 16px;
 }
 
 .resource-table th {
     background-color: #000;
     color: var(--accent-blue);
-    font-size: 14px;
-	font-weight: 600;
-	vertical-align: stretch;;
+    font-size: 18px;
+    font-weight: 600;
     text-transform: uppercase;
+    user-select: none;
 }
 
-.resource-table th, .resource-table td {
-    padding: 10px;
-    border-bottom: 1px solid var(--border-color);
-    /*height: 40px;*/
-}
-
-.resource-table th.stat-header, .stat-cell {
-    width: 30px !important;
-    text-align: center;
-}
-
-.resource-table th.status-header, .status-cell {
-    width: 110px;
-    text-align: center;
-}
-
-.resource-table th.location-header, .location-cell {
-    text-align: right;
-    width: 180px;
-}
-
-.resource-table th.date-header, .date-cell {
-    width: 100px;
-    text-align: center;
-    color: var(--text-dim);
-    font-family: monospace;
-}
-
-/* Highlight table headers on hover */
+/* Highlight table headers on hover to show clickability */
 .resource-table th[onclick] {
     cursor: pointer;
     transition: background-color 0.2s ease;
 }
 
 .resource-table th[onclick]:hover {
-    background-color: #1a1f26; /* Slightly lighter than the black background */
+    background-color: #1a1f26;
 }
 
-/* Ensure the flex containers inside headers allow the highlight to fill the space */
-.sort-header, .sort-header-left {
-    pointer-events: none; /* Allows the click to pass through to the TH */
+.resource-table tbody tr:hover {
+    background-color: rgba(255, 255, 255, 0.02);
 }
 
-.resource-table th:nth-child(1),
-.resource-table td:nth-child(1) {
-    width: 100px;
-    text-align: left;
-    padding-right: 0;
+/* Persistent Row Highlight */
+.resource-table tr.highlighted-row {
+    background-color: rgba(0, 212, 255, 0.15) !important;
+    box-shadow: inset 0 0 10px rgba(0, 212, 255, 0.1);
+    transition: background-color 0.2s ease;
 }
 
-.resource-table th:nth-child(2),
-.resource-table td:nth-child(2) {
-    width: 200px;
-    text-align: left;
-    padding-left: 0;
+.resource-table tr.highlighted-row td:first-child {
+    border-left: 3px solid var(--accent-blue);
 }
 
-/* --- Consolidated Column Widths --- */
-.col-name { width: 150px; }
-.col-type { width: 150px; font-size: 16px !important; }
-.col-stat { width: 45px; text-align: center; position: relative; font-size: 16px;} /* Replaces nth-child(3-10) */
-.col-loc  { width: 180px; text-align: right; font-size: 18px !important;}
-.col-date { width: 90px; text-align: center; color: var(--text-dim); }
-.col-status { width: 90px; text-align: center; }
-.col-spacer { width: 20px; }
+/* =========================================
+   3. Column Definitions (Single Source of Truth)
+   ========================================= */
 
-td.col-stat[data-tooltip] {
-    position: relative;
-    /* cursor: help; */
-}
+/* Text Columns */
+.col-name { width: 14%; text-align: left; }
+.col-type { width: 16%; text-align: left; }
 
-td.col-stat[data-tooltip]::after {
-    content: attr(data-tooltip);
-    position: absolute;
-    bottom: 125%; 
-    left: 50%;
-    transform: translateX(-50%);
-    background-color: #000;
-    padding: 4px 8px;
-    border: 1px solid var(--border-color);
-    border-radius: 4px;
-    font-size: 12px;
-    white-space: nowrap;
-    opacity: 0;
-    visibility: hidden;
-    transition: opacity 0.2s ease;
-    z-index: 100;
-}
+/* Numeric Stats */
+.col-stat { width: 3.5%; text-align: center; font-family: 'Rajdhani', sans-serif; }
 
-/* Show only when hovered AND attribute is present */
-td.col-stat[data-tooltip]:hover::after {
-    opacity: 1;
-    visibility: visible;
-}
+/* Metadata Columns */
+.col-loc    { width: 15%; text-align: right; font-size: 18px !important; }
+.col-date   { width: 8%; text-align: center; color: var(--text-dim); }
+.col-status { width: 8%; text-align: center; }
 
-/* Ensure color classes apply to the tooltip text as well */
-td.col-stat.stat-red[data-tooltip]::after { color: #ff4444; border-color: #ff4444; }
-td.col-stat.stat-yellow[data-tooltip]::after { color: #ffcc00; border-color: #ffcc00; }
-td.col-stat.stat-green[data-tooltip]::after { color: #00ff9d; border-color: #00ff9d; }
+/* Cell Content Styling */
+td.col-name, td.col-type { padding: 0 10px; }
+td.col-stat { font-weight: 700; }
 
-/* Target only table cells, not headers */
-td.col-stat {
-    position: relative;
-    /* cursor: help; */
-}
-
-/* Ensure the tooltip only appears for elements that actually have the attribute */
-td.col-stat[data-tooltip]:hover::after {
-    opacity: 1;
-    visibility: visible;
-}
-
-/* Inherit the text color from the parent TD class (stat-red, etc.) */
-.col-stat.stat-red::after { color: #ff4444; border-color: #ff4444; }
-.col-stat.stat-yellow::after { color: #ffcc00; border-color: #ffcc00; }
-.col-stat.stat-green::after { color: #00ff9d; border-color: #00ff9d; }
-
-.col-stat:hover::after {
-    opacity: 1;
-    visibility: visible;
-}
-
-/* Add a safeguard to prevent headers from ever showing tooltips */
-th.col-stat::after {
-    content: none !important;
-    display: none !important;
-}
-
-/* --- Sorting & Taxonomy --- */
-.sort-header, 
-.sort-header-left {
+.col-loc .cell-wrapper {
     display: flex;
-    align-items: center; /* Vertically center the text */
-    box-sizing: border-box; /* Ensures border/outline stays inside the width */
+    align-items: center;
+    justify-content: flex-end;
+    gap: 8px;
+    padding-right: 10px;
+}
+
+/* =========================================
+   4. Sort Headers (Interactive Wrappers)
+   ========================================= */
+.sort-wrapper {
+    display: flex;
+	flex-direction: row;
+    align-items: center;
     width: 100%;
     height: 100%;
-	font-size: 18px;
-	padding: 0;
-    /* Remove float: left; as it interferes with Flexbox */
+    cursor: pointer;
+    padding: 0 8px;
+    box-sizing: border-box;
+    pointer-events: none; /* Let the TH handle the click event */
 }
 
-.sort-header-left {
-    justify-content: left !important;
-    /* padding-right: 12px; */
-}
-
-.sort-header {
-	display: flex;
-	align-items: center;
-	width: 100%;
-	cursor: pointer;
-	gap: 4px;
-    justify-content: center !important;
-	padding-left: 12px;
-}
+/* Alignment modifiers */
+.sort-wrapper.left   { justify-content: flex-start; }
+.sort-wrapper.center { justify-content: center; }
+.sort-wrapper.right  { justify-content: flex-end; }
 
 .sort-btns {
-	display: flex;
-	float: left;
-	flex-direction: column;
-	justify-content: center;
-	font-size: 8px;
-	line-height: 1;
-	color: var(--text-dim);
-	width: 10px;
-	height: 100%;
-	/* flex-shrink: 0; */
-	cursor: pointer;
-	padding-left: 4px;
-	gap: 4px;
-	padding-bottom: 2px;
+    display: flex;
+    flex-direction: column;
+    margin-left: 4px;
+    line-height: 0.9;
+    color: var(--text-dim);
+	flex-shrink: 0;
 }
 
-.sort-btns span {
-    font-size: 12px;        /* Increased size to match/complement header text */
-    height: 7px;
-	cursor: pointer;
-	transition: all 0.2s;
-	/* vertical-align: middle; */
-    /* display: inline-flex; */
-}
+.sort-btns span { font-size: 10px; }
+.sort-btns span.active-up   { color: var(--stat-high); text-shadow: 0 0 5px var(--stat-high); }
+.sort-btns span.active-down { color: var(--accent-blue); text-shadow: 0 0 5px var(--accent-blue); }
 
-.sort-btns span.active-up, .sort-btns span.active-down { color: var(--stat-high); text-shadow: 0 0 8px var(--stat-high); }
-
+/* =========================================
+   5. Dropdowns & Taxonomy
+   ========================================= */
 .custom-dropdown {
     position: relative;
     width: 250px;
@@ -252,7 +187,7 @@ th.col-stat::after {
     overflow-y: auto;
     background: #000;
     border: 1px solid var(--border-color);
-    display: none; /* Hidden by default */;
+    display: none;
 }
 
 .dropdown-item {
@@ -263,7 +198,6 @@ th.col-stat::after {
 }
 
 .dropdown-item:hover { background: #1a1f26; }
-
 .dropdown-selected { padding: 8px 12px; color: var(--text-main); }
 
 .toggle-icon {
@@ -279,27 +213,23 @@ th.col-stat::after {
 }
 
 .toggle-icon.collapsed { transform: rotate(-90deg); }
-
-/* This hides children when the parent is collapsed */
 .branch-container.hidden { display: none; }
 
-/* --- Planets & Status --- */
+/* =========================================
+   6. Planets & Status
+   ========================================= */
 .planets-container {
     display: inline-flex;
-    /*flex-direction: row;*/
     gap: 4px;
-    /*vertical-align: middle;*/
     justify-content: flex-end;
 }
 
 .planet-controls {
     display: inline-block;
     margin-left: 2px;
-    /*min-width: 24px;*/
     vertical-align: middle;
 }
 
-/* Style the select to look like a small '+' button */
 .planet-select {
     background: #1e293b;
     color: var(--accent-blue);
@@ -307,13 +237,11 @@ th.col-stat::after {
     border-radius: 4px;
     font-size: 12px;
     font-weight: bold;
-    /*padding: 0 2px;*/
     cursor: pointer;
     width: 20px;
     height: 18px;
-    appearance: none; /* Removes default arrow */
+    appearance: none;
     text-align: center;
-    visibility: visible;
     transition: all 0.2s;
 }
 
@@ -330,74 +258,65 @@ th.col-stat::after {
     line-height: 18px;
     cursor: pointer;
     display: inline-block;
-    position: relative;
     user-select: none;
 }
 
 .planet:hover {
     filter: brightness(1.2);
-    text-decoration: line-through; /* Visual cue for deletion */
+    text-decoration: line-through;
 }
-
-.status-text {
-    min-width: fit-content;
-    font-weight: bold;
-}
-
-.status-text.active { color: var(--stat-high); }
-.status-text.inactive { color: #ef4444; text-shadow: 0 0 5px rgba(255,0,0,0.3); }
 
 .status-container {
     display: flex;
     align-items: center;
-    justify-content: center;  /* Pushes text left and button right */
+    justify-content: center;
     gap: 6px;
-}
-
-.toggle-status-btn {
-    width: 10px;
-    height: 10px;
-    border-radius: 50%; /* Makes it a circular light */
-    border: 1px solid rgba(255,255,255,0.2);
-    cursor: pointer;
-    padding: 0;
-    transition: background-color 0.3s, box-shadow 0.3s;
-    position: relative; /* For the tooltip to work */
 }
 
 .status-text {
     min-width: fit-content;
     font-weight: bold;
 }
+.status-text.active { color: var(--stat-high); }
+.status-text.inactive { color: #ef4444; text-shadow: 0 0 5px rgba(255,0,0,0.3); }
 
-/* Red button when status is Active (Action: "Kill" spawn) */
+.toggle-status-btn {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    border: 1px solid rgba(255,255,255,0.2);
+    cursor: pointer;
+    padding: 0;
+    transition: background-color 0.3s, box-shadow 0.3s;
+}
+
 .status-text.active + .toggle-status-btn {
     background-color: #ef4444; 
     box-shadow: 0 0 8px rgba(239, 68, 68, 0.5);
 }
 
-/* Green button when status is Inactive (Action: "Revive" spawn) */
 .status-text.inactive + .toggle-status-btn {
     background-color: var(--stat-high);
     box-shadow: 0 0 8px rgba(0, 255, 157, 0.5);
 }
 
-/* Planet Colors remain the same... */
-.corellia {background: #2190ac; color: #000000; }
+/* Planet Colors */
+.corellia { background: #2190ac; color: #000; }
 .dantooine { background: #6a006a; }
-.dathomir { background: #8f5120;}
-.endor { background: #6f9975; color: #000000; }
-.kashyyyk { background: #146e54; color: #000000; }
+.dathomir { background: #8f5120; }
+.endor { background: #6f9975; color: #000; }
+.kashyyyk { background: #146e54; color: #000; }
 .lok { background: #a84909; }
 .mustafar { background: #67120d; }
 .naboo { background: #415c71; }
-.rori { background: #827660; color:  #000000;}
-.talus { background: #677449; color: #000000;}
-.tatooine { background: #e0c37b; color: #000000;}
-.yavin { background: #71bb9a; color: #000000;}
+.rori { background: #827660; color: #000; }
+.talus { background: #677449; color: #000; }
+.tatooine { background: #e0c37b; color: #000; }
+.yavin { background: #71bb9a; color: #000; }
 
-
-/* Modal Overlay */
+/* =========================================
+   7. Modal
+   ========================================= */
 .modal-overlay {
     position: fixed;
     top: 0;
@@ -405,13 +324,12 @@ th.col-stat::after {
     width: 100%;
     height: 100%;
     background: rgba(0, 0, 0, 0.85);
-    display: none; /* Hidden by default */
+    display: none;
     justify-content: center;
     align-items: center;
     z-index: 2000;
 }
 
-/* Modal Box */
 .modal-content {
     background: var(--panel-bg);
     border: 2px solid var(--accent-blue);
@@ -424,12 +342,12 @@ th.col-stat::after {
 
 .modal-header {
     display: flex;
-    align-items: center; /* Vertically center items */
-    justify-content: center; /* Horizontally center the title */
+    align-items: center;
+    justify-content: center;
     border-bottom: 1px solid var(--border-color);
     margin-bottom: 15px;
     padding-bottom: 10px;
-    position: relative; /* Essential for absolute positioning of the close button */
+    position: relative;
 }
 
 .modal-header h2 {
@@ -438,7 +356,7 @@ th.col-stat::after {
     font-family: 'Orbitron', sans-serif;
     font-size: 1.2rem;
     text-align: center;
-    flex: 1; /* Allow the title to take up the space to ensure centering */
+    flex: 1;
 }
 
 .close-btn {
@@ -447,23 +365,23 @@ th.col-stat::after {
     color: var(--text-dim);
     font-size: 24px;
     cursor: pointer;
-    position: absolute; /* Take the button out of the flex flow */
-    right: 0; /* Pin it to the far right of the header */
+    position: absolute;
+    right: 0;
     top: 50%;
-    transform: translateY(-50%); /* Perfectly center vertically */
-	padding-bottom: 10px;
+    transform: translateY(-50%);
+    padding-bottom: 10px;
 }
 
 .modal-body-grid {
     display: grid;
     grid-template-columns: 0.8fr 1.8fr;
     gap: 8px 15px;
-	padding: 10px 0;
+    padding: 10px 0;
 }
 
 .modal-label {
-	color: var(--text-dim);
-    text-align: right; /* Right-align labels */
+    color: var(--text-dim);
+    text-align: right;
     font-weight: 500;
     text-transform: uppercase;
     font-size: 14px;
@@ -471,12 +389,14 @@ th.col-stat::after {
 
 .modal-value {
     color: var(--text-main);
-    text-align: left; /* Left-align values */
+    text-align: left;
     font-weight: 700;
     font-size: 16px;
-	padding-right: 2px;
-	display: flex;
-	align-items: center;
+    padding-right: 2px;
+    display: flex;
+    align-items: flex-start; /* Aligns text areas correctly */
+    position: relative;
+    overflow: visible !important;
 }
 
 .modal-textarea {
@@ -488,13 +408,22 @@ th.col-stat::after {
     padding: 5px;
     font-family: 'Rajdhani', sans-serif;
     font-size: 14px;
-    resize: vertical; /* Allows users to expand the box if needed */
+    resize: vertical;
     box-sizing: border-box;
 }
 
-/* Ensure the modal grid cell doesn't clip the textarea */
-.modal-value {
-    align-items: flex-start !important;
+.modal-value input {
+    background: #000;
+    color: var(--accent-blue);
+    border: 1px solid var(--border-color);
+    width: 100%;
+    padding: 2px 5px;
+    font-family: inherit;
+    font-size: inherit;
+}
+
+.res-name, .res-type {
+	padding-left: 8px !important;
 }
 
 .res-link {
@@ -502,10 +431,7 @@ th.col-stat::after {
     text-decoration: none;
     cursor: pointer;
 }
-
-.res-link:hover {
-    text-shadow: 0 0 10px var(--accent-blue);
-}
+.res-link:hover { text-shadow: 0 0 10px var(--accent-blue); }
 
 .status-bar {
     height: 20px;
@@ -514,7 +440,6 @@ th.col-stat::after {
     font-size: 14px;
     font-weight: bold;
 }
-
 .status-success { color: var(--stat-high); }
 .status-error { color: #ef4444; }
 
@@ -537,46 +462,12 @@ th.col-stat::after {
     border: 1px solid var(--border-color);
 }
 
-.modal-action-bar button:disabled {
-    opacity: 0.4;
-    cursor: not-allowed;
-}
-
-.modal-action-bar button:not(:disabled):hover {
-    border-color: var(--accent-blue);
-}
-
-/* Style for editable inputs */
-.modal-value input {
-    background: #000;
-    color: var(--accent-blue);
-    border: 1px solid var(--border-color);
-    width: 100%;
-    padding: 2px 5px;
-    font-family: inherit;
-    font-size: inherit;
-}
-
-.modal-type-select {
-    background: #000;
-    color: var(--accent-blue);
-    border: 1px solid var(--border-color);
-    width: 100%;
-    padding: 2px 5px;
-    font-family: 'Rajdhani', sans-serif;
-    font-size: 14px;
-    cursor: pointer;
-	box-sizing: border-box;
-}
-
-.modal-type-select option {
-    background: #14181f;
-    color: var(--text-main);
-}
+.modal-action-bar button:disabled { opacity: 0.4; cursor: not-allowed; }
+.modal-action-bar button:not(:disabled):hover { border-color: var(--accent-blue); }
 
 .modal-dropdown {
     width: 100% !important;
-    z-index: 3000; /* Ensure it stays above modal content */
+    z-index: 3000;
 }
 
 .modal-dropdown .dropdown-list {
@@ -589,47 +480,41 @@ th.col-stat::after {
     left: 0;
 }
 
-/* Ensure the modal-value cell can contain the dropdown overflow */
-.modal-value {
-    position: relative;
-    overflow: visible !important;
+/* =========================================
+   8. Pagination
+   ========================================= */
+.pagination-stack {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 8px;
+    margin-left: auto;
 }
 
-/* Persistent Row Highlight */
-.resource-table tr.highlighted-row {
-    background-color: rgba(0, 212, 255, 0.15) !important; /* Subtle blue tint */
-    box-shadow: inset 0 0 10px rgba(0, 212, 255, 0.1);
-    transition: background-color 0.2s ease;
-}
-
-/* Optional: Add a small border accent to the left of the highlighted row */
-.resource-table tr.highlighted-row td:first-child {
-    border-left: 3px solid var(--accent-blue);
-}
-
-/* resources.css */
 .pagination-controls {
     display: flex;
     align-items: center;
     gap: 8px;
     color: var(--text-dim);
-    font-size: 14px;
-}
-
-.results-select {
-    background: #000;
-    color: var(--accent-blue);
-    border: 1px solid var(--border-color);
-    padding: 4px;
-    border-radius: 4px;
-    cursor: pointer;
+    font-size: 13px;
+    text-transform: uppercase;
 }
 
 .page-nav-container {
     display: flex;
     align-items: center;
     gap: 5px;
-    margin-left: auto; /* Pushes pagination to the right */
+}
+
+.results-select {
+    background: #000;
+    color: var(--accent-blue);
+    border: 1px solid var(--border-color);
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-family: 'Rajdhani', sans-serif;
+    cursor: pointer;
+    font-size: 14px;
 }
 
 .page-nav-btn {
@@ -657,59 +542,4 @@ th.col-stat::after {
 #page-select {
     min-width: 80px;
     text-align: center;
-}
-
-/* resources.css */
-
-.pagination-stack {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end; /* Align both sections to the right */
-    gap: 8px;
-    margin-left: auto; /* Pushes the whole stack to the right */
-}
-
-.pagination-controls {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    color: var(--text-dim);
-    font-size: 13px;
-    text-transform: uppercase;
-}
-
-.page-nav-container {
-    display: flex;
-    align-items: center;
-    gap: 5px;
-}
-
-/* Ensure consistent sizing for both selects */
-.results-select {
-    background: #000;
-    color: var(--accent-blue);
-    border: 1px solid var(--border-color);
-    padding: 2px 6px;
-    border-radius: 4px;
-    font-family: 'Rajdhani', sans-serif;
-    cursor: pointer;
-    font-size: 14px;
-}
-
-.add-resource-btn {
-    background: #1a1f26;
-    color: var(--accent-blue);
-    border: 1px solid var(--border-color);
-    padding: 8px 16px;
-    border-radius: 4px;
-    font-family: 'Rajdhani', sans-serif;
-    font-weight: 700;
-    cursor: pointer;
-    transition: all 0.2s;
-    white-space: nowrap;
-}
-
-.add-resource-btn:hover {
-    border-color: var(--accent-blue);
-    box-shadow: 0 0 10px rgba(0, 212, 255, 0.2);
 }
