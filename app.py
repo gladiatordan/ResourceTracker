@@ -6,7 +6,7 @@ from flask import Flask, jsonify, request, render_template
 from flask_cors import CORS
 
 # Local Imports
-from core.ipc import get_client, create_packet
+from SWGBuddy.core.ipc import get_client, create_packet
 
 app = Flask(__name__)
 CORS(app)
