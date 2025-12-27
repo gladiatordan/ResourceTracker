@@ -10,20 +10,29 @@
  */
 async function loadResources() {
     try {
-        // 1. Fetch from Backend
-        const data = await API.fetchResources();
+        // 1. Fetch Data (Full Fetch for now to ensure consistency)
+        // In future: const dataPacket = await API.fetchResources(lastSyncTime);
+        const dataPacket = await API.fetchResources(0); 
         
-        // 2. Update Global Store
-        rawResourceData = data;
+        // 2. Extract Resources list from the packet
+        // API now returns { resources: [...], ... }
+        const newResources = dataPacket.resources || [];
         
-        // 3. Render Table (Relies on table.js)
+        // 3. Update Global Store (Replace strategy for stability)
+        rawResourceData = newResources;
+        lastSyncTime = Date.now();
+
+        // 4. Update Global Valid Types if provided (Syncs modal dropdowns)
+        if (dataPacket.valid_types && window.updateValidTypes) {
+            window.updateValidTypes(dataPacket.valid_types);
+        }
+
+        // 5. Render Table
         if (typeof applyAllTableTransforms === 'function') {
             applyAllTableTransforms();
-        } else {
-            console.error("Table rendering function 'applyAllTableTransforms' not found.");
         }
         
-        console.log(`Loaded ${rawResourceData.length} resources.`);
+        console.log(`Resources Loaded: ${rawResourceData.length}`);
     } catch (error) {
         console.error("Failed to load resources:", error);
     }

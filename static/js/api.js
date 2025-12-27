@@ -1,32 +1,35 @@
+/**
+ * API Wrapper
+ */
 const API = {
-    // Helper to get current server from Auth module or DOM
     getServerContext() {
         return document.getElementById('server-select')?.value || 'cuemu';
     },
 
-    async fetchResources() {
+    async fetchResources(sinceTimestamp = 0) {
         const serverId = this.getServerContext();
-        const response = await fetch(`/api/resource_log?server=${serverId}`);
+        // Pass 'since' to backend. Backend logic will use it to filter delta.
+        const response = await fetch(`/api/resource_log?server=${serverId}&since=${sinceTimestamp}`);
         if (!response.ok) throw new Error('Failed to fetch resources');
-        return await response.json();
+        
+        // Return full response object { taxonomy, valid_types, resources, etc }
+        return await response.json(); 
     },
 
     async fetchTaxonomy() {
+        // Taxonomy is static, no delta needed
         const response = await fetch('/api/taxonomy');
         if (!response.ok) throw new Error('Failed to fetch taxonomy');
         return await response.json();
     },
 
     async addResource(data) {
-        // Inject Server ID into payload
         data.server_id = this.getServerContext();
-        
         const response = await fetch('/api/add-resource', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(data)
         });
-        
         const result = await response.json();
         if (!result.success) throw new Error(result.error || 'Unknown error');
         return result;
