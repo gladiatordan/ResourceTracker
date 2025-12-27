@@ -1,224 +1,208 @@
 /**
- * Modal Component
- * Handles viewing and editing resource details
+ * Resource Modal Controller
+ * Handles Add/Edit interactions, dynamic stat validation, and submission.
  */
 
-function openResourceModal(resourceName) {
-    const res = rawResourceData.find(r => r.name === resourceName);
-    if (!res) return;
+// Mapping between DOM Input IDs and Taxonomy Attribute Codes
+const STAT_MAPPING = {
+    'res_oq': 'OQ', 'res_cd': 'CD', 'res_dr': 'DR', 'res_fl': 'FL',
+    'res_hr': 'HR', 'res_ma': 'MA', 'res_pe': 'PE', 'res_sr': 'SR',
+    'res_ut': 'UT', 'res_cr': 'CR'
+};
 
-    // Highlight the row when the link is clicked
-    const rowId = `row-${resourceName.replace(/['\s]/g, '-')}`;
-    const row = document.getElementById(rowId);
-    highlightRow(row);
+const Modal = {
+    isOpen: false,
+    mode: 'add', // 'add' or 'edit'
+    currentResourceId: null,
 
-    // Update the modal title with the resource name
-    document.getElementById('modal-title').textContent = `Details - ${resourceName}`;
+    elements: {
+        overlay: document.getElementById('resource-modal'),
+        title: document.getElementById('modal-title'),
+        form: document.getElementById('resource-form'),
+        typeSelect: document.getElementById('res-type'),
+        planetSelect: document.getElementById('res-planet'),
+        inputs: {}, // Populated on init
+        statusBar: document.getElementById('modal-status-bar') || createStatusBar()
+    },
 
-    originalModalData = { ...res }; // Store original data for cancellation
-    renderModalContent(res);
-    resetModalUI();
-
-    document.getElementById('resource-modal').style.display = 'flex';
-}
-
-function enterEditMode() {
-    document.getElementById('modal-status-bar').textContent = '';
-    renderModalContent(originalModalData, true);
-    document.getElementById('btn-edit').disabled = true;
-    document.getElementById('btn-cancel').disabled = false;
-}
-
-function cancelEditMode() {
-    document.getElementById('modal-status-bar').textContent = '';
-    renderModalContent(originalModalData, false);
-    resetModalUI();
-}
-
-function onModalInputChange() {
-    document.getElementById('modal-status-bar').textContent = '';
-    document.getElementById('btn-save').disabled = false;
-}
-
-function renderModalContent(data, isEditable = false) {
-    const body = document.getElementById('modal-body');
-    const numericKeys = ['res_weight_rating', 'res_oq', 'res_cr', 'res_cd', 'res_dr', 'res_fl', 'res_hr', 'res_ma', 'res_pe', 'res_sr', 'res_ut'];
-    
-    let typeDisplay;
-    if (isEditable) {
-        typeDisplay = `
-            <div class="custom-dropdown modal-dropdown" id="modal-taxonomy-dropdown">
-                <div class="dropdown-selected" onclick="toggleModalDropdown()">${data.type}</div>
-                <div class="dropdown-list" id="modal-taxonomy-list" style="display: none;"></div>
-                <input type="hidden" id="modal-type-value" data-key="type" value="${data.type}">
-            </div>`;
-    } else {
-        typeDisplay = data.type;
-    }
-
-    const fields = [
-        { label: 'Type', key: 'type', val: typeDisplay, isCustom: true },
-        { label: 'Rating', key: 'res_weight_rating', val: parseInt(data.res_weight_rating * 1000), skipEdit: true },
-        { label: 'Overall Quality', key: 'res_oq', val: data.res_oq },
-        { label: 'Cold Resistance', key: 'res_cr', val: data.res_cr },
-        { label: 'Conductivity', key: 'res_cd', val: data.res_cd },
-        { label: 'Decay Resistance', key: 'res_dr', val: data.res_dr },
-        { label: 'Flavor', key: 'res_fl', val: data.res_fl },
-        { label: 'Heat Resistance', key: 'res_hr', val: data.res_hr },
-        { label: 'Malleability', key: 'res_ma', val: data.res_ma },
-        { label: 'Potential Energy', key: 'res_pe', val: data.res_pe },
-        { label: 'Shock Resistance', key: 'res_sr', val: data.res_sr }, 
-        { label: 'Unit Toughness', key: 'res_ut', val: data.res_ut },
-        { label: 'Date Reported', key: 'date_reported', val: formatDate(data.date_reported), skipEdit: true },
-        { label: 'Status', key: 'is_active', val: data.is_active ? 'Active' : 'Inactive', skipEdit: true },
-        { label: 'Notes', key: 'notes', val: (data.notes || '').replace(/,/g, '\n'), isTextArea: true }
-    ];
-
-    // 3. Render the grid
-    body.innerHTML = fields.map(f => {
-        let valueHTML;
-        if (f.isCustom) {
-            valueHTML = f.val;
-        } else if (isEditable && !f.skipEdit) {
-            if (f.isTextArea) {
-                // Formatting for Notes in Edit Mode
-                const textareaVal = String(f.val || '').replace(/,/g, '\n');
-                valueHTML = `<textarea oninput="onModalInputChange()" data-key="${f.key}" class="modal-textarea">${textareaVal}</textarea>`;
-            } else {
-                // Formatting for standard numeric/text inputs
-                const isNumeric = numericKeys.includes(f.key);
-                valueHTML = `<input type="${isNumeric ? 'number' : 'text'}" step="1" value="${f.val !== null && f.val !== undefined ? f.val : ''}" oninput="onModalInputChange()" data-key="${f.key}">`;
-            }
-        } else {
-            // Formatting for Display Mode
-            if (f.key === 'notes') {
-                const displayStr = String(f.val || '').replace(/,/g, '\n');
-                valueHTML = displayStr ? displayStr.replace(/\n/g, '<br>') : '-';
-            } else {
-                valueHTML = f.val !== null && f.val !== undefined ? f.val : '-';
-            }
-        }
-        return `<div class="modal-label">${f.label}</div><div class="modal-value">${valueHTML}</div>`;
-    }).join('');
-
-    // If we are in edit mode, populate the custom dropdown tree
-    if (isEditable) {
-        initModalTaxonomy();
-    }
-}
-
-async function saveResourceEdits() {
-    const inputs = document.querySelectorAll('.modal-value input, .modal-value textarea, #modal-type-value');
-    const updatedData = { ...originalModalData };
-    const statusBox = document.getElementById('modal-status-bar');
-    
-    let isValid = true;
-    inputs.forEach(input => {
-        const key = input.getAttribute('data-key');
-        let val = input.value;
-
-        if (key === 'notes') {
-            val = val.replace(/\n/g, ',');
-        } else if (input.type === 'number') {
-            const numVal = Number(val);
-            if (val === '' || !Number.isInteger(numVal) || numVal < 0 || numVal > 1000) {
-                isValid = false;
-                input.style.borderColor = "#ef4444";
-            } else {
-                input.style.borderColor = "var(--border-color)";
-                val = parseInt(val, 10);
-            }
-        }
-        updatedData[key] = val;
-    });
-
-    if (!isValid) {
-        statusBox.textContent = "Validation Error: Stats must be 0-1000";
-        statusBox.className = "status-bar status-error";
-        return;
-    }
-
-    try {
-        const response = await fetch('/api/update-resource', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(updatedData)
+    init() {
+        // Cache stat inputs
+        Object.keys(STAT_MAPPING).forEach(id => {
+            this.elements.inputs[id] = document.getElementById(id);
         });
 
-        if (response.ok) {
-            statusBox.textContent = "Update Successful";
-            statusBox.className = "status-bar status-success";
-            
-            const idx = rawResourceData.findIndex(r => r.name === updatedData.name);
-            if (idx !== -1) rawResourceData[idx] = updatedData;
-            
-            originalModalData = { ...updatedData };
-            renderModalContent(updatedData, false);
-            resetModalUI();
-            applyAllTableTransforms(); 
-        } else {
-            throw new Error("Server rejected update");
+        // Listen for Type changes to update UI
+        this.elements.typeSelect.addEventListener('change', (e) => {
+            this.updateStatFields(e.target.value);
+        });
+
+        // Handle Submit
+        this.elements.form.addEventListener('submit', (e) => {
+            e.preventDefault();
+            this.submit();
+        });
+    },
+
+    openAdd() {
+        this.mode = 'add';
+        this.currentResourceId = null;
+        this.elements.title.textContent = "Report New Resource";
+        this.resetForm();
+        this.populateTypeDropdown();
+        this.populatePlanets(); // Ensure planets are loaded
+        
+        this.elements.overlay.classList.remove('hidden');
+        this.elements.overlay.style.display = 'flex';
+    },
+
+    close() {
+        this.elements.overlay.classList.add('hidden');
+        this.elements.overlay.style.display = 'none';
+        this.resetStatusBar();
+    },
+
+    populateTypeDropdown() {
+        const select = this.elements.typeSelect;
+        select.innerHTML = '<option value="">Select Resource Type...</option>';
+
+        // Filter TAXONOMY_TREE using VALID_TYPES set
+        // Sort alphabetically for better UX
+        const sortedTypes = Array.from(VALID_TYPES)
+            .map(id => ({ id: id, name: TAXONOMY_TREE[id].class_label }))
+            .sort((a, b) => a.name.localeCompare(b.name));
+
+        sortedTypes.forEach(type => {
+            const opt = document.createElement('option');
+            opt.value = type.id;
+            opt.textContent = type.name;
+            select.appendChild(opt);
+        });
+    },
+
+    populatePlanets() {
+        // TODO: Move planet list to config or DB
+        const planets = ["Corellia", "Dantooine", "Dathomir", "Endor", "Lok", "Naboo", "Rori", "Talus", "Tatooine", "Yavin IV"];
+        const select = this.elements.planetSelect;
+        if (select.children.length <= 1) { // Only populate if empty
+            planets.forEach(p => {
+                const opt = document.createElement('option');
+                opt.value = p;
+                opt.textContent = p;
+                select.appendChild(opt);
+            });
         }
-    } catch (e) {
-        statusBox.textContent = "Update Failed: Server Error";
-        statusBox.className = "status-bar status-error";
+    },
+
+    updateStatFields(typeId) {
+        if (!typeId) return;
+
+        const config = getResourceTypeConfig(typeId);
+        if (!config) return;
+
+        // Loop through all stat inputs
+        Object.entries(STAT_MAPPING).forEach(([inputId, attrCode]) => {
+            const input = this.elements.inputs[inputId];
+            const statConfig = config.stats[attrCode];
+
+            if (statConfig) {
+                // Valid Stat
+                input.disabled = false;
+                input.placeholder = `${statConfig.min} - ${statConfig.max}`;
+                input.min = statConfig.min;
+                input.max = statConfig.max;
+                input.parentElement.style.opacity = "1";
+            } else {
+                // Invalid Stat
+                input.disabled = true;
+                input.value = "";
+                input.placeholder = "N/A";
+                input.parentElement.style.opacity = "0.3";
+            }
+        });
+    },
+
+    async submit() {
+        const btn = this.elements.form.querySelector('button[type="submit"]');
+        const originalText = btn.textContent;
+        
+        try {
+            // 1. UI Feedback
+            btn.disabled = true;
+            btn.textContent = "Saving...";
+            this.setStatus("Submitting to database...", "info");
+
+            // 2. Gather Data
+            const formData = {
+                resource_class_id: this.elements.typeSelect.value,
+                name: document.getElementById('res-name').value,
+                planet: this.elements.planetSelect.value,
+                // Server ID is handled by API wrapper from Auth context
+            };
+
+            // Add stats
+            Object.keys(STAT_MAPPING).forEach(key => {
+                const val = document.getElementById(key).value;
+                if (val) formData[key] = parseInt(val);
+            });
+
+            // 3. Send Request
+            const result = await API.addResource(formData);
+
+            // 4. Success Handling
+            this.setStatus("Saved successfully!", "success");
+            btn.textContent = "Saved!";
+            
+            // Refresh table
+            await loadResources(); 
+
+            // Close after short delay
+            setTimeout(() => {
+                this.close();
+                btn.disabled = false;
+                btn.textContent = originalText;
+            }, 1000);
+
+        } catch (error) {
+            console.error(error);
+            this.setStatus(`Error: ${error.message}`, "error");
+            btn.disabled = false;
+            btn.textContent = originalText;
+        }
+    },
+
+    setStatus(msg, type) {
+        const bar = this.elements.statusBar;
+        bar.textContent = msg;
+        bar.className = `status-bar status-${type}`; // css: .status-error, .status-success
+    },
+
+    resetStatusBar() {
+        this.elements.statusBar.textContent = "";
+        this.elements.statusBar.className = "status-bar";
+    },
+
+    resetForm() {
+        this.elements.form.reset();
+        // Disable all stats initially until type is picked
+        Object.values(this.elements.inputs).forEach(input => {
+            input.disabled = true;
+            input.parentElement.style.opacity = "0.5";
+        });
     }
+};
+
+// Helper to inject status bar if missing from HTML
+function createStatusBar() {
+    const div = document.createElement('div');
+    div.id = 'modal-status-bar';
+    div.className = 'status-bar';
+    document.querySelector('.modal-body').appendChild(div);
+    return div;
 }
 
-function closeModal(event = null) {
-    document.getElementById('resource-modal').style.display = 'none';
-}
+// Global hooks for HTML onClick
+window.openAddResourceModal = () => Modal.openAdd();
+window.closeResourceModal = () => Modal.close(); // Need to update HTML close button
 
-function toggleModalDropdown() {
-    const list = document.getElementById('modal-taxonomy-list');
-    list.style.display = list.style.display === 'block' ? 'none' : 'block';
-}
-
-function openAddResourceModal() {
-    isNewResource = true;
-    const emptyData = {
-        name: '',
-        type: 'Resources',
-        res_rating: 0, res_oq: 0, res_cr: 0, res_cd: 0, 
-        res_dr: 0, res_fl: 0, res_hr: 0, res_ma: 0, 
-        res_pe: 0, res_sr: 0, res_ut: 0,
-        notes: '',
-        planets: []
-    };
-
-    document.getElementById('modal-title').textContent = "Add New Resource";
-    
-    // Render in edit mode immediately
-    renderModalContent(emptyData, true);
-    
-    // Override the "Type" field to allow Name editing for new resources
-    const nameLabel = document.querySelector('.modal-label'); // First label
-    const nameValue = nameLabel.nextElementSibling;
-    
-    // We need to add the Name field at the top since it's required for new spawns
-    const body = document.getElementById('modal-body');
-    body.insertAdjacentHTML('afterbegin', `
-        <div class="modal-label">Name</div>
-        <div class="modal-value">
-            <input type="text" data-key="name" placeholder="Resource Name..." oninput="onModalInputChange()">
-        </div>
-    `);
-
-    // UI Adjustments for Add Mode
-    document.getElementById('btn-edit').style.display = 'none';
-    document.getElementById('btn-save').disabled = true;
-    document.getElementById('btn-cancel').style.display = 'none';
-    document.getElementById('resource-modal').style.display = 'flex';
-
-	// TODO: ADD FUNCTIONALITY TO SAVE NEW RESOURCE
-}
-
-// Update the close/cancel logic to restore the "Edit" button visibility
-function resetModalUI() {
-    document.getElementById('modal-status-bar').textContent = '';
-    document.getElementById('btn-edit').style.display = 'block'; // Ensure it's back
-    document.getElementById('btn-edit').disabled = false;
-    document.getElementById('btn-save').disabled = true;
-    document.getElementById('btn-cancel').disabled = true;
-    isNewResource = false;
-}
+// Init on load
+document.addEventListener('DOMContentLoaded', () => Modal.init());

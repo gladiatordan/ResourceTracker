@@ -91,20 +91,50 @@
 					<tbody id="resource-log-body"></tbody>
 				</table>
 			</section>
-			<div id="resource-modal" class="modal-overlay" onclick="closeModal(event)">
-				<div class="modal-content" onclick="event.stopPropagation()">
+			<div id="resource-modal" class="modal hidden">
+				<div class="modal-content">
 					<div class="modal-header">
-						<h2 id="modal-title">Resource Details</h2>
-						<button class="close-btn" onclick="closeModal()">×</button>
+						<h2 id="modal-title">Report Resource</h2>
+						<button class="close-modal" onclick="closeResourceModal()">&times;</button>
 					</div>
-					<div id="modal-body" class="modal-body-grid"></div>
-					
-					<div id="modal-status-bar" class="status-bar"></div>
-					
-					<div class="modal-action-bar">
-						<button id="btn-edit" onclick="enterEditMode()">Edit Values</button>
-						<button id="btn-save" onclick="saveResourceEdits()" disabled>Save</button>
-						<button id="btn-cancel" onclick="cancelEditMode()" disabled>Cancel</button>
+					<div class="modal-body">
+						<form id="resource-form">
+							<div class="form-group">
+								<label>Resource Name</label>
+								<input type="text" id="res-name" required placeholder="e.g. Polonium" autocomplete="off">
+							</div>
+							
+							<div class="form-row">
+								<div class="form-group">
+									<label>Type</label>
+									<select id="res-type" required></select>
+								</div>
+								<div class="form-group">
+									<label>Planet</label>
+									<select id="res-planet" required></select>
+								</div>
+							</div>
+
+							<div class="stats-label">Enter Stats (Disabled fields do not apply to this type)</div>
+							<div id="stats-container" class="stats-grid">
+								<div class="stat-group"><label>OQ</label><input type="number" id="res_oq"></div>
+								<div class="stat-group"><label>CR</label><input type="number" id="res_cr"></div>
+								<div class="stat-group"><label>CD</label><input type="number" id="res_cd"></div>
+								<div class="stat-group"><label>DR</label><input type="number" id="res_dr"></div>
+								<div class="stat-group"><label>FL</label><input type="number" id="res_fl"></div>
+								<div class="stat-group"><label>HR</label><input type="number" id="res_hr"></div>
+								<div class="stat-group"><label>MA</label><input type="number" id="res_ma"></div>
+								<div class="stat-group"><label>PE</label><input type="number" id="res_pe"></div>
+								<div class="stat-group"><label>SR</label><input type="number" id="res_sr"></div>
+								<div class="stat-group"><label>UT</label><input type="number" id="res_ut"></div>
+							</div>
+
+							<div id="modal-status-bar" class="status-bar"></div>
+
+							<div class="modal-actions">
+								<button type="submit" class="btn-primary">Submit Resource</button>
+							</div>
+						</form>
 					</div>
 				</div>
 			</div>

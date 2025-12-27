@@ -204,3 +204,32 @@ body {
     border-radius: 50%;
     border: 1px solid var(--accent-color);
 }
+
+/* Status Bar */
+.status-bar {
+    margin-top: 15px;
+    padding: 10px;
+    border-radius: 4px;
+    font-weight: bold;
+    text-align: center;
+    min-height: 20px;
+}
+.status-info { background: rgba(0, 200, 255, 0.1); color: var(--accent-color); }
+.status-success { background: rgba(0, 255, 100, 0.1); color: #00ff66; border: 1px solid #00ff66; }
+.status-error { background: rgba(255, 50, 50, 0.1); color: #ff4444; border: 1px solid #ff4444; }
+
+/* Disabled Inputs */
+input:disabled {
+    cursor: not-allowed;
+    background-color: rgba(0,0,0,0.5);
+    border-color: #333;
+    color: #555;
+}
+
+.stats-label {
+    margin-top: 15px;
+    margin-bottom: 5px;
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    text-transform: uppercase;
+}

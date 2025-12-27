@@ -187,6 +187,7 @@ class ValidationService(Core):
 
 			response_data = {
 				"taxonomy": self.taxonomy,
+				"valid_types": list(self.valid_resource_types),
 				"servers": self.server_registry,
 				"resources": self.active_resources.get(server_id, [])
 			}
