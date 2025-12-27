@@ -44,7 +44,7 @@ def check_for_updates():
         
         # 2. Get Hashes
         local_hash = run_command(["git", "rev-parse", "HEAD"], cwd=REPO_DIR)
-        remote_hash = run_command(["git", "rev-parse", "origin"], cwd=REPO_DIR)
+        remote_hash = run_command(["git", "rev-parse", "origin/master"], cwd=REPO_DIR)
         
         if local_hash != remote_hash:
             logger.info(f"Update Detected! Local: {local_hash[:7]} -> Remote: {remote_hash[:7]}")
@@ -66,7 +66,7 @@ def perform_update():
         
         # 2. Pull Code
         logger.info("Pulling latest code...")
-        run_command(["git", "pull", "origin", "master"], cwd=REPO_DIR)
+        run_command(["git", "pull"], cwd=REPO_DIR)
         
         # 3. Start Backend
         logger.info("Starting Backend...")
