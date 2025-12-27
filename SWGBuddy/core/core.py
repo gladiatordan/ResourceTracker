@@ -2,11 +2,9 @@
 
 Core module for SWGBuddy
 
-Contains base classes with helpful functions for inherited classes to utilize
-
+Contains base classes for standardizing logging, configuration, and secret redaction.
 """
-
-#stdlib
+# stdlib
 import json
 import inspect
 import logging
@@ -14,84 +12,62 @@ import textwrap
 
 
 class Serializable:
-	"""
-	
-	Base class which overrides certain built-in functions and adds new ones
-	
-	"""
-	def __init__(self):
-		pass
+    """
+    Base class that provides string representation with secret redaction.
+    Define _redact_ list in child classes to scrub specific attributes from logs.
+    """
+    _redact_ = ['password', 'token', 'secret', 'key', 'client_secret']
 
-	def __str__(self):
-		# produces a generic string representation of the instance's data attribute
-		result = textwrap.dedent(f"""
-		{self.__class__.__name__} Instance
-		
-		Data:
-		
-		""")
-		for k, v in self.__dict__:
-			if type(v) == type(object):
-				# try converting object to a string
-				v = str(v)
-			result += f"{k} -> {v}\n"
-		result += "\n"
-		return result
+    def __init__(self):
+        pass
+
+    def __str__(self):
+        # Produces a safe string representation of the instance
+        data = {}
+        for k, v in self.__dict__.items():
+            if k in self._redact_ or any(x in k.lower() for x in self._redact_):
+                data[k] = "[REDACTED]"
+            else:
+                # Handle non-serializable objects gracefully
+                try:
+                    # Test if serializable
+                    json.dumps(v)
+                    data[k] = v
+                except (TypeError, OverflowError):
+                    data[k] = str(v)
+        
+        return f"{self.__class__.__name__} Instance\n{json.dumps(data, indent=4, default=str)}"
 
 
 class Core(Serializable):
-	"""
-	
-	Base class containing utils to be used by other objects
-	
-	"""
-	def __init__(self):
-		# figure out which module called us
-		self.mod = self._get_caller_module()
-		
-		# get logger, return root logger if module cannot be found
-		self.logger = logging.getLogger(self.mod) if self.mod else logging.getLogger()
-		super().__init__()
-		# get Manager instance
-		# self.mgr = Manager()
+    """
+    Base class for all services and managers.
+    Provides standardized logging access.
+    """
+    def __init__(self):
+        # Figure out which module called us
+        self.mod = self._get_caller_module()
+        # Get logger
+        self.logger = logging.getLogger(self.mod) if self.mod else logging.getLogger()
+        super().__init__()
 
+    def _get_caller_module(self):
+        frame = inspect.currentframe().f_back
+        module = inspect.getmodule(frame)
+        return module.__name__ if module else "Unknown"
 
-	def _get_caller_module(self):
-		frame  = inspect.currentframe().f_back
-		module = inspect.getmodule(frame)
-		return module.__name__ if module else None
+    # Standardized Log Wrappers
+    def debug(self, message):
+        self.logger.debug(message)
 
-	def _log(self, message, level):
-		# if logger is not attached to this instance then we don't log anything
-		if not self.logger:
-			return
+    def info(self, message):
+        self.logger.info(message)
 
-		match level:
-			case 10:
-				self.logger.debug(message)
-			case 20:
-				self.logger.info(message)
-			case 30:
-				self.logger.warning(message)
-			case 40:
-				self.logger.error(message)
-			case 50:
-				self.logger.critical(message)
-			case _:
-				self.logger.warning(f"Level specified could not be read -> {level} | Using info level instead")
-				self.logger.info(message)
+    def warning(self, message):
+        self.logger.warning(message)
 
-	def debug(self, message):
-		self._log(message, 10)
+    def error(self, message):
+        self.logger.error(message)
 
-	def info(self, message):
-		self._log(message, 20)
-
-	def warning(self, message):
-		self._log(message, 30)
-
-	def error(self, message):
-		self._log(message, 40)
-
-	def critical(self, message):
-		self._log(message, 50)
+    def critical(self, message):
+        self.logger.critical(message)
