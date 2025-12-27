@@ -12,10 +12,12 @@ import logging
 from queue import Queue, Empty
 
 # Local Imports
-# NOTE: We removed the direct queue imports because we must use the Manager's proxies
+# FIX 1: Do NOT import get_ingress_queue directly. We need the Manager's version.
 from core.ipc import get_server
 from DatabaseService import DatabaseService
 from ValidationService import ValidationService
+
+# Graceful optional import for Bot
 try:
     from DiscordBotService import DiscordBotService
     BOT_AVAILABLE = True
