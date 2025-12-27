@@ -66,7 +66,7 @@ def perform_update():
         
         # 2. Pull Code
         logger.info("Pulling latest code...")
-        run_command(["git", "pull"], cwd=REPO_DIR)
+        run_command(["git", "pull", "origin", "master"], cwd=REPO_DIR)
         
         # 3. Start Backend
         logger.info("Starting Backend...")
