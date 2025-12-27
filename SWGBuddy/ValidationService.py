@@ -123,7 +123,7 @@ class ValidationService(Core):
     def _worker_loop(self):
         while self.running:
             try:
-                message = self.input_queue.get(timeout=2)
+                message = self.input_queue.get()
                 if message: self._process_command(message)
             except: continue
 
