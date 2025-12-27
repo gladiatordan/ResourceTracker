@@ -12,6 +12,7 @@ from flask_cors import CORS
 # Local Imports
 from core.ipc import get_client, create_packet
 
+
 app = Flask(__name__)
 CORS(app)
 
@@ -23,7 +24,7 @@ app.secret_key = os.getenv("FLASK_SECRET_KEY", "dev_secret_key_change_me")
 # Discord Configuration
 DISCORD_CLIENT_ID = os.getenv("DISCORD_CLIENT_ID")
 DISCORD_CLIENT_SECRET = os.getenv("DISCORD_CLIENT_SECRET")
-DISCORD_REDIRECT_URI = "https://db.theboys-db.com/callback"
+DISCORD_REDIRECT_URI = "https://swgbuddy.com/callback"
 DISCORD_API_URL = "https://discord.com/api"
 
 # Configure Logging
