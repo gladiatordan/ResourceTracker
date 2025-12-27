@@ -153,7 +153,7 @@ const Modal = {
             btn.textContent = "Saved!";
             
             // Refresh table
-            await fetchResources(); 
+            await loadResources(); 
 
             // Close after short delay
             setTimeout(() => {
