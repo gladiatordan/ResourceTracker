@@ -3,8 +3,6 @@
  * Handles data fetching, status toggling, and row refreshing.
  */
 
-// Global Data Store (Used by table.js for filtering/sorting)
-let rawResourceData = [];
 
 /**
  * Main Loader Function
