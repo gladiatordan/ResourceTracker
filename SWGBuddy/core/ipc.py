@@ -3,6 +3,7 @@ IPC Manager Module
 Handles the high-speed Unix Domain Socket bridge between Gunicorn (Frontend) 
 and MainProcess (Backend).
 """
+import os
 import time
 from multiprocessing.managers import BaseManager
 from queue import Queue
@@ -39,7 +40,6 @@ def get_egress_bot_queue():
 # MANAGER REGISTRATION (Exposes Queues to Clients)
 # --------------------------------------------------------------------------
 
-# FIX: Use the named functions directly, NOT lambdas
 IPCManager.register('get_ingress_queue', callable=get_ingress_queue)
 IPCManager.register('get_egress_web_queue', callable=get_egress_web_queue)
 IPCManager.register('get_egress_bot_queue', callable=get_egress_bot_queue)
@@ -49,6 +49,14 @@ def get_server():
     Called ONLY by MainProcess.
     Creates and binds the Unix Socket.
     """
+    # FIX: Clean up stale socket file if it exists from a previous crash
+    if os.path.exists(SOCKET_PATH):
+        try:
+            os.unlink(SOCKET_PATH)
+            print(f"IPC Warning: Removed stale socket at {SOCKET_PATH}")
+        except OSError as e:
+            print(f"IPC Error: Could not remove stale socket: {e}")
+
     manager = IPCManager(address=SOCKET_PATH, authkey=AUTH_KEY)
     return manager
 
@@ -71,6 +79,9 @@ def get_client():
         return None
     except ConnectionRefusedError:
         print("IPC Error: Connection refused. MainProcess might be starting up.")
+        return None
+    except Exception as e:
+        print(f"IPC Error: {e}")
         return None
 
 def create_packet(target, action, data=None, server_id="cuemu", user_context=None):
