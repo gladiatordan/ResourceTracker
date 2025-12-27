@@ -1,11 +1,10 @@
 const Auth = {
     user: null,
-    // Power Levels: Higher overrides lower
     ROLE_POWER: { 'SUPERADMIN': 100, 'ADMIN': 3, 'EDITOR': 2, 'USER': 1, 'GUEST': 0 },
 
     async init() {
         await this.checkSession();
-        this.setupListeners(); // Must setup listeners first to know current server
+        this.setupListeners();
         this.renderAuthUI();
     },
 
@@ -20,32 +19,22 @@ const Auth = {
         } catch (error) { this.user = null; }
     },
 
-    /**
-     * Determines your role for the CURRENTLY selected server.
-     */
     getEffectiveRole() {
         if (!this.user) return 'GUEST';
         
-        const currentServer = this.getServerID(); // e.g., 'cuemu'
-        const globalRole = this.user.global_role;
+        // 1. Boolean Override
+        if (this.user.is_superadmin) return 'SUPERADMIN';
+
+        // 2. Server Specific
+        const currentServer = this.getServerID();
+        const serverRole = this.user.server_perms ? this.user.server_perms[currentServer] : null;
         
-        // 1. SuperAdmin overrides everything
-        if (globalRole === 'SUPERADMIN') return 'SUPERADMIN';
-
-        // 2. Check for specific server permission
-        // server_perms looks like: { 'cuemu': 'ADMIN', 'legends': 'USER' }
-        const specificRole = this.user.server_perms ? this.user.server_perms[currentServer] : null;
-
-        // 3. Return the higher of the two (Global vs Specific)
-        const globalPower = this.ROLE_POWER[globalRole] || 0;
-        const specificPower = this.ROLE_POWER[specificRole] || 0;
-
-        return specificPower > globalPower ? specificRole : globalRole;
+        return serverRole || 'USER'; // Default to USER if logged in but no specific role
     },
 
     renderAuthUI() {
         const authSection = document.getElementById('auth-section');
-        const addBtn = document.querySelector('.add-resource-btn'); // Use querySelector for class
+        const addBtn = document.querySelector('.add-resource-btn');
         const role = this.getEffectiveRole();
 
         if (this.user) {
@@ -59,7 +48,6 @@ const Auth = {
                     <a href="/logout" class="btn-logout" style="margin-left: 5px;"><i class="fa-solid fa-sign-out-alt"></i></a>
                 </div>`;
             
-            // Show Add Button only if EDITOR or higher (Level 2+)
             if (addBtn) {
                 const power = this.ROLE_POWER[role] || 0;
                 addBtn.style.display = power >= 2 ? 'block' : 'none';
@@ -78,7 +66,6 @@ const Auth = {
 
             serverSelect.addEventListener('change', (e) => {
                 localStorage.setItem('swg_server_id', e.target.value);
-                // Re-render because role might change when switching servers!
                 this.renderAuthUI(); 
                 window.location.reload(); 
             });

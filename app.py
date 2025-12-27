@@ -145,12 +145,11 @@ def callback():
 		# The backend now returns the DB row (including global_role)
 		resp = send_ipc("validation", "sync_user", data=user_data)
 		
-		global_role = "USER" # Default
+		is_superadmin = False
 		if resp.get('status') == 'success' and resp.get('data'):
-			# DB returns a list of rows, we want the first one
 			rows = resp['data']
 			if rows and len(rows) > 0:
-				global_role = rows[0].get('global_role', 'USER')
+				is_superadmin = rows[0].get('is_superadmin', False)
 		
 		perm_resp = send_ipc("validation", "get_user_perms", data={'discord_id': user_data["id"]})
 		server_perms = {}
@@ -161,7 +160,7 @@ def callback():
 		session['discord_id'] = user_data['id']
 		session['username'] = user_data['username']
 		session['avatar'] = user_data['avatar']
-		session['global_role'] = global_role
+		session['global_role'] = is_superadmin
 		session['server_perms'] = server_perms
 
 		return redirect(url_for('index'))
@@ -186,7 +185,7 @@ def get_current_user():
 		"id": session['discord_id'],
 		"username": session['username'],
 		"avatar": session['avatar'],
-		"global_role": session.get('global_role', 'USER'),
+		"global_role": session.get('is_superadmin', False),
 		"server_perms": session.get('server_perms', {}) # Now populated!
 	})
 

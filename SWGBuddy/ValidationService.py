@@ -12,12 +12,13 @@ from core.core import Core
 from core.ipc import create_packet
 
 class ValidationService(Core):
+    # DEFINE THE HIERARCHY OF POWER
     ROLE_HIERARCHY = {
-        'SUPERADMIN': 100,
-        'ADMIN': 3,
-        'EDITOR': 2,
-        'USER': 1,
-        'GUEST': 0
+        'SUPERADMIN': 100, # God Mode
+        'ADMIN': 3,        # Server Manager
+        'EDITOR': 2,       # Content Creator
+        'USER': 1,         # Viewer
+        'GUEST': 0         # No Access
     }
 
     def __init__(self, input_queue, db_queue, web_out_queue, bot_out_queue):
@@ -29,11 +30,15 @@ class ValidationService(Core):
         
         self.running = True
         
-        self.taxonomy = {}
+        # In-Memory Caches
+        self.taxonomy = {}       # { swg_index: data } (Static-ish)
         self.valid_resource_types = set() 
+        
+        # Refreshable Caches
         self.server_registry = {} 
-        self.permissions = {}    
+        self.permissions = {}    # { 'discord_id': {'server_id': 'role'} }
         self.active_resources = {} 
+        self.superadmins = set() # Set of discord_ids who are SuperAdmins
 
         self.stat_map = {
             'res_oq': 'OQ', 'res_cd': 'CD', 'res_dr': 'DR', 
@@ -43,23 +48,48 @@ class ValidationService(Core):
 
     def start(self):
         self.info("Initializing Validation Service...")
-        if not self._hydrate_cache():
+        
+        # Initial Load (Blocking)
+        if not self._hydrate_cache(full_load=True):
             self.critical("Failed to hydrate cache. Service cannot start.")
             return
-        self.info("Cache Hydrated. Starting Worker Loop...")
-        worker_thread = threading.Thread(target=self._worker_loop)
-        worker_thread.start()
 
-    def _hydrate_cache(self):
-        self.info("Hydrating Cache from Database...")
+        self.info("Cache Hydrated. Starting Worker Loops...")
+        
+        # 1. Command Processor Thread
+        self.worker_thread = threading.Thread(target=self._worker_loop, daemon=True)
+        self.worker_thread.start()
+        
+        # 2. Cache Maintenance Thread (Background Refresh)
+        self.maintenance_thread = threading.Thread(target=self._maintenance_loop, daemon=True)
+        self.maintenance_thread.start()
+
+    def _maintenance_loop(self):
+        """Re-fetches dynamic tables every 30 seconds."""
+        while self.running:
+            time.sleep(30)
+            # self.debug("Running Cache Maintenance...")
+            try:
+                # We skip taxonomy (heavy/static) during routine maintenance
+                self._hydrate_cache(full_load=False)
+            except Exception as e:
+                self.error(f"Cache Maintenance Failed: {e}")
+
+    def _hydrate_cache(self, full_load=False):
+        """Fetches data from DB. full_load=True includes Taxonomy."""
         temp_reply_queue = Queue()
         
+        # Always fetch these dynamic tables
         queries = [
             ("servers", "SELECT * FROM game_servers"),
-            ("taxonomy", "SELECT * FROM resource_taxonomy"),
             ("permissions", "SELECT * FROM server_permissions"),
+            ("superadmins", "SELECT discord_id FROM users WHERE is_superadmin = TRUE"),
             ("resources", "SELECT * FROM resource_spawns WHERE is_active = TRUE")
         ]
+        
+        # Only fetch taxonomy on startup (it rarely changes)
+        if full_load:
+            queries.insert(1, ("taxonomy", "SELECT * FROM resource_taxonomy"))
 
         for key, sql in queries:
             msg = {"id": f"init_{key}", "action": "query", "sql": sql, "reply_to": temp_reply_queue}
@@ -71,27 +101,38 @@ class ValidationService(Core):
                     return False
                 self._load_data_into_cache(key, response['data'])
             except Empty:
-                self.critical(f"Timeout waiting for DB to load {key}")
+                self.error(f"Timeout waiting for DB to load {key}")
                 return False
         
-        self._build_validity_cache()
+        if full_load:
+            self._build_validity_cache()
+            
         return True
 
     def _load_data_into_cache(self, key, rows):
         if key == "servers":
             self.server_registry = {r['id']: r for r in rows}
+            # Initialize buckets
             for s_id in self.server_registry:
-                self.active_resources[s_id] = []
+                if s_id not in self.active_resources:
+                    self.active_resources[s_id] = []
+                    
         elif key == "taxonomy":
             self.taxonomy = {r['swg_index']: r for r in rows}
+            
+        elif key == "superadmins":
+            self.superadmins = {r['discord_id'] for r in rows}
+            
         elif key == "permissions":
-            self.permissions = {}
+            self.permissions = {} 
             for r in rows:
                 uid = r['user_id']
                 if uid not in self.permissions:
                     self.permissions[uid] = {}
                 self.permissions[uid][r['server_id']] = r['role']
+                
         elif key == "resources":
+            # Reset active resources to ensure we don't have stale deleted ones
             self.active_resources = {s_id: [] for s_id in self.server_registry}
             for r in rows:
                 sid = r.get('server_id', 'cuemu') 
@@ -99,6 +140,7 @@ class ValidationService(Core):
                     self.active_resources[sid].append(r)
 
     def _build_validity_cache(self):
+        # ... (Keep existing logic unchanged) ...
         ids_with_children = set()
         for r in self.taxonomy.values():
             pid = r.get('parent_id')
@@ -176,7 +218,7 @@ class ValidationService(Core):
             self.bot_out_queue.put(bot_packet)
             return
 
-        # 3. USER SYNC (Upsert User)
+        # 3. USER SYNC (Upsert User with is_superadmin check)
         if action == "sync_user":
             discord_id = payload.get('id')
             username = payload.get('username')
@@ -189,10 +231,9 @@ class ValidationService(Core):
                 SET username = EXCLUDED.username, 
                     avatar_url = EXCLUDED.avatar_url,
                     last_login = NOW()
-                RETURNING global_role
+                RETURNING is_superadmin
             """
             
-            # FIX: Use execute_fetch to COMMIT and RETURN
             db_packet = {
                 "id": correlation_id,
                 "action": "execute_fetch", 
@@ -203,7 +244,7 @@ class ValidationService(Core):
             self.db_queue.put(db_packet)
             return
 
-        # 4. GET USER PERMISSIONS (Auto-Populate for Active Servers)
+        # 4. GET USER PERMISSIONS
         if action == "get_user_perms":
             discord_id = payload.get('discord_id')
             
@@ -217,11 +258,9 @@ class ValidationService(Core):
             
             for s_id in active_server_ids:
                 if s_id not in self.permissions[discord_id]:
-                    # Default Role: USER
                     self.permissions[discord_id][s_id] = 'USER'
                     new_perms_to_insert.append((discord_id, s_id, 'USER'))
             
-            # If we created new defaults, persist them to DB asynchronously
             if new_perms_to_insert:
                 sql_values = ",".join([f"('{u}', '{s}', '{r}')" for u, s, r in new_perms_to_insert])
                 sql = f"INSERT INTO server_permissions (user_id, server_id, role) VALUES {sql_values} ON CONFLICT DO NOTHING"
@@ -232,28 +271,28 @@ class ValidationService(Core):
                     "sql": sql
                 })
             
-            # Return current (possibly updated) cache
             self._reply_web(correlation_id, "success", self.permissions[discord_id])
             return
 
     def _get_user_level(self, user_ctx, server_id):
         if not user_ctx: return 0 
-        global_role = user_ctx.get('global_role', 'GUEST')
-        global_level = self.ROLE_HIERARCHY.get(global_role, 0)
-        if global_level >= 100: return 100
-        
         uid = user_ctx.get('id')
+        
+        # 1. SuperAdmin Override (Check internal cache, NOT user_ctx which might be stale)
+        if uid in self.superadmins:
+            return 100
+        
+        # 2. Check Server Permission
         user_perms = self.permissions.get(uid, {})
         server_role = user_perms.get(server_id, 'GUEST')
-        server_level = self.ROLE_HIERARCHY.get(server_role, 0)
-        
-        return max(global_level, server_level)
+        return self.ROLE_HIERARCHY.get(server_role, 0)
 
     def _check_access(self, user_ctx, server_id, required_role_name):
         user_level = self._get_user_level(user_ctx, server_id)
         required_level = self.ROLE_HIERARCHY.get(required_role_name, 100)
         return user_level >= required_level
 
+    # ... (Keep _validate_resource, _generate_insert_sql, etc. unchanged) ...
     def _validate_resource(self, data):
         class_id = data.get('resource_class_id')
         if not class_id: return False, "Missing resource_class_id"
