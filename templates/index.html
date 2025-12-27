@@ -163,7 +163,7 @@
         // 2. Fetch Data from API
         // Promise.all ensures both load before we trigger initial filters
         await Promise.all([
-            loadResources(),
+            fetchResources(),
             loadTaxonomy()
         ]);
         
