@@ -1,15 +1,30 @@
+import os
 import uuid
+import json
+import requests
 import threading
 import logging
 from queue import Queue, Empty
-from flask import Flask, jsonify, request, render_template
+from functools import wraps
+from flask import Flask, jsonify, request, render_template, redirect, url_for, session, make_response
 from flask_cors import CORS
 
 # Local Imports
-from SWGBuddy.core.ipc import get_client, create_packet
+from core.ipc import get_client, create_packet
 
 app = Flask(__name__)
 CORS(app)
+
+# --------------------------------------------------------------------------
+# CONFIGURATION
+# --------------------------------------------------------------------------
+app.secret_key = os.getenv("FLASK_SECRET_KEY", "dev_secret_key_change_me")
+
+# Discord Configuration
+DISCORD_CLIENT_ID = os.getenv("DISCORD_CLIENT_ID")
+DISCORD_CLIENT_SECRET = os.getenv("DISCORD_CLIENT_SECRET")
+DISCORD_REDIRECT_URI = "https://db.theboys-db.com/callback"
+DISCORD_API_URL = "https://discord.com/api"
 
 # Configure Logging
 logging.basicConfig(level=logging.INFO)
@@ -23,8 +38,6 @@ ipc_manager = get_client()
 
 if not ipc_manager:
     logger.critical("FATAL: Could not connect to Backend IPC. Is main.py running?")
-    # In production, we might want to exit, but for now we let it run 
-    # so we can see the error on the webpage if needed.
     ingress_queue = None
     egress_queue = None
 else:
@@ -35,75 +48,128 @@ else:
 # --------------------------------------------------------------------------
 # ASYNC RESPONSE HANDLER
 # --------------------------------------------------------------------------
-# Maps Correlation ID -> Queue to wake up the waiting HTTP request
 response_futures = {} 
 
 def response_listener():
-    """
-    Background thread that consumes ALL messages from the Backend
-    and routes them to the specific waiting HTTP request.
-    """
+    """Background thread to route IPC responses to waiting requests."""
     logger.info("Response Listener Thread Started")
     while True:
         try:
-            # Blocking get to save CPU
             message = egress_queue.get()
             correlation_id = message.get('id')
-            
             if correlation_id in response_futures:
-                # Wake up the waiting request
                 response_futures[correlation_id].put(message)
-            else:
-                logger.warning(f"Received orphaned response: {correlation_id}")
-                
         except Exception as e:
             logger.error(f"Listener Error: {e}")
 
-# Start the listener immediately
 if egress_queue:
-    listener_thread = threading.Thread(target=response_listener, daemon=True)
-    listener_thread.start()
+    threading.Thread(target=response_listener, daemon=True).start()
 
-def send_command_and_wait(target, action, data=None, server_id="cuemu", timeout=5):
-    """
-    Helper to send IPC command and block until response arrives.
-    """
+def send_ipc(target, action, data=None, server_id="cuemu", timeout=5):
+    """Sends command to backend and waits for response."""
     if not ingress_queue:
         return {"status": "error", "error": "Backend Unavailable"}
 
-    # 1. Generate ID and Future
     correlation_id = str(uuid.uuid4())
     future_queue = Queue()
     response_futures[correlation_id] = future_queue
 
-    # 2. Send Packet
-    packet = create_packet(
-        target=target,
-        action=action,
-        data=data,
-        server_id=server_id,
-        user_context={"id": "guest", "role": "admin"} # TODO: Add Real Auth
-    )
-    packet['id'] = correlation_id # Override with UUID
+    # Get User Context from Session
+    user_context = {
+        "id": session.get('discord_id'),
+        "username": session.get('username'),
+        "avatar": session.get('avatar'),
+        "global_role": session.get('global_role', 'USER')
+    }
+
+    packet = create_packet(target, action, data, server_id, user_context)
+    packet['id'] = correlation_id
     
     try:
         ingress_queue.put(packet)
-        
-        # 3. Wait for Response
-        response = future_queue.get(timeout=timeout)
-        return response
-        
+        return future_queue.get(timeout=timeout)
     except Empty:
         return {"status": "error", "error": "Backend Timeout"}
     except Exception as e:
         return {"status": "error", "error": str(e)}
     finally:
-        # Cleanup memory
         if correlation_id in response_futures:
             del response_futures[correlation_id]
 
 # --------------------------------------------------------------------------
-# ROUTES
+# AUTHENTICATION ROUTES
+# --------------------------------------------------------------------------
+
+@app.route('/login')
+def login():
+    """Redirects user to Discord OAuth2 Login."""
+    scope = "identify"
+    discord_url = (
+        f"{DISCORD_API_URL}/oauth2/authorize?client_id={DISCORD_CLIENT_ID}"
+        f"&redirect_uri={DISCORD_REDIRECT_URI}&response_type=code&scope={scope}"
+    )
+    return redirect(discord_url)
+
+@app.route('/callback')
+def callback():
+    """Handles the OAuth2 Callback from Discord."""
+    code = request.args.get('code')
+    if not code:
+        return "Error: No code provided", 400
+
+    # 1. Exchange Code for Token
+    data = {
+        'client_id': DISCORD_CLIENT_ID,
+        'client_secret': DISCORD_CLIENT_SECRET,
+        'grant_type': 'authorization_code',
+        'code': code,
+        'redirect_uri': DISCORD_REDIRECT_URI,
+        'scope': 'identify'
+    }
+    headers = {'Content-Type': 'application/x-www-form-urlencoded'}
+    
+    token_resp = requests.post(f"{DISCORD_API_URL}/oauth2/token", data=data, headers=headers)
+    token_resp.raise_for_status()
+    access_token = token_resp.json()['access_token']
+
+    # 2. Get User Info
+    user_resp = requests.get(f"{DISCORD_API_URL}/users/@me", headers={
+        "Authorization": f"Bearer {access_token}"
+    })
+    user_resp.raise_for_status()
+    user_data = user_resp.json()
+
+    # 3. Store in Session
+    session['discord_id'] = user_data['id']
+    session['username'] = user_data['username']
+    session['avatar'] = user_data['avatar']
+    
+    # 4. Sync User to Backend (Create/Update User in DB)
+    # We fire-and-forget this update so we don't block the login
+    send_ipc("validation", "sync_user", data=user_data)
+
+    return redirect(url_for('index'))
+
+@app.route('/logout')
+def logout():
+    session.clear()
+    return redirect(url_for('index'))
+
+@app.route('/api/me')
+def get_current_user():
+    """Returns the current logged-in user to the frontend JS."""
+    if 'discord_id' not in session:
+        return jsonify({"authenticated": False})
+    
+    return jsonify({
+        "authenticated": True,
+        "id": session['discord_id'],
+        "username": session['username'],
+        "avatar": session['avatar']
+    })
+
+# --------------------------------------------------------------------------
+# RESOURCE ROUTES
 # --------------------------------------------------------------------------
 
 @app.route('/')
@@ -112,55 +178,61 @@ def index():
 
 @app.route('/api/resource_log', methods=['GET'])
 def queryResourceLog():
-    # Example: "get_init_data" returns {taxonomy, servers, resources}
-    # For compatibility with legacy frontend, we extract just the resources list
-    
     server_id = request.args.get('server', 'cuemu')
-    
-    resp = send_command_and_wait("validation", "get_init_data", server_id=server_id)
+    resp = send_ipc("validation", "get_init_data", server_id=server_id)
     
     if resp['status'] == 'success':
-        # Transformation: The frontend expects a list of resources. 
-        # The backend sends {resources: [...], taxonomy: {...}}
-        # We can eventually send it all, but for now let's just send resources 
-        # to keep the frontend JS happy.
         return jsonify(resp['data']['resources'])
-    else:
-        return jsonify({"error": resp.get('error')}), 500
+    return jsonify({"error": resp.get('error')}), 500
 
 @app.route('/api/taxonomy', methods=['GET'])
 def get_taxonomy():
-    # New Route: Fetches taxonomy from Backend RAM (Fast!)
-    resp = send_command_and_wait("validation", "get_init_data")
+    resp = send_ipc("validation", "get_init_data")
     if resp['status'] == 'success':
-        # Convert Dictionary format back to List if frontend expects array
-        # Backend: {1: {data}, 2: {data}}
-        # Frontend: [{data}, {data}]
-        tax_dict = resp['data']['taxonomy']
-        tax_list = list(tax_dict.values())
-        return jsonify(tax_list)
+        # Flatten for frontend
+        return jsonify(list(resp['data']['taxonomy'].values()))
+    return jsonify({"error": resp.get('error')}), 500
+
+@app.route('/api/add-resource', methods=['POST'])
+def add_resource():
+    """Endpoint to Create a New Resource."""
+    if 'discord_id' not in session:
+        return jsonify({"error": "Unauthorized"}), 401
+        
+    data = request.json
+    server_id = data.get('server_id', 'cuemu')
+    
+    resp = send_ipc("validation", "add_resource", data=data, server_id=server_id)
+    
+    if resp['status'] == 'success':
+        return jsonify({"success": True})
     return jsonify({"error": resp.get('error')}), 500
 
 @app.route('/api/update-status', methods=['POST'])
 def update_status():
+    if 'discord_id' not in session:
+        return jsonify({"error": "Unauthorized"}), 401
+
     data = request.json
-    resp = send_command_and_wait("validation", "update_status", data=data)
+    server_id = data.get('server_id', 'cuemu')
+    resp = send_ipc("validation", "update_status", data=data, server_id=server_id)
+    
     if resp['status'] == 'success':
         return jsonify({"success": True})
     return jsonify({"error": resp.get('error')}), 500
 
 @app.route('/api/update-resource', methods=['POST'])
 def update_resource():
+    if 'discord_id' not in session:
+        return jsonify({"error": "Unauthorized"}), 401
+
     data = request.json
-    resp = send_command_and_wait("validation", "update_resource", data=data)
+    # Logic to be handled by ValidationService 'update_resource' action
+    resp = send_ipc("validation", "update_resource", data=data) 
+    
     if resp['status'] == 'success':
         return jsonify({"success": True})
     return jsonify({"error": resp.get('error')}), 500
 
-# NOTE: You mentioned 'Add Resource' logic. 
-# You will need to make sure your frontend POSTs to a route we handle here.
-# Assuming you might add this later or it uses 'update-resource' logic?
-
 if __name__ == '__main__':
-    # Debug Mode
     app.run(debug=True, port=5000)
