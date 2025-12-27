@@ -145,6 +145,7 @@ class ValidationService(Core):
         user_ctx = packet.get('user_context') 
         payload = packet.get('payload')
         correlation_id = packet.get('id')
+        self.info(f"VALIDATION SERVICE: Processing {action}") #
         
         # 1. READ REQUESTS (Now Gated by USER Level)
         if action == "get_init_data":

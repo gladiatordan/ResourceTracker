@@ -106,7 +106,8 @@ class ServiceManager:
             try:
                 # 1. Get Message from Web/Bot
                 packet = self.ingress_queue.get(timeout=2)
-                
+                # NEW DEBUG LOG
+                logger.info(f"Router received packet: {packet.get('action')} for {packet.get('target')}")
                 target = packet.get('target')
                 
                 # 2. Route Message
