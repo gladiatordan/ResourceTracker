@@ -190,12 +190,13 @@ class ValidationService(Core):
             self.bot_out_queue.put(bot_packet)
             return
 
-        # 3. USER SYNC
+        # 3. USER SYNC (Updated for Roles)
         if action == "sync_user":
             discord_id = payload.get('id')
             username = payload.get('username')
             avatar = payload.get('avatar')
-            
+
+            # Upsert and RETURN the global_role so the webserver can cache it
             sql = """
                 INSERT INTO users (discord_id, username, avatar_url, last_login)
                 VALUES (%s, %s, %s, NOW())
@@ -203,10 +204,28 @@ class ValidationService(Core):
                 SET username = EXCLUDED.username, 
                     avatar_url = EXCLUDED.avatar_url,
                     last_login = NOW()
+                RETURNING global_role
             """
-            db_packet = {"id": f"sync_{correlation_id}", "action": "execute", "sql": sql, "params": (discord_id, username, avatar), "reply_to": None}
+            
+            # We use a temporary reply queue inside the service logic 
+            # to get the role back from DB immediately (Synchronous-ish)
+            # But since we are inside the Worker Loop, we can't easily block on the DB Service 
+            # without stalling the Validation Service. 
+            
+            # BETTER APPROACH: Send the execute command to DB, 
+            # and have the DB reply DIRECTLY to the WebServer with the data.
+            
+            db_packet = {
+                "id": correlation_id, # Re-use the Web's ID so the reply goes to the right waiting request
+                "action": "query",    # Change to 'query' so we get the RETURNING data
+                "sql": sql,
+                "params": (discord_id, username, avatar),
+                "reply_to": self.web_out_queue # DB replies to Web directly
+            }
             self.db_queue.put(db_packet)
-            self._reply_web(correlation_id, "success", {"msg": "User Synced"})
+            
+            # NOTE: We do NOT send a separate _reply_web here because the DB service 
+            # will send the success/data packet directly to the web queue.
             return
 
     # ------------------------------------------------------------------

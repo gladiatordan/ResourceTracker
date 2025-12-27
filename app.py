@@ -129,27 +129,40 @@ def callback():
     }
     headers = {'Content-Type': 'application/x-www-form-urlencoded'}
     
-    token_resp = requests.post(f"{DISCORD_API_URL}/oauth2/token", data=data, headers=headers)
-    token_resp.raise_for_status()
-    access_token = token_resp.json()['access_token']
+    try:
+        token_resp = requests.post(f"{DISCORD_API_URL}/oauth2/token", data=data, headers=headers)
+        token_resp.raise_for_status()
+        access_token = token_resp.json()['access_token']
 
-    # 2. Get User Info
-    user_resp = requests.get(f"{DISCORD_API_URL}/users/@me", headers={
-        "Authorization": f"Bearer {access_token}"
-    })
-    user_resp.raise_for_status()
-    user_data = user_resp.json()
+        # 2. Get User Info
+        user_resp = requests.get(f"{DISCORD_API_URL}/users/@me", headers={
+            "Authorization": f"Bearer {access_token}"
+        })
+        user_resp.raise_for_status()
+        user_data = user_resp.json()
 
-    # 3. Store in Session
-    session['discord_id'] = user_data['id']
-    session['username'] = user_data['username']
-    session['avatar'] = user_data['avatar']
-    
-    # 4. Sync User to Backend (Create/Update User in DB)
-    # We fire-and-forget this update so we don't block the login
-    send_ipc("validation", "sync_user", data=user_data)
+        # 3. Sync User to Backend & Get Role
+        # The backend now returns the DB row (including global_role)
+        resp = send_ipc("validation", "sync_user", data=user_data)
+        
+        global_role = "USER" # Default
+        if resp.get('status') == 'success' and resp.get('data'):
+            # DB returns a list of rows, we want the first one
+            rows = resp['data']
+            if rows and len(rows) > 0:
+                global_role = rows[0].get('global_role', 'USER')
 
-    return redirect(url_for('index'))
+        # 4. Store in Session
+        session['discord_id'] = user_data['id']
+        session['username'] = user_data['username']
+        session['avatar'] = user_data['avatar']
+        session['global_role'] = global_role
+
+        return redirect(url_for('index'))
+
+    except Exception as e:
+        logger.error(f"Login Error: {e}")
+        return f"Login Failed: {e}", 500
 
 @app.route('/logout')
 def logout():
@@ -166,7 +179,8 @@ def get_current_user():
         "authenticated": True,
         "id": session['discord_id'],
         "username": session['username'],
-        "avatar": session['avatar']
+        "avatar": session['avatar'],
+        "global_role": session.get('global_role', 'USER') # Now populated!
     })
 
 # --------------------------------------------------------------------------
