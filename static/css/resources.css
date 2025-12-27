@@ -539,6 +539,10 @@ td.col-stat { font-weight: 700; }
     color: var(--text-dim);
 }
 
+.nav-btn:hover {
+	color: var(--text-main);
+}
+
 #page-select {
     min-width: 80px;
     text-align: center;
