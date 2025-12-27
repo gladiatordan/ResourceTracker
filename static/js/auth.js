@@ -45,14 +45,13 @@ const Auth = {
             // 1. Render User Profile
             authSection.innerHTML = `
                 <div class="user-profile">
-                    <img src="https://cdn.discordapp.com/avatars/${this.user.id}/${this.user.avatar}.png" class="user-avatar" alt="User">
-                    <div class="user-info">
-                        <span class="username">${this.user.username}</span>
-                        <span class="role-badge role-${this.user.global_role.toLowerCase()}">${this.user.global_role}</span>
-                    </div>
-                    <a href="/logout" class="btn-logout" title="Logout"><i class="fa-solid fa-sign-out-alt"></i></a>
+                <div class="user-info" style="text-align: right;">
+                    <div class="username" style="font-family: 'Orbitron'; font-size: 0.8rem;">${this.user.username}</div>
+                    <div class="role-badge" style="font-size: 0.6rem; color: var(--accent-color);">${this.user.global_role}</div>
                 </div>
-            `;
+                <img src="https://cdn.discordapp.com/avatars/${this.user.id}/${this.user.avatar}.png" class="user-avatar" alt="User">
+                <a href="/logout" class="btn-logout" style="margin-left: 5px;"><i class="fa-solid fa-sign-out-alt"></i></a>
+            	</div>`;
             
             // 2. Permission Check for "Add Resource" Button
             // Only Editor (Level 2) and above can see the button
