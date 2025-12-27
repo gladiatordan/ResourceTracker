@@ -317,6 +317,20 @@ td.col-stat { font-weight: 700; }
 /* =========================================
    7. Modal
    ========================================= */
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 9999; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgba(0, 0, 0, 0.85); /* Black w/ opacity */
+    backdrop-filter: blur(5px); /* Cool blur effect */
+    align-items: center;
+    justify-content: center;
+}
 .modal-overlay {
     position: fixed;
     top: 0;
@@ -330,14 +344,31 @@ td.col-stat { font-weight: 700; }
     z-index: 2000;
 }
 
+/* Show class to toggle display */
+.modal:not(.hidden) {
+    display: flex !important;
+}
+
+.modal.hidden {
+    display: none !important;
+}
+
+/* MODAL CONTENT BOX */
 .modal-content {
-    background: var(--panel-bg);
-    border: 2px solid var(--accent-blue);
-    box-shadow: 0 0 20px rgba(0, 212, 255, 0.2);
-    width: 450px;
-    padding: 10px;
-    border-radius: 4px;
+    background-color: var(--bg-secondary);
+    border: 1px solid var(--accent-color);
+    border-radius: 8px;
+    width: 90%;
+    max-width: 600px;
+    box-shadow: 0 0 20px rgba(0, 243, 255, 0.2);
+    animation: modalSlideIn 0.3s ease-out;
     position: relative;
+    padding: 0; /* Header/Body handle padding */
+}
+
+@keyframes modalSlideIn {
+    from { transform: translateY(-50px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
 }
 
 .modal-header {

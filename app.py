@@ -242,11 +242,12 @@ def queryResourceLog():
     server_id = request.args.get('server', 'cuemu')
     since = request.args.get('since', 0)
     
-    # INCREASED TIMEOUT: 15 seconds for heavy data load
-    resp = send_ipc("validation", "get_init_data", 
+    # CALL NEW LIGHTWEIGHT ENDPOINT
+    # Reduced timeout to 5s because it should be fast now
+    resp = send_ipc("validation", "get_resource_data", 
                    data={'since': since}, 
                    server_id=server_id, 
-                   timeout=15)
+                   timeout=5)
     
     if resp['status'] == 'success':
         return jsonify(resp['data']) 
@@ -254,8 +255,9 @@ def queryResourceLog():
 
 @app.route('/api/taxonomy', methods=['GET'])
 def get_taxonomy():
-    # INCREASED TIMEOUT: 15 seconds
-    resp = send_ipc("validation", "get_init_data", timeout=15)
+    # CALL NEW TAXONOMY ENDPOINT
+    # Keep 15s timeout because this one is still huge
+    resp = send_ipc("validation", "get_taxonomy_data", timeout=15)
     
     if resp['status'] == 'success':
         return jsonify(resp['data'])
