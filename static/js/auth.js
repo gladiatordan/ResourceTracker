@@ -1,11 +1,12 @@
 const Auth = {
     user: null,
+    // Power Levels: Higher overrides lower
     ROLE_POWER: { 'SUPERADMIN': 100, 'ADMIN': 3, 'EDITOR': 2, 'USER': 1, 'GUEST': 0 },
 
     async init() {
         await this.checkSession();
-        this.setupListeners(); // Setup listeners first to get server ID
-        this.renderAuthUI();   // Render UI based on current server
+        this.setupListeners(); // Must setup listeners first to know current server
+        this.renderAuthUI();
     },
 
     async checkSession() {
@@ -14,51 +15,53 @@ const Auth = {
             const data = await response.json();
             if (data.authenticated) {
                 this.user = data;
-                console.log("User Loaded:", this.user);
+                console.log("User Loaded:", this.user.username);
             } else { this.user = null; }
         } catch (error) { this.user = null; }
     },
 
     /**
-     * Calculates the effective role for the currently selected server.
+     * Determines your role for the CURRENTLY selected server.
      */
     getEffectiveRole() {
         if (!this.user) return 'GUEST';
         
-        const currentServer = this.getServerID();
-        const serverRole = this.user.server_perms ? this.user.server_perms[currentServer] : null;
+        const currentServer = this.getServerID(); // e.g., 'cuemu'
         const globalRole = this.user.global_role;
-
-        // If SuperAdmin, always win
+        
+        // 1. SuperAdmin overrides everything
         if (globalRole === 'SUPERADMIN') return 'SUPERADMIN';
 
-        // Compare power levels
-        const serverPower = this.ROLE_POWER[serverRole] || 0;
-        const globalPower = this.ROLE_POWER[globalRole] || 0;
+        // 2. Check for specific server permission
+        // server_perms looks like: { 'cuemu': 'ADMIN', 'legends': 'USER' }
+        const specificRole = this.user.server_perms ? this.user.server_perms[currentServer] : null;
 
-        return serverPower > globalPower ? serverRole : globalRole;
+        // 3. Return the higher of the two (Global vs Specific)
+        const globalPower = this.ROLE_POWER[globalRole] || 0;
+        const specificPower = this.ROLE_POWER[specificRole] || 0;
+
+        return specificPower > globalPower ? specificRole : globalRole;
     },
 
     renderAuthUI() {
         const authSection = document.getElementById('auth-section');
-        const addBtn = document.getElementById('add-resource-btn');
-        const effectiveRole = this.getEffectiveRole();
+        const addBtn = document.querySelector('.add-resource-btn'); // Use querySelector for class
+        const role = this.getEffectiveRole();
 
         if (this.user) {
             authSection.innerHTML = `
                 <div class="user-profile">
                     <div class="user-info" style="text-align: right;">
                         <div class="username" style="font-family: 'Orbitron'; font-size: 0.8rem;">${this.user.username}</div>
-                        <div class="role-badge role-${effectiveRole.toLowerCase()}" style="font-size: 0.6rem;">${effectiveRole}</div>
+                        <div class="role-badge role-${role.toLowerCase()}" style="font-size: 0.6rem;">${role}</div>
                     </div>
                     <img src="https://cdn.discordapp.com/avatars/${this.user.id}/${this.user.avatar}.png" class="user-avatar" alt="User">
                     <a href="/logout" class="btn-logout" style="margin-left: 5px;"><i class="fa-solid fa-sign-out-alt"></i></a>
                 </div>`;
             
-            // Show/Hide Add Button
+            // Show Add Button only if EDITOR or higher (Level 2+)
             if (addBtn) {
-                // Check if effective role is at least EDITOR (Level 2)
-                const power = this.ROLE_POWER[effectiveRole] || 0;
+                const power = this.ROLE_POWER[role] || 0;
                 addBtn.style.display = power >= 2 ? 'block' : 'none';
             }
         } else {
@@ -70,13 +73,12 @@ const Auth = {
     setupListeners() {
         const serverSelect = document.getElementById('server-select');
         if (serverSelect) {
-            // Restore selection
-            const savedServer = localStorage.getItem('swg_server_id');
-            if (savedServer) serverSelect.value = savedServer;
+            const saved = localStorage.getItem('swg_server_id');
+            if (saved) serverSelect.value = saved;
 
             serverSelect.addEventListener('change', (e) => {
                 localStorage.setItem('swg_server_id', e.target.value);
-                // Re-render auth UI because role might change between servers
+                // Re-render because role might change when switching servers!
                 this.renderAuthUI(); 
                 window.location.reload(); 
             });
