@@ -177,8 +177,6 @@ class ValidationService(Core):
 
         # 1. READ REQUESTS
         if action == "get_init_data":
-            # NOTE: We can optionally filter the taxonomy sent to frontend here 
-            # to only show valid types, but usually frontend wants the whole tree for structure.
             response_data = {
                 "taxonomy": self.taxonomy,
                 "servers": self.server_registry,
@@ -194,7 +192,7 @@ class ValidationService(Core):
                 self._reply_web(correlation_id, "error", None, "Permission Denied")
                 return
 
-            # B. Validation Check (Deep Logic)
+            # B. Validation Check
             is_valid, err_msg = self._validate_resource(payload)
             if not is_valid:
                 self._reply_web(correlation_id, "error", None, err_msg)
@@ -216,6 +214,38 @@ class ValidationService(Core):
             # E. Notify Bot
             bot_packet = create_packet("bot", "new_resource", payload, server_id)
             self.bot_out_queue.put(bot_packet)
+            return
+
+        # 3. USER SYNC (New Handler)
+        if action == "sync_user":
+            # Payload contains: {'id', 'username', 'avatar', ...}
+            discord_id = payload.get('id')
+            username = payload.get('username')
+            avatar = payload.get('avatar')
+
+            # We upsert the user into the database so Foreign Keys work later
+            sql = """
+                INSERT INTO users (discord_id, username, avatar_url, last_login)
+                VALUES (%s, %s, %s, NOW())
+                ON CONFLICT (discord_id) DO UPDATE 
+                SET username = EXCLUDED.username, 
+                    avatar_url = EXCLUDED.avatar_url,
+                    last_login = NOW()
+            """
+            
+            # Send to DB
+            # We assume success and reply to Web immediately to keep Login fast
+            db_packet = {
+                "id": f"sync_{correlation_id}", # Internal ID
+                "action": "execute",
+                "sql": sql,
+                "params": (discord_id, username, avatar),
+                "reply_to": None # Fire and forget
+            }
+            self.db_queue.put(db_packet)
+            
+            self._reply_web(correlation_id, "success", {"msg": "User Synced"})
+            return
 
     def _check_permission(self, user_ctx, server_id, required_role):
         if not user_ctx: return False
