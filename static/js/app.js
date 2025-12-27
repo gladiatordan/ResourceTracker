@@ -1,3 +1,30 @@
+async function loadServers() {
+    // We can piggyback on the 'get_init_data' call which returns {taxonomy, servers, resources}
+    // Or assume the page load fetched it. 
+    // For now, let's update initTabs/Listeners to fetch it.
+    
+    // Actually, api.js fetchResources calls 'get_init_data'.
+    // Let's modify loadResources() in resources.js or create a specific init.
+}
+
+async function initServerList(serverData) {
+    const select = document.getElementById('server-select');
+    if (!select || !serverData) return;
+
+    select.innerHTML = '';
+    const saved = localStorage.getItem('swg_server_id') || 'cuemu';
+
+    // serverData is an object: { 'cuemu': {name: 'CUEmu', ...}, 'legends': {...} }
+    Object.values(serverData).forEach(server => {
+        if (!server.is_active) return;
+        const option = document.createElement('option');
+        option.value = server.id;
+        option.textContent = server.display_name;
+        if (server.id === saved) option.selected = true;
+        select.appendChild(option);
+    });
+}
+
 function initTabs() {
     const navButtons = document.querySelectorAll('.nav-btn');
     const containers = document.querySelectorAll('.page-container');

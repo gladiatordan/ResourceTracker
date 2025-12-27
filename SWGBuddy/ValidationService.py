@@ -228,6 +228,14 @@ class ValidationService(Core):
             # NOTE: We do NOT send a separate _reply_web here because the DB service 
             # will send the success/data packet directly to the web queue.
             return
+        
+		# 4. GET USER PERMISSIONS (New)
+        if action == "get_user_perms":
+            discord_id = payload.get('discord_id')
+            # Retrieve from cache: {'cuemu': 'ADMIN', 'legends': 'EDITOR'}
+            perms = self.permissions.get(discord_id, {})
+            self._reply_web(correlation_id, "success", perms)
+            return
 
     # ------------------------------------------------------------------
     # PERMISSION LOGIC (The New Hierarchy)
