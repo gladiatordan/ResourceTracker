@@ -216,14 +216,14 @@ class ValidationService(Core):
             self.bot_out_queue.put(bot_packet)
             return
 
-        # 3. USER SYNC (New Handler)
+        # 3. USER SYNC
         if action == "sync_user":
-            # Payload contains: {'id', 'username', 'avatar', ...}
+            self.info(f"Processing Sync for User: {payload.get('username')}")
+            
             discord_id = payload.get('id')
             username = payload.get('username')
             avatar = payload.get('avatar')
 
-            # We upsert the user into the database so Foreign Keys work later
             sql = """
                 INSERT INTO users (discord_id, username, avatar_url, last_login)
                 VALUES (%s, %s, %s, NOW())
@@ -233,19 +233,22 @@ class ValidationService(Core):
                     last_login = NOW()
             """
             
-            # Send to DB
-            # We assume success and reply to Web immediately to keep Login fast
             db_packet = {
-                "id": f"sync_{correlation_id}", # Internal ID
+                "id": f"sync_{correlation_id}",
                 "action": "execute",
                 "sql": sql,
                 "params": (discord_id, username, avatar),
-                "reply_to": None # Fire and forget
+                "reply_to": None 
             }
             self.db_queue.put(db_packet)
             
+            # Log success
+            self.info("Sync User SQL sent to DB Queue")
             self._reply_web(correlation_id, "success", {"msg": "User Synced"})
             return
+
+        # 4. CATCH-ALL FOR UNKNOWN COMMANDS
+        self.warning(f"Unknown/Unhandled Action received: '{action}'")
 
     def _check_permission(self, user_ctx, server_id, required_role):
         if not user_ctx: return False
