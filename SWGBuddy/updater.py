@@ -44,7 +44,7 @@ def check_for_updates():
         
         # 2. Get Hashes
         local_hash = run_command(["git", "rev-parse", "HEAD"], cwd=REPO_DIR)
-        remote_hash = run_command(["git", "rev-parse", f"origin/{BRANCH}"], cwd=REPO_DIR)
+        remote_hash = run_command(["git", "rev-parse", "origin"], cwd=REPO_DIR)
         
         if local_hash != remote_hash:
             logger.info(f"Update Detected! Local: {local_hash[:7]} -> Remote: {remote_hash[:7]}")
