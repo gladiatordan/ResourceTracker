@@ -65,9 +65,18 @@ const Modal = {
         const select = this.elements.typeSelect;
         select.innerHTML = '<option value="">Select Resource Type...</option>';
 
+        // SAFETY CHECK: If taxonomy failed to load, don't crash
+        if (!VALID_TYPES || VALID_TYPES.size === 0) {
+            const opt = document.createElement('option');
+            opt.disabled = true;
+            opt.textContent = "Error: Taxonomy not loaded. Refresh page.";
+            select.appendChild(opt);
+            return;
+        }
+
         // Filter TAXONOMY_TREE using VALID_TYPES set
-        // Sort alphabetically for better UX
         const sortedTypes = Array.from(VALID_TYPES)
+            .filter(id => TAXONOMY_TREE[id]) // Extra safety check
             .map(id => ({ id: id, name: TAXONOMY_TREE[id].class_label }))
             .sort((a, b) => a.name.localeCompare(b.name));
 

@@ -240,19 +240,23 @@ def get_current_user():
 @app.route('/api/resource_log', methods=['GET'])
 def queryResourceLog():
     server_id = request.args.get('server', 'cuemu')
-    since = request.args.get('since', 0) # Delta Sync Param
+    since = request.args.get('since', 0)
     
-    resp = send_ipc("validation", "get_init_data", data={'since': since}, server_id=server_id)
+    # INCREASED TIMEOUT: 15 seconds for heavy data load
+    resp = send_ipc("validation", "get_init_data", 
+                   data={'since': since}, 
+                   server_id=server_id, 
+                   timeout=15)
     
     if resp['status'] == 'success':
-        # Return full payload (resources, valid_types, etc)
-        # Frontend logic will parse what it needs
         return jsonify(resp['data']) 
     return jsonify({"error": resp.get('error')}), 500
 
 @app.route('/api/taxonomy', methods=['GET'])
 def get_taxonomy():
-    resp = send_ipc("validation", "get_init_data") # Taxonomy rarely changes, no delta needed usually
+    # INCREASED TIMEOUT: 15 seconds
+    resp = send_ipc("validation", "get_init_data", timeout=15)
+    
     if resp['status'] == 'success':
         return jsonify(resp['data'])
     return jsonify({"error": resp.get('error')}), 500
