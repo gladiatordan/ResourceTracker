@@ -191,6 +191,10 @@ class ValidationService(Core):
 				"servers": self.server_registry,
 				"resources": self.active_resources.get(server_id, [])
 			}
+			self.info(f"length Taxonomy -> {len(response_data["taxonomy"])}")
+			self.info(f"length ValidTypes -> {len(response_data["valid_types"])}")
+			self.info(f"length Servers -> {len(response_data["servers"])}")
+			self.info(f"length Resources{server_id} -> {len(response_data["resources"])}")
 			self._reply_web(correlation_id, "success", response_data)
 			return
 
