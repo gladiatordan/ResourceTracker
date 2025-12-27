@@ -1,9 +1,7 @@
 """
 Database Service Module
-
 Acts as the exclusive gatekeeper for the PostgreSQL database.
 Manages connection pooling and executes queries for other services.
-
 """
 import os
 import time
@@ -36,9 +34,6 @@ class DatabaseService(Core):
         }
 
     def start(self):
-        """
-        Main entry point. Starts the connection pool and the worker loop.
-        """
         self.info("Initializing Database Service...")
         try:
             self._init_pool()
@@ -47,14 +42,10 @@ class DatabaseService(Core):
             return
 
         self.info("Database Pool Ready. Starting Worker Loop...")
-        # We can spawn multiple threads here if load increases
         worker_thread = threading.Thread(target=self._worker_loop)
         worker_thread.start()
 
     def _init_pool(self):
-        """
-        Creates the ThreadedConnectionPool.
-        """
         self.pool = psycopg2.pool.ThreadedConnectionPool(
             minconn=1,
             maxconn=10,
@@ -63,31 +54,16 @@ class DatabaseService(Core):
         )
 
     def _worker_loop(self):
-        """
-        Continuous loop that consumes messages from the input_queue.
-        """
         while self.running:
             try:
-                # Blocking get with timeout allows checking self.running
                 message = self.input_queue.get(timeout=2)
             except:
-                continue # Timeout, check running flag and loop
+                continue
 
             if message:
                 self._process_message(message)
 
     def _process_message(self, message):
-        """
-        Route the message to the appropriate handler.
-        Expected Message Format:
-        {
-            "id": "123",
-            "action": "query", # or "execute"
-            "sql": "SELECT * FROM ...",
-            "params": (1, 2),
-            "reply_to": <Queue Object> (Optional)
-        }
-        """
         request_id = message.get('id')
         action = message.get('action')
         sql = message.get('sql')
@@ -106,10 +82,19 @@ class DatabaseService(Core):
                     cur.execute(sql, params)
                     
                     if action == 'query':
+                        # Read-only (No commit)
                         result = cur.fetchall()
+                    
                     elif action == 'execute':
+                        # Write (Commit, return count)
                         conn.commit()
                         result = {"affected_rows": cur.rowcount}
+                    
+                    elif action == 'execute_fetch':
+                        # Write + Read (Commit AND Return data)
+                        # Useful for INSERT ... RETURNING
+                        result = cur.fetchall()
+                        conn.commit()
                         
             except Exception as e:
                 conn.rollback()
@@ -122,7 +107,6 @@ class DatabaseService(Core):
             error = f"Connection Pool Error: {pool_error}"
             self.critical(error)
 
-        # Send Response if a reply queue was provided
         if reply_queue:
             response = {
                 "id": request_id,
@@ -133,9 +117,6 @@ class DatabaseService(Core):
             reply_queue.put(response)
 
     def stop(self):
-        """
-        Graceful Shutdown
-        """
         self.running = False
         if self.pool:
             self.pool.closeall()

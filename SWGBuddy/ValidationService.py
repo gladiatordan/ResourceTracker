@@ -1,10 +1,7 @@
 """
-
 Validation Service Module
-
 Acts as the central logic core and In-Memory Cache (CQRS Read Layer).
 Validates all incoming write commands before sending them to the Database.
-
 """
 import time
 import threading
@@ -15,13 +12,12 @@ from core.core import Core
 from core.ipc import create_packet
 
 class ValidationService(Core):
-    # DEFINE THE HIERARCHY OF POWER
     ROLE_HIERARCHY = {
-        'SUPERADMIN': 100, # God Mode
-        'ADMIN': 3,        # Server Manager (Delete, Manage Users)
-        'EDITOR': 2,       # Content Creator (Add/Edit Resources)
-        'USER': 1,         # Viewer (Read Only)
-        'GUEST': 0         # No Access
+        'SUPERADMIN': 100,
+        'ADMIN': 3,
+        'EDITOR': 2,
+        'USER': 1,
+        'GUEST': 0
     }
 
     def __init__(self, input_queue, db_queue, web_out_queue, bot_out_queue):
@@ -33,11 +29,10 @@ class ValidationService(Core):
         
         self.running = True
         
-        # In-Memory Caches
-        self.taxonomy = {}       # { swg_index (int): {data} }
+        self.taxonomy = {}
         self.valid_resource_types = set() 
         self.server_registry = {} 
-        self.permissions = {}    # { 'discord_id': {'server_id': 'role_string'} }
+        self.permissions = {}    
         self.active_resources = {} 
 
         self.stat_map = {
@@ -90,7 +85,7 @@ class ValidationService(Core):
         elif key == "taxonomy":
             self.taxonomy = {r['swg_index']: r for r in rows}
         elif key == "permissions":
-            self.permissions = {} # Reset to ensure clean reload
+            self.permissions = {}
             for r in rows:
                 uid = r['user_id']
                 if uid not in self.permissions:
@@ -104,7 +99,6 @@ class ValidationService(Core):
                     self.active_resources[sid].append(r)
 
     def _build_validity_cache(self):
-        self.info("Building Resource Validity Cache...")
         ids_with_children = set()
         for r in self.taxonomy.values():
             pid = r.get('parent_id')
@@ -136,22 +130,17 @@ class ValidationService(Core):
                 if message: self._process_command(message)
             except: continue
 
-    # ------------------------------------------------------------------
-    # COMMAND PROCESSOR
-    # ------------------------------------------------------------------
     def _process_command(self, packet):
         action = packet.get('action')
         server_id = packet.get('server_id')
         user_ctx = packet.get('user_context') 
         payload = packet.get('payload')
         correlation_id = packet.get('id')
-        self.info(f"VALIDATION SERVICE: Processing {action}") #
         
-        # 1. READ REQUESTS (Now Gated by USER Level)
+        # 1. READ REQUESTS
         if action == "get_init_data":
-            # Check for 'USER' (Level 1) or higher
             if not self._check_access(user_ctx, server_id, 'USER'):
-                self._reply_web(correlation_id, "error", None, "Access Denied: You do not have permission to view this server.")
+                self._reply_web(correlation_id, "error", None, "Access Denied.")
                 return
 
             response_data = {
@@ -162,7 +151,7 @@ class ValidationService(Core):
             self._reply_web(correlation_id, "success", response_data)
             return
 
-        # 2. ADD REQUESTS (Gated by EDITOR Level)
+        # 2. ADD REQUESTS
         if action == "add_resource":
             if not self._check_access(user_ctx, server_id, 'EDITOR'):
                 self._reply_web(correlation_id, "error", None, "Permission Denied: Editor role required.")
@@ -183,21 +172,16 @@ class ValidationService(Core):
             }
             self.db_queue.put(db_packet)
             
-            # Optimistic Update: Add to local cache immediately so the user sees it
-            # (We would ideally wait for DB confirmation, but this is faster for UI)
-            # For now, we wait for next fetch or assume success.
-            
             bot_packet = create_packet("bot", "new_resource", payload, server_id)
             self.bot_out_queue.put(bot_packet)
             return
 
-        # 3. USER SYNC (Updated for Roles)
+        # 3. USER SYNC (Upsert User)
         if action == "sync_user":
             discord_id = payload.get('id')
             username = payload.get('username')
             avatar = payload.get('avatar')
 
-            # Upsert and RETURN the global_role so the webserver can cache it
             sql = """
                 INSERT INTO users (discord_id, username, avatar_url, last_login)
                 VALUES (%s, %s, %s, NOW())
@@ -208,67 +192,68 @@ class ValidationService(Core):
                 RETURNING global_role
             """
             
-            # We use a temporary reply queue inside the service logic 
-            # to get the role back from DB immediately (Synchronous-ish)
-            # But since we are inside the Worker Loop, we can't easily block on the DB Service 
-            # without stalling the Validation Service. 
-            
-            # BETTER APPROACH: Send the execute command to DB, 
-            # and have the DB reply DIRECTLY to the WebServer with the data.
-            
+            # FIX: Use execute_fetch to COMMIT and RETURN
             db_packet = {
-                "id": correlation_id, # Re-use the Web's ID so the reply goes to the right waiting request
-                "action": "query",    # Change to 'query' so we get the RETURNING data
+                "id": correlation_id,
+                "action": "execute_fetch", 
                 "sql": sql,
                 "params": (discord_id, username, avatar),
-                "reply_to": self.web_out_queue # DB replies to Web directly
+                "reply_to": self.web_out_queue 
             }
             self.db_queue.put(db_packet)
-            
-            # NOTE: We do NOT send a separate _reply_web here because the DB service 
-            # will send the success/data packet directly to the web queue.
-            return
-        
-		# 4. GET USER PERMISSIONS (New)
-        if action == "get_user_perms":
-            discord_id = payload.get('discord_id')
-            # Retrieve from cache: {'cuemu': 'ADMIN', 'legends': 'EDITOR'}
-            perms = self.permissions.get(discord_id, {})
-            self._reply_web(correlation_id, "success", perms)
             return
 
-    # ------------------------------------------------------------------
-    # PERMISSION LOGIC (The New Hierarchy)
-    # ------------------------------------------------------------------
+        # 4. GET USER PERMISSIONS (Auto-Populate for Active Servers)
+        if action == "get_user_perms":
+            discord_id = payload.get('discord_id')
+            
+            # Logic: Ensure user has a permission row for every active server
+            active_server_ids = [s for s in self.server_registry if self.server_registry[s].get('is_active')]
+            
+            if discord_id not in self.permissions:
+                self.permissions[discord_id] = {}
+            
+            new_perms_to_insert = []
+            
+            for s_id in active_server_ids:
+                if s_id not in self.permissions[discord_id]:
+                    # Default Role: USER
+                    self.permissions[discord_id][s_id] = 'USER'
+                    new_perms_to_insert.append((discord_id, s_id, 'USER'))
+            
+            # If we created new defaults, persist them to DB asynchronously
+            if new_perms_to_insert:
+                sql_values = ",".join([f"('{u}', '{s}', '{r}')" for u, s, r in new_perms_to_insert])
+                sql = f"INSERT INTO server_permissions (user_id, server_id, role) VALUES {sql_values} ON CONFLICT DO NOTHING"
+                
+                self.db_queue.put({
+                    "id": f"auto_perm_{discord_id}",
+                    "action": "execute",
+                    "sql": sql
+                })
+            
+            # Return current (possibly updated) cache
+            self._reply_web(correlation_id, "success", self.permissions[discord_id])
+            return
+
     def _get_user_level(self, user_ctx, server_id):
-        """Calculates the integer power level of the user for the specific server."""
-        if not user_ctx: return 0 # Guest
-        
-        # 1. Check Global Role
+        if not user_ctx: return 0 
         global_role = user_ctx.get('global_role', 'GUEST')
         global_level = self.ROLE_HIERARCHY.get(global_role, 0)
-        
-        # If SuperAdmin, they are level 100 everywhere
         if global_level >= 100: return 100
         
-        # 2. Check Server-Specific Role
         uid = user_ctx.get('id')
         user_perms = self.permissions.get(uid, {})
         server_role = user_perms.get(server_id, 'GUEST')
         server_level = self.ROLE_HIERARCHY.get(server_role, 0)
         
-        # Return the higher of the two (though Global is usually just Registered or SuperAdmin)
         return max(global_level, server_level)
 
     def _check_access(self, user_ctx, server_id, required_role_name):
-        """Returns True if user's level >= required role's level."""
         user_level = self._get_user_level(user_ctx, server_id)
         required_level = self.ROLE_HIERARCHY.get(required_role_name, 100)
         return user_level >= required_level
 
-    # ------------------------------------------------------------------
-    # VALIDATION LOGIC
-    # ------------------------------------------------------------------
     def _validate_resource(self, data):
         class_id = data.get('resource_class_id')
         if not class_id: return False, "Missing resource_class_id"
