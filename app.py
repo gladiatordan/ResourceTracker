@@ -210,14 +210,15 @@ def logout():
     session.clear()
     return redirect(url_for('index'))
 
-@app.route('/api/me')
+@@app.route('/api/me')
 def get_current_user():
     if 'discord_id' not in session:
         return jsonify({"authenticated": False})
     
-    # 1. Fetch Fresh Permissions from Backend (The only thing requested)
-    perm_resp = send_ipc("validation", "get_user_perms", data={'discord_id': session['discord_id']}, timeout=2)
+    # FIX: Increased timeout from 2 to 5 seconds to prevent "Wrong Role" on slow loads
+    perm_resp = send_ipc("validation", "get_user_perms", data={'discord_id': session['discord_id']}, timeout=5)
     
+    current_perms = session.get('server_perms', {})
     current_perms = session.get('server_perms', {})
     current_super = session.get('is_superadmin', False)
 

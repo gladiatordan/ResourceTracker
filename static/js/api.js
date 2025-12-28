@@ -19,6 +19,7 @@ const API = {
 
         // Update timestamp for next time
         // We use the current server time if provided, or client time as fallback
+        // FIX: Ensure we are using seconds (Python timestamp) not MS
         LAST_SYNC_TIMESTAMP = Date.now() / 1000; 
         
         return data;

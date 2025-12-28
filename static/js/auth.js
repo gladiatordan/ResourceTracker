@@ -73,7 +73,10 @@ const Auth = {
     },
 
     getServerID() {
-        return document.getElementById('server-select')?.value || 'cuemu';
+        // FIX: Check localStorage as fallback if the DOM isn't ready or defaults to cuemu
+        const domVal = document.getElementById('server-select')?.value;
+        const storedVal = localStorage.getItem('swg_server_id');
+        return domVal || storedVal || 'cuemu';
     }
 };
 

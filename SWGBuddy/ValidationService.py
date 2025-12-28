@@ -135,7 +135,6 @@ class ValidationService(Core):
         payload = packet.get('payload')
         correlation_id = packet.get('id')
         
-        # 1. OPTIMIZED READ: RESOURCES ONLY (Lightweight)
         # 1. OPTIMIZED READ: RESOURCES
         if action == "get_resource_data":
             if not self._check_access(user_ctx, server_id, 'USER'):
@@ -165,16 +164,6 @@ class ValidationService(Core):
                 filtered_resources = full_list
             # -----------------------
 
-            response_data = {
-                "servers": self.server_registry,
-                "resources": filtered_resources
-            }
-            self._reply_web(correlation_id, "success", response_data)
-            return
-            # --- DELTA LOGIC END ---
-
-            # Optimization: Don't send the server registry every single time if not needed
-            # But it's small, so we leave it for now.
             response_data = {
                 "servers": self.server_registry,
                 "resources": filtered_resources
