@@ -169,6 +169,7 @@ body {
 .btn-discord {
     display: flex;
     align-items: center;
+	justify-content: center;
     gap: 8px;
     background: #5865F2; /* Discord Brand Color */
     color: white;
