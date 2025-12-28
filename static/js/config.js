@@ -10,7 +10,7 @@ let sortStack = [
 	{ key: 'is_active', direction: 'desc' }
 ];
 let rawResourceData = [];
-let lastSyncTime = 0;
+let LAST_SYNC_TIMESTAMP = 0;
 let taxonomyData = [];
 let taxonomyMap = {};
 // config.js

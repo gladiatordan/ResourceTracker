@@ -6,14 +6,22 @@ const API = {
         return document.getElementById('server-select')?.value || 'cuemu';
     },
 
-    async fetchResources(sinceTimestamp = 0) {
+    async fetchResources(isDelta = false) {
         const serverId = this.getServerContext();
-        // Pass 'since' to backend. Backend logic will use it to filter delta.
-        const response = await fetch(`/api/resource_log?server=${serverId}&since=${sinceTimestamp}`);
+        
+        // If it's a full refresh (not delta), reset timestamp
+        if (!isDelta) LAST_SYNC_TIMESTAMP = 0;
+
+        const response = await fetch(`/api/resource_log?server=${serverId}&since=${LAST_SYNC_TIMESTAMP}`);
         if (!response.ok) throw new Error('Failed to fetch resources');
         
-        // Return full response object { taxonomy, valid_types, resources, etc }
-        return await response.json(); 
+        const data = await response.json();
+
+        // Update timestamp for next time
+        // We use the current server time if provided, or client time as fallback
+        LAST_SYNC_TIMESTAMP = Date.now() / 1000; 
+        
+        return data;
     },
 
     async fetchTaxonomy() {

@@ -72,7 +72,7 @@ body {
 .user-profile {
     display: flex;
     align-items: center;
-    gap: 12px;
+    gap: 10px;
     background: var(--bg-secondary);
     padding: 4px 12px;
     border-radius: 20px;
@@ -178,7 +178,8 @@ body {
     font-weight: 700;
     text-decoration: none;
     transition: filter 0.2s, transform 0.1s;
-    height: 38px;
+	width: 182px;
+    height: 42px;
     border: none;
     cursor: pointer;
 }
@@ -189,20 +190,6 @@ body {
 
 .btn-discord:active {
     transform: translateY(1px);
-}
-
-/* User Profile (Post-Login) */
-.user-profile {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-}
-
-.user-avatar {
-    width: 32px;
-    height: 32px;
-    border-radius: 50%;
-    border: 1px solid var(--accent-color);
 }
 
 /* Status Bar */

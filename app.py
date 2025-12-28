@@ -24,6 +24,11 @@ DISCORD_API_URL = "https://discord.com/api"
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger("WebServer")
 
+CACHE = {
+    "taxonomy": None,
+    "taxonomy_ts": 0
+}
+
 # --------------------------------------------------------------------------
 # ROBUST IPC CLIENT
 # --------------------------------------------------------------------------
@@ -210,31 +215,40 @@ def get_current_user():
     if 'discord_id' not in session:
         return jsonify({"authenticated": False})
     
-    # Try Live Fetch
+    # 1. Fetch Fresh Permissions from Backend (The only thing requested)
     perm_resp = send_ipc("validation", "get_user_perms", data={'discord_id': session['discord_id']}, timeout=2)
     
-    # FALLBACK STRATEGY: Use Session Data if Backend fails
+    current_perms = session.get('server_perms', {})
+    current_super = session.get('is_superadmin', False)
+
+    response_perms = current_perms
+    response_super = current_super
+
     if perm_resp.get('status') == 'success':
         data = perm_resp.get('data', {})
-        server_perms = data.get('perms', {})
-        is_superadmin = data.get('is_superadmin', False)
+        new_perms = data.get('perms', {})
+        new_super = data.get('is_superadmin', False)
         
-        # Update session to keep it fresh
-        session['server_perms'] = server_perms
-        session['is_superadmin'] = is_superadmin
+        # 2. OPTIMIZATION: Only update session (send Set-Cookie) if data CHANGED
+        # This reduces header overhead on every page load
+        if new_perms != current_perms or new_super != current_super:
+            session['server_perms'] = new_perms
+            session['is_superadmin'] = new_super
+            session.modified = True  # Explicitly tell Flask to resend cookie
+        
+        response_perms = new_perms
+        response_super = new_super
     else:
-        # Backend down/timeout? Use cached session data so UI doesn't break
+        # Backend down? Log it, but let the user proceed with cached cookie perms
         logger.warning("Backend Permissions Fetch Failed. Using Session Fallback.")
-        server_perms = session.get('server_perms', {})
-        is_superadmin = session.get('is_superadmin', False)
 
     return jsonify({
         "authenticated": True,
         "id": session['discord_id'],
         "username": session['username'],
         "avatar": session['avatar'],
-        "is_superadmin": is_superadmin,
-        "server_perms": server_perms
+        "is_superadmin": response_super,
+        "server_perms": response_perms
     })
 
 @app.route('/api/resource_log', methods=['GET'])
@@ -253,14 +267,26 @@ def queryResourceLog():
         return jsonify(resp['data']) 
     return jsonify({"error": resp.get('error')}), 500
 
+# GLOBAL MEMORY CACHE
+# --------------------------------------------------------------------------
 @app.route('/api/taxonomy', methods=['GET'])
 def get_taxonomy():
-    # CALL NEW TAXONOMY ENDPOINT
-    # Keep 15s timeout because this one is still huge
+    # 2. Serve from Memory if available (Fixes IPC Bottleneck)
+    if CACHE["taxonomy"]:
+        response = jsonify(CACHE["taxonomy"])
+        # 3. Tell Browser to Cache for 24 hours (Fixes Reload Slowness)
+        response.headers['Cache-Control'] = 'public, max-age=86400'
+        return response
+
+    # Fetch from Backend (Only happens once per restart)
     resp = send_ipc("validation", "get_taxonomy_data", timeout=15)
     
     if resp['status'] == 'success':
-        return jsonify(resp['data'])
+        CACHE["taxonomy"] = resp['data']
+        response = jsonify(resp['data'])
+        response.headers['Cache-Control'] = 'public, max-age=86400'
+        return response
+
     return jsonify({"error": resp.get('error')}), 500
 
 @app.route('/api/add-resource', methods=['POST'])

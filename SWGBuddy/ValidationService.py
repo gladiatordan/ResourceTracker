@@ -26,6 +26,7 @@ class ValidationService(Core):
         self.server_registry = {} 
         self.permissions = {}    
         self.active_resources = {} 
+        self.resources_full = {}
         self.superadmins = set()
 
         self.stat_map = {
@@ -54,7 +55,7 @@ class ValidationService(Core):
             ("servers", "SELECT * FROM game_servers"),
             ("permissions", "SELECT * FROM server_permissions"),
             ("superadmins", "SELECT discord_id FROM users WHERE is_superadmin = TRUE"),
-            ("resources", "SELECT * FROM resource_spawns WHERE is_active = TRUE ORDER BY date_reported DESC")
+            ("resources", "SELECT * FROM resource_spawns ORDER BY server_id, id")
         ]
         if full_load:
             queries.insert(1, ("taxonomy", "SELECT * FROM resource_taxonomy"))
@@ -135,20 +136,47 @@ class ValidationService(Core):
         correlation_id = packet.get('id')
         
         # 1. OPTIMIZED READ: RESOURCES ONLY (Lightweight)
+        # 1. OPTIMIZED READ: RESOURCES
         if action == "get_resource_data":
             if not self._check_access(user_ctx, server_id, 'USER'):
                 self._reply_web(correlation_id, "error", None, "Access Denied.")
                 return
 
-            # Delta Filtering Logic
-            since_ts = float(payload.get('since', 0) or 0)
             full_list = self.active_resources.get(server_id, [])
             
-            # (Optional: Add actual delta logic here later)
-            filtered_resources = full_list 
+            # --- NEW DELTA LOGIC ---
+            try:
+                # Grab timestamp from request (default to 0 for full load)
+                since_ts = float(payload.get('since', 0) or 0)
+                
+                if since_ts > 0:
+                    # Filter: Only items created OR modified after the timestamp
+                    filtered_resources = [
+                        r for r in full_list
+                        if r.get('date_reported').timestamp() > since_ts 
+                        or (r.get('last_modified') and r.get('last_modified').timestamp() > since_ts)
+                    ]
+                else:
+                    # Full Load
+                    filtered_resources = full_list
+
+            except Exception as e:
+                self.error(f"Delta filter error: {e}")
+                filtered_resources = full_list
+            # -----------------------
 
             response_data = {
-                "servers": self.server_registry, # Lightweight enough to send every time
+                "servers": self.server_registry,
+                "resources": filtered_resources
+            }
+            self._reply_web(correlation_id, "success", response_data)
+            return
+            # --- DELTA LOGIC END ---
+
+            # Optimization: Don't send the server registry every single time if not needed
+            # But it's small, so we leave it for now.
+            response_data = {
+                "servers": self.server_registry,
                 "resources": filtered_resources
             }
             self._reply_web(correlation_id, "success", response_data)
