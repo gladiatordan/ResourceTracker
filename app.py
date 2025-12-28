@@ -210,7 +210,7 @@ def logout():
     session.clear()
     return redirect(url_for('index'))
 
-@@app.route('/api/me')
+@app.route('/api/me')
 def get_current_user():
     if 'discord_id' not in session:
         return jsonify({"authenticated": False})
