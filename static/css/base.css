@@ -178,8 +178,8 @@ body {
     font-weight: 700;
     text-decoration: none;
     transition: filter 0.2s, transform 0.1s;
-	width: 182px;
-    height: 42px;
+	width: 150px;
+    height: 26px;
     border: none;
     cursor: pointer;
 }
