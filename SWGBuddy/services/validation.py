@@ -266,7 +266,7 @@ class ValidationService(Core):
 		# Planet Validation (FIX: Enforce Capitalization)
 		planet = data.get('planet')
 		if planet:
-			planet = planet.capitalize()
+			planet = [p.capitalize() for p in planet]
 			data['planet'] = planet # Save back to data for DB consistency
 
 		if planet and planet not in allowed_planets:
