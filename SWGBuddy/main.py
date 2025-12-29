@@ -16,6 +16,7 @@ class ServiceManager:
         # Shared Queues
         self.log_queue = multiprocessing.Queue()
         self.validation_queue = multiprocessing.Queue()
+        # FIX 1: Add the missing reply queue
         self.reply_queue = multiprocessing.Queue()
 
     def start(self):
@@ -23,19 +24,24 @@ class ServiceManager:
 
         services = [
             ("Logger", LogService, (self.log_queue,)),
+            # FIX 2: Pass reply_queue to Validation & Web
             ("Validation", ValidationService, (self.validation_queue, self.log_queue, self.reply_queue)),
             ("Web", WebService, (self.validation_queue, self.log_queue, self.reply_queue))
         ]
 
         for name, cls, args in services:
-            p = multiprocessing.Process(target=self._wrapper, args=(name, cls, args), name=name)
+            # FIX 3: Use the static method (ServiceManager._wrapper) instead of self._wrapper
+            # This prevents pickling the 'self' instance which holds unpickleable Process objects
+            p = multiprocessing.Process(target=ServiceManager._wrapper, args=(name, cls, args), name=name)
             p.start()
             self.processes.append(p)
             print(f"[Manager] {name} started (PID: {p.pid})")
 
         self._monitor()
 
-    def _wrapper(self, name, cls, args):
+    # FIX 4: Convert to staticmethod so it doesn't require 'self'
+    @staticmethod
+    def _wrapper(name, cls, args):
         try:
             service = cls(*args)
             service.run()
@@ -46,13 +52,18 @@ class ServiceManager:
     def _monitor(self):
         while self.running:
             time.sleep(1)
-            # TODO - Add respawn logic here
+            # Optional: Check if processes are alive and restart them
+            for p in self.processes:
+                if not p.is_alive():
+                     # Simple log for now
+                     pass
 
     def stop(self, signum, frame):
         print("\n[Manager] Stopping...")
         self.running = False
         for p in self.processes:
-            p.terminate()
+            if p.is_alive():
+                p.terminate()
         sys.exit(0)
 
 if __name__ == "__main__":
