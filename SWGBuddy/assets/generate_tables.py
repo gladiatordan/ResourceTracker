@@ -12,28 +12,28 @@ VALID_RES_FILE = "valid_resource_table.json"
 
 # Map internal DB names to Standard Short Codes
 STAT_MAP = {
-    "res_quality": "OQ",
-    "res_decay_resist": "DR",
-    "res_flavor": "FL",
-    "res_potential_energy": "PE",
-    "res_malleability": "MA",
-    "res_toughness": "UT",
-    "res_shock_resistance": "SR",
-    "res_cold_resist": "CR",
-    "res_heat_resist": "HR",
-    "res_conductivity": "CD",
-    "entangle_resistance": "ER"
+    "res_quality": "res_oq",
+    "res_decay_resist": "res_dr",
+    "res_flavor": "res_fl",
+    "res_potential_energy": "res_pe",
+    "res_malleability": "res_ma",
+    "res_toughness": "res_ut",
+    "res_shock_resistance": "res_sr",
+    "res_cold_resist": "res_cr",
+    "res_heat_resist": "res_hr",
+    "res_conductivity": "res_cd",
+    "entangle_resistance": "res_er"
 }
 
 STANDARD_PLANETS = [
     "Corellia", "Dantooine", "Dathomir", "Endor", "Lok", 
-    "Naboo", "Rori", "Talus", "Tatooine", "Yavin IV"
+    "Naboo", "Rori", "Talus", "Tatooine", "Yavin"
 ]
 
 def clean_str(s):
     """Removes quotes from CSV/TSV strings."""
     if not s: return ""
-    return s.strip().strip('"').strip("'")
+    return s.strip().strip('"').strip("'").replace("  ", " ")
 
 def get_planet_list(label):
     """Derives valid planets based on the class label."""
