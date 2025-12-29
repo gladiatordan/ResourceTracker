@@ -116,7 +116,24 @@ async function handleBadgeClick(event, resourceName, planetValue) {
 	const resource = rawResourceData.find(r => r.name === resourceName);
 	if (!resource) return;
 
-	if (!confirm(`Remove ${planetValue} from ${resourceName}?`)) return;
+	// 2. Check for "Don't Prompt Again" preference in localStorage
+    const skipConfirmation = localStorage.getItem('swgbuddy_skip_planet_confirm') === 'true';
+
+    // 3. Confirmation Logic
+    if (!skipConfirmation) {
+        // Since standard browser confirm() doesn't have a "Don't ask again" checkbox,
+        // this typically refers to the browser's native "Prevent this page from creating additional dialogs".
+        // If the browser blocks the dialog, confirm() may return false.
+        
+        const confirmed = confirm(`Remove ${planetValue} from ${resourceName}?`);
+        
+        // If the user cancels, stop logic. 
+        // Note: If the browser is auto-blocking, we move to a custom preference model.
+        if (!confirmed) return;
+        
+        // Optional: If you implement a custom modal with a checkbox later, 
+        // you would set 'swgbuddy_skip_planet_confirm' to true here.
+    }
 
 	try {
 		await API.updateResource({
