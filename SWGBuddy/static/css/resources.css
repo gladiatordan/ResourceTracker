@@ -651,6 +651,7 @@ td.col-stat { font-weight: 700; }
     cursor: pointer;
     font-family: 'Rajdhani', sans-serif;
     font-weight: 700;
+    transition: all 0.2s; /* Added transition */
 }
 .btn-secondary:hover { background: #444; color: #fff; }
 .btn-secondary:disabled { opacity: 0.5; cursor: not-allowed; }
@@ -664,6 +665,7 @@ td.col-stat { font-weight: 700; }
     cursor: pointer;
     font-family: 'Rajdhani', sans-serif;
     font-weight: 700;
+    transition: all 0.2s; /* Added transition */
 }
 .btn-danger:hover { background: #ff4444; color: #000; }
 .btn-danger:disabled { opacity: 0.5; cursor: not-allowed; }

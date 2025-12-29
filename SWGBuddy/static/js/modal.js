@@ -135,41 +135,42 @@ const Modal = {
 		document.getElementById('stats-label').textContent = isDetails ? "Stats" : "Enter Stats (Stats not applicable to this type are disabled)";
 		
 		if (isDetails) this.renderStatsView(res);
-		else this.updateStatFields(document.getElementById('res-type').value); // Enable/Disable based on type
+		else this.updateStatFields(document.getElementById('res-type').value);
 
-		// Meta Data (Planets, etc) - Only visible in Details/Edit (Not Add)
+		// Meta Data
 		els.metaContainer.classList.toggle('hidden', this.mode === 'ADD');
 		if (this.mode !== 'ADD') this.renderMetaData(res);
 
 		// Inputs ReadOnly Status
-		els.nameInput.disabled = (this.mode === 'DETAILS'); // Name might be editable in EDIT? "enables editing of any editable fields"
+		els.nameInput.disabled = (this.mode === 'DETAILS'); 
 		els.notesInput.disabled = (this.mode === 'DETAILS');
-		els.notesInput.classList.toggle('static-value', isDetails); // Optional styling change
+		els.notesInput.classList.toggle('static-value', isDetails); 
 
-		// 3. Buttons
-		const canEditRole = window.Auth && Auth.hasPermission('USER');
+		// 3. Buttons Logic
+		// FIX: Check for EDITOR permission (Level 2), not just USER (Level 1)
+		const canEditRole = window.Auth && Auth.hasPermission('EDITOR');
 		
 		// Edit Details Button
 		if (this.mode === 'DETAILS') {
 			els.btnEdit.classList.remove('hidden');
-			els.btnEdit.disabled = !canEditRole;
+			els.btnEdit.disabled = !canEditRole; // Disabled if not at least Editor
 		} else if (this.mode === 'EDIT') {
 			els.btnEdit.classList.remove('hidden');
-			els.btnEdit.disabled = true; 
+			els.btnEdit.disabled = true; // Disabled while editing
 		} else {
-			els.btnEdit.classList.add('hidden');
+			els.btnEdit.classList.add('hidden'); // Hidden in Add mode
 		}
 
 		// Save Button
 		if (this.mode === 'DETAILS') {
 			els.btnSave.disabled = true;
 		} else if (this.mode === 'ADD') {
-			els.btnSave.disabled = false; // Always enabled for Add (validation handles it)
+			els.btnSave.disabled = false; 
 		} 
 		// Edit mode save state is handled by checkDirty()
 
 		// Cancel Button
-		els.btnCancel.disabled = (this.mode === 'DETAILS');
+		els.btnCancel.disabled = (this.mode === 'DETAILS'); // Disabled in View-only
 	},
 
 	renderStatsView(res) {
