@@ -105,7 +105,7 @@ async function handleBadgeClick(event, resourceName, planetValue) {
 		event.stopPropagation();
 	}
 
-	if (!window.Auth || !Auth.hasPermission('USER')) return;
+	if (!window.Auth || !Auth.hasPermission('EDITOR')) return;
 
 	const resource = rawResourceData.find(r => r.name === resourceName);
 	if (!resource) return;

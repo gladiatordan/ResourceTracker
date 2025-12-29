@@ -121,8 +121,8 @@ function toggleSort(key) {
 	}
 
 	// Keep Date and Active as fallbacks at the bottom of the stack if they aren't active
-	if (!sortStack.find(s => s.key === 'is_active')) sortStack.push({ key: 'is_active', direction: 'desc' });
-	if (!sortStack.find(s => s.key === 'date_reported')) sortStack.push({ key: 'date_reported', direction: 'desc' });
+	if (!sortStack.find(s => s.key === 'is_active')) sortStack.push({ key: 'is_active', direction: 'asc' });
+	if (!sortStack.find(s => s.key === 'date_reported')) sortStack.push({ key: 'date_reported', direction: 'asc' });
 
 	updateSortVisuals();
 	applyAllTableTransforms();
