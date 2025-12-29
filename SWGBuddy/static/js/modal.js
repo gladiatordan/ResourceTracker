@@ -1,181 +1,144 @@
-/**
- * Resource Modal Controller
- * Handles Add/Edit interactions, dynamic stat validation, and submission.
- */
+/* Modal Logic for SWGBuddy 
+    Handles opening, closing, and submitting the resource form.
+*/
 
-// Mapping between DOM Input IDs and Taxonomy Attribute Codes
-const STAT_MAPPING = {
-    'res_oq': 'OQ', 'res_cd': 'CD', 'res_dr': 'DR', 'res_fl': 'FL',
-    'res_hr': 'HR', 'res_ma': 'MA', 'res_pe': 'PE', 'res_sr': 'SR',
-    'res_ut': 'UT', 'res_cr': 'CR'
-};
+// Mapping of Stat Keys to DOM IDs
+const STAT_KEYS = ['res_oq', 'res_cd', 'res_dr', 'res_fl', 'res_hr', 'res_ma', 'res_pe', 'res_sr', 'res_ut', 'res_cr'];
+let isSubmitting = false;
 
-const Modal = {
-    isSubmitting: false,
+function openAddResourceModal() {
+    // 1. Reset Form
+    document.getElementById('resource-form').reset();
+    document.getElementById('modal-title').innerText = "REPORT RESOURCE";
+    document.getElementById('modal-status-bar').innerText = "";
+    document.getElementById('modal-status-bar').className = "status-bar";
     
-    elements: {
-        overlay: document.getElementById('resource-modal'),
-        title: document.getElementById('modal-title'),
-        form: document.getElementById('resource-form'),
-        typeSelect: document.getElementById('res-type'),
-        notes: document.getElementById('res-notes'),
-        inputs: {}, 
-        statusBar: document.getElementById('modal-status-bar'),
-        loader: document.getElementById('modal-loader')
-    },
+    // 2. Populate Types (if empty)
+    populateTypeDropdown();
 
-    init() {
-        // Cache stat inputs
-        Object.keys(STAT_MAPPING).forEach(id => {
-            const el = document.getElementById(id);
-            if (el) this.elements.inputs[id] = el;
-        });
+    // 3. Trigger initial stat toggle based on default selection
+    handleTypeChange();
 
-        // Listen for Type changes to update UI
-        if (this.elements.typeSelect) {
-            this.elements.typeSelect.addEventListener('change', (e) => {
-                this.updateStatFields(e.target.value);
-            });
-        }
+    // 4. Show Modal
+    const modal = document.getElementById('resource-modal');
+    modal.classList.remove('hidden');
+}
 
-        // Handle Submit
-        if (this.elements.form) {
-            this.elements.form.addEventListener('submit', (e) => {
-                e.preventDefault();
-                this.submit();
-            });
-        }
-    },
+function closeResourceModal() {
+    document.getElementById('resource-modal').classList.add('hidden');
+}
 
-    openAdd() {
-        this.resetForm();
-        this.elements.title.textContent = "REPORT RESOURCE";
-        this.populateTypeDropdown();
-        this.updateStatFields(this.elements.typeSelect.value);
+/* Populates the Dropdown. 
+   Depends on 'window.validResources' being loaded by api.js or resources.js first.
+*/
+function populateTypeDropdown() {
+    const select = document.getElementById('res-type');
+    if (select.options.length > 0) return; // Already populated
+
+    // Sort alphabetically
+    const types = Object.keys(window.validResources || {}).sort();
+    
+    types.forEach(type => {
+        const opt = document.createElement('option');
+        opt.value = type;
+        opt.innerText = type;
+        select.appendChild(opt);
+    });
+}
+
+/* Dynamic Stat Toggling 
+   Reads the selected type and disables stats that aren't valid for it.
+*/
+function handleTypeChange() {
+    const type = document.getElementById('res-type').value;
+    const rules = window.validResources ? window.validResources[type] : null;
+    
+    if (!rules) return;
+
+    STAT_KEYS.forEach(stat => {
+        const input = document.getElementById(stat);
+        // If the stat exists in the rules definition, enable it. Otherwise disable.
+        const isEnabled = rules.stats && rules.stats.hasOwnProperty(stat);
         
-        this.elements.overlay.classList.remove('hidden');
-    },
-
-    close() {
-        if (this.isSubmitting) return; // Prevent closing while saving
-        this.elements.overlay.classList.add('hidden');
-        this.resetStatusBar();
-    },
-
-    populateTypeDropdown() {
-        const select = this.elements.typeSelect;
-        if (select.options.length > 0) return; 
-
-        const sortedTypes = Object.keys(window.validResources || {}).sort();
-        sortedTypes.forEach(label => {
-            const opt = document.createElement('option');
-            opt.value = label;
-            opt.textContent = label;
-            select.appendChild(opt);
-        });
-    },
-
-    updateStatFields(label) {
-        const config = window.validResources ? window.validResources[label] : null;
+        input.disabled = !isEnabled;
         
-        Object.entries(STAT_MAPPING).forEach(([inputId, attrCode]) => {
-            const input = this.elements.inputs[inputId];
-            if (!input) return;
+        if (!isEnabled) {
+            input.value = ""; // Clear invalid data
+            input.placeholder = "-";
+        } else {
+            input.placeholder = "";
+        }
+    });
+}
 
-            const isEnabled = config && config.stats && config.stats.hasOwnProperty(inputId);
+/* Form Submission */
+document.getElementById('resource-form').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    if (isSubmitting) return;
 
-            if (isEnabled) {
-                input.disabled = false;
-                input.placeholder = "";
-                input.parentElement.style.opacity = "1";
-            } else {
-                input.disabled = true;
-                input.value = "";
-                input.placeholder = "-";
-                input.parentElement.style.opacity = "0.3";
-            }
-        });
-    },
+    const loader = document.getElementById('modal-loader');
+    const statusDiv = document.getElementById('modal-status-bar');
 
-    async submit() {
-        if (this.isSubmitting) return;
-
-        // 1. Pre-submit Validation (1-1000)
-        for (const [id, input] of Object.entries(this.elements.inputs)) {
-            if (!input.disabled && input.value) {
-                const val = parseInt(input.value);
-                if (isNaN(val) || val < 1 || val > 1000) {
-                    alert(`${STAT_MAPPING[id]} must be between 1 and 1000.`);
-                    input.focus();
-                    return;
-                }
+    // 1. Client-Side Validation (Integers 1-1000)
+    for (let stat of STAT_KEYS) {
+        const input = document.getElementById(stat);
+        if (!input.disabled && input.value) {
+            const val = parseInt(input.value);
+            if (isNaN(val) || val < 1 || val > 1000) {
+                alert(`Error: ${stat.toUpperCase().replace('RES_', '')} must be between 1 and 1000.`);
+                input.focus();
+                return;
             }
         }
-
-        try {
-            this.isSubmitting = true;
-            this.elements.loader.classList.remove('hidden');
-            this.setStatus("", "");
-
-            // 2. Gather Data
-            const formData = {
-                type: this.elements.typeSelect.value,
-                name: document.getElementById('res-name').value,
-                notes: this.elements.notes ? this.elements.notes.value : "",
-                server_id: localStorage.getItem('swg_server_id') || 'cuemu'
-            };
-
-            Object.keys(STAT_MAPPING).forEach(key => {
-                const input = this.elements.inputs[key];
-                if (input && !input.disabled && input.value) {
-                    formData[key] = parseInt(input.value);
-                }
-            });
-
-            // 3. Send Request
-            const response = await fetch('/api/add-resource', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(formData)
-            });
-
-            const result = await response.json();
-
-            if (result.success) {
-                this.setStatus("Validated and Saved!", "success");
-                await loadResources(); 
-                setTimeout(() => this.close(), 800);
-            } else {
-                throw new Error(result.error || "Validation Failed");
-            }
-
-        } catch (error) {
-            this.setStatus(error.message, "error");
-        } finally {
-            this.isSubmitting = false;
-            this.elements.loader.classList.add('hidden');
-        }
-    },
-
-    setStatus(msg, type) {
-        this.elements.statusBar.textContent = msg;
-        this.elements.statusBar.className = `status-bar status-${type}`; 
-    },
-
-    resetStatusBar() {
-        this.elements.statusBar.textContent = "";
-        this.elements.statusBar.className = "status-bar";
-    },
-
-    resetForm() {
-        this.elements.form.reset();
-        this.isSubmitting = false;
-        this.elements.loader.classList.add('hidden');
     }
-};
 
-// Global hooks
-window.openAddResourceModal = () => Modal.openAdd();
-window.closeResourceModal = () => Modal.close(); 
+    // 2. Prepare Payload
+    const payload = {
+        name: document.getElementById('res-name').value,
+        type: document.getElementById('res-type').value,
+        notes: document.getElementById('res-notes').value, // Notes are sent as string
+        server_id: localStorage.getItem('swg_server_id') || 'cuemu'
+    };
 
-document.addEventListener('DOMContentLoaded', () => Modal.init());
+    STAT_KEYS.forEach(key => {
+        const val = document.getElementById(key).value;
+        if (val) payload[key] = parseInt(val);
+    });
+
+    // 3. Show Loading State
+    isSubmitting = true;
+    loader.classList.remove('hidden'); // Show Spinner
+    statusDiv.innerText = "";
+
+    try {
+        const response = await fetch('/api/add-resource', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload)
+        });
+
+        const result = await response.json();
+
+        if (result.success) {
+            // Success!
+            closeResourceModal();
+            // Refresh grid
+            if (typeof loadResources === 'function') loadResources(); 
+        } else {
+            // Server Error
+            statusDiv.innerText = "Error: " + (result.error || "Unknown error");
+            statusDiv.className = "status-bar status-error";
+        }
+    } catch (err) {
+        statusDiv.innerText = "Network Error: " + err.message;
+        statusDiv.className = "status-bar status-error";
+    } finally {
+        isSubmitting = false;
+        loader.classList.add('hidden'); // Hide Spinner
+    }
+});
+
+// Close modal when clicking outside content
+document.getElementById('resource-modal').addEventListener('click', (e) => {
+    if (e.target.id === 'resource-modal') closeResourceModal();
+});
