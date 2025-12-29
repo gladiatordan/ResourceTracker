@@ -97,34 +97,44 @@ async function togglePlanet(selectElement, resourceName) {
 }
 
 async function handleBadgeClick(event, resourceName, planetValue) {
-	const newPlanet = selectElement.value;
-    if (!newPlanet) return;
+	// 1. Prevent bubbling (don't open details modal)
+    if (event) {
+        event.preventDefault();
+        event.stopPropagation();
+    }
+
+    // 2. Permission Check (Guests can see badges but not click them)
+    if (!window.Auth || !Auth.hasPermission('USER')) return;
 
     const resource = rawResourceData.find(r => r.name === resourceName);
     if (!resource) return;
 
-    // Add planet to local list to prevent UI lag
-    if (!resource.planets) resource.planets = [];
-    if (!resource.planets.includes(newPlanet)) {
-        resource.planets.push(newPlanet);
+    // 3. Confirmation
+    if (!confirm(`Remove ${planetValue} from ${resourceName}?`)) return;
+
+    // 4. Optimistic Update (Remove locally)
+    if (resource.planets) {
+        resource.planets = resource.planets.filter(p => p !== planetValue);
     }
 
     try {
+        // 5. Send API Request (Backend toggles it off because it exists)
         await API.updateResource({
             id: resource.id,
             name: resource.name,
-            type: resource.type,
-            planet: newPlanet 
+            type: resource.type, 
+            planet: planetValue
         });
 
-        selectElement.value = "";
+        // 6. Refresh Table
         if (typeof applyAllTableTransforms === 'function') {
             applyAllTableTransforms();
         }
+
     } catch (error) {
-        console.error("Failed to add planet:", error);
-        alert("Error adding planet: " + error.message);
-        await loadResources(); // Revert local state on error
+        console.error("Failed to remove planet:", error);
+        alert("Error removing planet: " + error.message);
+        await loadResources(); // Revert state
     }
 }
 
