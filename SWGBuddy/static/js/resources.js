@@ -101,6 +101,14 @@ async function handleBadgeClick(event, resourceName, planetValue) {
 	console.log(`Remove ${planetValue} from ${resourceName}`);
 }
 
+function getStatColorClass(rating) {
+	if (!rating || rating === '-') return '';
+	if (rating >= 0.950) return 'stat-red';
+	if (rating >= 0.900 && rating < 0.950) return 'stat-yellow';
+	if (rating >= 0.500 && rating < 0.900) return 'stat-green';
+	return '';
+}
+
 // ------------------------------------------------------------------
 // MODAL BRIDGE
 // ------------------------------------------------------------------
