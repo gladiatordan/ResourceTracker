@@ -271,5 +271,19 @@ def set_role():
 	if resp['status'] == 'success': return jsonify({"success": True})
 	return jsonify({"error": resp.get('error')}), 500
 
+@app.route('/api/admin/reload-cache', methods=['POST'])
+def reload_cache():
+    if 'discord_id' not in session: return jsonify({"error": "Unauthorized"}), 401
+    
+    # Optional: Check for SuperAdmin permission here if desired
+    if not session.get('is_superadmin'):
+        return jsonify({"error": "Forbidden"}), 403
+
+    resp = send_command("reload_cache", {})
+    
+    if resp['status'] == 'success':
+        return jsonify({"success": True, "message": "Cache reloaded successfully."})
+    return jsonify({"error": resp.get('error')}), 500
+
 if __name__ == '__main__':
 	app.run(debug=True, port=5000)

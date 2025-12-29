@@ -140,6 +140,11 @@ class ValidationService(Core):
 			elif action == "set_user_role":
 				self._set_user_role(user_ctx, payload, server_id)
 				self.info(f"Role change: {payload.get('target_user_id')} -> {payload.get('role')} on {server_id}")
+
+			# --- NEW COMMAND ---
+			elif action == "reload_cache":
+				self._reload_cache()
+				self.info(f"Admin {user_ctx.get('username')} triggered cache reload.")
 			
 			else:
 				raise ValueError(f"No handler for action: {action}")
@@ -426,4 +431,23 @@ class ValidationService(Core):
 		except Exception as e:
 			self.error(f"Error syncing user {username}: {e}")
 			# Re-raise to ensure the caller knows sync failed
+			raise e
+	
+	def _reload_cache(self):
+		"""Re-reads the JSON taxonomy from disk."""
+		try:
+			json_path = os.path.join(os.getcwd(), "assets", "resource_taxonomy.json")
+			with open(json_path, 'r') as f:
+				tree_data = json.load(f)
+			
+			# Clear and Rebuild
+			self.valid_resources = {}
+			self._flatten_taxonomy(tree_data)
+			
+			# Re-hydrate permissions (optional, if you edit them in DB manually)
+			self._hydrate_permissions()
+			
+			self.info(f"Cache Reloaded. Valid types: {len(self.valid_resources)}")
+		except Exception as e:
+			self.error(f"Failed to reload cache: {e}")
 			raise e

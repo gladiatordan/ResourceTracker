@@ -115,5 +115,19 @@ const API = {
         const result = await response.json();
         if (!result.success) throw new Error(result.error || 'Unknown error');
         return result;
+    },
+
+	/**
+     * ADMIN: Force Backend Cache Reload
+     */
+    async reloadCache() {
+        const response = await fetch('/api/admin/reload-cache', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' }
+        });
+        
+        const result = await response.json();
+        if (!result.success) throw new Error(result.error || 'Reload failed');
+        return result;
     }
 };
