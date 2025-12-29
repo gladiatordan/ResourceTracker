@@ -254,7 +254,7 @@ class ValidationService(Core):
 
 		# Planet Validation
 		planet = data.get('planet')
-		if planet and planet not in allowed_planets:
+		if planet and planet not in allowed_planets and len(allowed_planets) > 0:
 			raise ValueError(f"Planet '{planet}' is not valid for this resource type.")
 
 		# Stat Validation
