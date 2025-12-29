@@ -324,22 +324,7 @@ class ValidationService(Core):
 	# DB UTILS
 	# ----------------------------------------------------------------------
 	def _insert_resource(self, data, server_id):
-		# We need to map the Label back to an ID for the DB 'resource_class_id' column
-		# Or update the DB to store the Label string. 
-		# Assuming we keep the ID column for optimization:
-		
-		label = data.get('type')
-		# Reverse lookup ID from label
-		# ( Ideally we would cache a label_to_id map in __init__ )
-		# For now, linear search or just rely on frontend sending ID?
-		# Frontend refactor removed ID. We should probably update DB to use label or lookup here.
-		
-		# Quick Fix: Inefficient reverse lookup
-		res_class_id = 0
-		for rid, rlabel in self.id_to_label.items():
-			if rlabel == label:
-				res_class_id = rid
-				break
+		res_class_id = data.get('resource_class_id')
 		
 		cols = ["server_id", "resource_class_id", "name", "planet", "res_weight_rating", "type"]
 		vals = [server_id, res_class_id, data['name'], data.get('planet'), data['res_weight_rating'], label]
