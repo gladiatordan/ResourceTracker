@@ -111,3 +111,5 @@ const Auth = {
 		}
 	}
 };
+
+window.Auth = Auth;

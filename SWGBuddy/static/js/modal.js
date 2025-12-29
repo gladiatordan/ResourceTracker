@@ -146,19 +146,17 @@ const Modal = {
 		els.notesInput.disabled = (this.mode === 'DETAILS');
 		els.notesInput.classList.toggle('static-value', isDetails); 
 
-		// 3. Buttons Logic
-		// FIX: Check for EDITOR permission (Level 2), not just USER (Level 1)
 		const canEditRole = window.Auth && Auth.hasPermission('EDITOR');
 		
 		// Edit Details Button
 		if (this.mode === 'DETAILS') {
 			els.btnEdit.classList.remove('hidden');
-			els.btnEdit.disabled = !canEditRole; // Disabled if not at least Editor
+			els.btnEdit.disabled = !canEditRole;
 		} else if (this.mode === 'EDIT') {
 			els.btnEdit.classList.remove('hidden');
-			els.btnEdit.disabled = true; // Disabled while editing
+			els.btnEdit.disabled = true; 
 		} else {
-			els.btnEdit.classList.add('hidden'); // Hidden in Add mode
+			els.btnEdit.classList.add('hidden');
 		}
 
 		// Save Button

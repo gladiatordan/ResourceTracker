@@ -525,12 +525,12 @@ td.col-stat { font-weight: 700; }
     border-top: 1px solid var(--border-color);
     padding-top: 15px;
 }
-
+/* Buttons */
 .btn-primary {
     background: var(--accent-blue);
     color: #000;
-    border: none;
-    padding: 8px 25px;
+    border: 1px solid transparent; /* Added border placeholder to match others */
+    padding: 8px 16px; /* FIX: Reduced from 25px to 16px to match Cancel */
     font-family: 'Orbitron', sans-serif;
     font-weight: 700;
     font-size: 0.9rem;
@@ -543,6 +543,42 @@ td.col-stat { font-weight: 700; }
     background: #fff;
     box-shadow: 0 0 10px var(--accent-blue);
 }
+
+.btn-primary:disabled {
+    background: #333;
+    color: #666;
+    border-color: #444;
+    box-shadow: none;
+    cursor: not-allowed;
+}
+
+.btn-secondary {
+    background: #333;
+    color: #ddd;
+    border: 1px solid #555;
+    padding: 8px 16px; /* 16px Matches Primary */
+    border-radius: 3px;
+    cursor: pointer;
+    font-family: 'Rajdhani', sans-serif;
+    font-weight: 700;
+    transition: all 0.2s;
+}
+.btn-secondary:hover { background: #444; color: #fff; }
+.btn-secondary:disabled { opacity: 0.5; cursor: not-allowed; }
+
+.btn-danger {
+    background: #3a1111;
+    color: #ffaaaa;
+    border: 1px solid #ff4444;
+    padding: 8px 16px; /* 16px Matches Primary */
+    border-radius: 3px;
+    cursor: pointer;
+    font-family: 'Rajdhani', sans-serif;
+    font-weight: 700;
+    transition: all 0.2s;
+}
+.btn-danger:hover { background: #ff4444; color: #000; }
+.btn-danger:disabled { opacity: 0.5; cursor: not-allowed; }
 
 /* Loader / Spinner */
 .modal-loader {
@@ -641,34 +677,7 @@ td.col-stat { font-weight: 700; }
     margin-bottom: 10px;
 }
 
-/* Buttons */
-.btn-secondary {
-    background: #333;
-    color: #ddd;
-    border: 1px solid #555;
-    padding: 8px 16px;
-    border-radius: 3px;
-    cursor: pointer;
-    font-family: 'Rajdhani', sans-serif;
-    font-weight: 700;
-    transition: all 0.2s; /* Added transition */
-}
-.btn-secondary:hover { background: #444; color: #fff; }
-.btn-secondary:disabled { opacity: 0.5; cursor: not-allowed; }
 
-.btn-danger {
-    background: #3a1111;
-    color: #ffaaaa;
-    border: 1px solid #ff4444;
-    padding: 8px 16px;
-    border-radius: 3px;
-    cursor: pointer;
-    font-family: 'Rajdhani', sans-serif;
-    font-weight: 700;
-    transition: all 0.2s; /* Added transition */
-}
-.btn-danger:hover { background: #ff4444; color: #000; }
-.btn-danger:disabled { opacity: 0.5; cursor: not-allowed; }
 
 @keyframes spin { 100% { transform: rotate(360deg); } }
 @keyframes pulse { 0% { opacity: 0.6; } 50% { opacity: 1; } 100% { opacity: 0.6; } }
