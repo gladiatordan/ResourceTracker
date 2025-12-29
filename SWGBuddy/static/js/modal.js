@@ -21,10 +21,11 @@ const Modal = {
 		form: document.getElementById('resource-form'),
 		
 		// Inputs
+		nameGroup: document.querySelector('#res-name').closest('.form-group'), // For toggling visibility
 		nameInput: document.getElementById('res-name'),
 		notesInput: document.getElementById('res-notes'),
 		typeInput: document.getElementById('res-type'),
-		inputs: {}, // Populated in init
+		inputs: {}, 
 		
 		// Containers
 		typeDropdown: document.getElementById('modal-type-dropdown'),
@@ -48,28 +49,23 @@ const Modal = {
 			const el = document.getElementById(id);
 			if (el) {
 				this.elements.inputs[id] = el;
-				// Add dirty check listener
 				el.addEventListener('input', () => this.checkDirty());
 			}
 		});
 
-		// Other Dirty Check Listeners
 		this.elements.nameInput.addEventListener('input', () => this.checkDirty());
 		this.elements.notesInput.addEventListener('input', () => this.checkDirty());
 		
-		// Dropdown toggle
 		document.getElementById('modal-type-selected').addEventListener('click', (e) => {
 			e.stopPropagation();
 			if (this.mode !== 'DETAILS') this.toggleDropdown();
 		});
 
-		// Form Submit
 		this.elements.form.addEventListener('submit', (e) => {
 			e.preventDefault();
 			this.submit();
 		});
 		
-		// Close dropdown on click out
 		document.addEventListener('click', (e) => {
 			const list = document.getElementById('modal-type-list');
 			if (list.style.display === 'block' && !this.elements.typeDropdown.contains(e.target)) {
@@ -94,9 +90,9 @@ const Modal = {
 		this.resetState();
 		this.mode = 'DETAILS';
 		this.currentResource = resource;
-		this.originalData = { ...resource }; // Clone for reference
+		this.originalData = { ...resource }; 
 		
-		this.populateTypeTree(); // Needed for edit mode transition
+		this.populateTypeTree();
 		this.populateFields(resource);
 		this.renderState();
 		this.elements.overlay.classList.remove('hidden');
@@ -104,9 +100,9 @@ const Modal = {
 
 	enterEditMode() {
 		this.mode = 'EDIT';
-		this.originalData = this.captureCurrentFormData(); // Snapshot current inputs
+		this.originalData = this.captureCurrentFormData(); 
 		this.renderState();
-		this.checkDirty(); // Should be disabled initially
+		this.checkDirty();
 	},
 
 	// --- STATE RENDERING ---
@@ -115,14 +111,20 @@ const Modal = {
 		const els = this.elements;
 		const res = this.currentResource || {};
 		
-		// 1. Header Title
+		// 1. Header & Visibility
 		if (this.mode === 'EDIT') els.title.textContent = `Edit Resource - ${res.name}`;
 		else if (this.mode === 'DETAILS') els.title.textContent = `Details - ${res.name}`;
 		else els.title.textContent = "Report Resource";
 
-		// 2. Visibility Toggles
-		const isEditable = (this.mode === 'ADD' || this.mode === 'EDIT');
 		const isDetails = (this.mode === 'DETAILS');
+
+		// FIX: Hide Name field unless in Add Mode
+		if (this.mode === 'ADD') {
+			els.nameGroup.style.display = 'flex';
+			els.nameInput.disabled = false;
+		} else {
+			els.nameGroup.style.display = 'none';
+		}
 
 		// Type
 		els.typeDropdown.classList.toggle('hidden', isDetails);
@@ -141,34 +143,32 @@ const Modal = {
 		els.metaContainer.classList.toggle('hidden', this.mode === 'ADD');
 		if (this.mode !== 'ADD') this.renderMetaData(res);
 
-		// Inputs ReadOnly Status
-		els.nameInput.disabled = (this.mode === 'DETAILS'); 
-		els.notesInput.disabled = (this.mode === 'DETAILS');
-		els.notesInput.classList.toggle('static-value', isDetails); 
+		// Inputs
+		els.notesInput.disabled = isDetails;
+		els.notesInput.classList.toggle('static-value', isDetails);
 
+		// Buttons
 		const canEditRole = window.Auth && Auth.hasPermission('EDITOR');
 		
-		// Edit Details Button
 		if (this.mode === 'DETAILS') {
 			els.btnEdit.classList.remove('hidden');
 			els.btnEdit.disabled = !canEditRole;
+			els.btnSave.disabled = true;
+			els.btnCancel.disabled = true; // "Cancel" disabled in view mode? Or usually hidden?
+			// User requested: "Cancel exits Edit Mode, disabled unless in Edit Mode"
+			// Actually, in Details mode, usually we just have "Close" (X top right).
+			// But if requested "disabled":
+			els.btnCancel.disabled = true; 
 		} else if (this.mode === 'EDIT') {
 			els.btnEdit.classList.remove('hidden');
-			els.btnEdit.disabled = true; 
-		} else {
+			els.btnEdit.disabled = true;
+			// Save state handled by checkDirty
+			els.btnCancel.disabled = false;
+		} else { // ADD
 			els.btnEdit.classList.add('hidden');
+			els.btnSave.disabled = false;
+			els.btnCancel.disabled = false;
 		}
-
-		// Save Button
-		if (this.mode === 'DETAILS') {
-			els.btnSave.disabled = true;
-		} else if (this.mode === 'ADD') {
-			els.btnSave.disabled = false; 
-		} 
-		// Edit mode save state is handled by checkDirty()
-
-		// Cancel Button
-		els.btnCancel.disabled = (this.mode === 'DETAILS'); // Disabled in View-only
 	},
 
 	renderStatsView(res) {
@@ -179,7 +179,7 @@ const Modal = {
 			const val = res[key];
 			if (val && val > 0) {
 				const rating = res[key + '_rating'] || 0;
-				const colorClass = getStatColorClass(rating); // Global helper
+				const colorClass = getStatColorClass(rating); 
 				const pct = (rating * 100).toFixed(1) + '%';
 				
 				const div = document.createElement('div');
@@ -192,14 +192,23 @@ const Modal = {
 	},
 
 	renderMetaData(res) {
-		document.getElementById('res-date').textContent = formatDate(res.date_reported);
+		// FIX: Use last_modified if available, else date_reported
+		// Use the new _ts (timestamp) fields from server
+		const ts = res.last_modified_ts || res.date_reported_ts || 0;
+		const dateLabel = res.last_modified_ts ? "Last Modified" : "Date Reported";
+		
+		// Update Label dynamically if you want, or just stick to "Date Reported" field showing the active date
+		document.querySelector('#meta-container label').textContent = dateLabel;
+		document.getElementById('res-date').textContent = formatDate(ts);
+		
 		document.getElementById('res-reporter').textContent = res.reporter_name || "Unknown";
 		
-		// Planets
-		const planets = (res.planet || []).join(', ') || "None";
-		document.getElementById('res-planets').textContent = planets;
+		// FIX: Handle 'planet' (DB column) or 'planets' (JS alias) correctly
+		// The server returns 'planet' which is a list of strings
+		const pList = res.planet || res.planets || [];
+		const planetsStr = Array.isArray(pList) ? pList.join(', ') : pList;
+		document.getElementById('res-planets').textContent = planetsStr || "None";
 		
-		// Status
 		const statusDiv = document.getElementById('res-status');
 		statusDiv.innerHTML = `<span class="status-text ${res.is_active ? 'active' : 'inactive'}">${res.is_active ? 'Active' : 'Inactive'}</span>`;
 	},
@@ -216,13 +225,10 @@ const Modal = {
 		});
 	},
 
-	// --- ACTIONS ---
-
 	cancel() {
 		if (this.mode === 'ADD') {
 			this.close();
 		} else if (this.mode === 'EDIT') {
-			// Revert to Details
 			this.openDetails(this.currentResource);
 		}
 	},
@@ -234,7 +240,6 @@ const Modal = {
 	async submit() {
 		if (this.isSubmitting) return;
 		
-		// Validation (1-1000)
 		for (const [id, input] of Object.entries(this.elements.inputs)) {
 			if (!input.disabled && input.value) {
 				const val = parseInt(input.value);
@@ -254,21 +259,17 @@ const Modal = {
 			if (this.mode === 'EDIT') {
 				formData.id = this.currentResource.id;
 				await API.updateResource(formData);
-				// Update local model implicitly by re-fetching or merging
-				// For simplicity, we assume success means backend is updated
 			} else {
 				await API.addResource(formData);
 			}
 
-			// Success -> Reload Data -> Switch to Details
 			await loadResources(); 
 			
-			// Find the fresh object to display Details Mode correctly
 			const freshRes = rawResourceData.find(r => r.name === formData.name);
 			if (freshRes) {
 				this.openDetails(freshRes);
 			} else {
-				this.close(); // Fallback
+				this.close();
 			}
 
 		} catch (error) {
@@ -279,8 +280,6 @@ const Modal = {
 			this.elements.loader.classList.add('hidden');
 		}
 	},
-
-	// --- HELPERS ---
 
 	captureCurrentFormData() {
 		const data = {
@@ -303,9 +302,10 @@ const Modal = {
 		if (this.mode !== 'EDIT') return;
 		
 		const current = this.captureCurrentFormData();
-		// Simple comparison. Note: originalData might have extra fields like 'id', ignore them.
 		let isDirty = false;
 		
+		// Note: Name isn't editable in EDIT mode typically if it's the ID, but here it is
+		// If name input is disabled in edit mode, this check is moot for name
 		if (current.name !== this.originalData.name) isDirty = true;
 		if (current.notes !== (this.originalData.notes || "")) isDirty = true;
 		if (current.type !== this.originalData.type) isDirty = true;
@@ -313,15 +313,14 @@ const Modal = {
 		Object.keys(STAT_MAPPING).forEach(key => {
 			const oldVal = this.originalData[key] || "";
 			const newVal = current[key] || "";
-			// Compare as strings to handle "500" vs 500
 			if (oldVal.toString() !== newVal.toString()) isDirty = true;
 		});
 
 		this.elements.btnSave.disabled = !isDirty;
 	},
 
+	// ... (populateTypeTree, selectType, updateStatFields, toggleDropdown, resetState - Same as before)
 	populateTypeTree() {
-		// ... (Existing Tree Builder Logic - Kept same as previous) ...
 		const list = document.getElementById('modal-type-list');
 		list.innerHTML = ''; 
 		if (!window.TAXONOMY_TREE || window.TAXONOMY_TREE.length === 0) return;
@@ -376,7 +375,7 @@ const Modal = {
 	},
 
 	selectType(label) {
-		if (this.mode === 'DETAILS') return; // Read only
+		if (this.mode === 'DETAILS') return; 
 		this.elements.typeInput.value = label;
 		document.getElementById('modal-type-selected').textContent = label;
 		document.getElementById('modal-type-list').style.display = 'none';
@@ -414,13 +413,12 @@ const Modal = {
 		this.elements.statusBar.className = "status-bar";
 		this.elements.loader.classList.add('hidden');
 		this.isSubmitting = false;
-		// Default visuals
 		document.getElementById('modal-type-selected').textContent = "Select Resource Type...";
 	}
 };
 
 window.openAddResourceModal = () => Modal.openAdd();
 window.closeResourceModal = () => Modal.close();
-window.Modal = Modal; // Expose for resources.js
+window.Modal = Modal; 
 
 document.addEventListener('DOMContentLoaded', () => Modal.init());

@@ -44,18 +44,19 @@ async function toggleStatus(button, resourceName) {
 	statusSpan.className = `status-text ${newState ? 'active' : 'inactive'}`;
 
 	try {
-		// UNIFIED CALL: Use updateResource instead of specific endpoint
-		await API.updateResource({
-			id: resource.id,
-			name: resource.name,
-			type: resource.type, // <--- CRITICAL: Required for validation lookup
-			is_active: newState
-		});
+		// FIX: Send full object so validation.py can recalculate ratings if needed
+		const payload = {
+			...resource, 
+			is_active: newState,
+			// Ensure we use the correct array format for planets if present
+			planet: resource.planet || [] 
+		};
+
+		await API.updateResource(payload);
 		
 		resource.is_active = newState;
 	} catch (error) {
 		console.error("Failed to save status:", error);
-		// Revert UI
 		statusSpan.textContent = currentlyActive ? "Active" : "Inactive";
 		statusSpan.className = `status-text ${currentlyActive ? 'active' : 'inactive'}`;
 		alert("Failed: " + error.message);
@@ -73,22 +74,27 @@ async function togglePlanet(selectElement, resourceName) {
 	const resource = rawResourceData.find(r => r.name === resourceName);
 	if (!resource) return;
 
+	// Local Update
 	if (!resource.planets) resource.planets = [];
-	if (!resource.planets.includes(newPlanet)) {
-		resource.planets.push(newPlanet);
-	}
-
+	// Note: Validation.py handles the toggle logic (remove if present), 
+	// but here we are just triggering the update.
+	// If we want accurate optimistic UI, we'd check if present and remove/add.
+	// But since the dropdown usually only shows "Addable" planets, assume Add.
+	
 	try {
-		await API.updateResource({
-			id: resource.id,
-			name: resource.name,
-			type: resource.type, // <--- CRITICAL
-			planet: newPlanet
-		});
+		// FIX: Send full object + new planet to toggle
+		// The backend toggle logic relies on us sending the *singular* planet field to toggle it
+		const payload = {
+			...resource,
+			planet: newPlanet // This specific field triggers the array toggle logic in backend
+		};
+
+		await API.updateResource(payload);
 
 		selectElement.value = "";
 		if (typeof applyAllTableTransforms === 'function') {
-			applyAllTableTransforms();
+			// Reload to get the fresh array from DB (safest for array toggles)
+			await loadResources(); 
 		}
 	} catch (error) {
 		console.error("Failed to add planet:", error);
@@ -97,45 +103,27 @@ async function togglePlanet(selectElement, resourceName) {
 }
 
 async function handleBadgeClick(event, resourceName, planetValue) {
-	// 1. Prevent bubbling (don't open details modal)
-    if (event) {
-        event.preventDefault();
-        event.stopPropagation();
-    }
+	if (event) { event.preventDefault(); event.stopPropagation(); }
+	if (!window.Auth || !Auth.hasPermission('USER')) return;
 
-    // 2. Permission Check (Guests can see badges but not click them)
-    if (!window.Auth || !Auth.hasPermission('USER')) return;
+	const resource = rawResourceData.find(r => r.name === resourceName);
+	if (!resource) return;
 
-    const resource = rawResourceData.find(r => r.name === resourceName);
-    if (!resource) return;
+	if (!confirm(`Remove ${planetValue} from ${resourceName}?`)) return;
 
-    // 3. Confirmation
-    if (!confirm(`Remove ${planetValue} from ${resourceName}?`)) return;
+	try {
+		const payload = {
+			...resource,
+			planet: planetValue // Triggers toggle (remove)
+		};
 
-    // 4. Optimistic Update (Remove locally)
-    if (resource.planets) {
-        resource.planets = resource.planets.filter(p => p !== planetValue);
-    }
+		await API.updateResource(payload);
+		await loadResources(); 
 
-    try {
-        // 5. Send API Request (Backend toggles it off because it exists)
-        await API.updateResource({
-            id: resource.id,
-            name: resource.name,
-            type: resource.type, 
-            planet: planetValue
-        });
-
-        // 6. Refresh Table
-        if (typeof applyAllTableTransforms === 'function') {
-            applyAllTableTransforms();
-        }
-
-    } catch (error) {
-        console.error("Failed to remove planet:", error);
-        alert("Error removing planet: " + error.message);
-        await loadResources(); // Revert state
-    }
+	} catch (error) {
+		console.error("Failed to remove planet:", error);
+		alert("Error: " + error.message);
+	}
 }
 
 function getStatColorClass(rating) {
