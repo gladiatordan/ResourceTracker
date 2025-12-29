@@ -9,7 +9,7 @@ let VALID_TYPES = new Set(); // Set of Strings (Labels)
 async function loadTaxonomy() {
 	try {
 		// Fetch the single consolidated JSON
-		const response = await fetch('/assets/resource_taxonomy.json');
+		const response = await fetch('/api/taxonomy');
 		if (!response.ok) throw new Error("Failed to fetch taxonomy");
 		
 		TAXONOMY_TREE = await response.json();
