@@ -85,7 +85,7 @@ async function togglePlanet(selectElement, resourceName) {
 	try {
 		// Send update to server (Requires type for validation)
 		// We send the specific 'planet' field to add it
-		await API.updateResource({
+		await API.updateStatus({
 			id: resource.id,
 			name: resource.name,
 			type: resource.type,
