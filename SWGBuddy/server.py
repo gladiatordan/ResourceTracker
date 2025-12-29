@@ -202,7 +202,7 @@ def queryResourceLog():
                EXTRACT(EPOCH FROM rs.date_reported) as date_reported_ts,
                EXTRACT(EPOCH FROM rs.last_modified) as last_modified_ts
         FROM resource_spawns rs
-        JOIN resource_taxonomy rt ON rs.resource_class_id = rt.swg_index
+        JOIN resource_taxonomy rt ON rs.resource_class_id = rt.id
         LEFT JOIN users u ON rs.reporter_id = u.discord_id
         WHERE rs.server_id = %s 
         AND (EXTRACT(EPOCH FROM rs.date_reported) > %s 
