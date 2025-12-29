@@ -234,7 +234,7 @@ def get_taxonomy():
     try:
         # Use relative pathing from file location to ensure it works in package mode
         base_dir = os.path.dirname(os.path.abspath(__file__))
-        path = os.path.join(base_dir, "assets", "resource_hierarchy_table.json")
+        path = os.path.join(base_dir, "assets", "resource_taxonomy.json")
         with open(path, 'r') as f:
             data = json.load(f)
         resp = jsonify(data)
