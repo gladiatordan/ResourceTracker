@@ -67,7 +67,7 @@ async function toggleStatus(button, resourceName) {
 // ------------------------------------------------------------------
 
 async function togglePlanet(selectElement, resourceName) {
-	const newPlanet = selectElement.value;
+	const newPlanet = selectElement.value.charAt(0).toUpperCase() + selectElement.value.slice(1);
 	if (!newPlanet) return;
 
 	const resource = rawResourceData.find(r => r.name === resourceName);
