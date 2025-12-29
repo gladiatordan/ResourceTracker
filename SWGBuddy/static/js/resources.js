@@ -4,8 +4,7 @@
  */
 
 // Global Store
-let rawResourceData = [];
-let lastSyncTime = 0;
+
 
 /**
  * Main Loader Function
@@ -16,7 +15,7 @@ async function loadResources() {
 		const newResources = dataPacket.resources || [];
 		
 		rawResourceData = newResources;
-		lastSyncTime = Date.now();
+		LAST_SYNC_TIMESTAMP = Date.now();
 
 		if (typeof applyAllTableTransforms === 'function') {
 			applyAllTableTransforms();

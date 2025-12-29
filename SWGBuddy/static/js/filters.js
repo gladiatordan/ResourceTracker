@@ -5,11 +5,6 @@
 
 // Initialize Sort Stack with defaults: Status (Active first), then Date (Newest first)
 // Note: 'asc' usually maps to Up Arrow.
-let sortStack = [
-	{ key: 'is_active', direction: 'desc' }, // Active on top
-	{ key: 'date_reported', direction: 'desc' } // Newest on top
-];
-
 const columnTypes = {
 	name: 'alpha',
 	type: 'alpha',
