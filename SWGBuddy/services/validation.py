@@ -327,7 +327,7 @@ class ValidationService(Core):
 		res_class_id = data.get('resource_class_id')
 		
 		cols = ["server_id", "resource_class_id", "name", "planet", "res_weight_rating", "type"]
-		vals = [server_id, res_class_id, data['name'], data.get('planet'), data['res_weight_rating'], label]
+		vals = [server_id, res_class_id, data['name'], data.get('planet'), data['res_weight_rating']]
 
 		for stat in self.STAT_COLS:
 			if data.get(stat):
