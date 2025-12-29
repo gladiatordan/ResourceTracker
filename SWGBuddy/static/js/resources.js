@@ -15,7 +15,10 @@ async function loadResources() {
 		const newResources = dataPacket.resources || [];
 		
 		rawResourceData = newResources;
-		LAST_SYNC_TIMESTAMP = Date.now();
+		// Use global variable for tracking delta syncs if applicable
+		if (typeof LAST_SYNC_TIMESTAMP !== 'undefined') {
+			LAST_SYNC_TIMESTAMP = Date.now();
+		}
 
 		if (typeof applyAllTableTransforms === 'function') {
 			applyAllTableTransforms();
@@ -44,20 +47,17 @@ async function toggleStatus(button, resourceName) {
 	statusSpan.className = `status-text ${newState ? 'active' : 'inactive'}`;
 
 	try {
-        // Prepare payload
-        const payload = { ...resource, is_active: newState };
-        
-        // FIX: Remove planet fields to prevent accidental toggling/updates
-        // validation.py now handles lists gracefully, but it's safer to just 
-        // not send 'planet' if we aren't changing it.
-        delete payload.planet;
-        delete payload.planets;
+		// Send full object excluding planet to avoid array issues
+		const payload = { ...resource, is_active: newState };
+		delete payload.planet; // Don't toggle planets
+		delete payload.planets;
 
-        await API.updateResource(payload);
-        
-        resource.is_active = newState;
+		await API.updateResource(payload);
+		
+		resource.is_active = newState;
 	} catch (error) {
 		console.error("Failed to save status:", error);
+		// Revert UI
 		statusSpan.textContent = currentlyActive ? "Active" : "Inactive";
 		statusSpan.className = `status-text ${currentlyActive ? 'active' : 'inactive'}`;
 		alert("Failed: " + error.message);
@@ -75,28 +75,29 @@ async function togglePlanet(selectElement, resourceName) {
 	const resource = rawResourceData.find(r => r.name === resourceName);
 	if (!resource) return;
 
-	// Local Update
-	if (!resource.planets) resource.planets = [];
-	// Note: Validation.py handles the toggle logic (remove if present), 
-	// but here we are just triggering the update.
-	// If we want accurate optimistic UI, we'd check if present and remove/add.
-	// But since the dropdown usually only shows "Addable" planets, assume Add.
-	
-	try {
-		// FIX: Send full object + new planet to toggle
-		// The backend toggle logic relies on us sending the *singular* planet field to toggle it
-		const payload = {
-			...resource,
-			planet: newPlanet // This specific field triggers the array toggle logic in backend
-		};
+	// Normalize property
+	const pList = resource.planet || resource.planets || [];
+	// Ensure we are updating the canonical property 'planet'
+	resource.planet = pList; 
 
-		await API.updateResource(payload);
+	// Local Optimistic Update
+	if (!resource.planet.includes(newPlanet)) {
+		// Just push to local for responsiveness; reload will sort it.
+		resource.planet.push(newPlanet); 
+	}
+
+	try {
+		await API.updateResource({
+			id: resource.id,
+			name: resource.name,
+			type: resource.type, 
+			planet: newPlanet // Backend toggles (appends) this value
+		});
 
 		selectElement.value = "";
-		if (typeof applyAllTableTransforms === 'function') {
-			// Reload to get the fresh array from DB (safest for array toggles)
-			await loadResources(); 
-		}
+		// Reload to get sorted, verified list from DB
+		await loadResources(); 
+		
 	} catch (error) {
 		console.error("Failed to add planet:", error);
 		alert("Error: " + error.message);
@@ -104,8 +105,13 @@ async function togglePlanet(selectElement, resourceName) {
 }
 
 async function handleBadgeClick(event, resourceName, planetValue) {
-	if (event) { event.preventDefault(); event.stopPropagation(); }
-	if (!window.Auth || !Auth.hasPermission('USER')) return;
+	if (event) {
+		event.preventDefault();
+		event.stopPropagation();
+	}
+
+	// Permission Check (Assuming Auth exists)
+	if (window.Auth && !Auth.hasPermission('USER')) return;
 
 	const resource = rawResourceData.find(r => r.name === resourceName);
 	if (!resource) return;
@@ -113,13 +119,14 @@ async function handleBadgeClick(event, resourceName, planetValue) {
 	if (!confirm(`Remove ${planetValue} from ${resourceName}?`)) return;
 
 	try {
-		const payload = {
-			...resource,
-			planet: planetValue // Triggers toggle (remove)
-		};
+		await API.updateResource({
+			id: resource.id,
+			name: resource.name,
+			type: resource.type,
+			planet: planetValue // Backend toggles (removes) this value if present
+		});
 
-		await API.updateResource(payload);
-		await loadResources(); 
+		await loadResources(); // Refresh to update UI
 
 	} catch (error) {
 		console.error("Failed to remove planet:", error);
@@ -140,11 +147,9 @@ function getStatColorClass(rating) {
 // ------------------------------------------------------------------
 
 function openResourceModal(resourceName) {
-	// Find the data object
 	const resource = rawResourceData.find(r => r.name === resourceName);
 	
 	if (resource && window.Modal) {
-		// Call the Modal controller to open in DETAILS mode
 		window.Modal.openDetails(resource);
 	} else {
 		console.error("Cannot open modal: Resource not found or Modal not loaded.");
