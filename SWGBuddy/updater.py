@@ -5,7 +5,7 @@ import sys
 import os
 
 # Configuration
-POLL_INTERVAL = 60  # Check every 60 seconds
+POLL_INTERVAL = 15  # Check every 60 seconds
 REPO_DIR = "/home/swgbuddy/SWGBuddy"
 BRANCH = "main"
 
