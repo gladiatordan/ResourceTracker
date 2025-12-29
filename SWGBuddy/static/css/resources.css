@@ -318,16 +318,16 @@ td.col-stat { font-weight: 700; }
    7. Modal & Forms
    ========================================= */
 
-/* The Modal Container (Overlay) - Updated to fix layout issues */
+/* The Modal Container (Overlay) */
 .modal {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0, 0, 0, 0.85); /* Darker backdrop */
+    background: rgba(0, 0, 0, 0.85); 
     backdrop-filter: blur(2px);
-    display: flex; /* Toggled via JS class .hidden */
+    display: flex; /* Flex required for centering */
     justify-content: center;
     align-items: center;
     z-index: 2000;
@@ -335,7 +335,7 @@ td.col-stat { font-weight: 700; }
 
 /* Modal Content Box */
 .modal-content {
-    background: var(--bg-secondary); /* Dark Panel BG */
+    background: var(--bg-secondary);
     border: 1px solid var(--accent-blue);
     box-shadow: 0 0 30px rgba(0, 212, 255, 0.15);
     width: 500px;
@@ -361,6 +361,67 @@ td.col-stat { font-weight: 700; }
     font-family: 'Orbitron', sans-serif;
     font-size: 1.2rem;
     letter-spacing: 1px;
+}
+
+/* Modal Dropdown Logic */
+.modal-body .custom-dropdown {
+    width: 100%;
+}
+
+.modal-body .dropdown-list {
+    max-height: 250px;
+    z-index: 2500; /* Higher than modal */
+}
+
+/* Hierarchical Tree Items */
+.modal-tree-node {
+    /* Wrapper for a node and its children */
+}
+
+.modal-tree-label {
+    padding: 8px 10px;
+    cursor: default; /* Default cursor for folders */
+    display: flex;
+    align-items: center;
+    transition: background 0.1s;
+    color: var(--text-dim);
+    font-size: 0.95rem;
+}
+
+.modal-tree-label:hover {
+    background: #111;
+}
+
+.modal-tree-label.selectable {
+    color: var(--text-main);
+    font-weight: 500;
+    cursor: pointer; /* Pointer for valid types */
+}
+
+.modal-tree-label.selectable:hover {
+    background: #1a1f26;
+    color: var(--accent-blue);
+}
+
+.modal-tree-children {
+    display: block; /* Expanded by default */
+}
+
+.modal-tree-children.collapsed {
+    display: none;
+}
+
+.tree-toggle {
+    width: 24px;
+    text-align: center;
+    margin-right: 2px;
+    font-size: 0.7rem;
+    color: var(--accent-color);
+    cursor: pointer;
+    user-select: none;
+}
+.tree-toggle:hover {
+    color: #fff;
 }
 
 .close-modal {

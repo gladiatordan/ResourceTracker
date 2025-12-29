@@ -1,144 +1,291 @@
-/* Modal Logic for SWGBuddy 
-    Handles opening, closing, and submitting the resource form.
-*/
+/**
+ * Resource Modal Controller
+ * Handles Add/Edit interactions, dynamic stat validation, and submission.
+ */
 
-// Mapping of Stat Keys to DOM IDs
-const STAT_KEYS = ['res_oq', 'res_cd', 'res_dr', 'res_fl', 'res_hr', 'res_ma', 'res_pe', 'res_sr', 'res_ut', 'res_cr'];
-let isSubmitting = false;
+// Mapping between DOM Input IDs and Taxonomy Attribute Codes
+const STAT_MAPPING = {
+    'res_oq': 'OQ', 'res_cd': 'CD', 'res_dr': 'DR', 'res_fl': 'FL',
+    'res_hr': 'HR', 'res_ma': 'MA', 'res_pe': 'PE', 'res_sr': 'SR',
+    'res_ut': 'UT', 'res_cr': 'CR'
+};
 
-function openAddResourceModal() {
-    // 1. Reset Form
-    document.getElementById('resource-form').reset();
-    document.getElementById('modal-title').innerText = "REPORT RESOURCE";
-    document.getElementById('modal-status-bar').innerText = "";
-    document.getElementById('modal-status-bar').className = "status-bar";
+const Modal = {
+    isSubmitting: false,
     
-    // 2. Populate Types (if empty)
-    populateTypeDropdown();
-
-    // 3. Trigger initial stat toggle based on default selection
-    handleTypeChange();
-
-    // 4. Show Modal
-    const modal = document.getElementById('resource-modal');
-    modal.classList.remove('hidden');
-}
-
-function closeResourceModal() {
-    document.getElementById('resource-modal').classList.add('hidden');
-}
-
-/* Populates the Dropdown. 
-   Depends on 'window.validResources' being loaded by api.js or resources.js first.
-*/
-function populateTypeDropdown() {
-    const select = document.getElementById('res-type');
-    if (select.options.length > 0) return; // Already populated
-
-    // Sort alphabetically
-    const types = Object.keys(window.validResources || {}).sort();
-    
-    types.forEach(type => {
-        const opt = document.createElement('option');
-        opt.value = type;
-        opt.innerText = type;
-        select.appendChild(opt);
-    });
-}
-
-/* Dynamic Stat Toggling 
-   Reads the selected type and disables stats that aren't valid for it.
-*/
-function handleTypeChange() {
-    const type = document.getElementById('res-type').value;
-    const rules = window.validResources ? window.validResources[type] : null;
-    
-    if (!rules) return;
-
-    STAT_KEYS.forEach(stat => {
-        const input = document.getElementById(stat);
-        // If the stat exists in the rules definition, enable it. Otherwise disable.
-        const isEnabled = rules.stats && rules.stats.hasOwnProperty(stat);
+    elements: {
+        overlay: document.getElementById('resource-modal'),
+        title: document.getElementById('modal-title'),
+        form: document.getElementById('resource-form'),
         
-        input.disabled = !isEnabled;
+        // Dropdown Elements
+        typeDropdown: document.getElementById('modal-type-dropdown'),
+        typeSelected: document.getElementById('modal-type-selected'),
+        typeList: document.getElementById('modal-type-list'),
+        typeInput: document.getElementById('res-type'),
         
-        if (!isEnabled) {
-            input.value = ""; // Clear invalid data
-            input.placeholder = "-";
-        } else {
-            input.placeholder = "";
-        }
-    });
-}
+        notes: document.getElementById('res-notes'),
+        inputs: {}, 
+        statusBar: document.getElementById('modal-status-bar'),
+        loader: document.getElementById('modal-loader')
+    },
 
-/* Form Submission */
-document.getElementById('resource-form').addEventListener('submit', async (e) => {
-    e.preventDefault();
-    if (isSubmitting) return;
-
-    const loader = document.getElementById('modal-loader');
-    const statusDiv = document.getElementById('modal-status-bar');
-
-    // 1. Client-Side Validation (Integers 1-1000)
-    for (let stat of STAT_KEYS) {
-        const input = document.getElementById(stat);
-        if (!input.disabled && input.value) {
-            const val = parseInt(input.value);
-            if (isNaN(val) || val < 1 || val > 1000) {
-                alert(`Error: ${stat.toUpperCase().replace('RES_', '')} must be between 1 and 1000.`);
-                input.focus();
-                return;
-            }
-        }
-    }
-
-    // 2. Prepare Payload
-    const payload = {
-        name: document.getElementById('res-name').value,
-        type: document.getElementById('res-type').value,
-        notes: document.getElementById('res-notes').value, // Notes are sent as string
-        server_id: localStorage.getItem('swg_server_id') || 'cuemu'
-    };
-
-    STAT_KEYS.forEach(key => {
-        const val = document.getElementById(key).value;
-        if (val) payload[key] = parseInt(val);
-    });
-
-    // 3. Show Loading State
-    isSubmitting = true;
-    loader.classList.remove('hidden'); // Show Spinner
-    statusDiv.innerText = "";
-
-    try {
-        const response = await fetch('/api/add-resource', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(payload)
+    init() {
+        // Cache stat inputs
+        Object.keys(STAT_MAPPING).forEach(id => {
+            const el = document.getElementById(id);
+            if (el) this.elements.inputs[id] = el;
         });
 
-        const result = await response.json();
-
-        if (result.success) {
-            // Success!
-            closeResourceModal();
-            // Refresh grid
-            if (typeof loadResources === 'function') loadResources(); 
-        } else {
-            // Server Error
-            statusDiv.innerText = "Error: " + (result.error || "Unknown error");
-            statusDiv.className = "status-bar status-error";
+        // Setup Dropdown Toggling
+        if (this.elements.typeSelected) {
+            this.elements.typeSelected.addEventListener('click', (e) => {
+                e.stopPropagation();
+                this.toggleDropdown();
+            });
         }
-    } catch (err) {
-        statusDiv.innerText = "Network Error: " + err.message;
-        statusDiv.className = "status-bar status-error";
-    } finally {
-        isSubmitting = false;
-        loader.classList.add('hidden'); // Hide Spinner
-    }
-});
 
-// Close modal when clicking outside content
-document.getElementById('resource-modal').addEventListener('click', (e) => {
-    if (e.target.id === 'resource-modal') closeResourceModal();
-});
+        // Close dropdown when clicking outside
+        document.addEventListener('click', (e) => {
+            if (this.elements.typeList && this.elements.typeList.style.display === 'block') {
+                if (!this.elements.typeDropdown.contains(e.target)) {
+                    this.elements.typeList.style.display = 'none';
+                }
+            }
+        });
+
+        // Handle Submit
+        if (this.elements.form) {
+            this.elements.form.addEventListener('submit', (e) => {
+                e.preventDefault();
+                this.submit();
+            });
+        }
+    },
+
+    openAdd() {
+        this.resetForm();
+        this.elements.title.textContent = "REPORT RESOURCE";
+        this.populateTypeTree(); // Use new tree builder
+        this.elements.overlay.classList.remove('hidden');
+    },
+
+    close() {
+        if (this.isSubmitting) return; 
+        this.elements.overlay.classList.add('hidden');
+        this.resetStatusBar();
+    },
+
+    toggleDropdown() {
+        const list = this.elements.typeList;
+        list.style.display = list.style.display === 'block' ? 'none' : 'block';
+    },
+
+    // Build the hierarchical tree
+    populateTypeTree() {
+        const list = this.elements.typeList;
+        list.innerHTML = ''; 
+
+        if (!window.TAXONOMY_TREE || window.TAXONOMY_TREE.length === 0) {
+            list.innerHTML = '<div style="padding:10px">Loading types...</div>';
+            return;
+        }
+
+        // Recursive Node Builder
+        const createNode = (node, depth) => {
+            const container = document.createElement('div');
+            container.className = 'modal-tree-node';
+
+            const header = document.createElement('div');
+            header.className = 'modal-tree-label';
+            header.style.paddingLeft = (depth * 15 + 5) + 'px';
+
+            const isLeaf = !node.children || node.children.length === 0;
+            // Check validity map
+            const isValid = window.validResources && window.validResources.hasOwnProperty(node.label);
+
+            // 1. Icon (Toggle for folders, Dot for leaves)
+            const icon = document.createElement('span');
+            icon.className = 'tree-toggle';
+            icon.innerText = isLeaf ? '•' : '▼'; 
+            icon.style.opacity = isLeaf ? '0.3' : '1';
+            header.appendChild(icon);
+
+            // 2. Text
+            const text = document.createElement('span');
+            text.innerText = node.label;
+            header.appendChild(text);
+
+            // 3. Logic
+            let childrenContainer = null;
+
+            if (isValid) {
+                // If it's a valid type, clicking the ROW selects it
+                header.classList.add('selectable');
+                header.addEventListener('click', () => {
+                    this.selectType(node.label);
+                });
+            } else if (!isLeaf) {
+                // If it's a generic folder (e.g. "Inorganic"), clicking text toggles it
+                header.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    if (childrenContainer) {
+                        childrenContainer.classList.toggle('collapsed');
+                        icon.innerText = childrenContainer.classList.contains('collapsed') ? '▶' : '▼';
+                    }
+                });
+            }
+
+            container.appendChild(header);
+
+            // 4. Children
+            if (!isLeaf) {
+                childrenContainer = document.createElement('div');
+                childrenContainer.className = 'modal-tree-children'; // Expanded by default
+                
+                node.children.forEach(child => {
+                    childrenContainer.appendChild(createNode(child, depth + 1));
+                });
+                container.appendChild(childrenContainer);
+
+                // Make the icon always toggle the children, even if the row is selectable
+                icon.onclick = (e) => {
+                    e.stopPropagation();
+                    childrenContainer.classList.toggle('collapsed');
+                    icon.innerText = childrenContainer.classList.contains('collapsed') ? '▶' : '▼';
+                };
+            }
+
+            return container;
+        };
+
+        // Build Root Nodes
+        window.TAXONOMY_TREE.forEach(rootNode => {
+            list.appendChild(createNode(rootNode, 0));
+        });
+    },
+
+    selectType(label) {
+        // Update hidden input and display text
+        this.elements.typeInput.value = label;
+        this.elements.typeSelected.innerText = label;
+        this.elements.typeList.style.display = 'none';
+
+        // Update stats
+        this.updateStatFields(label);
+    },
+
+    updateStatFields(label) {
+        const config = window.validResources ? window.validResources[label] : null;
+        
+        Object.entries(STAT_MAPPING).forEach(([inputId, attrCode]) => {
+            const input = this.elements.inputs[inputId];
+            if (!input) return;
+
+            const isEnabled = config && config.stats && config.stats.hasOwnProperty(inputId);
+
+            if (isEnabled) {
+                input.disabled = false;
+                input.placeholder = "";
+                input.parentElement.style.opacity = "1";
+            } else {
+                input.disabled = true;
+                input.value = "";
+                input.placeholder = "-";
+                input.parentElement.style.opacity = "0.3";
+            }
+        });
+    },
+
+    async submit() {
+        if (this.isSubmitting) return;
+
+        // Validation
+        for (const [id, input] of Object.entries(this.elements.inputs)) {
+            if (!input.disabled && input.value) {
+                const val = parseInt(input.value);
+                if (isNaN(val) || val < 1 || val > 1000) {
+                    alert(`${STAT_MAPPING[id]} must be between 1 and 1000.`);
+                    input.focus();
+                    return;
+                }
+            }
+        }
+
+        if (!this.elements.typeInput.value) {
+            alert("Please select a resource type.");
+            return;
+        }
+
+        try {
+            this.isSubmitting = true;
+            this.elements.loader.classList.remove('hidden');
+            this.setStatus("", "");
+
+            const formData = {
+                type: this.elements.typeInput.value,
+                name: document.getElementById('res-name').value,
+                notes: this.elements.notes ? this.elements.notes.value : "",
+                server_id: localStorage.getItem('swg_server_id') || 'cuemu'
+            };
+
+            Object.keys(STAT_MAPPING).forEach(key => {
+                const input = this.elements.inputs[key];
+                if (input && !input.disabled && input.value) {
+                    formData[key] = parseInt(input.value);
+                }
+            });
+
+            const response = await fetch('/api/add-resource', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(formData)
+            });
+
+            const result = await response.json();
+
+            if (result.success) {
+                this.setStatus("Validated and Saved!", "success");
+                await loadResources(); 
+                setTimeout(() => this.close(), 800);
+            } else {
+                throw new Error(result.error || "Validation Failed");
+            }
+
+        } catch (error) {
+            this.setStatus(error.message, "error");
+        } finally {
+            this.isSubmitting = false;
+            this.elements.loader.classList.add('hidden');
+        }
+    },
+
+    setStatus(msg, type) {
+        this.elements.statusBar.textContent = msg;
+        this.elements.statusBar.className = `status-bar status-${type}`; 
+    },
+
+    resetStatusBar() {
+        this.elements.statusBar.textContent = "";
+        this.elements.statusBar.className = "status-bar";
+    },
+
+    resetForm() {
+        this.elements.form.reset();
+        this.elements.typeInput.value = "";
+        this.elements.typeSelected.innerText = "Select Resource Type...";
+        this.isSubmitting = false;
+        this.elements.loader.classList.add('hidden');
+        
+        // Disable stats initially
+        Object.values(this.elements.inputs).forEach(input => {
+            input.disabled = true;
+            input.parentElement.style.opacity = "0.3";
+        });
+    }
+};
+
+window.openAddResourceModal = () => Modal.openAdd();
+window.closeResourceModal = () => Modal.close(); 
+
+document.addEventListener('DOMContentLoaded', () => Modal.init());

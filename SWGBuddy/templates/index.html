@@ -80,9 +80,13 @@
 									<input type="text" id="res-name" required placeholder="e.g. Polonium" autocomplete="off">
 								</div>
 								
-								<div class="form-group">
+                                <div class="form-group">
 									<label>Type</label>
-									<select id="res-type" required onchange="handleTypeChange()"></select>
+                                    <div class="custom-dropdown" id="modal-type-dropdown">
+                                        <div class="dropdown-selected" id="modal-type-selected">Select Resource Type...</div>
+                                        <div class="dropdown-list" id="modal-type-list"></div>
+                                    </div>
+                                    <input type="hidden" id="res-type" required>
 								</div>
 
 								<div class="stats-label">Enter Stats (Stats not applicable to this type are disabled)</div>
