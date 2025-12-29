@@ -20,19 +20,17 @@ DISCORD_REDIRECT_URI = "https://swgbuddy.com/callback"
 DISCORD_API_URL = "https://discord.com/api"
 
 # --------------------------------------------------------------------------
-# RESPONSE ROUTER (Replaces old IPC Listener)
+# RESPONSE ROUTER
 # --------------------------------------------------------------------------
-response_futures = {} # Maps Correlation ID -> Queue()
+response_futures = {} 
 
 def start_response_router(reply_queue):
-    """Starts the background thread that routes replies to waiting requests."""
     t = threading.Thread(target=_router_loop, args=(reply_queue,), daemon=True)
     t.start()
 
 def _router_loop(reply_queue):
     while True:
         try:
-            # Blocking get is fine here
             msg = reply_queue.get()
             cid = msg.get('id')
             if cid and cid in response_futures:
@@ -42,7 +40,6 @@ def _router_loop(reply_queue):
             time.sleep(1)
 
 def send_command(action, payload, server_id='cuemu', timeout=10):
-    """Sends a write command to ValidationService and waits for a reply."""
     if 'VAL_QUEUE' not in current_app.config:
         return {"status": "error", "error": "Backend Unavailable"}
 
@@ -115,7 +112,6 @@ def callback():
         user_resp.raise_for_status()
         user_data = user_resp.json()
 
-        # WRITE: Sync User to DB via ValidationService
         send_command("sync_user", user_data)
         
         session['discord_id'] = user_data['id']
@@ -138,33 +134,23 @@ def get_current_user():
         return jsonify({"authenticated": False})
     
     uid = session['discord_id']
-    
-    # READ: Direct DB Access (Fast)
     is_super = False
     perms = {}
     
     try:
         with DatabaseContext.cursor() as cur:
-            # 1. Get Superadmin Status
             cur.execute("SELECT is_superadmin FROM users WHERE discord_id = %s", (uid,))
             row = cur.fetchone()
             if row: is_super = row['is_superadmin']
             
-            # 2. Get Server Roles
             cur.execute("SELECT server_id, role FROM server_permissions WHERE user_id = %s", (uid,))
             rows = cur.fetchall()
             perms = {r['server_id']: r['role'] for r in rows}
     except Exception as e:
         print(f"DB Error in /api/me: {e}")
 
-    # Session Optimization
-    old_perms = session.get('server_perms')
-    old_super = session.get('is_superadmin')
-    
-    if old_perms != perms or old_super != is_super:
-        session['server_perms'] = perms
-        session['is_superadmin'] = is_super
-        session.modified = True
+    session['server_perms'] = perms
+    session['is_superadmin'] = is_super
 
     return jsonify({
         "authenticated": True,
@@ -179,7 +165,6 @@ def get_current_user():
 
 @app.route('/api/resource_log', methods=['GET'])
 def queryResourceLog():
-    """Reads resource data directly from DB."""
     server_id = request.args.get('server', 'cuemu')
     try:
         since = float(request.args.get('since', 0))
@@ -198,30 +183,35 @@ def queryResourceLog():
         with DatabaseContext.cursor() as cur:
             cur.execute(sql, (server_id, since, since))
             rows = cur.fetchall()
-        # Return wrapper to match frontend expectation
         return jsonify({"resources": rows})
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
 @app.route('/api/taxonomy', methods=['GET'])
 def get_taxonomy():
-    """Serves static JSON file."""
+    """Serves the hierarchy tree structure."""
     try:
-        # Assuming running from root
-        path = os.path.join("SWGBuddy", "assets", "resource_hierarchy_table.json") # Or taxonomy.json
-        # NOTE: You mentioned resource_hierarchy_table.json earlier. 
-        # If the frontend expects the full taxonomy map, use the original taxonomy.json.
-        # If you updated frontend to use hierarchy, use that. 
-        # For now, sticking to static/taxonomy.json as per previous turns for safety.
-        
-        with open('static/taxonomy.json', 'r') as f:
+        path = os.path.join("SWGBuddy", "assets", "resource_hierarchy_table.json")
+        with open(path, 'r') as f:
             data = json.load(f)
-        
         resp = jsonify(data)
         resp.headers['Cache-Control'] = 'public, max-age=86400'
         return resp
     except Exception as e:
         return jsonify({"error": "Taxonomy unavailable"}), 500
+
+@app.route('/api/types', methods=['GET'])
+def get_resource_types():
+    """Serves the valid types configuration (stats, planets)."""
+    try:
+        path = os.path.join("SWGBuddy", "assets", "valid_resource_table.json")
+        with open(path, 'r') as f:
+            data = json.load(f)
+        resp = jsonify(data)
+        resp.headers['Cache-Control'] = 'public, max-age=86400'
+        return resp
+    except Exception as e:
+        return jsonify({"error": "Types config unavailable"}), 500
 
 # --- WRITE OPERATIONS ---
 
@@ -245,6 +235,20 @@ def update_resource():
     if resp['status'] == 'success': return jsonify({"success": True})
     return jsonify({"error": resp.get('error')}), 500
 
+@app.route('/api/update-status', methods=['POST'])
+def update_status():
+    """Specific endpoint for toggling active/inactive status."""
+    if 'discord_id' not in session: return jsonify({"error": "Unauthorized"}), 401
+    
+    data = request.json
+    # Map frontend 'is_active' toggle to backend expected payload if needed
+    # Assuming ValidationService handles "update_resource" with partial data or we send a specific command
+    # For now, let's reuse update_resource command but ensure we pass the context
+    resp = send_command("update_resource", data, server_id=data.get('server_id', 'cuemu'))
+    
+    if resp['status'] == 'success': return jsonify({"success": True})
+    return jsonify({"error": resp.get('error')}), 500
+
 @app.route('/api/retire-resource', methods=['POST'])
 def retire_resource():
     if 'discord_id' not in session: return jsonify({"error": "Unauthorized"}), 401
@@ -256,5 +260,4 @@ def retire_resource():
     return jsonify({"error": resp.get('error')}), 500
 
 if __name__ == '__main__':
-    # Dev mode only
     app.run(debug=True, port=5000)

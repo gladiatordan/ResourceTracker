@@ -1,60 +1,112 @@
 /**
  * Taxonomy Manager
- * Handles the resource tree structure and validity checks.
+ * Handles the resource tree structure, validity checks, and rendering.
  */
-let TAXONOMY_TREE = {};
-let VALID_TYPES = new Set(); // Stores IDs of spawnable resources
+let TAXONOMY_TREE = []; // Array of objects
+let RESOURCE_CONFIG = {}; // Map: Label -> {stats, planets}
+let VALID_TYPES = new Set(); // Set of Strings (Labels)
 
 async function loadTaxonomy() {
     try {
-        const data = await API.fetchTaxonomy();
+        const [treeData, configData] = await Promise.all([
+            API.fetchTaxonomy(),
+            API.fetchValidTypes()
+        ]);
         
-        // The API now returns a complex object, not just the list
-        // API.fetchTaxonomy() in api.js calls 'get_init_data'
-        // which returns: { taxonomy: {}, valid_types: [], servers: {}, resources: [] }
+        TAXONOMY_TREE = treeData;
+        RESOURCE_CONFIG = configData;
         
-        // We need to parse the flat taxonomy map into the global object
-        TAXONOMY_TREE = data.taxonomy;
-        
-        // Store valid types for the modal dropdown
-        if (data.valid_types) {
-            VALID_TYPES = new Set(data.valid_types);
+        // Populate valid types from the config map
+        if (RESOURCE_CONFIG) {
+            VALID_TYPES = new Set(Object.keys(RESOURCE_CONFIG));
         }
 
-        console.log(`Taxonomy Loaded: ${Object.keys(TAXONOMY_TREE).length} entries.`);
+        console.log(`Taxonomy Loaded. Valid Types: ${VALID_TYPES.size}`);
+        
+        // Render the dropdown filter UI
+        renderTaxonomyDropdown();
+        
         return TAXONOMY_TREE;
     } catch (error) {
         console.error("Failed to load taxonomy:", error);
     }
 }
 
-function getTaxonomyName(id) {
-    return TAXONOMY_TREE[id] ? TAXONOMY_TREE[id].class_label : `Unknown (${id})`;
+/**
+ * Renders the nested dropdown for filtering.
+ */
+function renderTaxonomyDropdown() {
+    const list = document.getElementById('taxonomy-list');
+    if (!list) return;
+
+    // Reset list with just the Root option
+    list.innerHTML = `<div class="dropdown-item root-item" onclick="selectCategory(null, 'All Resources')">All Resources</div>`;
+
+    // Recursive render
+    function buildHtml(nodes, depth) {
+        let html = '';
+        nodes.forEach(node => {
+            const padding = depth * 15;
+            // Use label as the identifier now
+            const safeLabel = node.label.replace(/'/g, "\\'");
+            
+            html += `<div class="dropdown-item" 
+                          style="padding-left: ${padding}px;" 
+                          onclick="selectCategory('${safeLabel}', '${safeLabel}')">
+                          ${node.label}
+                     </div>`;
+            
+            if (node.children && node.children.length > 0) {
+                html += buildHtml(node.children, depth + 1);
+            }
+        });
+        return html;
+    }
+
+    list.innerHTML += buildHtml(TAXONOMY_TREE, 1);
 }
 
 /**
- * Returns the attributes configuration for a specific resource type.
- * Used by modal.js to enable/disable fields.
+ * Returns a flattened list of all descendant labels for a given parent label.
+ * Used by filters.js to include children in filter results.
  */
-function getResourceTypeConfig(id) {
-    const entry = TAXONOMY_TREE[id];
-    if (!entry) return null;
+function getDescendantLabels(parentLabel) {
+    if (!parentLabel) return [];
+    
+    let descendants = [];
+    
+    // Recursive search to find the node
+    function findNode(nodes, target) {
+        for (const node of nodes) {
+            if (node.label === target) return node;
+            if (node.children) {
+                const found = findNode(node.children, target);
+                if (found) return found;
+            }
+        }
+        return null;
+    }
 
-    const config = {
-        name: entry.class_label,
-        stats: {}
-    };
-
-    // Map the attr_1...11 columns to our standard stat keys
-    // Example: attr_1="OQ" -> stats.OQ = {min: 1, max: 1000}
-    for (let i = 1; i <= 11; i++) {
-        const attrCode = entry[`attr_${i}`]; // e.g. "OQ"
-        if (attrCode) {
-            config.stats[attrCode] = {
-                min: entry[`att_${i}_min`],
-                max: entry[`att_${i}_max`]
-            };
+    const parentNode = findNode(TAXONOMY_TREE, parentLabel);
+    
+    // Collect all children recursively
+    function collect(node) {
+        if (node.children) {
+            node.children.forEach(child => {
+                descendants.push(child.label.toLowerCase());
+                collect(child);
+            });
         }
     }
-    return config;
+
+    if (parentNode) collect(parentNode);
+    return descendants;
+}
+
+/**
+ * Returns the configuration for a specific resource type.
+ * Used by modal.js to enable/disable fields.
+ */
+function getResourceTypeConfig(label) {
+    return RESOURCE_CONFIG[label] || null;
 }
