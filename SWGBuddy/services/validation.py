@@ -267,10 +267,10 @@ class ValidationService(Core):
 		planet = data.get('planet')
 		if planet:
 			planet = [p.capitalize() for p in planet]
+			for p in planet:
+				if p not in allowed_planets:
+					raise ValueError(f"Planet '{p}' is not valid for this resource type.")
 			data['planet'] = planet # Save back to data for DB consistency
-
-		if planet and planet not in allowed_planets:
-			raise ValueError(f"Planet '{planet}' is not valid for this resource type.")
 
 		# Stat Validation
 		for stat in self.STAT_COLS:
