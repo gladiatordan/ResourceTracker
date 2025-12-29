@@ -42,7 +42,7 @@ function renderTable(data) {
 			return `<span class="planet ${planetLower}" 
 							data-tooltip="${p}" 
                             /* FIX: Pass 'p' (Capitalized) to handleBadgeClick instead of planetLower */
-							onclick="handleBadgeClick(event, '${res.name}', '${p}')">
+							onclick="handleBadgeClick(event, '${res.name}', '${p.charAt(0)}')">
 							${p}
 					</span>`;
 		}).join(' ');
