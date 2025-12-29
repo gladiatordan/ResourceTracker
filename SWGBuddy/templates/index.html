@@ -11,6 +11,23 @@
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
+	<header class="main-header">
+		<div class="logo"><span>SWG</span>BUDDY</div>
+		<nav class="top-nav">
+			<button class="nav-btn active" data-target="resources-container">RESOURCES</button>
+			<button class="nav-btn" data-target="schematics-container">SCHEMATICS</button>
+		</nav>
+		<div class="controls-section">
+			<div class="server-select-container">
+				<label for="server-select"><i class="fa-solid fa-server"></i></label>
+				<select id="server-select-wrapper">
+					<option value="cuemu" selected>CUEmu</option>
+				</select>
+			</div>
+
+			<div id="auth-section" class="auth-section"></div>
+		</div>
+	</header>
     <div class="app-container">
 		<main id="main-content">
             <div id="page-loader" class="page-loader">
@@ -170,25 +187,8 @@
 			</section>
 		</main>
     </div>
-    
-	<header class="main-header">
-		<div class="logo"><span>SWG</span>BUDDY</div>
-		<nav class="top-nav">
-			<button class="nav-btn active" data-target="resources-container">RESOURCES</button>
-			<button class="nav-btn" data-target="schematics-container">SCHEMATICS</button>
-		</nav>
-		<div class="controls-section">
-			<div class="server-select-container">
-				<label for="server-select"><i class="fa-solid fa-server"></i></label>
-				<select id="server-select-wrapper">
-					<option value="cuemu" selected>CUEmu</option>
-				</select>
-			</div>
-
-			<div id="auth-section" class="auth-section"></div>
-		</div>
-	</header>
-
+</body>
+<script
 <script src="{{ url_for('static', filename='js/config.js') }}"></script>
 <script src="{{ url_for('static', filename='js/api.js') }}"></script>
 <script src="{{ url_for('static', filename='js/taxonomy.js') }}"></script>
@@ -198,5 +198,5 @@
 <script src="{{ url_for('static', filename='js/modal.js') }}"></script>
 <script src="{{ url_for('static', filename='js/resources.js') }}"></script>
 <script src="{{ url_for('static', filename='js/app.js') }}"></script>
-</body>
+</script>
 </html>
