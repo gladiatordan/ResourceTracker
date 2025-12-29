@@ -72,25 +72,32 @@ body {
 .auth-section {
     display: flex;
     align-items: center;
-	width: 150px;
-    height: 26px;
+    justify-content: flex-end; /* Keeps content anchored to the right */
+    
+    /* WIDTH: Needs to be wider to fit "Username + Avatar + Logout" */
+    min-width: 200px; 
+    
+    /* HEIGHT: Must match the profile's height (32px avatar + 16px padding = ~48px) */
+    height: 48px; 
 }
 
+/* 2. The Button: Remove fixed sizes, let it fit naturally or fill height */
 .btn-discord {
     display: flex;
     align-items: center;
-	justify-content: center;
+    justify-content: center;
     gap: 8px;
-    background: #5865F2; /* Discord Brand Color */
+    
+    background: #5865F2;
     color: white;
-    padding: 8px 16px;
+    padding: 0 20px; /* Adjusted padding for cleaner look */
+    height: 36px;    /* Give it a specific height smaller than container if you want, or 100% */
+    
     border-radius: 4px;
     font-family: 'Rajdhani', sans-serif;
     font-weight: 700;
     text-decoration: none;
     transition: filter 0.2s, transform 0.1s;
-	width: 150px;
-    height: 26px;
     border: none;
     cursor: pointer;
 }
@@ -103,15 +110,17 @@ body {
     transform: translateY(1px);
 }
 
-/* User Profile Styles */
+/* 3. User Profile: Fits perfectly inside the 48px container */
 .user-profile {
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 12px; /* Little more breathing room */
     background: var(--bg-secondary);
-    padding: 8px 16px;
+    padding: 6px 12px; /* Reduced vertical padding slightly to fit 48px nicely */
     border-radius: 4px;
     border: 1px solid var(--border-color);
+    height: 100%; /* Fills the auth-section height */
+    box-sizing: border-box; /* Ensures padding doesn't expand height */
 }
 
 .user-avatar {
