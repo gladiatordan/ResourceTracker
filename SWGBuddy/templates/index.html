@@ -69,6 +69,12 @@
 							<h2 id="modal-title">Report Resource</h2>
 							<button class="close-modal" onclick="closeResourceModal()">&times;</button>
 						</div>
+						
+						<div id="modal-loader" class="modal-loader hidden">
+							<div class="spinner"></div>
+							<div class="loader-text">VALIDATING RESOURCE...</div>
+						</div>
+
 						<div class="modal-body">
 							<form id="resource-form">
 								<div class="form-group">
@@ -76,35 +82,34 @@
 									<input type="text" id="res-name" required placeholder="e.g. Polonium" autocomplete="off">
 								</div>
 								
-								<div class="form-row">
-									<div class="form-group">
-										<label>Type</label>
-										<select id="res-type" required></select>
-									</div>
-									<div class="form-group">
-										<label>Planet</label>
-										<select id="res-planet" required></select>
-									</div>
+								<div class="form-group">
+									<label>Type</label>
+									<select id="res-type" required onchange="handleTypeChange()"></select>
 								</div>
 
-								<div class="stats-label">Enter Stats (Disabled fields do not apply to this type)</div>
+								<div class="stats-label">Enter Stats (Stats not applicable to this type are disabled)</div>
 								<div id="stats-container" class="stats-grid">
-									<div class="stat-group"><label>OQ</label><input type="number" id="res_oq"></div>
-									<div class="stat-group"><label>CR</label><input type="number" id="res_cr"></div>
-									<div class="stat-group"><label>CD</label><input type="number" id="res_cd"></div>
-									<div class="stat-group"><label>DR</label><input type="number" id="res_dr"></div>
-									<div class="stat-group"><label>FL</label><input type="number" id="res_fl"></div>
-									<div class="stat-group"><label>HR</label><input type="number" id="res_hr"></div>
-									<div class="stat-group"><label>MA</label><input type="number" id="res_ma"></div>
-									<div class="stat-group"><label>PE</label><input type="number" id="res_pe"></div>
-									<div class="stat-group"><label>SR</label><input type="number" id="res_sr"></div>
-									<div class="stat-group"><label>UT</label><input type="number" id="res_ut"></div>
+									<div class="stat-group"><label>OQ</label><input type="number" id="res_oq" min="1" max="1000"></div>
+									<div class="stat-group"><label>CR</label><input type="number" id="res_cr" min="1" max="1000"></div>
+									<div class="stat-group"><label>CD</label><input type="number" id="res_cd" min="1" max="1000"></div>
+									<div class="stat-group"><label>DR</label><input type="number" id="res_dr" min="1" max="1000"></div>
+									<div class="stat-group"><label>FL</label><input type="number" id="res_fl" min="1" max="1000"></div>
+									<div class="stat-group"><label>HR</label><input type="number" id="res_hr" min="1" max="1000"></div>
+									<div class="stat-group"><label>MA</label><input type="number" id="res_ma" min="1" max="1000"></div>
+									<div class="stat-group"><label>PE</label><input type="number" id="res_pe" min="1" max="1000"></div>
+									<div class="stat-group"><label>SR</label><input type="number" id="res_sr" min="1" max="1000"></div>
+									<div class="stat-group"><label>UT</label><input type="number" id="res_ut" min="1" max="1000"></div>
+								</div>
+
+								<div class="form-group full-width" style="margin-top: 15px;">
+									<label>Notes</label>
+									<textarea id="res-notes" class="modal-textarea" placeholder="Enter notes here..."></textarea>
 								</div>
 
 								<div id="modal-status-bar" class="status-bar"></div>
 
 								<div class="modal-actions">
-									<button type="submit" class="btn-primary">Submit Resource</button>
+									<button type="submit" class="btn-primary">Save</button>
 								</div>
 							</form>
 						</div>

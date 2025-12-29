@@ -1,227 +1,144 @@
-/**
- * Resource Modal Controller
- * Handles Add/Edit interactions, dynamic stat validation, and submission.
- */
+/* Modal Logic for SWGBuddy 
+    Handles opening, closing, and submitting the resource form.
+*/
 
-// Mapping between DOM Input IDs and Taxonomy Attribute Codes
-const STAT_MAPPING = {
-    'res_oq': 'OQ', 'res_cd': 'CD', 'res_dr': 'DR', 'res_fl': 'FL',
-    'res_hr': 'HR', 'res_ma': 'MA', 'res_pe': 'PE', 'res_sr': 'SR',
-    'res_ut': 'UT', 'res_cr': 'CR'
-};
+// Mapping of Stat Keys to DOM IDs
+const STAT_KEYS = ['res_oq', 'res_cd', 'res_dr', 'res_fl', 'res_hr', 'res_ma', 'res_pe', 'res_sr', 'res_ut', 'res_cr'];
+let isSubmitting = false;
 
-const Modal = {
-    isOpen: false,
-    mode: 'add', // 'add' or 'edit'
+function openAddResourceModal() {
+    // 1. Reset Form
+    document.getElementById('resource-form').reset();
+    document.getElementById('modal-title').innerText = "REPORT RESOURCE";
+    document.getElementById('modal-status-bar').innerText = "";
+    document.getElementById('modal-status-bar').className = "status-bar";
     
-    elements: {
-        overlay: document.getElementById('resource-modal'),
-        title: document.getElementById('modal-title'),
-        form: document.getElementById('resource-form'),
-        typeSelect: document.getElementById('res-type'),
-        planetSelect: document.getElementById('res-planet'),
-        inputs: {}, // Populated on init
-        statusBar: document.getElementById('modal-status-bar') || createStatusBar()
-    },
+    // 2. Populate Types (if empty)
+    populateTypeDropdown();
 
-    init() {
-        // Cache stat inputs
-        Object.keys(STAT_MAPPING).forEach(id => {
-            this.elements.inputs[id] = document.getElementById(id);
-        });
+    // 3. Trigger initial stat toggle based on default selection
+    handleTypeChange();
 
-        // Listen for Type changes to update UI
-        this.elements.typeSelect.addEventListener('change', (e) => {
-            this.updateStatFields(e.target.value);
-            this.updatePlanetFields(e.target.value);
-        });
-
-        // Handle Submit
-        this.elements.form.addEventListener('submit', (e) => {
-            e.preventDefault();
-            this.submit();
-        });
-    },
-
-    openAdd() {
-        this.mode = 'add';
-        this.elements.title.textContent = "Report New Resource";
-        this.resetForm();
-        this.populateTypeDropdown();
-        this.populatePlanets(); 
-        
-        this.elements.overlay.classList.remove('hidden');
-        this.elements.overlay.style.display = 'flex';
-    },
-
-    close() {
-        this.elements.overlay.classList.add('hidden');
-        this.elements.overlay.style.display = 'none';
-        this.resetStatusBar();
-    },
-
-    populateTypeDropdown() {
-        const select = this.elements.typeSelect;
-        select.innerHTML = '<option value="">Select Resource Type...</option>';
-
-        // Use RESOURCE_CONFIG keys (Labels)
-        if (!RESOURCE_CONFIG || Object.keys(RESOURCE_CONFIG).length === 0) {
-            const opt = document.createElement('option');
-            opt.disabled = true;
-            opt.textContent = "Loading types...";
-            select.appendChild(opt);
-            return;
-        }
-
-        const sortedTypes = Object.keys(RESOURCE_CONFIG).sort();
-
-        sortedTypes.forEach(label => {
-            const opt = document.createElement('option');
-            opt.value = label;
-            opt.textContent = label;
-            select.appendChild(opt);
-        });
-    },
-
-    populatePlanets(allowedPlanets = null) {
-        const select = this.elements.planetSelect;
-        select.innerHTML = ''; // Reset
-        
-        // Use Global ALL_PLANETS from config.js if no restriction
-        const list = allowedPlanets || ALL_PLANETS;
-        
-        list.forEach(p => {
-            const opt = document.createElement('option');
-            opt.value = p;
-            opt.textContent = p;
-            select.appendChild(opt);
-        });
-    },
-
-    updateStatFields(label) {
-        if (!label) return;
-
-        const config = getResourceTypeConfig(label);
-        if (!config) return;
-
-        // Loop through all stat inputs
-        Object.entries(STAT_MAPPING).forEach(([inputId, attrCode]) => {
-            const input = this.elements.inputs[inputId];
-            const statConfig = config.stats[attrCode]; // e.g. {min: 1, max: 1000}
-
-            if (statConfig) {
-                // Valid Stat
-                input.disabled = false;
-                input.placeholder = `${statConfig.min} - ${statConfig.max}`;
-                input.min = statConfig.min;
-                input.max = statConfig.max;
-                input.parentElement.style.opacity = "1";
-            } else {
-                // Invalid Stat
-                input.disabled = true;
-                input.value = "";
-                input.placeholder = "N/A";
-                input.parentElement.style.opacity = "0.3";
-            }
-        });
-    },
-    
-    updatePlanetFields(label) {
-        if (!label) return;
-        const config = getResourceTypeConfig(label);
-        // config.planets is an array of strings e.g. ["Tatooine", "Naboo"]
-        if (config && config.planets) {
-            this.populatePlanets(config.planets);
-        } else {
-            this.populatePlanets(null); // Fallback to all
-        }
-    },
-
-    async submit() {
-        const btn = this.elements.form.querySelector('button[type="submit"]');
-        const originalText = btn.textContent;
-        
-        try {
-            // 1. UI Feedback
-            btn.disabled = true;
-            btn.textContent = "Saving...";
-            this.setStatus("Submitting to database...", "info");
-
-            // 2. Gather Data
-            const formData = {
-                type: this.elements.typeSelect.value, // Sending Label now
-                name: document.getElementById('res-name').value,
-                planets: [this.elements.planetSelect.value], // Array expected?
-                // Server ID handled by API
-            };
-            
-            // Backend might expect 'planet' (string) or 'planets' (list) depending on validation.py
-            // Safe bet based on previous code: 'planet': string
-            formData.planet = this.elements.planetSelect.value;
-
-            // Add stats
-            Object.keys(STAT_MAPPING).forEach(key => {
-                const val = document.getElementById(key).value;
-                if (val && !document.getElementById(key).disabled) {
-                    formData[key] = parseInt(val);
-                }
-            });
-
-            // 3. Send Request
-            const result = await API.addResource(formData);
-
-            // 4. Success Handling
-            this.setStatus("Saved successfully!", "success");
-            btn.textContent = "Saved!";
-            
-            // Refresh table
-            await loadResources(); 
-
-            // Close after short delay
-            setTimeout(() => {
-                this.close();
-                btn.disabled = false;
-                btn.textContent = originalText;
-            }, 1000);
-
-        } catch (error) {
-            console.error(error);
-            this.setStatus(`Error: ${error.message}`, "error");
-            btn.disabled = false;
-            btn.textContent = originalText;
-        }
-    },
-
-    setStatus(msg, type) {
-        const bar = this.elements.statusBar;
-        bar.textContent = msg;
-        bar.className = `status-bar status-${type}`; 
-    },
-
-    resetStatusBar() {
-        this.elements.statusBar.textContent = "";
-        this.elements.statusBar.className = "status-bar";
-    },
-
-    resetForm() {
-        this.elements.form.reset();
-        // Disable all stats initially until type is picked
-        Object.values(this.elements.inputs).forEach(input => {
-            input.disabled = true;
-            input.parentElement.style.opacity = "0.5";
-        });
-    }
-};
-
-function createStatusBar() {
-    const div = document.createElement('div');
-    div.id = 'modal-status-bar';
-    div.className = 'status-bar';
-    document.querySelector('.modal-body').appendChild(div);
-    return div;
+    // 4. Show Modal
+    const modal = document.getElementById('resource-modal');
+    modal.classList.remove('hidden');
 }
 
-window.openAddResourceModal = () => Modal.openAdd();
-window.closeResourceModal = () => Modal.close(); 
+function closeResourceModal() {
+    document.getElementById('resource-modal').classList.add('hidden');
+}
 
-document.addEventListener('DOMContentLoaded', () => Modal.init());
+/* Populates the Dropdown. 
+   Depends on 'window.validResources' being loaded by api.js or resources.js first.
+*/
+function populateTypeDropdown() {
+    const select = document.getElementById('res-type');
+    if (select.options.length > 0) return; // Already populated
+
+    // Sort alphabetically
+    const types = Object.keys(window.validResources || {}).sort();
+    
+    types.forEach(type => {
+        const opt = document.createElement('option');
+        opt.value = type;
+        opt.innerText = type;
+        select.appendChild(opt);
+    });
+}
+
+/* Dynamic Stat Toggling 
+   Reads the selected type and disables stats that aren't valid for it.
+*/
+function handleTypeChange() {
+    const type = document.getElementById('res-type').value;
+    const rules = window.validResources ? window.validResources[type] : null;
+    
+    if (!rules) return;
+
+    STAT_KEYS.forEach(stat => {
+        const input = document.getElementById(stat);
+        // If the stat exists in the rules definition, enable it. Otherwise disable.
+        const isEnabled = rules.stats && rules.stats.hasOwnProperty(stat);
+        
+        input.disabled = !isEnabled;
+        
+        if (!isEnabled) {
+            input.value = ""; // Clear invalid data
+            input.placeholder = "-";
+        } else {
+            input.placeholder = "";
+        }
+    });
+}
+
+/* Form Submission */
+document.getElementById('resource-form').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    if (isSubmitting) return;
+
+    const loader = document.getElementById('modal-loader');
+    const statusDiv = document.getElementById('modal-status-bar');
+
+    // 1. Client-Side Validation (Integers 1-1000)
+    for (let stat of STAT_KEYS) {
+        const input = document.getElementById(stat);
+        if (!input.disabled && input.value) {
+            const val = parseInt(input.value);
+            if (isNaN(val) || val < 1 || val > 1000) {
+                alert(`Error: ${stat.toUpperCase().replace('RES_', '')} must be between 1 and 1000.`);
+                input.focus();
+                return;
+            }
+        }
+    }
+
+    // 2. Prepare Payload
+    const payload = {
+        name: document.getElementById('res-name').value,
+        type: document.getElementById('res-type').value,
+        notes: document.getElementById('res-notes').value, // Notes are sent as string
+        server_id: localStorage.getItem('swg_server_id') || 'cuemu'
+    };
+
+    STAT_KEYS.forEach(key => {
+        const val = document.getElementById(key).value;
+        if (val) payload[key] = parseInt(val);
+    });
+
+    // 3. Show Loading State
+    isSubmitting = true;
+    loader.classList.remove('hidden'); // Show Spinner
+    statusDiv.innerText = "";
+
+    try {
+        const response = await fetch('/api/add-resource', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload)
+        });
+
+        const result = await response.json();
+
+        if (result.success) {
+            // Success!
+            closeResourceModal();
+            // Refresh grid
+            if (typeof loadResources === 'function') loadResources(); 
+        } else {
+            // Server Error
+            statusDiv.innerText = "Error: " + (result.error || "Unknown error");
+            statusDiv.className = "status-bar status-error";
+        }
+    } catch (err) {
+        statusDiv.innerText = "Network Error: " + err.message;
+        statusDiv.className = "status-bar status-error";
+    } finally {
+        isSubmitting = false;
+        loader.classList.add('hidden'); // Hide Spinner
+    }
+});
+
+// Close modal when clicking outside content
+document.getElementById('resource-modal').addEventListener('click', (e) => {
+    if (e.target.id === 'resource-modal') closeResourceModal();
+});
