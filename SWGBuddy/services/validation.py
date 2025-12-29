@@ -366,7 +366,52 @@ class ValidationService(Core):
 		return user_power >= required_power, role
 
 	def _sync_user(self, data):
-		sql = """INSERT INTO users (discord_id, username, avatar_url, last_login) VALUES (%s, %s, %s, NOW())
-				 ON CONFLICT (discord_id) DO UPDATE SET username=EXCLUDED.username, avatar_url=EXCLUDED.avatar_url, last_login=NOW()"""
-		with DatabaseContext.cursor(commit=True) as cur:
-			cur.execute(sql, (data.get('id'), data.get('username'), data.get('avatar')))
+		"""
+		Upserts the user into the users table and ensures they have default 'USER'
+		permissions on all registered game servers.
+		"""
+		uid = data.get('id')
+		username = data.get('username')
+		avatar = data.get('avatar')
+
+		# 1. Upsert User Profile
+		sql_user = """
+			INSERT INTO users (discord_id, username, avatar_url, last_login) 
+			VALUES (%s, %s, %s, NOW())
+			ON CONFLICT (discord_id) 
+			DO UPDATE SET username=EXCLUDED.username, avatar_url=EXCLUDED.avatar_url, last_login=NOW()
+		"""
+
+		# 2. Get All Active Game Servers
+		sql_get_servers = "SELECT id FROM game_servers"
+
+		# 3. Grant Default Role (USER)
+		# assigned_by is set to the user themselves (uid) for self-registration.
+		# ON CONFLICT DO NOTHING ensures we don't overwrite existing higher roles (like ADMIN).
+		sql_grant_perm = """
+			INSERT INTO server_permissions (user_id, server_id, role, assigned_by)
+			VALUES (%s, %s, 'USER', %s)
+			ON CONFLICT (user_id, server_id) DO NOTHING
+		"""
+
+		try:
+			with DatabaseContext.cursor(commit=True) as cur:
+				# Update User Table
+				cur.execute(sql_user, (uid, username, avatar))
+				
+				# Fetch Servers
+				cur.execute(sql_get_servers)
+				servers = cur.fetchall()
+				
+				# Iterate and Grant Permissions
+				for server in servers:
+					# Access by key 'id' assuming DictCursor is in use
+					sid = server['id']
+					cur.execute(sql_grant_perm, (uid, sid, uid))
+					
+			self.info(f"Synced user {username} ({uid}) and checked permissions for {len(servers)} servers.")
+
+		except Exception as e:
+			self.error(f"Error syncing user {username}: {e}")
+			# Re-raise to ensure the caller knows sync failed
+			raise e
