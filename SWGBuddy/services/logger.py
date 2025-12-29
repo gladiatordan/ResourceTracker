@@ -27,6 +27,7 @@ class LogService:
             print(f"[LogService] Failed to create log directory: {e}", file=sys.stderr)
             
         self.log_file = os.path.join(self.log_dir, "swgbuddy-backend.log")
+        print(f"[LogService] Log File at -> {self.log_file}")
 
     def run(self):
         # Ignore SIGINT in this process so the ServiceManager can handle the shutdown signal
