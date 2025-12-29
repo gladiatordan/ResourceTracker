@@ -1,46 +1,78 @@
-async function loadServers() {
-    // We can piggyback on the 'get_init_data' call which returns {taxonomy, servers, resources}
-    // Or assume the page load fetched it. 
-    // For now, let's update initTabs/Listeners to fetch it.
-    
-    // Actually, api.js fetchResources calls 'get_init_data'.
-    // Let's modify loadResources() in resources.js or create a specific init.
-}
+/**
+ * Application Entry Point
+ * Orchestrates the loading sequence and global event listeners.
+ */
 
-async function initServerList(serverData) {
-    const select = document.getElementById('server-select');
-    if (!select || !serverData) return;
+document.addEventListener('DOMContentLoaded', async () => {
+    console.log("SWGBuddy Initializing...");
+    const loader = document.getElementById('page-loader');
 
-    select.innerHTML = '';
-    const saved = localStorage.getItem('swg_server_id') || 'cuemu';
+    try {
+        // 1. Initialize UI Helpers (Tabs, listeners)
+        initTabs(); 
+        initListeners();
 
-    // serverData is an object: { 'cuemu': {name: 'CUEmu', ...}, 'legends': {...} }
-    Object.values(serverData).forEach(server => {
-        if (!server.is_active) return;
-        const option = document.createElement('option');
-        option.value = server.id;
-        option.textContent = server.display_name;
-        if (server.id === saved) option.selected = true;
-        select.appendChild(option);
+        // 2. Parallel Load: Session + Taxonomy + Resource Data
+        // We need Session before we can determine Permissions for the Table
+        await Promise.all([
+            Auth.checkSession(),
+            loadTaxonomy(),
+            loadResources()
+        ]);
+
+        // 3. Update UI based on Role (hides/shows Add button)
+        Auth.updateInterface();
+
+        // 4. Render Table (Now that we have data AND permissions)
+        // Note: loadResources calls applyAllTableTransforms internally, 
+        // but we ensure permissions are applied by calling updateInterface first.
+        // We force a re-render here to be safe if loadResources finished before checkSession
+        applyAllTableTransforms();
+
+        console.log("Initialization Complete.");
+
+    } catch (error) {
+        console.error("Critical Initialization Error:", error);
+        if (loader) loader.innerHTML = `<div style="color:red">ERROR LOADING APP<br>${error.message}</div>`;
+        return; // Don't remove loader if critical fail
+    }
+
+    // 5. Fade out Loader
+    if (loader) {
+        loader.classList.add('fade-out');
+        setTimeout(() => {
+            loader.style.display = 'none';
+        }, 500);
+    }
+});
+
+// Listener for Server Select Change
+// When server changes, permissions might change, so we must re-check.
+const serverSelect = document.getElementById('server-select-wrapper');
+if (serverSelect) {
+    serverSelect.addEventListener('change', async () => {
+        console.log("Server Context Changed:", serverSelect.value);
+        
+        // Reload Resources for new server
+        await loadResources(); 
+        
+        // Update Add Button visibility (User might be Admin on Server A but Guest on B)
+        Auth.updateInterface();
+        
+        // Re-render table with new permissions
+        applyAllTableTransforms();
     });
 }
 
 function initTabs() {
-    const navButtons = document.querySelectorAll('.nav-btn');
-    const containers = document.querySelectorAll('.page-container');
-
-    navButtons.forEach(btn => {
+    document.querySelectorAll('.nav-btn').forEach(btn => {
         btn.addEventListener('click', () => {
-            const target = btn.getAttribute('data-target');
-
-            navButtons.forEach(b => b.classList.remove('active'));
-            containers.forEach(c => c.classList.remove('active'));
-
-            btn.classList.add('active');
-            document.getElementById(target).classList.add('active');
+            document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+            document.querySelectorAll('.page-container').forEach(p => p.classList.remove('active'));
             
-            // Note: .header-controls logic is no longer needed if 
-            // the filters are inside the page-container!
+            btn.classList.add('active');
+            const target = btn.getAttribute('data-target');
+            document.getElementById(target).classList.add('active');
         });
     });
 }
@@ -54,13 +86,4 @@ function initListeners() {
 function toggleDropdown() {
     const list = document.getElementById('taxonomy-list');
     list.style.display = list.style.display === 'block' ? 'none' : 'block';
-}
-
-function formatDate(dateStr) {
-    if (!dateStr) return '-';
-    const date = new Date(dateStr);
-    const day = String(date.getUTCDate()).padStart(2, '0');
-    const month = String(date.getUTCMonth() + 1).padStart(2, '0');
-    const year = date.getUTCFullYear();
-    return `${day}/${month}/${year}`;
 }

@@ -29,6 +29,10 @@
 		</div>
 	</header>
     <div class="app-container">
+		<div id="page-loader" class="page-loader">
+			<div class="spinner"></div>
+			<div class="loader-text">INITIALIZING DATAPAD...</div>
+		</div>
 		<main id="main-content">
 			<section id="resources-container" class="page-container active">
 				<div class="resource-filters-row">
@@ -39,7 +43,7 @@
                         </div>
                     </div>
                     <input type="text" placeholder="Search resources..." class="search-input">
-					<button class="add-resource-btn" onclick="openAddResourceModal()">Add Resource</button>
+					<button class="add-resource-btn hidden" onclick="openAddResourceModal()">Add Resource</button>
 					<div class="pagination-stack">
 						<div class="pagination-controls">
 							<label for="results-per-page">Show Results:</label>

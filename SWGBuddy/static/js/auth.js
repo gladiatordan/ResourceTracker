@@ -1,101 +1,95 @@
+/**
+ * Auth Manager
+ * Handles user session, profile rendering, and RBAC permission checks.
+ */
 const Auth = {
     user: null,
-    ROLE_POWER: { 'SUPERADMIN': 100, 'ADMIN': 3, 'EDITOR': 2, 'USER': 1, 'GUEST': 0 },
-
-    async init() {
-        console.log("Auth: Initializing...");
-        await this.checkSession();
-        this.setupListeners();
-        this.renderAuthUI();
+    
+    // Aligns with backend validation.py
+    ROLES: {
+        'SUPERADMIN': 100,
+        'ADMIN': 3,
+        'EDITOR': 2,
+        'USER': 1,
+        'GUEST': 0
     },
 
+    /**
+     * Initializes the user session. Returns promise.
+     */
     async checkSession() {
         try {
             const response = await fetch('/api/me');
-            if (response.status === 401) {
-                // Not logged in or session expired
-                this.user = null;
-                return;
-            }
-            
             const data = await response.json();
+            const authSection = document.getElementById('auth-section');
+
             if (data.authenticated) {
                 this.user = data;
-                console.log("Auth: User Logged In -", this.user.username);
-                // Trigger an event so other components know auth is ready
-                document.dispatchEvent(new CustomEvent('auth-ready', { detail: this.user }));
+                authSection.innerHTML = `
+                    <div class="user-profile">
+                        <img src="https://cdn.discordapp.com/avatars/${data.id}/${data.avatar}.png" class="user-avatar" alt="">
+                        <div class="user-info">
+                            <span class="username">${data.username}</span>
+                            <a href="/logout" class="btn-logout"><i class="fa-solid fa-sign-out-alt"></i></a>
+                        </div>
+                    </div>
+                `;
             } else {
                 this.user = null;
+                // Empty container -> JS will fill with "Login" if needed, or leave empty if using server-side redirect
+                authSection.innerHTML = `
+                    <a href="/login" class="btn-discord">
+                        <i class="fa-brands fa-discord"></i> Login
+                    </a>
+                `;
             }
         } catch (error) {
-            console.error("Auth: Session Check Failed", error);
+            console.error("Session check failed:", error);
             this.user = null;
         }
     },
 
-    getEffectiveRole() {
+    /**
+     * Returns the user's role for the CURRENT selected server.
+     */
+    getCurrentRole() {
         if (!this.user) return 'GUEST';
-        
-        // 1. SuperAdmin Override
         if (this.user.is_superadmin) return 'SUPERADMIN';
-
-        // 2. Server Specific Role
-        const currentServer = this.getServerID();
-        const serverRole = this.user.server_perms ? this.user.server_perms[currentServer] : null;
         
-        return serverRole || 'USER'; // Default to USER if logged in but no specific role
+        const serverId = API.getServerContext(); // e.g. 'cuemu'
+        const perms = this.user.server_perms || {};
+        
+        return perms[serverId] || 'GUEST';
     },
 
-    renderAuthUI() {
-        const authSection = document.getElementById('auth-section');
-        const addBtn = document.querySelector('.add-resource-btn'); // The floating button or main action button
-        const role = this.getEffectiveRole();
-
-        if (this.user) {
-            // Render User Profile
-            authSection.innerHTML = `
-                <div class="user-profile">
-                    <div class="user-info" style="text-align: right;">
-                        <div class="username" style="font-family: 'Orbitron'; font-size: 0.8rem;">${this.user.username}</div>
-                        <div class="role-badge role-${role.toLowerCase()}" style="font-size: 0.6rem;">${role}</div>
-                    </div>
-                    <img src="https://cdn.discordapp.com/avatars/${this.user.id}/${this.user.avatar}.png" class="user-avatar" alt="User">
-                    <a href="/logout" class="btn-logout" title="Logout" style="margin-left: 10px; color: var(--text-muted);"><i class="fa-solid fa-right-from-bracket"></i></a>
-                </div>`;
-            
-            // Show/Hide Add Button based on role
-            if (addBtn) {
-                const power = this.ROLE_POWER[role] || 0;
-                // Editors (2) and above can add resources
-                addBtn.style.display = power >= 2 ? 'block' : 'none';
+    /**
+     * Checks if the user meets the minimum role requirement.
+     * @param {string|number} requiredLevel - Role name ('USER') or numeric level (1)
+     */
+    hasPermission(requiredLevel) {
+        const role = this.getCurrentRole();
+        const currentLevel = this.ROLES[role] || 0;
+        
+        let req = requiredLevel;
+        if (typeof requiredLevel === 'string') {
+            req = this.ROLES[requiredLevel] || 0;
+        }
+        
+        return currentLevel >= req;
+    },
+    
+    /**
+     * Updates Global UI elements based on permissions.
+     * e.g. Shows/Hides "Add Resource" button.
+     */
+    updateInterface() {
+        const addBtn = document.getElementById('btn-add-resource');
+        if (addBtn) {
+            if (this.hasPermission('USER')) {
+                addBtn.classList.remove('hidden');
+            } else {
+                addBtn.classList.add('hidden');
             }
-        } else {
-            // Render Login Button
-            authSection.innerHTML = `<a href="/login" class="btn-discord"><i class="fa-brands fa-discord"></i> LOGIN</a>`;
-            if (addBtn) addBtn.style.display = 'none';
         }
-    },
-
-    setupListeners() {
-        const serverSelect = document.getElementById('server-select');
-        if (serverSelect) {
-            const saved = localStorage.getItem('swg_server_id');
-            if (saved) serverSelect.value = saved;
-
-            serverSelect.addEventListener('change', (e) => {
-                localStorage.setItem('swg_server_id', e.target.value);
-                this.renderAuthUI(); 
-                // Reload page to fetch data for new server
-                window.location.reload(); 
-            });
-        }
-    },
-
-    getServerID() {
-        const domVal = document.getElementById('server-select')?.value;
-        const storedVal = localStorage.getItem('swg_server_id');
-        return domVal || storedVal || 'cuemu';
     }
 };
-
-document.addEventListener('DOMContentLoaded', () => Auth.init());

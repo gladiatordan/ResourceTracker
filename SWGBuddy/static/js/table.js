@@ -101,6 +101,121 @@ function renderTable(data) {
     });
 }
 
+/* ... imports assumed ... */
+
+function renderResourceRow(res) {
+    const tr = document.createElement('tr');
+    tr.className = !res.is_active ? 'row-inactive' : '';
+
+    const dateStr = formatDate(res.date_reported);
+    const ratingClass = getStatColorClass(res.res_weight_rating);
+    
+    // --- PERMISSION CHECK ---
+    // Guests see static text. Users (Level 1+) see interactive controls.
+    const canEdit = window.Auth && Auth.hasPermission('USER');
+
+    // 1. Status Column Logic
+    let statusHtml = '';
+    if (canEdit) {
+        statusHtml = `
+            <span class="status-text ${res.is_active ? 'active' : 'inactive'}">
+                ${res.is_active ? 'Active' : 'Inactive'}
+            </span>
+            <button class="status-toggle-btn" onclick="toggleStatus(this, '${res.name}')">
+                <i class="fa-solid fa-power-off"></i>
+            </button>
+        `;
+    } else {
+        statusHtml = `
+            <span class="status-text ${res.is_active ? 'active' : 'inactive'}">
+                ${res.is_active ? 'Active' : 'Inactive'}
+            </span>
+        `;
+    }
+
+    // 2. Planet Column Logic
+    let locationHtml = '';
+    
+    // Render existing badges
+    let badges = '';
+    if (res.planets && res.planets.length > 0) {
+        res.planets.forEach(p => {
+            // Note: handleBadgeClick can perform deletion if we want to allow that for Users
+            badges += `<span class="planet-badge" onclick="handleBadgeClick(event, '${res.name}', '${p}')">${p}</span>`;
+        });
+    }
+
+    if (canEdit) {
+        // Dropdown for adding
+        // We get valid planets from taxonomy config
+        const config = window.validResources ? window.validResources[res.type] : null;
+        let options = '<option value="">+ Add</option>';
+        
+        if (config && config.planets) {
+            config.planets.forEach(p => {
+                if (!res.planets || !res.planets.includes(p)) {
+                    options += `<option value="${p}">${p}</option>`;
+                }
+            });
+        }
+        
+        locationHtml = `
+            <div class="location-wrapper">
+                <div class="planet-list">${badges}</div>
+                <select class="planet-add-select" onchange="togglePlanet(this, '${res.name}')">
+                    ${options}
+                </select>
+            </div>
+        `;
+    } else {
+        // Static List
+        locationHtml = `<div class="location-wrapper"><div class="planet-list">${badges}</div></div>`;
+    }
+
+    // 3. Name Link (Edit Modal)
+    // Even guests might want to see details, but let's assume only Users can "Edit".
+    // If you want Read-Only details for Guests, openResourceModal needs to handle "Read Only Mode".
+    // For now, let's allow clicking, but the Modal itself should maybe disable Save if Guest.
+    // (Or simpler: Disable click for Guests)
+    const nameHtml = canEdit 
+        ? `<a href="#" class="res-name-link" onclick="event.preventDefault(); openResourceModal('${res.name}')">${res.name}</a>`
+        : `<span class="res-name-static">${res.name}</span>`;
+
+    tr.innerHTML = `
+        <td class="col-name">${nameHtml}</td>
+        <td class="col-type">${res.type}</td>
+        <td class="col-stat ${ratingClass} center-text">${formatStat(res.res_weight_rating, true)}</td>
+        <td class="col-stat center-text">${formatStat(res.res_oq)}</td>
+        <td class="col-stat center-text">${formatStat(res.res_cr)}</td>
+        <td class="col-stat center-text">${formatStat(res.res_cd)}</td>
+        <td class="col-stat center-text">${formatStat(res.res_dr)}</td>
+        <td class="col-stat center-text">${formatStat(res.res_fl)}</td>
+        <td class="col-stat center-text">${formatStat(res.res_hr)}</td>
+        <td class="col-stat center-text">${formatStat(res.res_ma)}</td>
+        <td class="col-stat center-text">${formatStat(res.res_pe)}</td>
+        <td class="col-stat center-text">${formatStat(res.res_sr)}</td>
+        <td class="col-stat center-text">${formatStat(res.res_ut)}</td>
+        <td class="col-loc">${locationHtml}</td>
+        <td class="col-date center-text">${dateStr}</td>
+        <td class="col-status center-text status-cell">${statusHtml}</td>
+    `;
+
+    return tr;
+}
+
+// Helpers...
+function formatStat(val, isRating=false) {
+    if (val === null || val === undefined || val === 0 || val === "0") return "-";
+    if (isRating) return (val * 100).toFixed(1) + '%';
+    return val;
+}
+
+function formatDate(epoch) {
+    if (!epoch) return "-";
+    const d = new Date(epoch * 1000);
+    return d.toLocaleDateString() + ' ' + d.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
+}
+
 function renderPaginatedTable() {
     const start = (currentPage - 1) * resultsPerPage;
     const end = start + resultsPerPage;
