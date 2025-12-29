@@ -47,9 +47,13 @@ async function toggleStatus(button, resourceName) {
 	statusSpan.className = `status-text ${newState ? 'active' : 'inactive'}`;
 
 	try {
-		// Send full object excluding planet to avoid array issues
+		// FIX: Send full object so validation.py can recalculate ratings
 		const payload = { ...resource, is_active: newState };
-		delete payload.planet; // Don't toggle planets
+		
+		// FIX: Remove planet fields entirely for status updates.
+		// This prevents the backend from triggering "Replace Planet List" logic,
+		// avoiding race conditions or accidental overwrites.
+		delete payload.planet;
 		delete payload.planets;
 
 		await API.updateResource(payload);
@@ -75,27 +79,18 @@ async function togglePlanet(selectElement, resourceName) {
 	const resource = rawResourceData.find(r => r.name === resourceName);
 	if (!resource) return;
 
-	// Normalize property
-	const pList = resource.planet || resource.planets || [];
-	// Ensure we are updating the canonical property 'planet'
-	resource.planet = pList; 
-
-	// Local Optimistic Update
-	if (!resource.planet.includes(newPlanet)) {
-		// Just push to local for responsiveness; reload will sort it.
-		resource.planet.push(newPlanet); 
-	}
-
 	try {
-		await API.updateResource({
-			id: resource.id,
-			name: resource.name,
-			type: resource.type, 
-			planet: newPlanet // Backend toggles (appends) this value
-		});
+		// FIX: Send full object (stats) + new planet string
+		// Sending 'planet' as a String triggers the atomic Toggle logic in backend
+		const payload = {
+			...resource,
+			planet: newPlanet 
+		};
+
+		await API.updateResource(payload);
 
 		selectElement.value = "";
-		// Reload to get sorted, verified list from DB
+		// Reload is required to get the sorted/verified list from DB
 		await loadResources(); 
 		
 	} catch (error) {
@@ -110,40 +105,26 @@ async function handleBadgeClick(event, resourceName, planetValue) {
 		event.stopPropagation();
 	}
 
-	// Permission Check (Assuming Auth exists)
-	if (window.Auth && !Auth.hasPermission('USER')) return;
+	if (!window.Auth || !Auth.hasPermission('USER')) return;
 
 	const resource = rawResourceData.find(r => r.name === resourceName);
 	if (!resource) return;
 
-	// 2. Check for "Don't Prompt Again" preference in localStorage
-    const skipConfirmation = localStorage.getItem('swgbuddy_skip_planet_confirm') === 'true';
+	// Check "Don't Prompt" preference
+	const skipConfirmation = localStorage.getItem('swgbuddy_skip_planet_confirm') === 'true';
 
-    // 3. Confirmation Logic
-    if (!skipConfirmation) {
-        // Since standard browser confirm() doesn't have a "Don't ask again" checkbox,
-        // this typically refers to the browser's native "Prevent this page from creating additional dialogs".
-        // If the browser blocks the dialog, confirm() may return false.
-        
-        const confirmed = confirm(`Remove ${planetValue} from ${resourceName}?`);
-        
-        // If the user cancels, stop logic. 
-        // Note: If the browser is auto-blocking, we move to a custom preference model.
-        if (!confirmed) return;
-        
-        // Optional: If you implement a custom modal with a checkbox later, 
-        // you would set 'swgbuddy_skip_planet_confirm' to true here.
-    }
+	if (!skipConfirmation) {
+		if (!confirm(`Remove ${planetValue} from ${resourceName}?`)) return;
+	}
 
 	try {
-		await API.updateResource({
-			id: resource.id,
-			name: resource.name,
-			type: resource.type,
-			planet: planetValue // Backend toggles (removes) this value if present
-		});
+		const payload = {
+			...resource,
+			planet: planetValue // Triggers toggle (remove if present)
+		};
 
-		await loadResources(); // Refresh to update UI
+		await API.updateResource(payload);
+		await loadResources(); 
 
 	} catch (error) {
 		console.error("Failed to remove planet:", error);

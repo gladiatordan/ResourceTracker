@@ -21,7 +21,7 @@ const Modal = {
 		form: document.getElementById('resource-form'),
 		
 		// Inputs
-		nameGroup: document.querySelector('#res-name').closest('.form-group'), // For toggling visibility
+		nameGroup: document.querySelector('#res-name').closest('.form-group'), 
 		nameInput: document.getElementById('res-name'),
 		notesInput: document.getElementById('res-notes'),
 		typeInput: document.getElementById('res-type'),
@@ -118,7 +118,7 @@ const Modal = {
 
 		const isDetails = (this.mode === 'DETAILS');
 
-		// FIX: Hide Name field unless in Add Mode
+		// FIX: Hide Name field completely unless in Add Mode
 		if (this.mode === 'ADD') {
 			els.nameGroup.style.display = 'flex';
 			els.nameInput.disabled = false;
@@ -154,10 +154,6 @@ const Modal = {
 			els.btnEdit.classList.remove('hidden');
 			els.btnEdit.disabled = !canEditRole;
 			els.btnSave.disabled = true;
-			els.btnCancel.disabled = true; // "Cancel" disabled in view mode? Or usually hidden?
-			// User requested: "Cancel exits Edit Mode, disabled unless in Edit Mode"
-			// Actually, in Details mode, usually we just have "Close" (X top right).
-			// But if requested "disabled":
 			els.btnCancel.disabled = true; 
 		} else if (this.mode === 'EDIT') {
 			els.btnEdit.classList.remove('hidden');
@@ -192,22 +188,18 @@ const Modal = {
 	},
 
 	renderMetaData(res) {
-		// FIX: Use last_modified if available, else date_reported
-		// Use the new _ts (timestamp) fields from server
-		const ts = res.last_modified_ts || res.date_reported_ts || 0;
+		// FIX: Display Timestamps correctly
 		const dateLabel = res.last_modified_ts ? "Last Modified" : "Date Reported";
+		const ts = res.last_modified_ts || res.date_reported_ts || 0;
 		
-		// Update Label dynamically if you want, or just stick to "Date Reported" field showing the active date
 		document.querySelector('#meta-container label').textContent = dateLabel;
 		document.getElementById('res-date').textContent = formatDate(ts);
-		
 		document.getElementById('res-reporter').textContent = res.reporter_name || "Unknown";
 		
-		// FIX: Handle 'planet' (DB column) or 'planets' (JS alias) correctly
-		// The server returns 'planet' which is a list of strings
+		// FIX: Handle 'planet' (DB column) vs 'planets' (Alias)
 		const pList = res.planet || res.planets || [];
-		const planetsStr = Array.isArray(pList) ? pList.join(', ') : pList;
-		document.getElementById('res-planets').textContent = planetsStr || "None";
+		const pStr = Array.isArray(pList) ? pList.join(', ') : pList;
+		document.getElementById('res-planets').textContent = pStr || "None";
 		
 		const statusDiv = document.getElementById('res-status');
 		statusDiv.innerHTML = `<span class="status-text ${res.is_active ? 'active' : 'inactive'}">${res.is_active ? 'Active' : 'Inactive'}</span>`;
@@ -304,8 +296,6 @@ const Modal = {
 		const current = this.captureCurrentFormData();
 		let isDirty = false;
 		
-		// Note: Name isn't editable in EDIT mode typically if it's the ID, but here it is
-		// If name input is disabled in edit mode, this check is moot for name
 		if (current.name !== this.originalData.name) isDirty = true;
 		if (current.notes !== (this.originalData.notes || "")) isDirty = true;
 		if (current.type !== this.originalData.type) isDirty = true;
@@ -319,7 +309,7 @@ const Modal = {
 		this.elements.btnSave.disabled = !isDirty;
 	},
 
-	// ... (populateTypeTree, selectType, updateStatFields, toggleDropdown, resetState - Same as before)
+	// ... Tree Helpers (populateTypeTree, selectType, updateStatFields, toggleDropdown, resetState) ...
 	populateTypeTree() {
 		const list = document.getElementById('modal-type-list');
 		list.innerHTML = ''; 
