@@ -74,11 +74,12 @@ def perform_update():
         
         # 4. Wait for Socket Creation
         logger.info("Waiting for Backend initialization (5s)...")
-        time.sleep(5)
+        # time.sleep(5)
         
         # 5. Start Frontend
-        logger.info("Starting Frontend...")
-        run_command(["sudo", "systemctl", "start", "swgbuddy"])
+        # Don't do this, we're not using gunicorn anymore
+        # logger.info("Starting Frontend...")
+        # run_command(["sudo", "systemctl", "start", "swgbuddy"])
         
         logger.info("Update Protocol Complete. Services Restored.")
         
