@@ -8,7 +8,7 @@ const API = {
 
     async fetchResources(isDelta = false) {
         const serverId = this.getServerContext();
-        console.log(`serverID = ${serverId}`)
+        // console.log(`serverID = ${serverId}`)
         // If it's a full refresh (not delta), reset timestamp
         if (!isDelta) LAST_SYNC_TIMESTAMP = 0;
 
