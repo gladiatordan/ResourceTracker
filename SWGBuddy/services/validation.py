@@ -125,11 +125,12 @@ class ValidationService(Core):
 				self._sync_user(payload)
 
 			elif action == "add_resource":
-				self._handle_write(payload, server_id, is_new=True)
+				# Pass user_ctx to handle_write
+				self._handle_write(payload, server_id, is_new=True, user_ctx=user_ctx) 
 				self.info(f"User {user_ctx.get('username')} added resource: {payload.get('name')}")
 
 			elif action == "update_resource":
-				self._handle_write(payload, server_id, is_new=False)
+				self._handle_write(payload, server_id, is_new=False, user_ctx=user_ctx)
 				self.info(f"User {user_ctx.get('username')} updated resource ID: {payload.get('id')}")
 
 			elif action == "retire_resource":
@@ -158,7 +159,7 @@ class ValidationService(Core):
 	# ----------------------------------------------------------------------
 	# COMMAND LOGIC
 	# ----------------------------------------------------------------------
-	def _handle_write(self, data, server_id, is_new):
+	def _handle_write(self, data, server_id, is_new, user_ctx=None):
 		"""Unified Add/Edit logic with calculation and uniqueness check."""
 		
 		# 1. Validate (Includes Class ID Check, Stats, and Planet)
@@ -172,10 +173,9 @@ class ValidationService(Core):
 			name = data.get('name')
 			if self._resource_exists(name, server_id):
 				raise ValueError(f"Error: {name} already exists for {server_id}")
-			
-			self._insert_resource(data, server_id)
+			self._insert_resource(data, server_id, user_ctx)
 		else:
-			self._update_resource(data)
+			self._update_resource(data, user_ctx)
 
 	def _resource_exists(self, name, server_id):
 		if not name: return False
@@ -301,25 +301,19 @@ class ValidationService(Core):
 	# ----------------------------------------------------------------------
 	# DB UTILS
 	# ----------------------------------------------------------------------
-	def _insert_resource(self, data, server_id):
+	def _insert_resource(self, data, server_id, user_ctx):
 		# 1. Get Class ID directly from Config
 		label = data.get('type')
 		rules = self.valid_resources.get(label, {})
 		res_class_id = rules.get('id')
 
-		# Safety: Fail if ID is missing (Bug check)
-		if res_class_id is None:
-			raise ValueError(f"Configuration Error: 'id' missing for type '{label}'. Check valid_resource_table.json.")
+		# Get Reporter ID from context
+		reporter_id = user_ctx.get('id') if user_ctx else None
 
-		# 2. Prepare Columns and Values
-		cols = ["server_id", "resource_class_id", "name", "planet", "res_weight_rating", "notes"]
+		cols = ["server_id", "resource_class_id", "name", "planet", "res_weight_rating", "notes", "reporter_id"]
 		vals = [
-			server_id, 
-			res_class_id, 
-			data['name'], 
-			data.get('planet'), 
-			data.get('res_weight_rating', 0.0), # Default to 0.0 if missing
-			data.get('notes', '')
+			server_id, res_class_id, data['name'], data.get('planet'), 
+			data.get('res_weight_rating', 0.0), data.get('notes', ''), reporter_id
 		]
 
 		# Add Stats
@@ -335,15 +329,16 @@ class ValidationService(Core):
 		placeholders = ",".join(["%s"] * len(vals))
 		sql = f"INSERT INTO resource_spawns ({','.join(cols)}) VALUES ({placeholders})"
 		
-		self.info(f"[ValidationService] Adding Resource: {data['name']} (ID: {res_class_id})")
-		
 		with DatabaseContext.cursor(commit=True) as cur:
 			cur.execute(sql, tuple(vals))
 
-	def _update_resource(self, data):
+	def _update_resource(self, data, user_ctx):
 		res_id = data.get('id')
-		set_clauses = ["last_modified = NOW()", "res_weight_rating = %s"]
-		vals = [data.get('res_weight_rating', 0.0)]
+		# We can also update reporter_id on edit if we want "Last Edited By" behavior
+		reporter_id = user_ctx.get('id') if user_ctx else None
+		
+		set_clauses = ["last_modified = NOW()", "res_weight_rating = %s", "reporter_id = %s"]
+		vals = [data.get('res_weight_rating', 0.0), reporter_id]
 		
 		for stat in self.STAT_COLS:
 			if stat in data:

@@ -70,13 +70,15 @@
 				<div id="resource-modal" class="modal hidden">
 					<div class="modal-content">
 						<div class="modal-header">
-							<h2 id="modal-title">Report Resource</h2>
+							<h2 id="modal-title">Resource Details</h2>
 							<button class="close-modal" onclick="closeResourceModal()">&times;</button>
 						</div>
+						
 						<div id="modal-loader" class="modal-loader hidden">
 							<div class="spinner"></div>
-							<div class="loader-text">VALIDATING RESOURCE...</div>
+							<div class="loader-text">PROCESSING...</div>
 						</div>
+
 						<div class="modal-body">
 							<form id="resource-form">
 								<div class="form-group">
@@ -84,17 +86,19 @@
 									<input type="text" id="res-name" required placeholder="e.g. Polonium" autocomplete="off">
 								</div>
 								
-                                <div class="form-group">
+								<div class="form-group">
 									<label>Type</label>
                                     <div class="custom-dropdown" id="modal-type-dropdown">
                                         <div class="dropdown-selected" id="modal-type-selected">Select Resource Type...</div>
                                         <div class="dropdown-list" id="modal-type-list"></div>
                                     </div>
+                                    <div id="res-type-display" class="static-value hidden"></div>
                                     <input type="hidden" id="res-type" required>
 								</div>
 
-								<div class="stats-label">Enter Stats (Stats not applicable to this type are disabled)</div>
-								<div id="stats-container" class="stats-grid">
+								<div id="stats-label" class="stats-label">Stats</div>
+								
+                                <div id="stats-container-edit" class="stats-grid hidden">
 									<div class="stat-group"><label>OQ</label><input type="number" id="res_oq" min="1" max="1000"></div>
 									<div class="stat-group"><label>CR</label><input type="number" id="res_cr" min="1" max="1000"></div>
 									<div class="stat-group"><label>CD</label><input type="number" id="res_cd" min="1" max="1000"></div>
@@ -107,6 +111,28 @@
 									<div class="stat-group"><label>UT</label><input type="number" id="res_ut" min="1" max="1000"></div>
 								</div>
 
+                                <div id="stats-container-view" class="stats-grid-view hidden">
+                                    </div>
+
+                                <div id="meta-container" class="meta-grid">
+                                    <div class="form-group">
+                                        <label>Date Reported</label>
+                                        <div id="res-date" class="static-value">-</div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Last Edited By</label>
+                                        <div id="res-reporter" class="static-value">-</div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Planets</label>
+                                        <div id="res-planets" class="static-value">-</div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Status</label>
+                                        <div id="res-status" class="static-value">-</div>
+                                    </div>
+                                </div>
+
 								<div class="form-group full-width" style="margin-top: 15px;">
 									<label>Notes</label>
 									<textarea id="res-notes" class="modal-textarea" placeholder="Enter notes here..."></textarea>
@@ -114,8 +140,13 @@
 
 								<div id="modal-status-bar" class="status-bar"></div>
 
-								<div class="modal-actions">
-									<button type="submit" class="btn-primary">Save</button>
+								<div class="modal-footer">
+                                    <button type="button" id="btn-modal-edit" class="btn-secondary" onclick="Modal.enterEditMode()">Edit Details</button>
+                                    
+                                    <div class="footer-actions">
+                                        <button type="button" id="btn-modal-cancel" class="btn-danger" onclick="Modal.cancel()">Cancel</button>
+    									<button type="submit" id="btn-modal-save" class="btn-primary" disabled>Save</button>
+                                    </div>
 								</div>
 							</form>
 						</div>

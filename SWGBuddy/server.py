@@ -193,11 +193,13 @@ def queryResourceLog():
 	except:
 		since = 0
 	
-	# UPDATED SQL: Joins taxonomy table to get the readable string 'type'
+	# UPDATED SQL: Joins users table to get the reporter's name
+	# Assumes 'reporter_id' exists in resource_spawns. If not, this needs a DB migration.
 	sql = """
-		SELECT rs.*, rt.class_label as type
+		SELECT rs.*, rt.class_label as type, u.username as reporter_name
 		FROM resource_spawns rs
 		JOIN resource_taxonomy rt ON rs.resource_class_id = rt.swg_index
+		LEFT JOIN users u ON rs.reporter_id = u.discord_id
 		WHERE rs.server_id = %s 
 		AND (EXTRACT(EPOCH FROM rs.date_reported) > %s 
 			 OR (rs.last_modified IS NOT NULL AND EXTRACT(EPOCH FROM rs.last_modified) > %s))

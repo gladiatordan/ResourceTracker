@@ -118,8 +118,8 @@ function openResourceModal(resourceName) {
 	const resource = rawResourceData.find(r => r.name === resourceName);
 	
 	if (resource && window.Modal) {
-		// Call the Modal controller to open in Edit mode
-		window.Modal.openEdit(resource);
+		// Call the Modal controller to open in DETAILS mode
+		window.Modal.openDetails(resource);
 	} else {
 		console.error("Cannot open modal: Resource not found or Modal not loaded.");
 	}
