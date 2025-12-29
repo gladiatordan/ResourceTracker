@@ -107,25 +107,20 @@ class ValidationService(Core):
 		response = {"id": correlation_id, "status": "success", "error": None}
 
 		try:
-			# 1. Check Command Registry
 			required_power = self.command_permissions.get(action, 100)
 			
-			# EXCEPTION: sync_user is allowed for Guests (login flow)
 			if action == 'sync_user':
 				required_power = 0
 
-			# 2. Verify Permissions
 			if required_power > 0:
 				is_allowed, user_role = self._check_permission(user_ctx, server_id, required_power)
 				if not is_allowed:
 					raise PermissionError(f"Insufficient Permissions. Your Role: {user_role}, Required Level: {required_power}")
 
-			# 3. Route Command
 			if action == "sync_user":
 				self._sync_user(payload)
 
 			elif action == "add_resource":
-				# Pass user_ctx to handle_write
 				self._handle_write(payload, server_id, is_new=True, user_ctx=user_ctx) 
 				self.info(f"User {user_ctx.get('username')} added resource: {payload.get('name')}")
 
@@ -140,12 +135,11 @@ class ValidationService(Core):
 			elif action == "set_user_role":
 				self._set_user_role(user_ctx, payload, server_id)
 				self.info(f"Role change: {payload.get('target_user_id')} -> {payload.get('role')} on {server_id}")
-
-			# --- NEW COMMAND ---
+			
 			elif action == "reload_cache":
 				self._reload_cache()
 				self.info(f"Admin {user_ctx.get('username')} triggered cache reload.")
-			
+
 			else:
 				raise ValueError(f"No handler for action: {action}")
 
@@ -161,19 +155,31 @@ class ValidationService(Core):
 		if self.reply_queue and correlation_id:
 			self.reply_queue.put(response)
 
+	def _reload_cache(self):
+		"""Re-reads the JSON taxonomy from disk."""
+		try:
+			json_path = os.path.join(os.getcwd(), "assets", "resource_taxonomy.json")
+			with open(json_path, 'r') as f:
+				tree_data = json.load(f)
+			
+			self.valid_resources = {}
+			self._flatten_taxonomy(tree_data)
+			self._hydrate_permissions()
+			
+			self.info(f"Cache Reloaded. Valid types: {len(self.valid_resources)}")
+		except Exception as e:
+			self.error(f"Failed to reload cache: {e}")
+			raise e
+
 	# ----------------------------------------------------------------------
 	# COMMAND LOGIC
 	# ----------------------------------------------------------------------
 	def _handle_write(self, data, server_id, is_new, user_ctx=None):
 		"""Unified Add/Edit logic with calculation and uniqueness check."""
 		
-		# 1. Validate (Includes Class ID Check, Stats, and Planet)
 		self._validate_resource(data)
-
-		# 2. Calculate Ratings
 		self._calculate_ratings(data)
 
-		# 3. DB Write
 		if is_new:
 			name = data.get('name')
 			if self._resource_exists(name, server_id):
@@ -257,14 +263,13 @@ class ValidationService(Core):
 		stats_def = rules.get('stats', {})
 		allowed_planets = rules.get('planets', [])
 
-		# Planet Validation
+		# Planet Validation (FIX: Enforce Capitalization)
 		planet = data.get('planet')
 		if planet:
 			planet = planet.capitalize()
-			data['planet'] = planet
+			data['planet'] = planet # Save back to data for DB consistency
 
-		if planet and planet not in allowed_planets and len(allowed_planets) > 0:
-			self.info(f"[ValidationService] Allowed planets -> {allowed_planets}")
+		if planet and planet not in allowed_planets:
 			raise ValueError(f"Planet '{planet}' is not valid for this resource type.")
 
 		# Stat Validation
@@ -312,21 +317,23 @@ class ValidationService(Core):
 	# DB UTILS
 	# ----------------------------------------------------------------------
 	def _insert_resource(self, data, server_id, user_ctx):
-		# 1. Get Class ID directly from Config
 		label = data.get('type')
 		rules = self.valid_resources.get(label, {})
 		res_class_id = rules.get('id')
 
-		# Get Reporter ID from context
+		# Get Reporter ID
 		reporter_id = user_ctx.get('id') if user_ctx else None
+
+		# FIX: Wrap planet string in a list so psycopg2 adapts it to SQL ARRAY
+		planet_val = data.get('planet')
+		planet_arr = [planet_val] if planet_val else None
 
 		cols = ["server_id", "resource_class_id", "name", "planet", "res_weight_rating", "notes", "reporter_id"]
 		vals = [
-			server_id, res_class_id, data['name'], data.get('planet'), 
+			server_id, res_class_id, data['name'], planet_arr, 
 			data.get('res_weight_rating', 0.0), data.get('notes', ''), reporter_id
 		]
 
-		# Add Stats
 		for stat in self.STAT_COLS:
 			if data.get(stat):
 				cols.append(stat)
@@ -335,7 +342,6 @@ class ValidationService(Core):
 				cols.append(f"{stat}_rating")
 				vals.append(data[f"{stat}_rating"])
 
-		# 3. Generate SQL with Placeholders (Safe)
 		placeholders = ",".join(["%s"] * len(vals))
 		sql = f"INSERT INTO resource_spawns ({','.join(cols)}) VALUES ({placeholders})"
 		
@@ -344,7 +350,6 @@ class ValidationService(Core):
 
 	def _update_resource(self, data, user_ctx):
 		res_id = data.get('id')
-		# We can also update reporter_id on edit if we want "Last Edited By" behavior
 		reporter_id = user_ctx.get('id') if user_ctx else None
 		
 		set_clauses = ["last_modified = NOW()", "res_weight_rating = %s", "reporter_id = %s"]
@@ -358,10 +363,18 @@ class ValidationService(Core):
 				set_clauses.append(f"{stat}_rating = %s")
 				vals.append(data[f"{stat}_rating"])
 
-		for field in ['notes', 'is_active', 'planet']:
+		# FIX: Loop no longer includes 'planet' because it needs special array logic
+		for field in ['notes', 'is_active']:
 			if field in data:
 				set_clauses.append(f"{field} = %s")
 				vals.append(data[field])
+
+		# FIX: Planet Array Toggle Logic (Add if missing, Remove if present)
+		if 'planet' in data and data['planet']:
+			planet_val = data['planet']
+			# Postgres ARRAY Logic: CASE WHEN val in array THEN remove ELSE append
+			set_clauses.append("planet = CASE WHEN %s = ANY(COALESCE(planet, ARRAY[]::text[])) THEN array_remove(planet, %s) ELSE array_append(COALESCE(planet, ARRAY[]::text[]), %s) END")
+			vals.extend([planet_val, planet_val, planet_val])
 
 		vals.append(res_id)
 		sql = f"UPDATE resource_spawns SET {', '.join(set_clauses)} WHERE id = %s"
@@ -387,28 +400,17 @@ class ValidationService(Core):
 		return user_power >= required_power, role
 
 	def _sync_user(self, data):
-		"""
-		Upserts the user into the users table and ensures they have default 'USER'
-		permissions on all registered game servers.
-		"""
 		uid = data.get('id')
 		username = data.get('username')
 		avatar = data.get('avatar')
 
-		# 1. Upsert User Profile
 		sql_user = """
 			INSERT INTO users (discord_id, username, avatar_url, last_login) 
 			VALUES (%s, %s, %s, NOW())
 			ON CONFLICT (discord_id) 
 			DO UPDATE SET username=EXCLUDED.username, avatar_url=EXCLUDED.avatar_url, last_login=NOW()
 		"""
-
-		# 2. Get All Active Game Servers
 		sql_get_servers = "SELECT id FROM game_servers"
-
-		# 3. Grant Default Role (USER)
-		# assigned_by is set to the user themselves (uid) for self-registration.
-		# ON CONFLICT DO NOTHING ensures we don't overwrite existing higher roles (like ADMIN).
 		sql_grant_perm = """
 			INSERT INTO server_permissions (user_id, server_id, role, assigned_by)
 			VALUES (%s, %s, 'USER', %s)
@@ -417,16 +419,10 @@ class ValidationService(Core):
 
 		try:
 			with DatabaseContext.cursor(commit=True) as cur:
-				# Update User Table
 				cur.execute(sql_user, (uid, username, avatar))
-				
-				# Fetch Servers
 				cur.execute(sql_get_servers)
 				servers = cur.fetchall()
-				
-				# Iterate and Grant Permissions
 				for server in servers:
-					# Access by key 'id' assuming DictCursor is in use
 					sid = server['id']
 					cur.execute(sql_grant_perm, (uid, sid, uid))
 					
@@ -434,24 +430,4 @@ class ValidationService(Core):
 
 		except Exception as e:
 			self.error(f"Error syncing user {username}: {e}")
-			# Re-raise to ensure the caller knows sync failed
-			raise e
-	
-	def _reload_cache(self):
-		"""Re-reads the JSON taxonomy from disk."""
-		try:
-			json_path = os.path.join(os.getcwd(), "assets", "resource_taxonomy.json")
-			with open(json_path, 'r') as f:
-				tree_data = json.load(f)
-			
-			# Clear and Rebuild
-			self.valid_resources = {}
-			self._flatten_taxonomy(tree_data)
-			
-			# Re-hydrate permissions (optional, if you edit them in DB manually)
-			self._hydrate_permissions()
-			
-			self.info(f"Cache Reloaded. Valid types: {len(self.valid_resources)}")
-		except Exception as e:
-			self.error(f"Failed to reload cache: {e}")
 			raise e
