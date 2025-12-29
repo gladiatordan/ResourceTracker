@@ -164,6 +164,8 @@ body {
 .auth-section {
     display: flex;
     align-items: center;
+	width: 150px;
+    height: 26px;
 }
 
 .btn-discord {
