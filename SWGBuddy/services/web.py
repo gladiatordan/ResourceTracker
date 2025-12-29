@@ -11,8 +11,8 @@ import threading
 # Ensure root directory is in path
 sys.path.append(os.getcwd())
 
-from SWGBuddy.core.core import Core
-from SWGBuddy.core.database import DatabaseContext
+from ..core.core import Core
+from ..core.database import DatabaseContext
 from app import app, start_response_router
 
 class WebService(Core):

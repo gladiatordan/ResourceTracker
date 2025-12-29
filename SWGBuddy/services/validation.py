@@ -8,8 +8,8 @@ import sys
 import json
 import os
 import traceback
-from SWGBuddy.core.core import Core
-from SWGBuddy.core.database import DatabaseContext
+from ..core.core import Core
+from ..core.database import DatabaseContext
 
 class ValidationService(Core):
     # Role Power Levels
