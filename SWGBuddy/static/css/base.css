@@ -68,14 +68,49 @@ body {
 
 .page-container.active { display: block; }
 
+/* Auth Section Styling */
+.auth-section {
+    display: flex;
+    align-items: center;
+	width: 150px;
+    height: 26px;
+}
+
+.btn-discord {
+    display: flex;
+    align-items: center;
+	justify-content: center;
+    gap: 8px;
+    background: #5865F2; /* Discord Brand Color */
+    color: white;
+    padding: 8px 16px;
+    border-radius: 4px;
+    font-family: 'Rajdhani', sans-serif;
+    font-weight: 700;
+    text-decoration: none;
+    transition: filter 0.2s, transform 0.1s;
+	width: 150px;
+    height: 26px;
+    border: none;
+    cursor: pointer;
+}
+
+.btn-discord:hover {
+    filter: brightness(1.1);
+}
+
+.btn-discord:active {
+    transform: translateY(1px);
+}
+
 /* User Profile Styles */
 .user-profile {
     display: flex;
     align-items: center;
     gap: 10px;
     background: var(--bg-secondary);
-    padding: 4px 12px;
-    border-radius: 20px;
+    padding: 8px 16px;
+    border-radius: 4px;
     border: 1px solid var(--border-color);
 }
 
@@ -160,40 +195,7 @@ body {
     color: var(--text-color);
 }
 
-/* Auth Section Styling */
-.auth-section {
-    display: flex;
-    align-items: center;
-	width: 150px;
-    height: 26px;
-}
 
-.btn-discord {
-    display: flex;
-    align-items: center;
-	justify-content: center;
-    gap: 8px;
-    background: #5865F2; /* Discord Brand Color */
-    color: white;
-    padding: 8px 16px;
-    border-radius: 4px;
-    font-family: 'Rajdhani', sans-serif;
-    font-weight: 700;
-    text-decoration: none;
-    transition: filter 0.2s, transform 0.1s;
-	width: 150px;
-    height: 26px;
-    border: none;
-    cursor: pointer;
-}
-
-.btn-discord:hover {
-    filter: brightness(1.1);
-}
-
-.btn-discord:active {
-    transform: translateY(1px);
-}
 
 /* Status Bar */
 .status-bar {
