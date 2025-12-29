@@ -30,13 +30,13 @@ function renderTable(data) {
 		const year = rawDate.getUTCFullYear();
 		const formattedDate = `${day}/${month}/${year}`;
 
-		const assignedPlanets = (res.planets || []).map(p => p.toLowerCase());
+		const assignedPlanets = (res.planet || []).map(p => p.toLowerCase());
 		const availableOptions = ALL_PLANETS
 			.filter(p => !assignedPlanets.includes(p.toLowerCase()))
 			.map(p => `<option value="${p}">${p}</option>`)
 			.join('');
 
-		const planetBadges = (res.planets || []).map(p => {
+		const planetBadges = (res.planet || []).map(p => {
             // We keep planetLower for the CSS class (e.g. .tatooine)
 			const planetLower = p.toLowerCase();
 			return `<span class="planet ${planetLower}" 
@@ -140,8 +140,8 @@ function renderResourceRow(res) {
     
     // Render existing badges
     let badges = '';
-    if (res.planets && res.planets.length > 0) {
-        res.planets.forEach(p => {
+    if (res.planet && res.planet.length > 0) {
+        res.planet.forEach(p => {
             // Note: handleBadgeClick can perform deletion if we want to allow that for Users
             badges += `<span class="planet-badge" onclick="handleBadgeClick(event, '${res.name}', '${p}')">${p}</span>`;
         });
@@ -155,7 +155,7 @@ function renderResourceRow(res) {
         
         if (config && config.planets) {
             config.planets.forEach(p => {
-                if (!res.planets || !res.planets.includes(p)) {
+                if (!res.planet || !res.planet.includes(p)) {
                     options += `<option value="${p}">${p}</option>`;
                 }
             });
