@@ -13,8 +13,13 @@ async function loadTaxonomy() {
             API.fetchValidTypes()
         ]);
         
+        // 1. Assign to local scope
         TAXONOMY_TREE = treeData;
         RESOURCE_CONFIG = configData;
+
+        // 2. EXPOSE TO GLOBAL SCOPE (Fixes Modal "Loading..." issue)
+        window.TAXONOMY_TREE = treeData;
+        window.validResources = configData; // Modal expects 'validResources'
         
         // Populate valid types from the config map
         if (RESOURCE_CONFIG) {
