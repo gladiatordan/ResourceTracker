@@ -289,14 +289,14 @@ class ValidationService(Core):
 		# 1. Get Class ID directly from Config
 		label = data.get('type')
 		rules = self.valid_resources.get(label, {})
-		res_class_id = rules.get('resource_class_id')
+		res_class_id = rules.get('id')
 
 		# Safety: Fail if ID is missing (Bug check)
 		if res_class_id is None:
-			raise ValueError(f"Configuration Error: 'resource_class_id' missing for type '{label}'. Check valid_resource_table.json.")
+			raise ValueError(f"Configuration Error: 'id' missing for type '{label}'. Check valid_resource_table.json.")
 
 		# 2. Prepare Columns and Values
-		cols = ["server_id", "resource_class_id", "name", "planet", "res_weight_rating", "notes"]
+		cols = ["server_id", "id", "name", "planet", "res_weight_rating", "notes"]
 		vals = [
 			server_id, 
 			res_class_id, 
