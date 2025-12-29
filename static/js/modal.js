@@ -90,7 +90,7 @@ const Modal = {
 
     populatePlanets() {
         // TODO: Move planet list to config or DB
-        const planets = ["Corellia", "Dantooine", "Dathomir", "Endor", "Lok", "Naboo", "Rori", "Talus", "Tatooine", "Yavin IV"];
+        const planets = ["Corellia", "Dantooine", "Dathomir", "Endor", "Lok", "Naboo", "Rori", "Talus", "Tatooine", "Yavin"];
         const select = this.elements.planetSelect;
         if (select.children.length <= 1) { // Only populate if empty
             planets.forEach(p => {

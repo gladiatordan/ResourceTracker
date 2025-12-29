@@ -1,20 +1,18 @@
 """
 
-Core module for SWGBuddy
+SWGBuddy Core Module
 
-Contains base classes for standardizing logging, configuration, and secret redaction.
+Base classes for standardizing logging, configuration, and secret redaction.
+Refactored for Monolithic Multiprocessing.
+
 """
-# stdlib
 import json
 import inspect
-import logging
-import textwrap
-
+import sys
 
 class Serializable:
     """
     Base class that provides string representation with secret redaction.
-    Define _redact_ list in child classes to scrub specific attributes from logs.
     """
     _redact_ = ['password', 'token', 'secret', 'key', 'client_secret']
 
@@ -22,13 +20,11 @@ class Serializable:
         pass
 
     def __str__(self):
-        # Produces a safe string representation of the instance
         data = {}
         for k, v in self.__dict__.items():
             if k in self._redact_ or any(x in k.lower() for x in self._redact_):
                 data[k] = "[REDACTED]"
             else:
-                # Handle non-serializable objects gracefully
                 try:
                     # Test if serializable
                     json.dumps(v)
@@ -41,33 +37,64 @@ class Serializable:
 
 class Core(Serializable):
     """
-    Base class for all services and managers.
-    Provides standardized logging access.
+    Base class for all services.
+    Routes log messages to the central LogService queue.
     """
-    def __init__(self):
-        # Figure out which module called us
+    def __init__(self, log_queue=None):
+        # Identify the child class name for the "Source" tag
         self.mod = self._get_caller_module()
-        # Get logger
-        self.logger = logging.getLogger(self.mod) if self.mod else logging.getLogger()
+        self.log_queue = log_queue
         super().__init__()
 
+    def set_log_queue(self, log_queue):
+        """Allows injecting the queue after instantiation if necessary."""
+        self.log_queue = log_queue
+
     def _get_caller_module(self):
-        frame = inspect.currentframe().f_back
-        module = inspect.getmodule(frame)
-        return module.__name__ if module else "Unknown"
+        """Walks the stack to find the name of the subclass."""
+        try:
+            frame = inspect.currentframe().f_back
+            while frame:
+                module = inspect.getmodule(frame)
+                # Skip Core itself to find the caller
+                if module and module.__name__ != __name__:
+                    # Return class name (e.g. ValidationService)
+                    return module.__name__.split('.')[-1]
+                frame = frame.f_back
+        except:
+            pass
+        return "Unknown"
+
+    def _send_log(self, level, message):
+        """Internal helper to route logs to the queue."""
+        msg_str = str(message)
+        
+        if self.log_queue:
+            try:
+                self.log_queue.put({
+                    "level": level,
+                    "source": self.mod,
+                    "msg": msg_str
+                })
+            except Exception as e:
+                # Fallback to stderr if queue is broken
+                print(f"[Core] Queue Error: {e} | [{level}] [{self.mod}] {msg_str}", file=sys.stderr)
+        else:
+            # Fallback for standalone scripts / testing
+            print(f"[{level}] [{self.mod}] {msg_str}")
 
     # Standardized Log Wrappers
     def debug(self, message):
-        self.logger.debug(message)
+        self._send_log("DEBUG", message)
 
     def info(self, message):
-        self.logger.info(message)
+        self._send_log("INFO", message)
 
     def warning(self, message):
-        self.logger.warning(message)
+        self._send_log("WARNING", message)
 
     def error(self, message):
-        self.logger.error(message)
+        self._send_log("ERROR", message)
 
     def critical(self, message):
-        self.logger.critical(message)
+        self._send_log("CRITICAL", message)

@@ -1,0 +1,846 @@
+"id"	"swg_index"	"enum_name"	"class_label"	"parent_id"	"tree_level"	"attr_1"	"attr_2"	"attr_3"	"attr_4"	"attr_5"	"attr_6"	"attr_7"	"attr_8"	"attr_9"	"attr_10"	"attr_11"	"att_1_min"	"att_1_max"	"att_2_min"	"att_2_max"	"att_3_min"	"att_3_max"	"att_4_min"	"att_4_max"	"att_5_min"	"att_5_max"	"att_6_min"	"att_6_max"	"att_7_min"	"att_7_max"	"att_8_min"	"att_8_max"	"att_9_min"	"att_9_max"	"att_10_min"	"att_10_max"	"att_11_min"	"att_11_max"
+1	1	"resource"	"Resources"		1	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"	"res_malleability"	"res_toughness"	"res_shock_resistance"	"res_cold_resist"	"res_heat_resist"	"res_conductivity"	"entangle_resistance"	1	1000	1	1000	1	1000	1	1000	1	1000	1	1000	1	1000	1	1000	1	1000	1	1000	1	1000
+2	2	"organic"	"Organic"	1	2	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"	"res_malleability"	"res_toughness"	"res_shock_resistance"					1	1000	1	1000	1	1000	1	1000	1	1000	1	1000	1	1000								
+3	3	"creature_resources"	"Creature Resources"	2	3	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"	"res_malleability"	"res_toughness"	"res_shock_resistance"					1	1000	1	1000	1	1000	1	1000	1	1000	1	1000	1	1000								
+4	4	"creature_food"	"Creature Food"	3	4	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	1	1000	1	1000														
+5	5	"milk"	"Milk"	4	5	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	1	1000	1	1000														
+6	905	"milk_homogenized"	"Homogenized Milk"	5	6	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								200	200	200	200	200	200	200	200														
+7	6	"milk_domesticated"	"Domesticated Milk"	5	6	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	1	700	300	1000														
+8	7	"milk_domesticated_corellia"	"Corellian Domesticated Milk"	7	7	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	1	700	300	1000														
+9	8	"milk_domesticated_dantooine"	"Dantooine Domesticated Milk"	7	7	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	1	700	300	1000														
+10	9	"milk_domesticated_dathomir"	"Dathomirian  Domesticated Milk"	7	7	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	1	700	300	1000														
+11	10	"milk_domesticated_endor"	"Endorian Domesticated Milk"	7	7	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	1	700	300	1000														
+12	11	"milk_domesticated_lok"	"Lokian Domesticated Milk"	7	7	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	1	700	300	1000														
+13	12	"milk_domesticated_naboo"	"Nabooian Domesticated Milk"	7	7	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	1	700	300	1000														
+14	13	"milk_domesticated_rori"	"Rori Domesticated Milk"	7	7	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	1	700	300	1000														
+15	14	"milk_domesticated_talus"	"Talusian Domesticated Milk"	7	7	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	1	700	300	1000														
+16	15	"milk_domesticated_tatooine"	"Tatooinian Domesticated Milk"	7	7	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	1	700	300	1000														
+17	16	"milk_domesticated_yavin4"	"Yavinian Domesticated Milk"	7	7	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	1	700	300	1000														
+18	1018	"milk_domesticated_kashyyyk"	"Kashyyykian Domesticated Milk"	7	7	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	1	700	300	1000														
+19	1118	"milk_domesticated_mustafar"	"Mustafarian Domesticated Milk"	7	7	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	1	700	300	1000														
+20	17	"milk_wild"	"Wild Milk"	5	6	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	300	1000	1	700														
+21	18	"milk_wild_corellia"	"Corellian Wild Milk"	20	7	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	300	1000	1	700														
+22	19	"milk_wild_dantooine"	"Dantooine Wild Milk"	20	7	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	300	1000	1	700														
+23	20	"milk_wild_dathomir"	"Dathomirian Wild Milk"	20	7	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	300	1000	1	700														
+24	21	"milk_wild_endor"	"Endorian Wild Milk"	20	7	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	300	1000	1	700														
+25	22	"milk_wild_lok"	"Lokian Wild Milk"	20	7	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	300	1000	1	700														
+26	23	"milk_wild_naboo"	"Nabooian Wild Milk"	20	7	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	300	1000	1	700														
+27	24	"milk_wild_rori"	"Rori Wild Milk"	20	7	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	300	1000	1	700														
+28	25	"milk_wild_talus"	"Talusian Wild Milk"	20	7	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	300	1000	1	700														
+29	26	"milk_wild_tatooine"	"Tatooinian Wild Milk"	20	7	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	300	1000	1	700														
+30	27	"milk_wild_yavin4"	"Yavin IV Wild Milk"	20	7	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	300	1000	1	700														
+31	1019	"milk_wild_kashyyyk"	"Kashyyykian Wild Milk"	20	7	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	300	1000	1	700														
+32	1063	"milk_wild_mustafar"	"Mustafarian Wild Milk"	20	7	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	300	1000	1	700														
+33	28	"meat"	"Meat"	4	5	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	1	1000	1	1000														
+34	906	"processed_meat"	"Processed Meat"	33	6	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								200	200	200	200	200	200	200	200														
+35	29	"meat_domesticated"	"Domesticated Meat"	33	6	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	300	1000	1	700														
+36	30	"meat_domesticated_corellia"	"Corellian Domesticated Meat"	35	7	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	300	1000	1	700														
+37	31	"meat_domesticated_dantooine"	"Dantooine Domesticated Meat"	35	7	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	300	1000	1	700														
+38	32	"meat_domesticated_dathomir"	"Dathomirian Domesticated Meat"	35	7	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	300	1000	1	700														
+39	33	"meat_domesticated_endor"	"Endorian Domesticated Meat"	35	7	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	300	1000	1	700														
+40	34	"meat_domesticated_lok"	"Lokian Domesticated Meat"	35	7	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	300	1000	1	700														
+41	35	"meat_domesticated_naboo"	"Nabooian Domesticated Meat"	35	7	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	300	1000	1	700														
+42	36	"meat_domesticated_rori"	"Rori Domesticated Meat"	35	7	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	300	1000	1	700														
+43	37	"meat_domesticated_talus"	"Talusian Domesticated Meat"	35	7	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	300	1000	1	700														
+44	38	"meat_domesticated_tatooine"	"Tatooinian Domesticated Meat"	35	7	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	300	1000	1	700														
+45	39	"meat_domesticated_yavin4"	"Yavinian Domesticated Meat"	35	7	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	300	1000	1	700														
+46	1020	"meat_domesticated_kashyyyk"	"Kashyyykian Domesticated Meat"	35	7	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	300	1000	1	700														
+47	1064	"meat_domesticated_mustafar"	"Mustafarian Domesticated Meat"	35	7	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	300	1000	1	700														
+48	40	"meat_wild"	"Wild Meat"	33	6	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	1	700	300	1000														
+49	41	"meat_wild_corellia"	"Corellian Wild Meat"	48	7	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	1	700	300	1000														
+50	42	"meat_wild_dantooine"	"Dantooine Wild Meat"	48	7	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	1	700	300	1000														
+51	43	"meat_wild_dathomir"	"Dathomirian Wild Meat"	48	7	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	1	700	300	1000														
+52	44	"meat_wild_endor"	"Endorian Wild Meat"	48	7	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	1	700	300	1000														
+53	45	"meat_wild_lok"	"Lokian Wild Meat"	48	7	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	1	700	300	1000														
+54	46	"meat_wild_naboo"	"Nabooian Wild Meat"	48	7	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	1	700	300	1000														
+55	47	"meat_wild_rori"	"Rori Wild Meat"	48	7	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	1	700	300	1000														
+56	48	"meat_wild_talus"	"Talusian Wild Meat"	48	7	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	1	700	300	1000														
+57	49	"meat_wild_tatooine"	"Tatooinian Wild Meat"	48	7	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	1	700	300	1000														
+58	50	"meat_wild_yavin4"	"Yavinian Wild Meat"	48	7	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	1	700	300	1000														
+59	1021	"meat_wild_kashyyyk"	"Kashyyykian Wild Meat"	48	7	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	1	700	300	1000														
+60	1065	"meat_wild_mustafar"	"Mustafarian Wild Meat"	48	7	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	1	700	300	1000														
+61	51	"meat_herbivore"	"Herbivore Meat"	33	6	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	1	700	1	700														
+62	52	"meat_herbivore_corellia"	"Corellian Herbivore Meat"	61	7	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	1	700	1	700														
+63	53	"meat_herbivore_dantooine"	"Dantooine Herbivore Meat"	61	7	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	1	700	1	700														
+64	54	"meat_herbivore_dathomir"	"Dathomirian Herbivore Meat"	61	7	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	1	700	1	700														
+65	55	"meat_herbivore_endor"	"Endorian Herbivore Meat"	61	7	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	1	700	1	700														
+66	56	"meat_herbivore_lok"	"Lokian Herbivore Meat"	61	7	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	1	700	1	700														
+67	57	"meat_herbivore_naboo"	"Nabooian Herbivore Meat"	61	7	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	1	700	1	700														
+68	58	"meat_herbivore_rori"	"Rori Herbivore Meat"	61	7	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	1	700	1	700														
+69	59	"meat_herbivore_talus"	"Talusian Herbivore Meat"	61	7	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	1	700	1	700														
+70	60	"meat_herbivore_tatooine"	"Tatooinian Herbivore Meat"	61	7	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	1	700	1	700														
+71	61	"meat_herbivore_yavin4"	"Yavinian Herbivore Meat"	61	7	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	1	700	1	700														
+72	1022	"meat_herbivore_kashyyyk"	"Kashyyykian Herbivore Meat"	61	7	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	1	700	1	700														
+73	1066	"meat_herbivore_mustafar"	"Mustafarian Herbivore Meat"	61	7	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	1	700	1	700														
+74	62	"meat_carnivore"	"Carnivore Meat"	33	6	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	300	1000	300	1000														
+75	63	"meat_carnivore_corellia"	"Corellian Carnivore Meat"	74	7	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	300	1000	300	1000														
+76	64	"meat_carnivore_dantooine"	"Dantooine Carnivore Meat"	74	7	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	300	1000	300	1000														
+77	65	"meat_carnivore_dathomir"	"Dathomirian Carnivore Meat"	74	7	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	300	1000	300	1000														
+78	66	"meat_carnivore_endor"	"Endorian Carnivore Meat"	74	7	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	300	1000	300	1000														
+79	67	"meat_carnivore_lok"	"Lokian Carnivore Meat"	74	7	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	300	1000	300	1000														
+80	68	"meat_carnivore_naboo"	"Nabooian Carnivore Meat"	74	7	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	300	1000	300	1000														
+81	69	"meat_carnivore_rori"	"Rori Carnivore Meat"	74	7	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	300	1000	300	1000														
+82	70	"meat_carnivore_talus"	"Talusian Carnivore Meat"	74	7	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	300	1000	300	1000														
+83	71	"meat_carnivore_tatooine"	"Tatooinian Carnivore Meat"	74	7	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	300	1000	300	1000														
+84	72	"meat_carnivore_yavin4"	"Yavinian Carnivore Meat"	74	7	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	300	1000	300	1000														
+85	1023	"meat_carnivore_kashyyyk"	"Kashyyykian Carnivore Meat"	74	7	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	300	1000	300	1000														
+86	1067	"meat_carnivore_mustafar"	"Mustafarian Carnivore Meat"	74	7	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	300	1000	300	1000														
+87	73	"meat_reptillian"	"Reptillian Meat"	33	6	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	1	1000	1	1000														
+88	74	"meat_reptilian_corellia"	"Corellian Reptillian Meat"	87	7	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	1	1000	1	1000														
+89	75	"meat_reptilian_dantooine"	"Dantooine Reptillian Meat"	87	7	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	1	1000	1	1000														
+90	76	"meat_reptilian_dathomir"	"Dathomirian Reptillian Meat"	87	7	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	1	1000	1	1000														
+91	77	"meat_reptilian_endor"	"Endorian Reptillian Meat"	87	7	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	1	1000	1	1000														
+92	78	"meat_reptilian_lok"	"Lokian Reptillian Meat"	87	7	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	1	1000	1	1000														
+93	79	"meat_reptilian_naboo"	"Nabooian Reptillian Meat"	87	7	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	1	1000	1	1000														
+94	80	"meat_reptilian_rori"	"Rori Reptillian Meat"	87	7	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	1	1000	1	1000														
+95	81	"meat_reptilian_talus"	"Talusian Reptillian Meat"	87	7	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	1	1000	1	1000														
+96	82	"meat_reptilian_tatooine"	"Tatooinian Reptillian Meat"	87	7	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	1	1000	1	1000														
+97	83	"meat_reptilian_yavin4"	"Yavinian Reptillian Meat"	87	7	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	1	1000	1	1000														
+98	1024	"meat_reptilian_kashyyyk"	"Kashyyykian Reptilian Meat"	87	7	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	1	1000	1	1000														
+99	1068	"meat_reptilian_mustafar"	"Mustafarian Reptilian Meat"	87	7	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	1	1000	1	1000														
+100	84	"meat_avian"	"Avian Meat"	33	6	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	1	700	300	1000														
+101	85	"meat_avian_corellia"	"Corellian Avian Meat"	100	7	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	1	700	300	1000														
+102	86	"meat_avian_dantooine"	"Dantooine Avian Meat"	100	7	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	1	700	300	1000														
+103	87	"meat_avian_dathomir"	"Dathomirian Avian Meat"	100	7	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	1	700	300	1000														
+104	88	"meat_avian_endor"	"Endorian Avian Meat"	100	7	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	1	700	300	1000														
+105	89	"meat_avian_lok"	"Lokian Avian Meat"	100	7	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	1	700	300	1000														
+106	90	"meat_avian_naboo"	"Nabooian Avian Meat"	100	7	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	1	700	300	1000														
+107	91	"meat_avian_rori"	"Rori Avian Meat"	100	7	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	1	700	300	1000														
+108	92	"meat_avian_talus"	"Talusian Avian Meat"	100	7	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	1	700	300	1000														
+109	93	"meat_avian_tatooine"	"Tatooinian Avian Meat"	100	7	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	1	700	300	1000														
+110	94	"meat_avian_yavin4"	"Yavinian Avian Meat"	100	7	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	1	700	300	1000														
+111	1025	"meat_avian_kashyyyk"	"Kashyyykian Avian Meat"	100	7	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	1	700	300	1000														
+112	1069	"meat_avian_mustafar"	"Mustafarian Avian Meat"	100	7	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	1	700	300	1000														
+113	95	"meat_egg"	"Egg"	33	6	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	1	1000	1	1000														
+114	96	"meat_egg_corellia"	"Corellian Egg"	113	7	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	1	1000	1	1000														
+115	97	"meat_egg_dantooine"	"Dantooine Egg"	113	7	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	1	1000	1	1000														
+116	98	"meat_egg_dathomir"	"Dathomirian Egg"	113	7	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	1	1000	1	1000														
+117	99	"meat_egg_endor"	"Endorian Egg"	113	7	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	1	1000	1	1000														
+118	100	"meat_egg_lok"	"Lokian Egg"	113	7	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	1	1000	1	1000														
+119	101	"meat_egg_naboo"	"Nabooian Egg"	113	7	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	1	1000	1	1000														
+120	102	"meat_egg_rori"	"Rori Egg"	113	7	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	1	1000	1	1000														
+121	103	"meat_egg_talus"	"Talusian Egg"	113	7	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	1	1000	1	1000														
+122	104	"meat_egg_tatooine"	"Tatooinian Egg"	113	7	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	1	1000	1	1000														
+123	105	"meat_egg_yavin4"	"Yavinian Egg"	113	7	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	1	1000	1	1000														
+124	1026	"meat_egg_kashyyyk"	"Kashyyykian Egg"	113	7	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	1	1000	1	1000														
+125	1070	"meat_egg_mustafar"	"Mustafarian Egg"	113	7	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	1	1000	1	1000														
+126	106	"meat_insect"	"Insect Meat"	33	6	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	1	1000	300	1000														
+127	107	"meat_insect_corellia"	"Corellian Insect Meat"	126	7	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	1	1000	300	1000														
+128	108	"meat_insect_dantooine"	"Dantooine Insect Meat"	126	7	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	1	1000	300	1000														
+129	109	"meat_insect_dathomir"	"Dathomirian Insect Meat"	126	7	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	1	1000	300	1000														
+130	110	"meat_insect_endor"	"Endorian Insect Meat"	126	7	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	1	1000	300	1000														
+131	111	"meat_insect_lok"	"Lokian Insect Meat"	126	7	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	1	1000	300	1000														
+132	112	"meat_insect_naboo"	"Nabooian Insect Meat"	126	7	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	1	1000	300	1000														
+133	113	"meat_insect_rori"	"Rori Insect Meat"	126	7	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	1	1000	300	1000														
+134	114	"meat_insect_talus"	"Talusian Insect Meat"	126	7	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	1	1000	300	1000														
+135	115	"meat_insect_tatooine"	"Tatooinian Insect Meat"	126	7	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	1	1000	300	1000														
+136	116	"meat_insect_yavin4"	"Yavinian Insect Meat"	126	7	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	1	1000	300	1000														
+137	1027	"meat_insect_kashyyyk"	"Kashyyykian Insect Meat"	126	7	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	1	1000	300	1000														
+138	1071	"meat_insect_mustafar"	"Mustafarian Insect Meat"	126	7	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	1	1000	300	1000														
+139	117	"seafood"	"Seafood"	33	6	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	1	1000	1	1000														
+140	907	"processed_seafood"	"Processed Seafood"	139	7	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								200	200	200	200	200	200	200	200														
+141	900	"seafood_fish"	"Fish"	139	7	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	1	1000	1	1000														
+142	118	"seafood_fish_corellia"	"Corellian Fish Meat"	141	8	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	1	1000	1	1000														
+143	119	"seafood_fish_dantooine"	"Dantooine Fish Meat"	141	8	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	1	1000	1	1000														
+144	120	"seafood_fish_dathomir"	"Dathomirian Fish Meat"	141	8	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	1	1000	1	1000														
+145	121	"seafood_fish_endor"	"Endorian Fish Meat"	141	8	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	1	1000	1	1000														
+146	122	"seafood_fish_lok"	"Lokian Fish Meat"	141	8	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	1	1000	1	1000														
+147	123	"seafood_fish_naboo"	"Nabooian Fish Meat"	141	8	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	1	1000	1	1000														
+148	124	"seafood_fish_rori"	"Rori Fish Meat"	141	8	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	1	1000	1	1000														
+149	125	"seafood_fish_talus"	"Talusian Fish Meat"	141	8	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	1	1000	1	1000														
+150	126	"seafood_fish_tatooine"	"Tatooinian Fish Meat"	141	8	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	1	1000	1	1000														
+151	127	"seafood_fish_yavin4"	"Yavinian Fish Meat"	141	8	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	1	1000	1	1000														
+152	1028	"seafood_fish_kashyyyk"	"Kashyyykian Fish Meat"	141	8	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	1	1000	1	1000														
+153	1072	"seafood_fish_mustafar"	"Mustafarian Fish Meat"	141	8	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	1	1000	1	1000														
+154	901	"seafood_crustacean"	"Crustacean"	139	7	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	1	1000	1	1000														
+155	129	"seafood_crustacean_corellia"	"Corellia Crustacean Meat"	154	8	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	1	1000	1	1000														
+156	130	"seafood_crustacean_dantooine"	"Dantooine Crustacean Meat"	154	8	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	1	1000	1	1000														
+157	131	"seafood_crustacean_dathomir"	"Dathomirian Crustacean Meat"	154	8	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	1	1000	1	1000														
+158	132	"seafood_crustacean_endor"	"Endorian Crustacean Meat"	154	8	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	1	1000	1	1000														
+159	133	"seafood_crustacean_lok"	"Lokian Crustacean Meat"	154	8	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	1	1000	1	1000														
+160	134	"seafood_crustacean_naboo"	"Nabooian Crustacean Meat"	154	8	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	1	1000	1	1000														
+161	135	"seafood_crustacean_rori"	"Rori Crustacean Meat"	154	8	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	1	1000	1	1000														
+162	136	"seafood_crustacean_talus"	"Talusian Crustacean Meat"	154	8	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	1	1000	1	1000														
+163	137	"seafood_crustacean_tatooine"	"Tatooinian Crustacean Meat"	154	8	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	1	1000	1	1000														
+164	138	"seafood_crustacean_yavin4"	"Yavinian Crustacean Meat"	154	8	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	1	1000	1	1000														
+165	1029	"seafood_crustacean_kashyyyk"	"Kashyyykian Crustacean Meat"	154	8	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	1	1000	1	1000														
+166	1073	"seafood_crustacean_mustafar"	"Mustafarian Crustacean Meat"	154	8	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	1	1000	1	1000														
+167	902	"seafood_mollusk"	"Mollusk"	139	7	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	1	1000	1	1000														
+168	139	"seafood_mollusk_corellia"	"Corellia Mollusk Meat"	167	8	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	1	1000	1	1000														
+169	140	"seafood_mollusk_dantooine"	"Dantooine Mollusk Meat"	167	8	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	1	1000	1	1000														
+170	141	"seafood_mollusk_dathomir"	"Dathomirian Mollusk Meat"	167	8	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	1	1000	1	1000														
+171	142	"seafood_mollusk_endor"	"Endorian Mollusk Meat"	167	8	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	1	1000	1	1000														
+172	143	"seafood_mollusk_lok"	"Lokian Mollusk Meat"	167	8	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	1	1000	1	1000														
+173	144	"seafood_mollusk_naboo"	"Nabooian Mollusk Meat"	167	8	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	1	1000	1	1000														
+174	145	"seafood_mollusk_rori"	"Rori Mollusk Meat"	167	8	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	1	1000	1	1000														
+175	146	"seafood_mollusk_talus"	"Talusian Mollusk Meat"	167	8	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	1	1000	1	1000														
+176	147	"seafood_mollusk_tatooine"	"Tatooinian Mollusk Meat"	167	8	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	1	1000	1	1000														
+177	148	"seafood_mollusk_yavin4"	"Yavinian Mollusk Meat"	167	8	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	1	1000	1	1000														
+178	1030	"seafood_mollusk_kashyyyk"	"Kashyyykian Mollusk Meat"	167	8	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	1	1000	1	1000														
+179	1074	"seafood_mollusk_mustafar"	"Mustafarian Mollusk Meat"	167	8	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	1	1000	1	1000														
+180	149	"creature_structural"	"Creature Structural"	3	4	"res_decay_resist"	"res_quality"	"res_malleability"	"res_toughness"	"res_shock_resistance"							1	1000	1	1000	1	1000	1	1000	1	1000												
+181	150	"bone"	"Bone"	180	5	"res_decay_resist"	"res_quality"	"res_malleability"	"res_toughness"	"res_shock_resistance"							1	1000	1	1000	1	600	1	1000	100	1000												
+182	908	"ground_bones"	"Ground Bones"	181	6	"res_decay_resist"	"res_quality"	"res_malleability"	"res_toughness"	"res_shock_resistance"							200	200	200	200	200	200	200	200	200	200												
+183	151	"bone_mammal_corellia"	"Corellian Animal Bones"	181	6	"res_decay_resist"	"res_quality"	"res_malleability"	"res_toughness"	"res_shock_resistance"							300	1000	1	1000	1	500	1	1000	400	1000												
+184	152	"bone_mammal_dantooine"	"Dantooine Animal Bones"	181	6	"res_decay_resist"	"res_quality"	"res_malleability"	"res_toughness"	"res_shock_resistance"							300	1000	1	1000	1	500	1	1000	400	1000												
+185	153	"bone_mammal_dathomir"	"Dathomirian Animal Bones"	181	6	"res_decay_resist"	"res_quality"	"res_malleability"	"res_toughness"	"res_shock_resistance"							300	1000	1	1000	1	500	1	1000	400	1000												
+186	154	"bone_mammal_endor"	"Endorian Animal Bones"	181	6	"res_decay_resist"	"res_quality"	"res_malleability"	"res_toughness"	"res_shock_resistance"							300	1000	1	1000	1	500	1	1000	400	1000												
+187	155	"bone_mammal_lok"	"Lokian  Animal Bones"	181	6	"res_decay_resist"	"res_quality"	"res_malleability"	"res_toughness"	"res_shock_resistance"							300	1000	1	1000	1	500	1	1000	400	1000												
+188	156	"bone_mammal_naboo"	"Nabooian  Animal Bones"	181	6	"res_decay_resist"	"res_quality"	"res_malleability"	"res_toughness"	"res_shock_resistance"							300	1000	1	1000	1	500	1	1000	400	1000												
+189	157	"bone_mammal_rori"	"Rori  Animal Bones"	181	6	"res_decay_resist"	"res_quality"	"res_malleability"	"res_toughness"	"res_shock_resistance"							300	1000	1	1000	1	500	1	1000	400	1000												
+190	158	"bone_mammal_talus"	"Talusian  Animal Bones"	181	6	"res_decay_resist"	"res_quality"	"res_malleability"	"res_toughness"	"res_shock_resistance"							300	1000	1	1000	1	500	1	1000	400	1000												
+191	159	"bone_mammal_tatooine"	"Tatooinian  Animal Bones"	181	6	"res_decay_resist"	"res_quality"	"res_malleability"	"res_toughness"	"res_shock_resistance"							300	1000	1	1000	1	500	1	1000	400	1000												
+192	160	"bone_mammal_yavin4"	"Yavinian  Animal Bones"	181	6	"res_decay_resist"	"res_quality"	"res_malleability"	"res_toughness"	"res_shock_resistance"							300	1000	1	1000	1	500	1	1000	400	1000												
+193	1031	"bone_mammal_kashyyyk"	"Kashyyykian Animal Bones"	181	6	"res_decay_resist"	"res_quality"	"res_malleability"	"res_toughness"	"res_shock_resistance"							300	1000	1	1000	1	500	1	1000	400	1000												
+194	1075	"bone_mammal_mustafar"	"Mustafarian Animal Bones"	181	6	"res_decay_resist"	"res_quality"	"res_malleability"	"res_toughness"	"res_shock_resistance"							300	1000	1	1000	1	500	1	1000	400	1000												
+195	172	"bone_avian"	"Avian bone"	181	6	"res_decay_resist"	"res_quality"	"res_malleability"	"res_toughness"	"res_shock_resistance"							1	700	1	1000	1	600	1	500	100	500												
+196	173	"bone_avian_corellia"	"Corellian Avian Bones"	195	7	"res_decay_resist"	"res_quality"	"res_malleability"	"res_toughness"	"res_shock_resistance"							1	700	1	1000	1	600	1	500	100	500												
+197	174	"bone_avian_dantooine"	"Dantooine Avian Bones"	195	7	"res_decay_resist"	"res_quality"	"res_malleability"	"res_toughness"	"res_shock_resistance"							1	700	1	1000	1	600	1	500	100	500												
+198	175	"bone_avian_dathomir"	"Dathomirian Avian Bones"	195	7	"res_decay_resist"	"res_quality"	"res_malleability"	"res_toughness"	"res_shock_resistance"							1	700	1	1000	1	600	1	500	100	500												
+199	176	"bone_avian_endor"	"Endorian Avian Bones"	195	7	"res_decay_resist"	"res_quality"	"res_malleability"	"res_toughness"	"res_shock_resistance"							1	700	1	1000	1	600	1	500	100	500												
+200	177	"bone_avian_lok"	"Lokian Avian Bones"	195	7	"res_decay_resist"	"res_quality"	"res_malleability"	"res_toughness"	"res_shock_resistance"							1	700	1	1000	1	600	1	500	100	500												
+201	178	"bone_avian_naboo"	"Nabooian Avian Bones"	195	7	"res_decay_resist"	"res_quality"	"res_malleability"	"res_toughness"	"res_shock_resistance"							1	700	1	1000	1	600	1	500	100	500												
+202	179	"bone_avian_rori"	"Rori Avian Bones"	195	7	"res_decay_resist"	"res_quality"	"res_malleability"	"res_toughness"	"res_shock_resistance"							1	700	1	1000	1	600	1	500	100	500												
+203	180	"bone_avian_talus"	"Talusian Avian Bones"	195	7	"res_decay_resist"	"res_quality"	"res_malleability"	"res_toughness"	"res_shock_resistance"							1	700	1	1000	1	600	1	500	100	500												
+204	181	"bone_avian_tatooine"	"Tatooinian Avian Bones"	195	7	"res_decay_resist"	"res_quality"	"res_malleability"	"res_toughness"	"res_shock_resistance"							1	700	1	1000	1	600	1	500	100	500												
+205	182	"bone_avian_yavin4"	"Yavinian Avian Bones"	195	7	"res_decay_resist"	"res_quality"	"res_malleability"	"res_toughness"	"res_shock_resistance"							1	700	1	1000	1	600	1	500	100	500												
+206	1032	"bone_avian_kashyyyk"	"Kashyyykian Avian Bones"	195	7	"res_decay_resist"	"res_quality"	"res_malleability"	"res_toughness"	"res_shock_resistance"							1	700	1	1000	1	600	1	500	100	500												
+207	1076	"bone_avian_mustafar"	"Mustafarian Avian Bones"	195	7	"res_decay_resist"	"res_quality"	"res_malleability"	"res_toughness"	"res_shock_resistance"							1	700	1	1000	1	600	1	500	100	500												
+208	161	"bone_horn"	"Horn"	180	5	"res_decay_resist"	"res_quality"	"res_malleability"	"res_toughness"	"res_shock_resistance"							200	1000	1	1000	1	500	1	500	200	700												
+209	913	"bone_horn_ground"	"Ground Horn"	208	6	"res_decay_resist"	"res_quality"	"res_malleability"	"res_toughness"	"res_shock_resistance"							200	200	200	200	200	200	200	200	200	200												
+210	162	"bone_horn_corellia"	"Corellian Horn"	208	6	"res_decay_resist"	"res_quality"	"res_malleability"	"res_toughness"	"res_shock_resistance"							200	1000	1	1000	1	500	1	500	300	700												
+211	163	"bone_horn_dantooine"	"Dantooine Horn"	208	6	"res_decay_resist"	"res_quality"	"res_malleability"	"res_toughness"	"res_shock_resistance"							200	1000	1	1000	1	500	1	500	300	700												
+212	164	"bone_horn_dathomir"	"Dothomirian Horn"	208	6	"res_decay_resist"	"res_quality"	"res_malleability"	"res_toughness"	"res_shock_resistance"							200	1000	1	1000	1	500	1	500	300	700												
+213	165	"bone_horn_endor"	"Endorian Horn"	208	6	"res_decay_resist"	"res_quality"	"res_malleability"	"res_toughness"	"res_shock_resistance"							200	1000	1	1000	1	500	1	500	300	700												
+214	166	"bone_horn_lok"	"Lokian Horn"	208	6	"res_decay_resist"	"res_quality"	"res_malleability"	"res_toughness"	"res_shock_resistance"							200	1000	1	1000	1	500	1	500	300	700												
+215	167	"bone_horn_naboo"	"Nabooian Horn"	208	6	"res_decay_resist"	"res_quality"	"res_malleability"	"res_toughness"	"res_shock_resistance"							200	1000	1	1000	1	500	1	500	300	700												
+216	168	"bone_horn_rori"	"Rori Horn"	208	6	"res_decay_resist"	"res_quality"	"res_malleability"	"res_toughness"	"res_shock_resistance"							200	1000	1	1000	1	500	1	500	300	700												
+217	169	"bone_horn_talus"	"Talusian Horn"	208	6	"res_decay_resist"	"res_quality"	"res_malleability"	"res_toughness"	"res_shock_resistance"							200	1000	1	1000	1	500	1	500	300	700												
+218	170	"bone_horn_tatooine"	"Tatooinian Horn"	208	6	"res_decay_resist"	"res_quality"	"res_malleability"	"res_toughness"	"res_shock_resistance"							200	1000	1	1000	1	500	1	500	300	700												
+219	171	"bone_horn_yavin4"	"Yavinian Horn"	208	6	"res_decay_resist"	"res_quality"	"res_malleability"	"res_toughness"	"res_shock_resistance"							200	1000	1	1000	1	500	1	500	300	700												
+220	1033	"bone_horn_kashyyyk"	"Kashyyykian Horn"	208	6	"res_decay_resist"	"res_quality"	"res_malleability"	"res_toughness"	"res_shock_resistance"							200	1000	1	1000	1	500	1	500	300	700												
+221	1077	"bone_horn_mustafar"	"Mustafarian Horn"	208	6	"res_decay_resist"	"res_quality"	"res_malleability"	"res_toughness"	"res_shock_resistance"							200	1000	1	1000	1	500	1	500	300	700												
+222	183	"hide"	"Hide"	180	5	"res_decay_resist"	"res_quality"	"res_malleability"	"res_toughness"	"res_shock_resistance"							1	1000	1	1000	1	1000	1	1000	1	1000												
+223	909	"synthesized_hides"	"Synthesized Hides"	222	6	"res_decay_resist"	"res_quality"	"res_malleability"	"res_toughness"	"res_shock_resistance"							200	200	200	200	200	200	200	200	200	200												
+224	184	"hide_wooly"	"Wooly Hide"	222	6	"res_decay_resist"	"res_quality"	"res_malleability"	"res_toughness"	"res_shock_resistance"							1	1000	1	1000	1	1000	1	1000	1	1000												
+225	185	"hide_wooly_corellia"	"Corellian Wooly Hide"	224	7	"res_decay_resist"	"res_quality"	"res_malleability"	"res_toughness"	"res_shock_resistance"							1	1000	1	1000	1	1000	1	1000	1	1000												
+226	186	"hide_wooly_dantooine"	"Dantooine Wooly Hide"	224	7	"res_decay_resist"	"res_quality"	"res_malleability"	"res_toughness"	"res_shock_resistance"							1	1000	1	1000	1	1000	1	1000	1	1000												
+227	187	"hide_wooly_dathomir"	"Dathomirian Wooly Hide"	224	7	"res_decay_resist"	"res_quality"	"res_malleability"	"res_toughness"	"res_shock_resistance"							1	1000	1	1000	1	1000	1	1000	1	1000												
+228	188	"hide_wooly_endor"	"Endorian Wooly Hide"	224	7	"res_decay_resist"	"res_quality"	"res_malleability"	"res_toughness"	"res_shock_resistance"							1	1000	1	1000	1	1000	1	1000	1	1000												
+229	189	"hide_wooly_lok"	"Lokian Wooly Hide"	224	7	"res_decay_resist"	"res_quality"	"res_malleability"	"res_toughness"	"res_shock_resistance"							1	1000	1	1000	1	1000	1	1000	1	1000												
+230	190	"hide_wooly_naboo"	"Nabooian Wooly Hide"	224	7	"res_decay_resist"	"res_quality"	"res_malleability"	"res_toughness"	"res_shock_resistance"							1	1000	1	1000	1	1000	1	1000	1	1000												
+231	191	"hide_wooly_rori"	"Rori Wooly Hide"	224	7	"res_decay_resist"	"res_quality"	"res_malleability"	"res_toughness"	"res_shock_resistance"							1	1000	1	1000	1	1000	1	1000	1	1000												
+232	192	"hide_wooly_talus"	"Talusian Wooly Hide"	224	7	"res_decay_resist"	"res_quality"	"res_malleability"	"res_toughness"	"res_shock_resistance"							1	1000	1	1000	1	1000	1	1000	1	1000												
+233	193	"hide_wooly_tatooine"	"Tatooinian Wooly Hide"	224	7	"res_decay_resist"	"res_quality"	"res_malleability"	"res_toughness"	"res_shock_resistance"							1	1000	1	1000	1	1000	1	1000	1	1000												
+234	194	"hide_wooly_yavin4"	"Yavinian Wooly Hide"	224	7	"res_decay_resist"	"res_quality"	"res_malleability"	"res_toughness"	"res_shock_resistance"							1	1000	1	1000	1	1000	1	1000	1	1000												
+235	1034	"hide_wooly_kashyyyk"	"Kashyyykian Wooly Hide"	224	7	"res_decay_resist"	"res_quality"	"res_malleability"	"res_toughness"	"res_shock_resistance"							1	1000	1	1000	1	1000	1	1000	1	1000												
+236	1078	"hide_wooly_mustafar"	"Mustafarian Wooly Hide"	224	7	"res_decay_resist"	"res_quality"	"res_malleability"	"res_toughness"	"res_shock_resistance"							1	1000	1	1000	1	1000	1	1000	1	1000												
+237	195	"hide_bristley"	"Bristley Hide"	222	6	"res_decay_resist"	"res_quality"	"res_malleability"	"res_toughness"	"res_shock_resistance"							1	1000	1	1000	1	1000	1	1000	1	1000												
+238	196	"hide_bristley_corellia"	"Corellian Bristley Hide"	237	7	"res_decay_resist"	"res_quality"	"res_malleability"	"res_toughness"	"res_shock_resistance"							1	1000	1	1000	1	1000	1	1000	1	1000												
+239	197	"hide_bristley_dantooine"	"Dantooine Bristley Hide"	237	7	"res_decay_resist"	"res_quality"	"res_malleability"	"res_toughness"	"res_shock_resistance"							1	1000	1	1000	1	1000	1	1000	1	1000												
+240	198	"hide_bristley_dathomir"	"Dathomirian Bristley Hide"	237	7	"res_decay_resist"	"res_quality"	"res_malleability"	"res_toughness"	"res_shock_resistance"							1	1000	1	1000	1	1000	1	1000	1	1000												
+241	199	"hide_bristley_endor"	"Endorian Bristley Hide"	237	7	"res_decay_resist"	"res_quality"	"res_malleability"	"res_toughness"	"res_shock_resistance"							1	1000	1	1000	1	1000	1	1000	1	1000												
+242	200	"hide_bristley_lok"	"Lokian Bristley Hide"	237	7	"res_decay_resist"	"res_quality"	"res_malleability"	"res_toughness"	"res_shock_resistance"							1	1000	1	1000	1	1000	1	1000	1	1000												
+243	201	"hide_bristley_naboo"	"Nabooian Bristley Hide"	237	7	"res_decay_resist"	"res_quality"	"res_malleability"	"res_toughness"	"res_shock_resistance"							1	1000	1	1000	1	1000	1	1000	1	1000												
+244	202	"hide_bristley_rori"	"Rori Bristley Hide"	237	7	"res_decay_resist"	"res_quality"	"res_malleability"	"res_toughness"	"res_shock_resistance"							1	1000	1	1000	1	1000	1	1000	1	1000												
+245	203	"hide_bristley_talus"	"Talusian Bristley Hide"	237	7	"res_decay_resist"	"res_quality"	"res_malleability"	"res_toughness"	"res_shock_resistance"							1	1000	1	1000	1	1000	1	1000	1	1000												
+246	204	"hide_bristley_tatooine"	"Tatooinian Bristley Hide"	237	7	"res_decay_resist"	"res_quality"	"res_malleability"	"res_toughness"	"res_shock_resistance"							1	1000	1	1000	1	1000	1	1000	1	1000												
+247	205	"hide_bristley_yavin4"	"Yavinian Bristley Hide"	237	7	"res_decay_resist"	"res_quality"	"res_malleability"	"res_toughness"	"res_shock_resistance"							1	1000	1	1000	1	1000	1	1000	1	1000												
+248	1035	"hide_bristley_kashyyyk"	"Kashyyykian Bristley Hide"	237	7	"res_decay_resist"	"res_quality"	"res_malleability"	"res_toughness"	"res_shock_resistance"							1	1000	1	1000	1	1000	1	1000	1	1000												
+249	1079	"hide_bristley_mustafar"	"Mustafarian Bristley Hide"	237	7	"res_decay_resist"	"res_quality"	"res_malleability"	"res_toughness"	"res_shock_resistance"							1	1000	1	1000	1	1000	1	1000	1	1000												
+250	206	"hide_leathery"	"Leathery Hide"	222	6	"res_decay_resist"	"res_quality"	"res_malleability"	"res_toughness"	"res_shock_resistance"							1	1000	1	1000	1	1000	1	1000	1	1000												
+251	207	"hide_leathery_corellia"	"Corellian Leathery Hide"	250	7	"res_decay_resist"	"res_quality"	"res_malleability"	"res_toughness"	"res_shock_resistance"							1	1000	1	1000	1	1000	1	1000	1	1000												
+252	208	"hide_leathery_dantooine"	"Dantooine Leathery Hide"	250	7	"res_decay_resist"	"res_quality"	"res_malleability"	"res_toughness"	"res_shock_resistance"							1	1000	1	1000	1	1000	1	1000	1	1000												
+253	209	"hide_leathery_dathomir"	"Dathomirian Leathery Hide"	250	7	"res_decay_resist"	"res_quality"	"res_malleability"	"res_toughness"	"res_shock_resistance"							1	1000	1	1000	1	1000	1	1000	1	1000												
+254	210	"hide_leathery_endor"	"Endorian Leathery Hide"	250	7	"res_decay_resist"	"res_quality"	"res_malleability"	"res_toughness"	"res_shock_resistance"							1	1000	1	1000	1	1000	1	1000	1	1000												
+255	211	"hide_leathery_lok"	"Lokian Leathery Hide"	250	7	"res_decay_resist"	"res_quality"	"res_malleability"	"res_toughness"	"res_shock_resistance"							1	1000	1	1000	1	1000	1	1000	1	1000												
+256	212	"hide_leathery_naboo"	"Nabooian Leathery Hide"	250	7	"res_decay_resist"	"res_quality"	"res_malleability"	"res_toughness"	"res_shock_resistance"							1	1000	1	1000	1	1000	1	1000	1	1000												
+257	213	"hide_leathery_rori"	"Rori Leathery Hide"	250	7	"res_decay_resist"	"res_quality"	"res_malleability"	"res_toughness"	"res_shock_resistance"							1	1000	1	1000	1	1000	1	1000	1	1000												
+258	214	"hide_leathery_talus"	"Talusian Leathery Hide"	250	7	"res_decay_resist"	"res_quality"	"res_malleability"	"res_toughness"	"res_shock_resistance"							1	1000	1	1000	1	1000	1	1000	1	1000												
+259	215	"hide_leathery_tatooine"	"Tatooinian Leathery Hide"	250	7	"res_decay_resist"	"res_quality"	"res_malleability"	"res_toughness"	"res_shock_resistance"							1	1000	1	1000	1	1000	1	1000	1	1000												
+260	216	"hide_leathery_yavin4"	"Yavinian Leathery Hide"	250	7	"res_decay_resist"	"res_quality"	"res_malleability"	"res_toughness"	"res_shock_resistance"							1	1000	1	1000	1	1000	1	1000	1	1000												
+261	1036	"hide_leathery_kashyyyk"	"Kashyyykian Leathery Hide"	250	7	"res_decay_resist"	"res_quality"	"res_malleability"	"res_toughness"	"res_shock_resistance"							1	1000	1	1000	1	1000	1	1000	1	1000												
+262	1080	"hide_leathery_mustafar"	"Mustafarian Leathery Hide"	250	7	"res_decay_resist"	"res_quality"	"res_malleability"	"res_toughness"	"res_shock_resistance"							1	1000	1	1000	1	1000	1	1000	1	1000												
+263	217	"hide_scaley"	"Scaley Hide"	222	6	"res_decay_resist"	"res_quality"	"res_malleability"	"res_toughness"	"res_shock_resistance"							1	1000	1	1000	1	1000	1	1000	1	1000												
+264	218	"hide_scaley_corellia"	"Corellian Scaley Hide"	263	7	"res_decay_resist"	"res_quality"	"res_malleability"	"res_toughness"	"res_shock_resistance"							1	1000	1	1000	1	1000	1	1000	1	1000												
+265	219	"hide_scaley_dantooine"	"Dantooine Scaley Hide"	263	7	"res_decay_resist"	"res_quality"	"res_malleability"	"res_toughness"	"res_shock_resistance"							1	1000	1	1000	1	1000	1	1000	1	1000												
+266	220	"hide_scaley_dathomir"	"Dathomirian Scaley Hide"	263	7	"res_decay_resist"	"res_quality"	"res_malleability"	"res_toughness"	"res_shock_resistance"							1	1000	1	1000	1	1000	1	1000	1	1000												
+267	221	"hide_scaley_endor"	"Endorian Scaley Hide"	263	7	"res_decay_resist"	"res_quality"	"res_malleability"	"res_toughness"	"res_shock_resistance"							1	1000	1	1000	1	1000	1	1000	1	1000												
+268	222	"hide_scaley_lok"	"Lokian Scaley Hide"	263	7	"res_decay_resist"	"res_quality"	"res_malleability"	"res_toughness"	"res_shock_resistance"							1	1000	1	1000	1	1000	1	1000	1	1000												
+269	223	"hide_scaley_naboo"	"Nabooian Scaley Hide"	263	7	"res_decay_resist"	"res_quality"	"res_malleability"	"res_toughness"	"res_shock_resistance"							1	1000	1	1000	1	1000	1	1000	1	1000												
+270	224	"hide_scaley_rori"	"Rori Scaley Hide"	263	7	"res_decay_resist"	"res_quality"	"res_malleability"	"res_toughness"	"res_shock_resistance"							1	1000	1	1000	1	1000	1	1000	1	1000												
+271	225	"hide_scaley_talus"	"Talusian Scaley Hide"	263	7	"res_decay_resist"	"res_quality"	"res_malleability"	"res_toughness"	"res_shock_resistance"							1	1000	1	1000	1	1000	1	1000	1	1000												
+272	226	"hide_scaley_tatooine"	"Tatooinian Scaley Hide"	263	7	"res_decay_resist"	"res_quality"	"res_malleability"	"res_toughness"	"res_shock_resistance"							1	1000	1	1000	1	1000	1	1000	1	1000												
+273	227	"hide_scaley_yavin4"	"Yavinian Scaley Hide"	263	7	"res_decay_resist"	"res_quality"	"res_malleability"	"res_toughness"	"res_shock_resistance"							1	1000	1	1000	1	1000	1	1000	1	1000												
+274	1037	"hide_scaley_kashyyyk"	"Kashyyykian Scaley Hide"	263	7	"res_decay_resist"	"res_quality"	"res_malleability"	"res_toughness"	"res_shock_resistance"							1	1000	1	1000	1	1000	1	1000	1	1000												
+275	1081	"hide_scaley_mustafar"	"Mustafarian Scaley Hide"	263	7	"res_decay_resist"	"res_quality"	"res_malleability"	"res_toughness"	"res_shock_resistance"							1	1000	1	1000	1	1000	1	1000	1	1000												
+276	228	"flora_resources"	"Flora Resources"	2	3	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"	"res_malleability"	"res_toughness"	"res_shock_resistance"					1	1000	1	1000	1	1000	1	1000	200	1000	1	800	1	700								
+277	229	"flora_food"	"Flora Food"	276	4	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	1	1000	1	1000														
+278	230	"cereal"	"Cereal"	277	5	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	1	1000	1	1000														
+279	950	"processed_cereal"	"Processed Cereal"	278	6	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								200	200	200	200	200	200	200	200														
+280	231	"corn"	"Corn"	278	6	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	1	1000	1	1000														
+281	232	"corn_domesticated"	"Domesticated Corn"	280	7	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	1	700	300	1000														
+282	233	"corn_domesticated_corellia"	"Corellian Domesticated Corn"	281	8	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	1	700	300	1000														
+283	234	"corn_domesticated_dantooine"	"Dantooine Domesticated Corn"	281	8	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	1	700	300	1000														
+284	235	"corn_domesticated_dathomir"	"Dathomirian Domesticated Corn"	281	8	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	1	700	300	1000														
+285	236	"corn_domesticated_endor"	"Endorian Domesticated Corn"	281	8	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	1	700	300	1000														
+286	237	"corn_domesticated_lok"	"Lokian Domesticated Corn"	281	8	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	1	700	300	1000														
+287	238	"corn_domesticated_naboo"	"Nabooian Domesticated Corn"	281	8	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	1	700	300	1000														
+288	239	"corn_domesticated_rori"	"Rori Domesticated Corn"	281	8	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	1	700	300	1000														
+289	240	"corn_domesticated_talus"	"Talusian Domesticated Corn"	281	8	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	1	700	300	1000														
+290	241	"corn_domesticated_tatooine"	"Tatooinian Domesticated Corn"	281	8	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	1	700	300	1000														
+291	242	"corn_domesticated_yavin4"	"Yavinian Domesticated Corn"	281	8	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	1	700	300	1000														
+292	1038	"corn_domesticated_kashyyyk"	"Kashyyykian Domesticated Corn"	281	8	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	1	700	300	1000														
+293	1082	"corn_domesticated_mustafar"	"Mustafarian Domesticated Corn"	281	8	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	1	700	300	1000														
+294	243	"corn_wild"	"Wild Corn"	280	7	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	300	1000	1	700														
+295	244	"corn_wild_corellia"	"Corellian Wild Corn"	294	8	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	300	1000	1	700														
+296	245	"corn_wild_dantooine"	"Dantooine Wild Corn"	294	8	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	300	1000	1	700														
+297	246	"corn_wild_dathomir"	"Dathomirian Wild Corn"	294	8	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	300	1000	1	700														
+298	247	"corn_wild_endor"	"Endorian Wild Corn"	294	8	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	300	1000	1	700														
+299	248	"corn_wild_lok"	"Lokian Wild Corn"	294	8	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	300	1000	1	700														
+300	249	"corn_wild_naboo"	"Nabooian Wild Corn"	294	8	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	300	1000	1	700														
+301	250	"corn_wild_rori"	"Rori Wild Corn"	294	8	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	300	1000	1	700														
+302	251	"corn_wild_talus"	"Talusian Wild Corn"	294	8	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	300	1000	1	700														
+303	252	"corn_wild_tatooine"	"Tatooinian Wild Corn"	294	8	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	300	1000	1	700														
+304	253	"corn_wild_yavin4"	"Yavinian Wild Corn"	294	8	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	300	1000	1	700														
+305	1039	"corn_wild_kashyyyk"	"Kashyyykian Wild Corn"	294	8	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	300	1000	1	700														
+306	1083	"corn_wild_mustafar"	"Mustafarian Wild Corn"	294	8	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	300	1000	1	700														
+307	254	"rice"	"Rice"	278	6	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	1	1000	1	1000														
+308	255	"rice_domesticated"	"Domesticated Rice"	307	7	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	1	700	300	1000														
+309	256	"rice_domesticated_corellia"	"Corellian Domesticated Rice"	308	8	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	1	700	300	1000														
+310	257	"rice_domesticated_dantooine"	"Dantooine Domesticated Rice"	308	8	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	1	700	300	1000														
+311	258	"rice_domesticated_dathomir"	"Dathomirian Domesticated Rice"	308	8	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	1	700	300	1000														
+312	259	"rice_domesticated_endor"	"Endorian Domesticated Rice"	308	8	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	1	700	300	1000														
+313	260	"rice_domesticated_lok"	"Lokian Domesticated Rice"	308	8	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	1	700	300	1000														
+314	261	"rice_domesticated_naboo"	"Nabooian Domesticated Rice"	308	8	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	1	700	300	1000														
+315	262	"rice_domesticated_rori"	"Rori Domesticated Rice"	308	8	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	1	700	300	1000														
+316	263	"rice_domesticated_talus"	"Talusian Domesticated Rice"	308	8	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	1	700	300	1000														
+317	264	"rice_domesticated_tatooine"	"Tatooinian Domesticated Rice"	308	8	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	1	700	300	1000														
+318	265	"rice_domesticated_yavin4"	"Yavinian Domesticated Rice"	308	8	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	1	700	300	1000														
+319	1040	"rice_domesticated_kashyyyk"	"Kashyyykian Domesticated Rice"	308	8	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	1	700	300	1000														
+320	1084	"rice_domesticated_mustafar"	"Mustafarian Domesticated Rice"	308	8	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	1	700	300	1000														
+321	266	"rice_wild"	"Wild Rice"	307	7	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	300	1000	1	700														
+322	267	"rice_wild_corellia"	"Corellian Wild Rice"	321	8	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	300	1000	1	700														
+323	268	"rice_wild_dantooine"	"Dantooine Wild Rice"	321	8	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	300	1000	1	700														
+324	269	"rice_wild_dathomir"	"Dathomirian Wild Rice"	321	8	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	300	1000	1	700														
+325	270	"rice_wild_endor"	"Endorian Wild Rice"	321	8	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	300	1000	1	700														
+326	271	"rice_wild_lok"	"Lokian Wild Rice"	321	8	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	300	1000	1	700														
+327	272	"rice_wild_naboo"	"Nabooian Wild Rice"	321	8	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	300	1000	1	700														
+328	273	"rice_wild_rori"	"Rori Wild Rice"	321	8	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	300	1000	1	700														
+329	274	"rice_wild_talus"	"Talusian Wild Rice"	321	8	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	300	1000	1	700														
+330	275	"rice_wild_tatooine"	"Tatooinian Wild Rice"	321	8	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	300	1000	1	700														
+331	276	"rice_wild_yavin4"	"Yavinian Wild Rice"	321	8	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	300	1000	1	700														
+332	1041	"rice_wild_kashyyyk"	"Kashyyykian Wild Rice"	321	8	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	300	1000	1	700														
+333	1085	"rice_wild_mustafar"	"Mustafarian Wild Rice"	321	8	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	300	1000	1	700														
+334	277	"oats"	"Oats"	278	6	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	1	1000	1	1000														
+335	278	"oats_domesticated"	"Domesticated Oats"	334	7	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	1	700	300	1000														
+336	279	"oats_domesticated_corellia"	"Corellian Domesticated Oats"	335	8	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	1	700	300	1000														
+337	280	"oats_domesticated_dantooine"	"Dantooine Domesticated Oats"	335	8	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	1	700	300	1000														
+338	281	"oats_domesticated_dathomir"	"Dathomirian Domesticated Oats"	335	8	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	1	700	300	1000														
+339	282	"oats_domesticated_endor"	"Endorian Domesticated Oats"	335	8	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	1	700	300	1000														
+340	283	"oats_domesticated_lok"	"Lokian Domesticated Oats"	335	8	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	1	700	300	1000														
+341	284	"oats_domesticated_naboo"	"Nabooian Domesticated Oats"	335	8	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	1	700	300	1000														
+342	285	"oats_domesticated_rori"	"Rori Domesticated Oats"	335	8	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	1	700	300	1000														
+343	286	"oats_domesticated_talus"	"Talusian Domesticated Oats"	335	8	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	1	700	300	1000														
+344	287	"oats_domesticated_tatooine"	"Tatooinian Domesticated Oats"	335	8	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	1	700	300	1000														
+345	288	"oats_domesticated_yavin4"	"Yavinian Domesticated Oats"	335	8	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	1	700	300	1000														
+346	1042	"oats_domesticated_kashyyyk"	"Kashyyykian Domesticated Oats"	335	8	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	1	700	300	1000														
+347	1086	"oats_domesticated_mustafar"	"Mustafarian Domesticated Oats"	335	8	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	1	700	300	1000														
+348	289	"oats_wild"	"Wild Oats"	334	7	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	300	1000	1	700														
+349	290	"oats_wild_corellia"	"Corellian Wild Oats"	348	8	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	300	1000	1	700														
+350	291	"oats_wild_dantooine"	"Dantooine Wild Oats"	348	8	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	300	1000	1	700														
+351	292	"oats_wild_dathomir"	"Dathomirian Wild Oats"	348	8	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	300	1000	1	700														
+352	293	"oats_wild_endor"	"Endorian Wild Oats"	348	8	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	300	1000	1	700														
+353	294	"oats_wild_lok"	"Lokian Wild Oats"	348	8	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	300	1000	1	700														
+354	295	"oats_wild_naboo"	"Nabooian Wild Oats"	348	8	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	300	1000	1	700														
+355	296	"oats_wild_rori"	"Rori Wild Oats"	348	8	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	300	1000	1	700														
+356	297	"oats_wild_talus"	"Talusian Wild Oats"	348	8	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	300	1000	1	700														
+357	298	"oats_wild_tatooine"	"Tatooinian Wild Oats"	348	8	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	300	1000	1	700														
+358	299	"oats_wild_yavin4"	"Yavinian Wild Oats"	348	8	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	300	1000	1	700														
+359	1043	"oats_wild_kashyyyk"	"Kashyyykian Wild Oats"	348	8	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	300	1000	1	700														
+360	1087	"oats_wild_mustafar"	"Mustafarian Wild Oats"	348	8	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	300	1000	1	700														
+361	300	"wheat"	"Wheat"	278	6	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	1	1000	1	1000														
+362	301	"wheat_domesticated"	"Domesticated Wheat"	361	7	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	1	700	300	1000														
+363	302	"wheat_domesticated_corellia"	"Corellian Domesticated Wheat"	362	8	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	1	700	300	1000														
+364	303	"wheat_domesticated_dantooine"	"Dantooine Domesticated Wheat"	362	8	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	1	700	300	1000														
+365	304	"wheat_domesticated_dathomir"	"Dathomirian Domesticated Wheat"	362	8	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	1	700	300	1000														
+366	305	"wheat_domesticated_endor"	"Endorian Domesticated Wheat"	362	8	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	1	700	300	1000														
+367	306	"wheat_domesticated_lok"	"Lokian Domesticated Wheat"	362	8	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	1	700	300	1000														
+368	307	"wheat_domesticated_naboo"	"Nabooian Domesticated Wheat"	362	8	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	1	700	300	1000														
+369	308	"wheat_domesticated_rori"	"Rori Domesticated Wheat"	362	8	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	1	700	300	1000														
+370	309	"wheat_domesticated_talus"	"Talusian Domesticated Wheat"	362	8	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	1	700	300	1000														
+371	310	"wheat_domesticated_tatooine"	"Tatooinian Domesticated Wheat"	362	8	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	1	700	300	1000														
+372	311	"wheat_domesticated_yavin4"	"Yavinian Domesticated Wheat"	362	8	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	1	700	300	1000														
+373	1044	"wheat_domesticated_kashyyyk"	"Kashyyykian Domesticated Wheat"	362	8	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	1	700	300	1000														
+374	1088	"wheat_domesticated_mustafar"	"Mustafarian Domesticated Wheat"	362	8	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	1	700	300	1000														
+375	312	"wheat_wild"	"Wild Wheat"	361	7	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	300	1000	1	700														
+376	313	"wheat_wild_corellia"	"Corellian Wild Wheat"	375	8	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	300	1000	1	700														
+377	314	"wheat_wild_dantooine"	"Dantooine Wild Wheat"	375	8	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	300	1000	1	700														
+378	315	"wheat_wild_dathomir"	"Dathomir Wild Wheat"	375	8	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	300	1000	1	700														
+379	316	"wheat_wild_endor"	"Endorian Wild Wheat"	375	8	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	300	1000	1	700														
+380	317	"wheat_wild_lok"	"Lokian Wild Wheat"	375	8	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	300	1000	1	700														
+381	318	"wheat_wild_naboo"	"Nabooian Wild Wheat"	375	8	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	300	1000	1	700														
+382	319	"wheat_wild_rori"	"Rori Wild Wheat"	375	8	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	300	1000	1	700														
+383	320	"wheat_wild_talus"	"Talusian Wild Wheat"	375	8	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	300	1000	1	700														
+384	321	"wheat_wild_tatooine"	"Tatooinian Wild Wheat"	375	8	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	300	1000	1	700														
+385	322	"wheat_wild_yavin4"	"Yavinian Wild Wheat"	375	8	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	300	1000	1	700														
+386	1045	"wheat_wild_kashyyyk"	"Kashyyykian Wild Wheat"	375	8	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	300	1000	1	700														
+387	1089	"wheat_wild_mustafar"	"Mustafarian Wild Wheat"	375	8	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	300	1000	1	700														
+388	323	"seeds"	"Seeds"	277	5	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	1	1000	1	1000														
+389	324	"vegetable"	"Vegetables"	388	6	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	1	1000	1	1000														
+390	914	"mixed_vegetables"	"Mixed Vegetables"	389	7	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								200	200	200	200	200	200	200	200														
+391	325	"vegetable_greens"	"Greens"	389	7	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	1	1000	1	1000														
+392	326	"vegetable_greens_corellia"	"Corellian Vegetable Greens"	391	8	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	1	1000	1	1000														
+393	327	"vegetable_greens_dantooine"	"Dantooine Vegetable Greens"	391	8	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	1	1000	1	1000														
+394	328	"vegetable_greens_dathomir"	"Dathomirian Vegetable Greens"	391	8	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	1	1000	1	1000														
+395	329	"vegetable_greens_endor"	"Endorian Vegetable Greens"	391	8	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	1	1000	1	1000														
+396	330	"vegetable_greens_lok"	"Lokian Vegetable Greens"	391	8	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	1	1000	1	1000														
+397	331	"vegetable_greens_naboo"	"Nabooian Vegetable Greens"	391	8	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	1	1000	1	1000														
+398	332	"vegetable_greens_rori"	"Rori Vegetable Greens"	391	8	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	1	1000	1	1000														
+399	333	"vegetable_greens_talus"	"Talusian Vegetable Greens"	391	8	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	1	1000	1	1000														
+400	334	"vegetable_greens_tatooine"	"Tatooinian Vegetable Greens"	391	8	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	1	1000	1	1000														
+401	335	"vegetable_greens_yavin4"	"Yavinian Vegetable Greens"	391	8	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	1	1000	1	1000														
+402	1046	"vegetable_greens_kashyyyk"	"Kashyyykian Vegetable Greens"	391	8	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	1	1000	1	1000														
+403	1090	"vegetable_greens_mustafar"	"Mustafarian Vegetable Greens"	391	8	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	1	1000	1	1000														
+404	336	"vegetable_beans"	"Beans"	389	7	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	1	1000	1	1000														
+405	337	"vegetable_beans_corellia"	"Corellian Vegetable Beans"	404	8	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	1	1000	1	1000														
+406	338	"vegetable_beans_dantooine"	"Dantooine Vegetable Beans"	404	8	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	1	1000	1	1000														
+407	339	"vegetable_beans_dathomir"	"Dathomirian Vegetable Beans"	404	8	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	1	1000	1	1000														
+408	340	"vegetable_beans_endor"	"Endorian Vegetable Beans"	404	8	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	1	1000	1	1000														
+409	341	"vegetable_beans_lok"	"Lokian Vegetable Beans"	404	8	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	1	1000	1	1000														
+410	342	"vegetable_beans_naboo"	"Nabooian Vegetable Beans"	404	8	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	1	1000	1	1000														
+411	343	"vegetable_beans_rori"	"Rori Vegetable Beans"	404	8	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	1	1000	1	1000														
+412	344	"vegetable_beans_talus"	"Talusian Vegetable Beans"	404	8	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	1	1000	1	1000														
+413	345	"vegetable_beans_tatooine"	"Tatooinian Vegetable Beans"	404	8	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	1	1000	1	1000														
+414	346	"vegetable_beans_yavin4"	"Yavinian Vegetable Beans"	404	8	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	1	1000	1	1000														
+415	1047	"vegetable_beans_kashyyyk"	"Kashyyykian Vegetable Beans"	404	8	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	1	1000	1	1000														
+416	1091	"vegetable_beans_mustafar"	"Mustafarian Vegetable Beans"	404	8	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	1	1000	1	1000														
+417	347	"vegetable_tubers"	"Tubers"	389	7	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	1	1000	1	1000														
+418	348	"vegetable_tubers_corellia"	"Corellian Vegetable Tubers"	417	8	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	1	1000	1	1000														
+419	349	"vegetable_tubers_dantooine"	"Dantooine Vegetable Tubers"	417	8	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	1	1000	1	1000														
+420	350	"vegetable_tubers_dathomir"	"Dathomirian Vegetable Tubers"	417	8	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	1	1000	1	1000														
+421	351	"vegetable_tubers_endor"	"Endorian Vegetable Tubers"	417	8	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	1	1000	1	1000														
+422	352	"vegetable_tubers_lok"	"Lokian Vegetable Tubers"	417	8	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	1	1000	1	1000														
+423	353	"vegetable_tubers_naboo"	"Nabooian Vegetable Tubers"	417	8	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	1	1000	1	1000														
+424	354	"vegetable_tubers_rori"	"Rori Vegetable Tubers"	417	8	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	1	1000	1	1000														
+425	355	"vegetable_tubers_talus"	"Talusian Vegetable Tubers"	417	8	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	1	1000	1	1000														
+426	356	"vegetable_tubers_tatooine"	"Tatooinian Vegetable Tubers"	417	8	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	1	1000	1	1000														
+427	357	"vegetable_tubers_yavin4"	"Yavinian Vegetable Tubers"	417	8	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	1	1000	1	1000														
+428	1048	"vegetable_tubers_kashyyyk"	"Kashyyykian Vegetable Tubers"	417	8	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	1	1000	1	1000														
+429	1092	"vegetable_tubers_mustafar"	"Mustafarian Vegetable Tubers"	417	8	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	1	1000	1	1000														
+430	358	"vegetable_fungi"	"Fungi"	389	7	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	1	1000	1	1000														
+431	359	"vegetable_fungi_corellia"	"Corellian Vegetable Fungus"	430	8	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	1	1000	1	1000														
+432	360	"vegetable_fungi_dantooine"	"Dantooine Vegetable Fungus"	430	8	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	1	1000	1	1000														
+433	361	"vegetable_fungi_dathomir"	"Dathomirian Vegetable Fungus"	430	8	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	1	1000	1	1000														
+434	362	"vegetable_fungi_endor"	"Endorian Vegetable Fungus"	430	8	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	1	1000	1	1000														
+435	363	"vegetable_fungi_lok"	"Lokian Vegetable Fungus"	430	8	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	1	1000	1	1000														
+436	364	"vegetable_fungi_naboo"	"Nabooian Vegetable Fungus"	430	8	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	1	1000	1	1000														
+437	365	"vegetable_fungi_rori"	"Rori Vegetable Fungus"	430	8	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	1	1000	1	1000														
+438	366	"vegetable_fungi_talus"	"Talusian Vegetable Fungus"	430	8	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	1	1000	1	1000														
+439	367	"vegetable_fungi_tatooine"	"Tatooinian Vegetable Fungus"	430	8	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	1	1000	1	1000														
+440	368	"vegetable_fungi_yavin4"	"Yavinian Vegetable Fungus"	430	8	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	1	1000	1	1000														
+441	1049	"vegetable_fungi_kashyyyk"	"Kashyyykian Vegetable Fungus"	430	8	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	1	1000	1	1000														
+442	1093	"vegetable_fungi_mustafar"	"Mustafarian Vegetable Fungus"	430	8	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	1	1000	1	1000														
+443	369	"fruit"	"Fruit"	388	6	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	1	1000	1	1000														
+444	915	"mixed_fruits"	"Mixed Fruits"	443	7	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								200	200	200	200	200	200	200	200														
+445	370	"fruit_fruits"	"Fruits"	443	7	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	1	1000	1	1000														
+446	371	"fruit_fruits_corellia"	"Corellian Fruit"	445	8	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	1	1000	1	1000														
+447	372	"fruit_fruits_dantooine"	"Dantooine Fruit"	445	8	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	1	1000	1	1000														
+448	373	"fruit_fruits_dathomir"	"Dathomirian Fruit"	445	8	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	1	1000	1	1000														
+449	374	"fruit_fruits_endor"	"Endorian Fruit"	445	8	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	1	1000	1	1000														
+450	375	"fruit_fruits_lok"	"Lokian Fruit"	445	8	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	1	1000	1	1000														
+451	376	"fruit_fruits_naboo"	"Nabooian Fruit"	445	8	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	1	1000	1	1000														
+452	377	"fruit_fruits_rori"	"Rori Fruit"	445	8	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	1	1000	1	1000														
+453	378	"fruit_fruits_talus"	"Talusian Fruit"	445	8	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	1	1000	1	1000														
+454	379	"fruit_fruits_tatooine"	"Tatooinian Fruit"	445	8	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	1	1000	1	1000														
+455	380	"fruit_fruits_yavin4"	"Yavinian Fruit"	445	8	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	1	1000	1	1000														
+456	1050	"fruit_fruits_kashyyyk"	"Kashyyykian Fruit"	445	8	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	1	1000	1	1000														
+457	1094	"fruit_fruits_mustafar"	"Mustafarian Fruit"	445	8	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	1	1000	1	1000														
+458	381	"fruit_berries"	"Berries"	443	7	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	1	1000	1	1000														
+459	382	"fruit_berries_corellia"	"Corellia Berry Fruit"	458	8	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	1	1000	1	1000														
+460	383	"fruit_berries_dantooine"	"Dantooine Berry Fruit"	458	8	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	1	1000	1	1000														
+461	384	"fruit_berries_dathomir"	"Dathomirian Berry Fruit"	458	8	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	1	1000	1	1000														
+462	385	"fruit_berries_endor"	"Endorian Berry Fruit"	458	8	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	1	1000	1	1000														
+463	386	"fruit_berries_lok"	"Lokian Berry Fruit"	458	8	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	1	1000	1	1000														
+464	387	"fruit_berries_naboo"	"Nabooian Berry Fruit"	458	8	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	1	1000	1	1000														
+465	388	"fruit_berries_rori"	"Rori Berry Fruit"	458	8	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	1	1000	1	1000														
+466	389	"fruit_berries_talus"	"Talusian Berry Fruit"	458	8	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	1	1000	1	1000														
+467	390	"fruit_berries_tatooine"	"Tatooinian Berry Fruit"	458	8	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	1	1000	1	1000														
+468	391	"fruit_berries_yavin4"	"Yavinian Berry Fruit"	458	8	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	1	1000	1	1000														
+469	1051	"fruit_berries_kashyyyk"	"Kashyyykian Berry Fruit"	458	8	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	1	1000	1	1000														
+470	1095	"fruit_berries_mustafar"	"Mustafarian Berry Fruit"	458	8	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	1	1000	1	1000														
+471	392	"fruit_flowers"	"Flowers"	443	7	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	1	1000	1	700														
+472	393	"fruit_flowers_corellia"	"Corellia Flower Fruit"	471	8	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	1	1000	1	700														
+473	394	"fruit_flowers_dantooine"	"Dantooine Flower Fruit"	471	8	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	1	1000	1	700														
+474	395	"fruit_flowers_dathomir"	"Dathomirian Flower Fruit"	471	8	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	1	1000	1	700														
+475	396	"fruit_flowers_endor"	"Endorian Flower Fruit"	471	8	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	1	1000	1	700														
+476	397	"fruit_flowers_lok"	"Lokian Flower Fruit"	471	8	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	1	1000	1	700														
+477	398	"fruit_flowers_naboo"	"Nabooian Flower Fruit"	471	8	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	1	1000	1	700														
+478	399	"fruit_flowers_rori"	"Rori Flower Fruit"	471	8	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	1	1000	1	700														
+479	400	"fruit_flowers_talus"	"Talusian Flower Fruit"	471	8	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	1	1000	1	700														
+480	401	"fruit_flowers_tatooine"	"Tatooinian Flower Fruit"	471	8	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	1	1000	1	700														
+481	402	"fruit_flowers_yavin4"	"Yavinian Flower Fruit"	471	8	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	1	1000	1	700														
+482	1052	"fruit_flowers_kashyyyk"	"Kashyyykian Flower Fruit"	471	8	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	1	1000	1	700														
+483	1096	"fruit_flowers_mustafar"	"Mustafarian Flower Fruit"	471	8	"res_decay_resist"	"res_quality"	"res_flavor"	"res_potential_energy"								1	1000	1	1000	1	1000	1	700														
+484	403	"flora_structural"	"Flora Structural"	276	4	"res_decay_resist"	"res_quality"	"res_malleability"	"res_toughness"	"res_shock_resistance"							1	800	1	1000	200	1000	1	800	1	700												
+485	404	"wood"	"Wood"	484	5	"res_decay_resist"	"res_quality"	"res_malleability"	"res_toughness"	"res_shock_resistance"							1	800	1	1000	200	1000	1	800	1	700												
+486	934	"processed_wood"	"Blended Wood"	485	6	"res_decay_resist"	"res_quality"	"res_malleability"	"res_toughness"	"res_shock_resistance"							200	200	200	200	200	200	200	200	200	200												
+487	405	"wood_deciduous"	"Hard Wood"	485	6	"res_decay_resist"	"res_quality"	"res_malleability"	"res_toughness"	"res_shock_resistance"							1	800	1	1000	400	800	1	800	300	700												
+488	406	"wood_deciduous_corellia"	"Corellian Deciduous Wood"	487	7	"res_decay_resist"	"res_quality"	"res_malleability"	"res_toughness"	"res_shock_resistance"							1	800	1	1000	400	800	1	800	300	700												
+489	407	"wood_deciduous_dantooine"	"Dantooine Deciduous Wood"	487	7	"res_decay_resist"	"res_quality"	"res_malleability"	"res_toughness"	"res_shock_resistance"							1	800	1	1000	400	800	1	800	300	700												
+490	408	"wood_deciduous_dathomir"	"Dathomirian Deciduous Wood"	487	7	"res_decay_resist"	"res_quality"	"res_malleability"	"res_toughness"	"res_shock_resistance"							1	800	1	1000	400	800	1	800	300	700												
+491	409	"wood_deciduous_endor"	"Endorian Deciduous Wood"	487	7	"res_decay_resist"	"res_quality"	"res_malleability"	"res_toughness"	"res_shock_resistance"							1	800	1	1000	400	800	1	800	300	700												
+492	410	"wood_deciduous_lok"	"Lokian Deciduous Wood"	487	7	"res_decay_resist"	"res_quality"	"res_malleability"	"res_toughness"	"res_shock_resistance"							1	800	1	1000	400	800	1	800	300	700												
+493	411	"wood_deciduous_naboo"	"Nabooian Deciduous Wood"	487	7	"res_decay_resist"	"res_quality"	"res_malleability"	"res_toughness"	"res_shock_resistance"							1	800	1	1000	400	800	1	800	300	700												
+494	412	"wood_deciduous_rori"	"Rori Deciduous Wood"	487	7	"res_decay_resist"	"res_quality"	"res_malleability"	"res_toughness"	"res_shock_resistance"							1	800	1	1000	400	800	1	800	300	700												
+495	413	"wood_deciduous_talus"	"Talusian Deciduous Wood"	487	7	"res_decay_resist"	"res_quality"	"res_malleability"	"res_toughness"	"res_shock_resistance"							1	800	1	1000	400	800	1	800	300	700												
+496	414	"wood_deciduous_tatooine"	"Tatooinian Deciduous Wood"	487	7	"res_decay_resist"	"res_quality"	"res_malleability"	"res_toughness"	"res_shock_resistance"							1	800	1	1000	400	800	1	800	300	700												
+497	415	"wood_deciduous_yavin4"	"Yavinian Deciduous Wood"	487	7	"res_decay_resist"	"res_quality"	"res_malleability"	"res_toughness"	"res_shock_resistance"							1	800	1	1000	400	800	1	800	300	700												
+498	1053	"wood_deciduous_kashyyyk"	"Kashyyykian Deciduous Wood"	487	7	"res_decay_resist"	"res_quality"	"res_malleability"	"res_toughness"	"res_shock_resistance"							1	800	1	1000	400	800	1	800	300	700												
+499	1097	"wood_deciduous_mustafar"	"Mustafarian Deciduous Wood"	487	7	"res_decay_resist"	"res_quality"	"res_malleability"	"res_toughness"	"res_shock_resistance"							1	800	1	1000	400	800	1	800	300	700												
+500	416	"softwood"	"Soft Wood"	485	6	"res_decay_resist"	"res_quality"	"res_malleability"	"res_toughness"	"res_shock_resistance"							1	600	1	1000	600	1000	1	300	1	400												
+501	417	"softwood_conifer_corellia"	"Corellian Conifer Wood"	500	7	"res_decay_resist"	"res_quality"	"res_malleability"	"res_toughness"	"res_shock_resistance"							1	600	1	1000	600	1000	1	300	100	400												
+502	418	"softwood_conifer_dantooine"	"Dantooine Conifer Wood"	500	7	"res_decay_resist"	"res_quality"	"res_malleability"	"res_toughness"	"res_shock_resistance"							1	600	1	1000	600	1000	1	300	100	400												
+503	419	"softwood_conifer_dathomir"	"Dathomirian Conifer Wood"	500	7	"res_decay_resist"	"res_quality"	"res_malleability"	"res_toughness"	"res_shock_resistance"							1	600	1	1000	600	1000	1	300	100	400												
+504	420	"softwood_conifer_endor"	"Endorian Conifer Wood"	500	7	"res_decay_resist"	"res_quality"	"res_malleability"	"res_toughness"	"res_shock_resistance"							1	600	1	1000	600	1000	1	300	100	400												
+505	421	"softwood_conifer_lok"	"Lokian Conifer Wood"	500	7	"res_decay_resist"	"res_quality"	"res_malleability"	"res_toughness"	"res_shock_resistance"							1	600	1	1000	600	1000	1	300	100	400												
+506	422	"softwood_conifer_naboo"	"Nabooian Conifer Wood"	500	7	"res_decay_resist"	"res_quality"	"res_malleability"	"res_toughness"	"res_shock_resistance"							1	600	1	1000	600	1000	1	300	100	400												
+507	423	"softwood_conifer_rori"	"Rori Conifer Wood"	500	7	"res_decay_resist"	"res_quality"	"res_malleability"	"res_toughness"	"res_shock_resistance"							1	600	1	1000	600	1000	1	300	100	400												
+508	424	"softwood_conifer_talus"	"Talusian Conifer Wood"	500	7	"res_decay_resist"	"res_quality"	"res_malleability"	"res_toughness"	"res_shock_resistance"							1	600	1	1000	600	1000	1	300	100	400												
+509	425	"softwood_conifer_tatooine"	"Tatooinian Conifer Wood"	500	7	"res_decay_resist"	"res_quality"	"res_malleability"	"res_toughness"	"res_shock_resistance"							1	600	1	1000	600	1000	1	300	100	400												
+510	426	"softwood_conifer_yavin4"	"Yavinian Conifer Wood"	500	7	"res_decay_resist"	"res_quality"	"res_malleability"	"res_toughness"	"res_shock_resistance"							1	600	1	1000	600	1000	1	300	100	400												
+511	1054	"softwood_conifer_kashyyyk"	"Kashyyykian Conifer Wood"	500	7	"res_decay_resist"	"res_quality"	"res_malleability"	"res_toughness"	"res_shock_resistance"							1	600	1	1000	600	1000	1	300	100	400												
+512	1098	"softwood_conifer_mustafar"	"Mustafarian Conifer Wood"	500	7	"res_decay_resist"	"res_quality"	"res_malleability"	"res_toughness"	"res_shock_resistance"							1	600	1	1000	600	1000	1	300	100	400												
+513	427	"softwood_evergreen"	"Evergreen Soft Wood"	500	7	"res_decay_resist"	"res_quality"	"res_malleability"	"res_toughness"	"res_shock_resistance"							1	500	1	1000	800	1000	1	300	1	400												
+514	428	"softwood_evergreen_corellia"	"Corellia Evergreen Wood"	513	8	"res_decay_resist"	"res_quality"	"res_malleability"	"res_toughness"	"res_shock_resistance"							1	500	1	1000	800	1000	1	300	1	400												
+515	429	"softwood_evergreen_dantooine"	"Dantooine Evergreen Wood"	513	8	"res_decay_resist"	"res_quality"	"res_malleability"	"res_toughness"	"res_shock_resistance"							1	500	1	1000	800	1000	1	300	1	400												
+516	430	"softwood_evergreen_dathomir"	"Dathomirian Evergreen Wood"	513	8	"res_decay_resist"	"res_quality"	"res_malleability"	"res_toughness"	"res_shock_resistance"							1	500	1	1000	800	1000	1	300	1	400												
+517	431	"softwood_evergreen_endor"	"Endorian Evergreen Wood"	513	8	"res_decay_resist"	"res_quality"	"res_malleability"	"res_toughness"	"res_shock_resistance"							1	500	1	1000	800	1000	1	300	1	400												
+518	432	"softwood_evergreen_lok"	"Lokian Evergreen Wood"	513	8	"res_decay_resist"	"res_quality"	"res_malleability"	"res_toughness"	"res_shock_resistance"							1	500	1	1000	800	1000	1	300	1	400												
+519	433	"softwood_evergreen_naboo"	"Nabooian Evergreen Wood"	513	8	"res_decay_resist"	"res_quality"	"res_malleability"	"res_toughness"	"res_shock_resistance"							1	500	1	1000	800	1000	1	300	1	400												
+520	434	"softwood_evergreen_rori"	"Rori Evergreen Wood"	513	8	"res_decay_resist"	"res_quality"	"res_malleability"	"res_toughness"	"res_shock_resistance"							1	500	1	1000	800	1000	1	300	1	400												
+521	435	"softwood_evergreen_talus"	"Talusian Evergreen Wood"	513	8	"res_decay_resist"	"res_quality"	"res_malleability"	"res_toughness"	"res_shock_resistance"							1	500	1	1000	800	1000	1	300	1	400												
+522	436	"softwood_evergreen_tatooine"	"Tatooinian Evergreen Wood"	513	8	"res_decay_resist"	"res_quality"	"res_malleability"	"res_toughness"	"res_shock_resistance"							1	500	1	1000	800	1000	1	300	1	400												
+523	437	"softwood_evergreen_yavin4"	"Yavinian Evergreen Wood"	513	8	"res_decay_resist"	"res_quality"	"res_malleability"	"res_toughness"	"res_shock_resistance"							1	500	1	1000	800	1000	1	300	1	400												
+524	1055	"softwood_evergreen_kashyyyk"	"Kashyyykian Evergreen Wood"	513	8	"res_decay_resist"	"res_quality"	"res_malleability"	"res_toughness"	"res_shock_resistance"							1	500	1	1000	800	1000	1	300	1	400												
+525	1099	"softwood_evergreen_mustafar"	"Mustafarian Evergreen Wood"	513	8	"res_decay_resist"	"res_quality"	"res_malleability"	"res_toughness"	"res_shock_resistance"							1	500	1	1000	800	1000	1	300	1	400												
+526	438	"inorganic"	"Inorganic"	1	2	"res_decay_resist"	"res_quality"	"res_potential_energy"	"res_malleability"	"res_toughness"	"res_shock_resistance"	"res_cold_resist"	"res_heat_resist"	"res_conductivity"	"entangle_resistance"		1	1000	1	1000	1	1000	1	1000	1	1000	1	1000	1	1000	1	1000	1	1000	1	1000		
+527	439	"chemical"	"Chemical"	526	3	"res_decay_resist"	"res_quality"	"res_potential_energy"	"res_malleability"	"res_toughness"	"res_shock_resistance"						1	1000	1	1000	1	1000	1	1000	1	1000	1	1000										
+528	916	"chemical_compound"	"Chemical Compound"	527	4	"res_decay_resist"	"res_quality"										200	200	200	200	200	200																
+529	440	"fuel_petrochem_liquid"	"Liquid Petrochem Fuel"	527	4	"res_decay_resist"	"res_quality"	"res_potential_energy"									1	1000	1	1000	1	1000																
+530	441	"petrochem_fuel_liquid_unknown"	"Unknown Liquid Petrochem Fuel"	529	5	"res_decay_resist"	"res_quality"	"res_potential_energy"									1	1000	1	1000	1	1000																
+531	442	"fuel_petrochem_liquid_known"	"Known Liquid Petrochem Fuel"	529	5	"res_decay_resist"	"res_quality"	"res_potential_energy"									1	600	1	1000	1	1000																
+532	443	"petrochem_fuel_liquid_type1"	"Class 1 Liquid Petro Fuel"	531	6	"res_decay_resist"	"res_quality"	"res_potential_energy"									1	600	1	1000	1	1000																
+533	444	"petrochem_fuel_liquid_type2"	"Class 2 Liquid Petro Fuel"	531	6	"res_decay_resist"	"res_quality"	"res_potential_energy"									1	600	1	1000	1	1000																
+534	445	"petrochem_fuel_liquid_type3"	"Class 3 Liquid Petro Fuel"	531	6	"res_decay_resist"	"res_quality"	"res_potential_energy"									1	600	1	1000	1	1000																
+535	446	"petrochem_fuel_liquid_type4"	"Class 4 Liquid Petro Fuel"	531	6	"res_decay_resist"	"res_quality"	"res_potential_energy"									1	600	1	1000	1	1000																
+536	447	"petrochem_fuel_liquid_type5"	"Class 5 Liquid Petro Fuel"	531	6	"res_decay_resist"	"res_quality"	"res_potential_energy"									1	600	1	1000	1	1000																
+537	448	"petrochem_fuel_liquid_type6"	"Class 6 Liquid Petro Fuel"	531	6	"res_decay_resist"	"res_quality"	"res_potential_energy"									1	600	1	1000	1	1000																
+538	449	"petrochem_fuel_liquid_type7"	"Class 7 Liquid Petro Fuel"	531	6	"res_decay_resist"	"res_quality"	"res_potential_energy"									1	600	1	1000	1	1000																
+539	1117	"petrochem_fuel_liquid_mustafar"	"Mustafarian Liquid Petro Fuel"	531	6	"res_decay_resist"	"res_quality"	"res_potential_energy"									1	600	1	1000	1	1000																
+540	450	"petrochem_inert"	"Inert Petrochemical"	527	4	"res_decay_resist"	"res_quality"	"res_malleability"	"res_toughness"	"res_shock_resistance"							1	1000	1	1000	1	1000	1	1000	1	1000												
+541	451	"petrochem_inert_lubricating_oil"	"Lubricating Oil"	540	5	"res_decay_resist"	"res_quality"										1	1000	1	1000																		
+542	452	"petrochem_inert_polymer"	"Polymer"	540	5	"res_decay_resist"	"res_quality"	"res_malleability"	"res_toughness"	"res_shock_resistance"							1	1000	1	1000	1	1000	1	1000	1	1000												
+543	671	"fiberplast"	"Fiberplast"	527	4	"res_decay_resist"	"res_quality"	"res_malleability"	"res_toughness"	"res_shock_resistance"							1	1000	1	1000	1	1000	1	1000	1	1000												
+544	672	"fiberplast_corellia"	"Corellia Fiberplast"	543	5	"res_decay_resist"	"res_quality"	"res_malleability"	"res_toughness"	"res_shock_resistance"							1	1000	1	1000	1	1000	1	1000	1	1000												
+545	673	"fiberplast_dantooine"	"Dantooine Fiberplast"	543	5	"res_decay_resist"	"res_quality"	"res_malleability"	"res_toughness"	"res_shock_resistance"							1	1000	1	1000	1	1000	1	1000	1	1000												
+546	674	"fiberplast_dathomir"	"Dathomirian Fiberplast"	543	5	"res_decay_resist"	"res_quality"	"res_malleability"	"res_toughness"	"res_shock_resistance"							1	1000	1	1000	1	1000	1	1000	1	1000												
+547	675	"fiberplast_endor"	"Endorian Fiberplast"	543	5	"res_decay_resist"	"res_quality"	"res_malleability"	"res_toughness"	"res_shock_resistance"							1	1000	1	1000	1	1000	1	1000	1	1000												
+548	676	"fiberplast_lok"	"Lokian Fiberplast"	543	5	"res_decay_resist"	"res_quality"	"res_malleability"	"res_toughness"	"res_shock_resistance"							1	1000	1	1000	1	1000	1	1000	1	1000												
+549	677	"fiberplast_naboo"	"Nabooian Fiberplast"	543	5	"res_decay_resist"	"res_quality"	"res_malleability"	"res_toughness"	"res_shock_resistance"							1	1000	1	1000	1	1000	1	1000	1	1000												
+550	678	"fiberplast_rori"	"Rori Fiberplast"	543	5	"res_decay_resist"	"res_quality"	"res_malleability"	"res_toughness"	"res_shock_resistance"							1	1000	1	1000	1	1000	1	1000	1	1000												
+551	679	"fiberplast_talus"	"Talusian Fiberplast"	543	5	"res_decay_resist"	"res_quality"	"res_malleability"	"res_toughness"	"res_shock_resistance"							1	1000	1	1000	1	1000	1	1000	1	1000												
+552	680	"fiberplast_tatooine"	"Tatooinian Fiberplast"	543	5	"res_decay_resist"	"res_quality"	"res_malleability"	"res_toughness"	"res_shock_resistance"							1	1000	1	1000	1	1000	1	1000	1	1000												
+553	688	"fiberplast_gravitonic"	"Gravitonic Fiberplast"	543	5	"res_decay_resist"	"res_quality"	"res_malleability"	"res_toughness"	"res_shock_resistance"							1	1000	1	1000	1	1000	1	1000	1	1000												
+554	681	"fiberplast_yavin4"	"Yavinian Fiberplast"	543	5	"res_decay_resist"	"res_quality"	"res_malleability"	"res_toughness"	"res_shock_resistance"							1	1000	1	1000	1	1000	1	1000	1	1000												
+555	1062	"fiberplast_kashyyyk"	"Kashyyykian Fiberplast"	543	5	"res_decay_resist"	"res_quality"	"res_malleability"	"res_toughness"	"res_shock_resistance"							1	1000	1	1000	1	1000	1	1000	1	1000												
+556	1100	"fiberplast_mustafar"	"Mustafarian Fiberplast"	543	5	"res_decay_resist"	"res_quality"	"res_malleability"	"res_toughness"	"res_shock_resistance"							1	1000	1	1000	1	1000	1	1000	1	1000												
+557	453	"water"	"Water"	526	3	"res_decay_resist"	"res_quality"										1	1000	200	1000																		
+558	935	"water_solution"	"Water Solution"	557	4	"res_decay_resist"	"res_quality"										200	200	200	200																		
+559	454	"water_vapor_corellia"	"Corellian Water Vapor"	557	4	"res_decay_resist"	"res_quality"										1	1000	600	1000																		
+560	455	"water_vapor_dantooine"	"Dantooine Water Vapor"	557	4	"res_decay_resist"	"res_quality"										1	1000	600	1000																		
+561	456	"water_vapor_dathomir"	"Dathomir Water Vapor"	557	4	"res_decay_resist"	"res_quality"										1	1000	600	1000																		
+562	457	"water_vapor_endor"	"Endorian Water Vapor"	557	4	"res_decay_resist"	"res_quality"										1	1000	600	1000																		
+563	458	"water_vapor_lok"	"Lokian Water Vapor"	557	4	"res_decay_resist"	"res_quality"										1	1000	600	1000																		
+564	459	"water_vapor_naboo"	"Nabooian Water Vapor"	557	4	"res_decay_resist"	"res_quality"										1	1000	600	1000																		
+565	460	"water_vapor_rori"	"Rori Water Vapor"	557	4	"res_decay_resist"	"res_quality"										1	1000	600	1000																		
+566	461	"water_vapor_talus"	"Talusian Water Vapor"	557	4	"res_decay_resist"	"res_quality"										1	1000	600	1000																		
+567	462	"water_vapor_tatooine"	"Tatooinian Water Vapor"	557	4	"res_decay_resist"	"res_quality"										1	1000	600	1000																		
+568	463	"water_vapor_yavin4"	"Yavinian Water Vapor"	557	4	"res_decay_resist"	"res_quality"										1	1000	600	1000																		
+569	1056	"water_vapor_kashyyyk"	"Kashyyykian Water Vapor"	557	4	"res_decay_resist"	"res_quality"										1	1000	600	1000																		
+570	1101	"water_vapor_mustafar"	"Mustafarian Water Vapor"	557	4	"res_decay_resist"	"res_quality"										1	1000	600	1000																		
+571	464	"mineral"	"Mineral"	526	3	"res_decay_resist"	"res_quality"	"res_cold_resist"	"res_heat_resist"	"res_malleability"	"res_toughness"	"res_shock_resistance"	"res_potential_energy"	"res_conductivity"	"entangle_resistance"		1	1000	1	1000	1	1000	1	1000	1	1000	1	1000	1	1000	1	1000	1	1000	1	1000		
+572	465	"fuel_petrochem_solid"	"Solid Petrochem Fuel"	571	4	"res_decay_resist"	"res_quality"	"res_potential_energy"									1	1000	1	1000	1	1000																
+573	917	"degraded_fuel_petrochem_solid"	"Degraded Solid Petrochem Fuel"	572	5	"res_decay_resist"	"res_quality"	"res_potential_energy"									200	200	200	200	200	200																
+574	466	"petrochem_fuel_solid_unknown"	"Unknown Solid Petrochem Fuel"	572	5	"res_decay_resist"	"res_quality"	"res_potential_energy"									1	1000	1	1000	1	1000																
+575	467	"fuel_petrochem_solid_known"	"Known Solid Petrochem Fuel"	572	5	"res_decay_resist"	"res_quality"	"res_potential_energy"									1	800	1	1000	300	1000																
+576	468	"petrochem_fuel_solid_type1"	"Class 1 Solid Petro Fuel"	575	6	"res_decay_resist"	"res_quality"	"res_potential_energy"									1	149	1	1000	300	430																
+577	469	"petrochem_fuel_solid_type2"	"Class 2 Solid Petro Fuel"	575	6	"res_decay_resist"	"res_quality"	"res_potential_energy"									81	264	1	1000	370	530																
+578	470	"petrochem_fuel_solid_type3"	"Class 3 Solid Petro Fuel"	575	6	"res_decay_resist"	"res_quality"	"res_potential_energy"									195	378	1	1000	470	630																
+579	471	"petrochem_fuel_solid_type4"	"Class 4 Solid Petro Fuel"	575	6	"res_decay_resist"	"res_quality"	"res_potential_energy"									309	492	1	1000	570	730																
+580	472	"petrochem_fuel_solid_type5"	"Class 5 Solid Petro Fuel"	575	6	"res_decay_resist"	"res_quality"	"res_potential_energy"									423	606	1	1000	670	830																
+581	473	"petrochem_fuel_solid_type6"	"Class 6 Solid Petro Fuel"	575	6	"res_decay_resist"	"res_quality"	"res_potential_energy"									537	720	1	1000	770	930																
+582	474	"petrochem_fuel_solid_type7"	"Class 7 Solid Petro Fuel"	575	6	"res_decay_resist"	"res_quality"	"res_potential_energy"									652	800	1	1000	870	1000																
+583	1106	"petrochem_fuel_solid_mustafar"	"Mustafarian Solid Petro Fuel"	575	6	"res_decay_resist"	"res_quality"	"res_potential_energy"									750	800	500	1000	870	1000																
+584	475	"radioactive"	"Radioactive"	571	4	"res_decay_resist"	"res_quality"	"res_potential_energy"									1	1000	1	1000	1	1000																
+585	918	"combined_radioactive_isotpopes"	"Combined Radioactive Isotopes"	584	5	"res_decay_resist"	"res_quality"	"res_potential_energy"									200	200	200	200	200	200																
+586	476	"radioactive_unknown"	"Unknown Radioactive"	584	5	"res_decay_resist"	"res_quality"	"res_potential_energy"									1	800	1	1000	1	1000																
+587	477	"radioactive_known"	"Known Radioactive"	584	5	"res_decay_resist"	"res_quality"	"res_potential_energy"									1	1000	1	1000	1	1000																
+588	478	"radioactive_type1"	"Class 1 Radioactive"	587	6	"res_decay_resist"	"res_quality"	"res_potential_energy"									400	474	1	1000	500	593																
+589	479	"radioactive_type2"	"Class 2 Radioactive"	587	6	"res_decay_resist"	"res_quality"	"res_potential_energy"									440	531	1	1000	550	664																
+590	480	"radioactive_type3"	"Class 3 Radioactive"	587	6	"res_decay_resist"	"res_quality"	"res_potential_energy"									497	589	1	1000	621	736																
+591	481	"radioactive_type4"	"Class 4 Radioactive"	587	6	"res_decay_resist"	"res_quality"	"res_potential_energy"									554	646	1	1000	693	807																
+592	482	"radioactive_type5"	"Class 5 Radioactive"	587	6	"res_decay_resist"	"res_quality"	"res_potential_energy"									611	703	1	1000	764	879																
+593	483	"radioactive_type6"	"Class 6 Radioactive"	587	6	"res_decay_resist"	"res_quality"	"res_potential_energy"									669	760	1	1000	836	950																
+594	484	"radioactive_type7"	"Class 7 Radioactive"	587	6	"res_decay_resist"	"res_quality"	"res_potential_energy"									726	800	1	1000	907	1000	889	1000														
+595	1107	"radioactive_mustafar"	"Mustafarian Radioactive"	587	6	"res_decay_resist"	"res_quality"	"res_potential_energy"									900	1000	500	1000	907	1000	889	1000														
+596	689	"radioactive_polymetric"	"High Grade Polymetric Radioactive"	587	6	"res_decay_resist"	"res_quality"	"res_potential_energy"									1	1000	1	1000	1	1000	1	1000														
+597	485	"metal"	"Metal"	571	4	"res_decay_resist"	"res_quality"	"res_cold_resist"	"res_heat_resist"	"res_malleability"	"res_toughness"	"res_shock_resistance"	"res_conductivity"				1	1000	1	1000	1	1000	1	1000	1	1000	1	1000	1	1000	1	1000						
+598	486	"metal_ferrous"	"Ferrous Metal"	597	5	"res_decay_resist"	"res_quality"	"res_cold_resist"	"res_heat_resist"	"res_malleability"	"res_toughness"	"res_shock_resistance"	"res_conductivity"				1	1000	1	1000	1	800	1	1000	1	600	1	1000	1	1000	1	650						
+599	911	"smelted_metal_ferrous_unknown"	"Smelted Ferrous Metal"	598	6	"res_decay_resist"	"res_quality"	"res_cold_resist"	"res_heat_resist"	"res_malleability"	"res_toughness"	"res_shock_resistance"	"res_conductivity"				200	200	200	200	200	200	200	200	200	200	200	200	200	200	200	200						
+600	487	"metal_ferrous_unknown"	"Unknown Ferrous Metal"	598	6	"res_decay_resist"	"res_quality"	"res_cold_resist"	"res_heat_resist"	"res_malleability"	"res_toughness"	"res_shock_resistance"	"res_conductivity"				300	1000	1	1000	1	800	300	1000	1	600	400	1000	400	1000	1	650						
+601	488	"steel"	"Steel"	598	6	"res_decay_resist"	"res_quality"	"res_cold_resist"	"res_heat_resist"	"res_malleability"	"res_toughness"	"res_shock_resistance"	"res_conductivity"				1	1000	1	1000	1	800	1	1000	1	400	1	1000	1	1000	1	650						
+602	919	"steel_smelted"	"Smelted Steel"	601	7	"res_decay_resist"	"res_quality"	"res_cold_resist"	"res_heat_resist"	"res_malleability"	"res_toughness"	"res_shock_resistance"	"res_conductivity"				200	200	200	200	200	200	200	200	200	200	200	200	200	200	200	200						
+603	489	"steel_rhodium"	"Rhodium Steel"	601	7	"res_decay_resist"	"res_quality"	"res_cold_resist"	"res_heat_resist"	"res_malleability"	"res_toughness"	"res_shock_resistance"	"res_conductivity"				500	565	1	1000	1	105	600	652	1	53	400	478	500	565	1	85						
+604	490	"steel_kiirium"	"Kiirium Steel"	601	7	"res_decay_resist"	"res_quality"	"res_cold_resist"	"res_heat_resist"	"res_malleability"	"res_toughness"	"res_shock_resistance"	"res_conductivity"				535	615	1	1000	57	185	628	692	29	93	442	538	535	615	46	150						
+605	491	"steel_cubirian"	"Cubirian Steel"	601	7	"res_decay_resist"	"res_quality"	"res_cold_resist"	"res_heat_resist"	"res_malleability"	"res_toughness"	"res_shock_resistance"	"res_conductivity"				585	665	1	1000	137	265	668	732	69	133	502	598	585	665	111	215						
+606	492	"steel_thoranium"	"Thoranium Steel"	601	7	"res_decay_resist"	"res_quality"	"res_cold_resist"	"res_heat_resist"	"res_malleability"	"res_toughness"	"res_shock_resistance"	"res_conductivity"				635	715	1	1000	217	345	708	772	109	173	562	658	635	715	176	280						
+607	493	"steel_neutronium"	"Neutronium Steel"	601	7	"res_decay_resist"	"res_quality"	"res_cold_resist"	"res_heat_resist"	"res_malleability"	"res_toughness"	"res_shock_resistance"	"res_conductivity"				685	765	1	1000	297	424	748	812	149	212	622	718	685	765	241	345						
+608	494	"steel_duranium"	"Duranium Steel"	601	7	"res_decay_resist"	"res_quality"	"res_cold_resist"	"res_heat_resist"	"res_malleability"	"res_toughness"	"res_shock_resistance"	"res_conductivity"				735	815	1	1000	377	504	788	852	189	252	682	778	735	815	306	410						
+609	495	"steel_ditanium"	"Ditanium Steel"	601	7	"res_decay_resist"	"res_quality"	"res_cold_resist"	"res_heat_resist"	"res_malleability"	"res_toughness"	"res_shock_resistance"	"res_conductivity"				785	865	1	1000	456	584	828	892	228	292	742	838	785	865	371	475						
+610	496	"steel_quadranium"	"Quadranium Steel"	601	7	"res_decay_resist"	"res_quality"	"res_cold_resist"	"res_heat_resist"	"res_malleability"	"res_toughness"	"res_shock_resistance"	"res_conductivity"				835	915	1	1000	536	664	868	932	268	332	802	898	835	915	436	540						
+611	497	"steel_carbonite"	"Carbonite Steel"	601	7	"res_decay_resist"	"res_quality"	"res_cold_resist"	"res_heat_resist"	"res_malleability"	"res_toughness"	"res_shock_resistance"	"res_conductivity"				885	965	1	1000	616	744	908	972	308	372	862	958	885	965	501	605						
+612	682	"steel_arveshian"	"Hardened Arveshium Steel"	601	7	"res_decay_resist"	"res_quality"	"res_cold_resist"	"res_heat_resist"	"res_malleability"	"res_toughness"	"res_shock_resistance"	"res_conductivity"				1	1000	1	1000	1	1000	1	1000	1	1000	1	1000	1	1000	1	1000						
+613	683	"steel_bicorbantium"	"Crystallized Bicorbantium Steel"	601	7	"res_decay_resist"	"res_quality"	"res_cold_resist"	"res_heat_resist"	"res_malleability"	"res_toughness"	"res_shock_resistance"	"res_conductivity"				1	1000	1	1000	1	1000	1	1000	1	1000	1	1000	1	1000	1	1000						
+614	498	"steel_duralloy"	"Duralloy Steel"	601	7	"res_decay_resist"	"res_quality"	"res_cold_resist"	"res_heat_resist"	"res_malleability"	"res_toughness"	"res_shock_resistance"	"res_conductivity"				935	1000	1	1000	696	800	948	1000	348	400	922	1000	935	1000	566	650						
+615	1108	"steel_mustafar"	"Mustafarian Steel"	601	7	"res_decay_resist"	"res_quality"	"res_cold_resist"	"res_heat_resist"	"res_malleability"	"res_toughness"	"res_shock_resistance"	"res_conductivity"				935	1000	500	1000	750	800	948	1000	350	400	922	1000	935	1000	600	650						
+616	499	"iron"	"Iron"	598	6	"res_decay_resist"	"res_quality"	"res_cold_resist"	"res_heat_resist"	"res_malleability"	"res_toughness"	"res_shock_resistance"	"res_conductivity"				200	1000	1	1000	1	800	200	1000	1	600	200	1000	200	1000	1	500						
+617	920	"iron_smelted"	"Smelted Iron"	616	7	"res_decay_resist"	"res_quality"	"res_cold_resist"	"res_heat_resist"	"res_malleability"	"res_toughness"	"res_shock_resistance"	"res_conductivity"				200	200	200	200	200	200	200	200	200	200	200	200	200	200	200	200						
+618	500	"iron_plumbum"	"Plumbum Iron"	616	7	"res_decay_resist"	"res_quality"	"res_cold_resist"	"res_heat_resist"	"res_malleability"	"res_toughness"	"res_shock_resistance"	"res_conductivity"				300	414	1	1000	1	131	500	581	1	98	400	498	400	498	1	82						
+619	501	"iron_polonium"	"Polonium Iron"	616	7	"res_decay_resist"	"res_quality"	"res_cold_resist"	"res_heat_resist"	"res_malleability"	"res_toughness"	"res_shock_resistance"	"res_conductivity"				361	501	1	1000	71	231	544	644	53	173	453	573	453	573	45	144						
+620	502	"iron_axidite"	"Axidite Iron"	616	7	"res_decay_resist"	"res_quality"	"res_cold_resist"	"res_heat_resist"	"res_malleability"	"res_toughness"	"res_shock_resistance"	"res_conductivity"				559	589	1	1000	171	331	606	706	128	248	528	648	528	648	107	207						
+621	503	"iron_bronzium"	"Bronzium Iron"	616	7	"res_decay_resist"	"res_quality"	"res_cold_resist"	"res_heat_resist"	"res_malleability"	"res_toughness"	"res_shock_resistance"	"res_conductivity"				536	676	1	1000	271	430	669	769	203	323	603	723	603	723	169	269						
+622	504	"iron_colat"	"Colat Iron"	616	7	"res_decay_resist"	"res_quality"	"res_cold_resist"	"res_heat_resist"	"res_malleability"	"res_toughness"	"res_shock_resistance"	"res_conductivity"				624	764	1	1000	371	530	731	831	278	398	678	798	678	798	232	332						
+623	505	"iron_dolovite"	"Dolovite Iron"	616	7	"res_decay_resist"	"res_quality"	"res_cold_resist"	"res_heat_resist"	"res_malleability"	"res_toughness"	"res_shock_resistance"	"res_conductivity"				711	851	1	1000	470	630	794	894	353	473	753	873	753	873	294	394						
+624	506	"iron_doonium"	"Doonium Iron"	616	7	"res_decay_resist"	"res_quality"	"res_cold_resist"	"res_heat_resist"	"res_malleability"	"res_toughness"	"res_shock_resistance"	"res_conductivity"				799	939	1	1000	570	730	856	956	428	548	828	948	828	948	357	456						
+625	507	"iron_kammris"	"Kammris Iron"	616	7	"res_decay_resist"	"res_quality"	"res_cold_resist"	"res_heat_resist"	"res_malleability"	"res_toughness"	"res_shock_resistance"	"res_conductivity"				886	1000	1	1000	670	800	919	1000	503	600	903	1000	903	1000	419	500						
+626	1109	"iron_mustafar"	"Mustafarian Iron"	616	7	"res_decay_resist"	"res_quality"	"res_cold_resist"	"res_heat_resist"	"res_malleability"	"res_toughness"	"res_shock_resistance"	"res_conductivity"				886	1000	500	1000	750	800	919	1000	550	600	903	1000	903	1000	450	500						
+627	508	"metal_nonferrous"	"Non-Ferrous Metal"	597	5	"res_decay_resist"	"res_quality"	"res_cold_resist"	"res_heat_resist"	"res_malleability"	"res_toughness"	"res_shock_resistance"	"res_conductivity"				1	800	1	1000	1	800	1	800	1	1000	1	1000	1	900	1	1000						
+628	912	"smelted_metal_nonferrous_unknown"	"Smelted Non-Ferrous Metal"	627	6	"res_decay_resist"	"res_quality"	"res_cold_resist"	"res_heat_resist"	"res_malleability"	"res_toughness"	"res_shock_resistance"	"res_conductivity"				200	200	200	200	200	200	200	200	200	200	200	200	200	200	200	200						
+629	509	"metal_nonferrous_unknown"	"Unknown Non-Ferrous Metal"	627	6	"res_decay_resist"	"res_quality"	"res_cold_resist"	"res_heat_resist"	"res_malleability"	"res_toughness"	"res_shock_resistance"	"res_conductivity"				1	700	1	1000	1	800	200	800	300	1000	300	1000	300	900	300	1000						
+630	510	"aluminum"	"Aluminum"	627	6	"res_decay_resist"	"res_quality"	"res_cold_resist"	"res_heat_resist"	"res_malleability"	"res_toughness"	"res_shock_resistance"	"res_conductivity"				1	800	1	1000	1	800	1	800	1	1000	1	900	1	900	1	800						
+631	921	"aluminum_smelted"	"Smelted Aluminum"	630	7	"res_decay_resist"	"res_quality"	"res_cold_resist"	"res_heat_resist"	"res_malleability"	"res_toughness"	"res_shock_resistance"	"res_conductivity"				200	200	200	200	200	200	200	200	200	200	200	200	200	200	200	200						
+632	511	"aluminum_titanium"	"Titanium Aluminum"	630	7	"res_decay_resist"	"res_quality"	"res_cold_resist"	"res_heat_resist"	"res_malleability"	"res_toughness"	"res_shock_resistance"	"res_conductivity"				1	174	1	1000	1	174	200	330	300	452	300	430	300	430	300	408						
+633	512	"aluminum_agrinium"	"Agrinium Aluminum"	630	7	"res_decay_resist"	"res_quality"	"res_cold_resist"	"res_heat_resist"	"res_malleability"	"res_toughness"	"res_shock_resistance"	"res_conductivity"				94	307	1	1000	94	307	270	430	382	568	370	530	370	530	358	492						
+634	513	"aluminum_chromium"	"Chromium Aluminum"	630	7	"res_decay_resist"	"res_quality"	"res_cold_resist"	"res_heat_resist"	"res_malleability"	"res_toughness"	"res_shock_resistance"	"res_conductivity"				227	440	1	1000	227	440	370	530	498	685	470	630	470	630	442	575						
+635	514	"aluminum_duralumin"	"Duralumin Aluminum"	630	7	"res_decay_resist"	"res_quality"	"res_cold_resist"	"res_heat_resist"	"res_malleability"	"res_toughness"	"res_shock_resistance"	"res_conductivity"				361	574	1	1000	361	574	470	630	615	802	570	730	570	730	525	658						
+636	515	"aluminum_linksteel"	"Link-Steel Aluminum"	630	7	"res_decay_resist"	"res_quality"	"res_cold_resist"	"res_heat_resist"	"res_malleability"	"res_toughness"	"res_shock_resistance"	"res_conductivity"				494	707	1	1000	494	707	570	730	732	918	670	830	670	830	608	742						
+637	686	"aluminum_perovskitic"	"Perovskitic Aluminum"	630	7	"res_decay_resist"	"res_quality"	"res_cold_resist"	"res_heat_resist"	"res_malleability"	"res_toughness"	"res_shock_resistance"	"res_conductivity"				1	1000	1	1000	1	1000	1	1000	1	1000	1	1000	1	1000	1	1000						
+638	516	"aluminum_phrik"	"Phrik Aluminum"	630	7	"res_decay_resist"	"res_quality"	"res_cold_resist"	"res_heat_resist"	"res_malleability"	"res_toughness"	"res_shock_resistance"	"res_conductivity"				627	800	1	1000	627	800	670	800	848	1000	770	900	770	900	692	800						
+639	1110	"aluminum_mustafar"	"Mustafarian Aluminum"	630	7	"res_decay_resist"	"res_quality"	"res_cold_resist"	"res_heat_resist"	"res_malleability"	"res_toughness"	"res_shock_resistance"	"res_conductivity"				800	800	500	1000	750	800	750	800	848	1000	800	900	800	900	750	800						
+640	517	"copper"	"Copper"	627	6	"res_decay_resist"	"res_quality"	"res_cold_resist"	"res_heat_resist"	"res_malleability"	"res_toughness"	"res_shock_resistance"	"res_conductivity"				1	700	1	1000	1	800	1	650	1	1000	1	800	1	800	1	1000						
+641	922	"copper_smelted"	"Smelted Copper"	640	7	"res_decay_resist"	"res_quality"	"res_cold_resist"	"res_heat_resist"	"res_malleability"	"res_toughness"	"res_shock_resistance"	"res_conductivity"				200	200	200	200	200	200	200	200	200	200	200	200	200	200	200	200						
+642	518	"copper_desh"	"Desh Copper"	640	7	"res_decay_resist"	"res_quality"	"res_cold_resist"	"res_heat_resist"	"res_malleability"	"res_toughness"	"res_shock_resistance"	"res_conductivity"				1	102	1	1000	1	116	200	265	500	572	300	372	300	372	500	572						
+643	519	"copper_thallium"	"Thallium Copper"	640	7	"res_decay_resist"	"res_quality"	"res_cold_resist"	"res_heat_resist"	"res_malleability"	"res_toughness"	"res_shock_resistance"	"res_conductivity"				55	180	1	1000	63	205	235	315	539	628	339	428	339	428	539	628						
+644	520	"copper_beyrllius"	"Beyrllius Copper"	640	7	"res_decay_resist"	"res_quality"	"res_cold_resist"	"res_heat_resist"	"res_malleability"	"res_toughness"	"res_shock_resistance"	"res_conductivity"				133	257	1	1000	152	294	285	365	594	683	394	483	394	483	594	683						
+645	521	"copper_codoan"	"Codoan Copper"	640	7	"res_decay_resist"	"res_quality"	"res_cold_resist"	"res_heat_resist"	"res_malleability"	"res_toughness"	"res_shock_resistance"	"res_conductivity"				211	335	1	1000	241	383	335	415	650	739	450	539	450	539	650	739						
+646	522	"copper_diatium"	"Diatium Copper"	640	7	"res_decay_resist"	"res_quality"	"res_cold_resist"	"res_heat_resist"	"res_malleability"	"res_toughness"	"res_shock_resistance"	"res_conductivity"				288	413	1	1000	329	472	385	465	706	794	506	594	506	594	706	794						
+647	523	"copper_kelsh"	"Kelsh Copper"	640	7	"res_decay_resist"	"res_quality"	"res_cold_resist"	"res_heat_resist"	"res_malleability"	"res_toughness"	"res_shock_resistance"	"res_conductivity"				366	490	1	1000	418	560	435	515	761	850	561	650	561	650	761	850						
+648	524	"copper_mythra"	"Mythra Copper"	640	7	"res_decay_resist"	"res_quality"	"res_cold_resist"	"res_heat_resist"	"res_malleability"	"res_toughness"	"res_shock_resistance"	"res_conductivity"				444	568	1	1000	507	649	485	565	817	906	617	706	617	706	817	906						
+649	525	"copper_platinite"	"Platinite Copper"	640	7	"res_decay_resist"	"res_quality"	"res_cold_resist"	"res_heat_resist"	"res_malleability"	"res_toughness"	"res_shock_resistance"	"res_conductivity"				521	646	1	1000	596	738	535	615	872	961	672	761	672	761	872	961						
+650	526	"copper_polysteel"	"Polysteel Copper"	640	7	"res_decay_resist"	"res_quality"	"res_cold_resist"	"res_heat_resist"	"res_malleability"	"res_toughness"	"res_shock_resistance"	"res_conductivity"				599	700	1	1000	685	800	585	650	928	1000	728	800	728	800	928	1000						
+651	684	"copper_borocarbitic"	"Conductive Borcarbitic Copper"	640	7	"res_decay_resist"	"res_quality"	"res_cold_resist"	"res_heat_resist"	"res_malleability"	"res_toughness"	"res_shock_resistance"	"res_conductivity"				1	1000	1	1000	1	1000	1	1000	1	1000	1	1000	1	1000	1	1000						
+652	1111	"copper_mustafar"	"Mustafarian Copper"	640	7	"res_decay_resist"	"res_quality"	"res_cold_resist"	"res_heat_resist"	"res_malleability"	"res_toughness"	"res_shock_resistance"	"res_conductivity"				650	700	500	1000	750	800	600	650	500	1000	750	800	750	800	500	1000						
+653	527	"ore"	"Low-Grade Ore"	571	4	"res_decay_resist"	"res_quality"	"res_cold_resist"	"res_heat_resist"	"res_malleability"	"res_toughness"	"res_shock_resistance"					1	1000	1	1000	1	1000	1	1000	1	1000	1	1000	1	1000								
+654	528	"ore_igneous"	"Igneous Ore"	653	5	"res_decay_resist"	"res_quality"	"res_cold_resist"	"res_heat_resist"	"res_malleability"	"res_toughness"	"res_shock_resistance"					200	1000	1	1000	200	1000	200	1000	1	800	200	1000	200	1000								
+655	923	"ore_extrusive_low_grade"	"Low Grade Ore (igneous)"	654	6	"res_decay_resist"	"res_quality"	"res_cold_resist"	"res_heat_resist"	"res_malleability"	"res_toughness"	"res_shock_resistance"					200	200	200	200	200	200	200	200	200	200	200	200	200	200								
+656	529	"ore_igneous_unknown"	"Unknown Igneous Ore"	654	6	"res_decay_resist"	"res_quality"	"res_cold_resist"	"res_heat_resist"	"res_malleability"	"res_toughness"	"res_shock_resistance"					300	1000	1	1000	200	1000	400	1000	1	800	400	1000	400	1000								
+657	530	"ore_extrusive"	"Extrusive Ore"	654	6	"res_decay_resist"	"res_quality"	"res_cold_resist"	"res_heat_resist"	"res_malleability"	"res_toughness"	"res_shock_resistance"					300	1000	1	1000	200	1000	400	1000	1	600	400	1000	400	1000								
+658	531	"ore_extrusive_bene"	"Bene Extrusive Ore"	657	7	"res_decay_resist"	"res_quality"	"res_cold_resist"	"res_heat_resist"	"res_malleability"	"res_toughness"	"res_shock_resistance"					300	391	1	1000	200	304	400	478	1	79	400	478	400	478								
+659	532	"ore_extrusive_chronamite"	"Chronamite Extrusive Ore"	657	7	"res_decay_resist"	"res_quality"	"res_cold_resist"	"res_heat_resist"	"res_malleability"	"res_toughness"	"res_shock_resistance"					349	461	1	1000	256	384	442	538	43	139	442	538	442	538								
+660	533	"ore_extrusive_ilimium"	"Ilimium Extrusive Ore"	657	7	"res_decay_resist"	"res_quality"	"res_cold_resist"	"res_heat_resist"	"res_malleability"	"res_toughness"	"res_shock_resistance"					419	531	1	1000	336	464	502	598	103	199	502	598	502	598								
+661	534	"ore_extrusive_kalonterium"	"Kalonterium Extrusive Ore"	657	7	"res_decay_resist"	"res_quality"	"res_cold_resist"	"res_heat_resist"	"res_malleability"	"res_toughness"	"res_shock_resistance"					489	601	1	1000	416	544	562	658	163	259	562	658	562	658								
+662	535	"ore_extrusive_keschel"	"Keschel Extrusive Ore"	657	7	"res_decay_resist"	"res_quality"	"res_cold_resist"	"res_heat_resist"	"res_malleability"	"res_toughness"	"res_shock_resistance"					559	671	1	1000	496	624	622	718	223	318	622	718	622	718								
+663	536	"ore_extrusive_lidium"	"Lidium Extrusive Ore"	657	7	"res_decay_resist"	"res_quality"	"res_cold_resist"	"res_heat_resist"	"res_malleability"	"res_toughness"	"res_shock_resistance"					629	741	1	1000	576	704	682	778	283	378	682	778	682	778								
+664	537	"ore_extrusive_maranium"	"Maranium Extrusive Ore"	657	7	"res_decay_resist"	"res_quality"	"res_cold_resist"	"res_heat_resist"	"res_malleability"	"res_toughness"	"res_shock_resistance"					699	811	1	1000	656	784	742	838	342	438	742	838	742	838								
+665	538	"ore_extrusive_pholokite"	"Pholokite Extrusive Ore"	657	7	"res_decay_resist"	"res_quality"	"res_cold_resist"	"res_heat_resist"	"res_malleability"	"res_toughness"	"res_shock_resistance"					769	881	1	1000	736	864	802	898	402	498	802	898	802	898								
+666	539	"ore_extrusive_quadrenium"	"Quadrenium Extrusive Ore"	657	7	"res_decay_resist"	"res_quality"	"res_cold_resist"	"res_heat_resist"	"res_malleability"	"res_toughness"	"res_shock_resistance"					839	951	1	1000	816	944	862	958	462	558	862	958	862	958								
+667	540	"ore_extrusive_vintrium"	"Vintrium Extrusive Ore"	657	7	"res_decay_resist"	"res_quality"	"res_cold_resist"	"res_heat_resist"	"res_malleability"	"res_toughness"	"res_shock_resistance"					909	1000	1	1000	896	1000	922	1000	522	600	922	1000	922	1000								
+668	1112	"ore_extrusive_mustafar"	"Mustafarian Extrusive Ore"	657	7	"res_decay_resist"	"res_quality"	"res_cold_resist"	"res_heat_resist"	"res_malleability"	"res_toughness"	"res_shock_resistance"					909	1000	500	1000	896	1000	922	1000	550	600	922	1000	922	1000								
+669	541	"ore_intrusive"	"Intrusive Ore"	654	6	"res_decay_resist"	"res_quality"	"res_cold_resist"	"res_heat_resist"	"res_malleability"	"res_toughness"	"res_shock_resistance"					300	1000	1	1000	200	1000	700	1000	1	600	400	1000	500	1000								
+670	542	"ore_intrusive_berubium"	"Berubium Intrusive Ore"	669	7	"res_decay_resist"	"res_quality"	"res_cold_resist"	"res_heat_resist"	"res_malleability"	"res_toughness"	"res_shock_resistance"					300	401	1	1000	200	316	700	743	1	88	400	487	500	572								
+671	543	"ore_intrusive_chanlon"	"Chanlon Intrusive Ore"	669	7	"res_decay_resist"	"res_quality"	"res_cold_resist"	"res_heat_resist"	"res_malleability"	"res_toughness"	"res_shock_resistance"					354	479	1	1000	262	404	723	777	48	154	447	553	539	628								
+672	544	"ore_intrusive_corintium"	"Corintium Intrusive Ore"	669	7	"res_decay_resist"	"res_quality"	"res_cold_resist"	"res_heat_resist"	"res_malleability"	"res_toughness"	"res_shock_resistance"					432	557	1	1000	351	493	757	810	114	221	513	620	594	683								
+673	545	"ore_intrusive_derillium"	"Derillium Intrusive Ore"	669	7	"res_decay_resist"	"res_quality"	"res_cold_resist"	"res_heat_resist"	"res_malleability"	"res_toughness"	"res_shock_resistance"					510	634	1	1000	440	582	790	843	181	287	580	687	650	739								
+674	546	"ore_intrusive_oridium"	"Oridium Intrusive Ore"	669	7	"res_decay_resist"	"res_quality"	"res_cold_resist"	"res_heat_resist"	"res_malleability"	"res_toughness"	"res_shock_resistance"					588	712	1	1000	529	671	823	877	247	354	647	753	706	794								
+675	547	"ore_intrusive_dylinium"	"Dylinium Intrusive Ore"	669	7	"res_decay_resist"	"res_quality"	"res_cold_resist"	"res_heat_resist"	"res_malleability"	"res_toughness"	"res_shock_resistance"					666	790	1	1000	618	760	857	910	314	420	713	820	761	850								
+676	548	"ore_intrusive_hollinium"	"Hollinium Intrusive Ore"	669	7	"res_decay_resist"	"res_quality"	"res_cold_resist"	"res_heat_resist"	"res_malleability"	"res_toughness"	"res_shock_resistance"					743	868	1	1000	707	849	890	943	380	487	780	887	817	906								
+677	549	"ore_intrusive_ionite"	"Ionite Intrusive Ore"	669	7	"res_decay_resist"	"res_quality"	"res_cold_resist"	"res_heat_resist"	"res_malleability"	"res_toughness"	"res_shock_resistance"					821	946	1	1000	796	938	923	977	447	553	847	953	872	961								
+678	550	"ore_intrusive_katrium"	"Katrium Intrusive Ore"	669	7	"res_decay_resist"	"res_quality"	"res_cold_resist"	"res_heat_resist"	"res_malleability"	"res_toughness"	"res_shock_resistance"					899	1000	1	1000	884	1000	957	1000	513	600	913	1000	928	1000								
+679	1113	"ore_intrusive_mustafar"	"Mustafarian Intrusive Ore"	669	7	"res_decay_resist"	"res_quality"	"res_cold_resist"	"res_heat_resist"	"res_malleability"	"res_toughness"	"res_shock_resistance"					899	1000	500	1000	884	1000	957	1000	550	600	913	1000	928	1000								
+680	551	"ore_sedimentary"	"Sedimentary Ore"	653	5	"res_decay_resist"	"res_quality"	"res_cold_resist"	"res_heat_resist"	"res_malleability"	"res_toughness"	"res_shock_resistance"					1	700	1	1000	1	1000	1	1000	1	1000	1	1000	1	700								
+681	924	"ore_carbonate_low_grade"	"Low Grade Ore (sedimentary)"	680	6	"res_decay_resist"	"res_quality"	"res_cold_resist"	"res_heat_resist"	"res_malleability"	"res_toughness"	"res_shock_resistance"					200	200	200	200	200	200	200	200	200	200	200	200	200	200								
+682	552	"ore_sedimentary_unknown"	"Unknown Sedimentary Ore"	680	6	"res_decay_resist"	"res_quality"	"res_cold_resist"	"res_heat_resist"	"res_malleability"	"res_toughness"	"res_shock_resistance"					1	700	1	1000	300	1000	300	1000	300	1000	1	1000	1	700								
+683	553	"ore_carbonate"	"Carbonate Ore"	680	6	"res_decay_resist"	"res_quality"	"res_cold_resist"	"res_heat_resist"	"res_malleability"	"res_toughness"	"res_shock_resistance"					1	700	1	1000	300	1000	400	1000	300	1000	200	1000	1	700								
+684	554	"ore_carbonate_alantium"	"Alantium Carbonate Ore"	683	7	"res_decay_resist"	"res_quality"	"res_cold_resist"	"res_heat_resist"	"res_malleability"	"res_toughness"	"res_shock_resistance"					1	115	1	1000	300	414	400	498	300	414	200	330	1	115								
+685	555	"ore_carbonate_barthierium"	"Barthierium Carbonate Ore"	683	7	"res_decay_resist"	"res_quality"	"res_cold_resist"	"res_heat_resist"	"res_malleability"	"res_toughness"	"res_shock_resistance"					62	202	1	1000	361	501	453	573	361	501	270	430	62	202								
+686	556	"ore_carbonate_chromite"	"Chromite Carbonate Ore"	683	7	"res_decay_resist"	"res_quality"	"res_cold_resist"	"res_heat_resist"	"res_malleability"	"res_toughness"	"res_shock_resistance"					150	289	1	1000	449	589	528	648	449	589	370	530	150	289								
+687	557	"ore_carbonate_frasium"	"Frasium Carbonate Ore"	683	7	"res_decay_resist"	"res_quality"	"res_cold_resist"	"res_heat_resist"	"res_malleability"	"res_toughness"	"res_shock_resistance"					237	377	1	1000	536	676	603	723	536	676	470	630	237	377								
+688	558	"ore_carbonate_lommite"	"Lommite Carbonate Ore"	683	7	"res_decay_resist"	"res_quality"	"res_cold_resist"	"res_heat_resist"	"res_malleability"	"res_toughness"	"res_shock_resistance"					324	464	1	1000	624	764	678	798	624	764	570	730	324	464								
+689	559	"ore_carbonate_ostrine"	"Ostrine Carbonate Ore"	683	7	"res_decay_resist"	"res_quality"	"res_cold_resist"	"res_heat_resist"	"res_malleability"	"res_toughness"	"res_shock_resistance"					412	551	1	1000	711	851	753	873	711	851	670	830	412	551								
+690	560	"ore_carbonate_varium"	"Varium Carbonate Ore"	683	7	"res_decay_resist"	"res_quality"	"res_cold_resist"	"res_heat_resist"	"res_malleability"	"res_toughness"	"res_shock_resistance"					499	639	1	1000	799	939	828	948	799	939	770	930	499	639								
+691	561	"ore_carbonate_zinsiam"	"Zinsiam Carbonate Ore"	683	7	"res_decay_resist"	"res_quality"	"res_cold_resist"	"res_heat_resist"	"res_malleability"	"res_toughness"	"res_shock_resistance"					586	700	1	1000	886	1000	903	1000	886	1000	870	1000	586	700								
+692	562	"ore_siliclastic"	"Siliclastic Ore"	680	6	"res_decay_resist"	"res_quality"	"res_cold_resist"	"res_heat_resist"	"res_malleability"	"res_toughness"	"res_shock_resistance"					1	700	1	1000	1	1000	1	1000	1	1000	1	700	1	600								
+693	925	"ore_siliclastic_low_grade"	"Low Grade Ore (siliclastic)"	692	7	"res_decay_resist"	"res_quality"	"res_cold_resist"	"res_heat_resist"	"res_malleability"	"res_toughness"	"res_shock_resistance"					200	200	200	200	200	200	200	200	200	200	200	200	200	200								
+694	563	"ore_siliclastic_ardanium"	"Ardanium Siliclastic Ore"	692	7	"res_decay_resist"	"res_quality"	"res_cold_resist"	"res_heat_resist"	"res_malleability"	"res_toughness"	"res_shock_resistance"					1	152	1	1000	300	452	300	452	300	452	1	152	1	131								
+695	564	"ore_siliclastic_cortosis"	"Cortosis Siliclastic Ore"	692	7	"res_decay_resist"	"res_quality"	"res_cold_resist"	"res_heat_resist"	"res_malleability"	"res_toughness"	"res_shock_resistance"					83	269	1	1000	382	568	382	568	382	568	83	269	71	231								
+696	565	"ore_siliclastic_crism"	"Crism Siliclastic Ore"	692	7	"res_decay_resist"	"res_quality"	"res_cold_resist"	"res_heat_resist"	"res_malleability"	"res_toughness"	"res_shock_resistance"					199	385	1	1000	498	685	498	685	498	685	199	385	171	330								
+697	566	"ore_siliclastic_malab"	"Malab Siliclastic Ore"	692	7	"res_decay_resist"	"res_quality"	"res_cold_resist"	"res_heat_resist"	"res_malleability"	"res_toughness"	"res_shock_resistance"					316	502	1	1000	615	802	615	802	615	802	316	502	271	430								
+698	567	"ore_siliclastic_robindun"	"Robindun Siliclastic Ore"	692	7	"res_decay_resist"	"res_quality"	"res_cold_resist"	"res_heat_resist"	"res_malleability"	"res_toughness"	"res_shock_resistance"					432	618	1	1000	732	918	732	918	732	918	432	618	370	530								
+699	685	"ore_siliclastic_fermionic"	"Fermionic Siliclastic Ore"	692	7	"res_decay_resist"	"res_quality"	"res_cold_resist"	"res_heat_resist"	"res_malleability"	"res_toughness"	"res_shock_resistance"					1	1000	1	1000	1	1000	1	1000	1	1000	1	1000	1	1000								
+700	568	"ore_siliclastic_tertian"	"Tertian Siliclastic Ore"	692	7	"res_decay_resist"	"res_quality"	"res_cold_resist"	"res_heat_resist"	"res_malleability"	"res_toughness"	"res_shock_resistance"					549	700	1	1000	848	1000	848	1000	848	1000	549	700	470	600								
+701	569	"gemstone"	"Gemstone"	571	4	"res_decay_resist"	"res_quality"	"res_cold_resist"	"res_heat_resist"	"res_malleability"	"res_toughness"	"res_shock_resistance"	"entangle_resistance"				1	1000	1	1000	1	1000	200	1000	1	600	1	1000	1	1000	1	1000						
+702	926	"gemstone_mixed_low_quality"	"Low Quality Gemstones"	701	5	"res_decay_resist"	"res_quality"	"res_cold_resist"	"res_heat_resist"	"res_malleability"	"res_toughness"	"res_shock_resistance"	"entangle_resistance"				200	200	200	200	200	200	200	200	200	200	200	200	200	200	200	200						
+703	570	"gemstone_unknown"	"Unknown Gem Type"	701	5	"res_decay_resist"	"res_quality"	"res_cold_resist"	"res_heat_resist"	"res_malleability"	"res_toughness"	"res_shock_resistance"	"entangle_resistance"				1	1000	1	1000	1	1000	600	1000	1	600	1	1000	1	1000	1	1000						
+704	571	"gemstone_armophous"	"Amorphous Gemstone"	701	5	"res_decay_resist"	"res_quality"	"res_cold_resist"	"res_heat_resist"	"res_malleability"	"res_toughness"	"res_shock_resistance"	"entangle_resistance"				1	1000	1	1000	1	1000	600	1000	1	600	1	1000	1	1000	1	800						
+705	572	"armophous_bospridium"	"Bospridium Amorphous Gemstone"	704	6	"res_decay_resist"	"res_quality"	"res_cold_resist"	"res_heat_resist"	"res_malleability"	"res_toughness"	"res_shock_resistance"	"entangle_resistance"				1	131	1	1000	1	131	600	652	1	79	1	131	1	131	1	105						
+706	573	"armophous_baradium"	"Baradium Amorphous Gemstone"	704	6	"res_decay_resist"	"res_quality"	"res_cold_resist"	"res_heat_resist"	"res_malleability"	"res_toughness"	"res_shock_resistance"	"entangle_resistance"				71	231	1	1000	71	231	628	692	43	139	71	231	71	231	57	185						
+707	574	"armophous_regvis"	"Regvis Amorphous Gemstone"	704	6	"res_decay_resist"	"res_quality"	"res_cold_resist"	"res_heat_resist"	"res_malleability"	"res_toughness"	"res_shock_resistance"	"entangle_resistance"				171	331	1	1000	171	331	668	732	103	199	171	331	171	331	137	265						
+708	575	"armophous_plexite"	"Plexite Amorphous Gemstone"	704	6	"res_decay_resist"	"res_quality"	"res_cold_resist"	"res_heat_resist"	"res_malleability"	"res_toughness"	"res_shock_resistance"	"entangle_resistance"				271	431	1	1000	271	431	708	772	163	259	271	431	271	431	217	345						
+709	576	"armophous_rudic"	"Rudic Amorphous Gemstone"	704	6	"res_decay_resist"	"res_quality"	"res_cold_resist"	"res_heat_resist"	"res_malleability"	"res_toughness"	"res_shock_resistance"	"entangle_resistance"				371	530	1	1000	371	530	748	812	223	318	371	530	371	530	297	424						
+710	577	"armophous_ryll"	"Ryll Amorphous Gemstone"	704	6	"res_decay_resist"	"res_quality"	"res_cold_resist"	"res_heat_resist"	"res_malleability"	"res_toughness"	"res_shock_resistance"	"entangle_resistance"				471	630	1	1000	471	630	788	852	283	378	471	630	471	630	377	504						
+711	578	"armophous_sedrellium"	"Sedrellium Amorphous Gemstone"	704	6	"res_decay_resist"	"res_quality"	"res_cold_resist"	"res_heat_resist"	"res_malleability"	"res_toughness"	"res_shock_resistance"	"entangle_resistance"				570	730	1	1000	570	730	828	892	342	438	570	730	570	730	456	584						
+712	579	"armophous_stygium"	"Stygium Amorphous Gemstone"	704	6	"res_decay_resist"	"res_quality"	"res_cold_resist"	"res_heat_resist"	"res_malleability"	"res_toughness"	"res_shock_resistance"	"entangle_resistance"				670	830	1	1000	670	830	868	932	402	498	670	830	670	830	536	664						
+713	580	"armophous_vendusii"	"Vendusii Crystal Amorphous Gemstone"	704	6	"res_decay_resist"	"res_quality"	"res_cold_resist"	"res_heat_resist"	"res_malleability"	"res_toughness"	"res_shock_resistance"	"entangle_resistance"				770	930	1	1000	770	930	908	972	462	558	770	930	770	930	616	744						
+714	581	"armophous_baltaran"	"Bal'ta'ran Crystal Amorphous Gemstone"	704	6	"res_decay_resist"	"res_quality"	"res_cold_resist"	"res_heat_resist"	"res_malleability"	"res_toughness"	"res_shock_resistance"	"entangle_resistance"				870	1000	1	1000	870	1000	948	1000	522	600	870	1000	870	1000	696	800						
+715	1114	"armophous_mustafar_1"	"Mustafarian Type 1 Crystal Amorphous Gem"	704	6	"res_decay_resist"	"res_quality"	"res_cold_resist"	"res_heat_resist"	"res_malleability"	"res_toughness"	"res_shock_resistance"	"entangle_resistance"				870	1000	1	1000	870	1000	948	1000	550	600	870	1000	870	1000	750	800						
+716	1115	"armophous_mustafar_2"	"Mustafarian Type 2 Crystal Amorphous Gem"	704	6	"res_decay_resist"	"res_quality"	"res_cold_resist"	"res_heat_resist"	"res_malleability"	"res_toughness"	"res_shock_resistance"	"entangle_resistance"				870	1000	1	1000	870	1000	948	1000	550	600	870	1000	870	1000	750	800						
+717	582	"gemstone_crystalline"	"Crystalline Gemstone"	701	5	"res_decay_resist"	"res_quality"	"res_cold_resist"	"res_heat_resist"	"res_malleability"	"res_toughness"	"res_shock_resistance"	"entangle_resistance"				1	1000	1	1000	1	1000	700	1000	1	400	300	1000	300	1000	500	1000						
+718	583	"crystalline_byrothsis"	"Byrothsis Crystalline Gemstone"	717	6	"res_decay_resist"	"res_quality"	"res_cold_resist"	"res_heat_resist"	"res_malleability"	"res_toughness"	"res_shock_resistance"	"entangle_resistance"				1	163	1	1000	1	163	700	749	1	66	300	414	300	414	500	581						
+719	584	"crystalline_gallinorian"	"Gallinorian Rainbow Gem Crystalline Gemstone"	717	6	"res_decay_resist"	"res_quality"	"res_cold_resist"	"res_heat_resist"	"res_malleability"	"res_toughness"	"res_shock_resistance"	"entangle_resistance"				88	288	1	1000	88	288	726	786	36	116	361	501	361	501	544	644						
+720	585	"crystalline_green_diamond"	"Green Diamond Crystalline Gemstone"	717	6	"res_decay_resist"	"res_quality"	"res_cold_resist"	"res_heat_resist"	"res_malleability"	"res_toughness"	"res_shock_resistance"	"entangle_resistance"				213	413	1	1000	213	413	764	824	86	166	449	589	449	589	606	706						
+721	586	"crystalline_kerol_firegem"	"Kerol Fire-Gem Crystalline Gemstone"	717	6	"res_decay_resist"	"res_quality"	"res_cold_resist"	"res_heat_resist"	"res_malleability"	"res_toughness"	"res_shock_resistance"	"entangle_resistance"				338	538	1	1000	338	538	801	861	136	215	536	676	536	676	669	769						
+722	587	"crystalline_seafah_jewel"	"Seafah Jewel Crystalline Gemstone"	717	6	"res_decay_resist"	"res_quality"	"res_cold_resist"	"res_heat_resist"	"res_malleability"	"res_toughness"	"res_shock_resistance"	"entangle_resistance"				463	663	1	1000	463	663	839	899	186	265	624	764	624	764	731	831						
+723	588	"crystalline_sormahil_firegem"	"Sormahil Fire Gem Crystalline Gemstone"	717	6	"res_decay_resist"	"res_quality"	"res_cold_resist"	"res_heat_resist"	"res_malleability"	"res_toughness"	"res_shock_resistance"	"entangle_resistance"				588	788	1	1000	588	788	876	936	235	315	711	851	711	851	794	894						
+724	589	"crystalline_laboi_mineral_crystal"	"Laboi Mineral Crystal Crystalline Gemstone"	717	6	"res_decay_resist"	"res_quality"	"res_cold_resist"	"res_heat_resist"	"res_malleability"	"res_toughness"	"res_shock_resistance"	"entangle_resistance"				713	913	1	1000	713	913	914	974	285	365	799	939	799	939	856	956						
+725	590	"crystalline_vertex"	"Vertex Crystalline Gemstone"	717	6	"res_decay_resist"	"res_quality"	"res_cold_resist"	"res_heat_resist"	"res_malleability"	"res_toughness"	"res_shock_resistance"	"entangle_resistance"				838	1000	1	1000	838	1000	951	1000	335	400	886	1000	886	1000	919	1000						
+726	1119	"crystalline_mustafar_1"	"Mustafarian Type 1 Crystalline Gem"	717	6	"res_decay_resist"	"res_quality"	"res_cold_resist"	"res_heat_resist"	"res_malleability"	"res_toughness"	"res_shock_resistance"	"entangle_resistance"				838	1000	500	1000	838	1000	951	1000	350	400	886	1000	886	1000	919	1000						
+727	1120	"crystalline_mustafar_2"	"Mustafarian Type 2 Crystalline Gem"	717	6	"res_decay_resist"	"res_quality"	"res_cold_resist"	"res_heat_resist"	"res_malleability"	"res_toughness"	"res_shock_resistance"	"entangle_resistance"				838	1000	500	1000	838	1000	951	1000	350	400	886	1000	886	1000	919	1000						
+728	591	"gas"	"Gas"	526	3	"res_decay_resist"	"res_quality"										1	1000	1	1000																		
+729	592	"gas_reactive"	"Reactive Gas"	728	4	"res_decay_resist"	"res_quality"										1	1000	1	1000																		
+730	593	"gas_reactive_unknown"	"Unknown Reactive Gas"	729	5	"res_decay_resist"	"res_quality"										1	1000	1	1000																		
+731	594	"gas_reactive_known"	"Known Reactive Gas"	729	5	"res_decay_resist"	"res_quality"										1	1000	1	1000																		
+732	927	"gas_reactive_mixed"	"Mixed Reactive Gas"	731	6	"res_decay_resist"	"res_quality"										200	200	200	200																		
+733	595	"gas_reactive_eleton"	"Eleton Reactive Gas"	731	6	"res_decay_resist"	"res_quality"										1	400	1	1000																		
+734	596	"gas_reactive_irolunn"	"Irolunn Reactive Gas"	731	6	"res_decay_resist"	"res_quality"										100	600	1	1000																		
+735	597	"gas_reactive_methane"	"Methane Reactive Gas"	731	6	"res_decay_resist"	"res_quality"										200	700	1	1000																		
+736	598	"gas_reactive_orveth"	"Orveth Reactive Gas"	731	6	"res_decay_resist"	"res_quality"										300	800	1	1000																		
+737	599	"gas_reactive_sig"	"Sig Reactive Gas"	731	6	"res_decay_resist"	"res_quality"										300	900	1	1000																		
+738	600	"gas_reactive_skevon"	"Skevon Reactive Gas"	731	6	"res_decay_resist"	"res_quality"										400	900	1	1000																		
+739	687	"gas_reactive_organometallic"	"Unstable Organometallic Reactive Gas"	731	6	"res_decay_resist"	"res_quality"										1	1000	1	1000																		
+740	601	"gas_reactive_tolium"	"Tolium Reactive Gas"	731	6	"res_decay_resist"	"res_quality"										500	1000	1	1000																		
+741	1116	"gas_reactive_mustafar"	"Mustafarian Reactive Gas"	731	6	"res_decay_resist"	"res_quality"										800	1000	500	1000																		
+742	602	"gas_inert"	"Inert Gas"	728	4	"res_decay_resist"	"res_quality"										1	1000	1	1000																		
+743	603	"gas_inert_unknown"	"Unknown Inert Gas"	742	5	"res_decay_resist"	"res_quality"										1	1000	1	1000																		
+744	604	"gas_inert_known"	"Known Inert Gas"	742	5	"res_decay_resist"	"res_quality"										1	800	1	1000																		
+745	928	"gas_inert_mixed"	"Mixed Inert Gas"	744	6	"res_decay_resist"	"res_quality"										200	200	200	200																		
+746	605	"gas_inert_hydron3"	"Hydron-3 Inert Gas"	744	6	"res_decay_resist"	"res_quality"										1	81	1	1000																		
+747	606	"gas_inert_malium"	"Malium Inert Gas"	744	6	"res_decay_resist"	"res_quality"										44	142	1	1000																		
+748	607	"gas_inert_bilal"	"Bilal gas Inert Gas"	744	6	"res_decay_resist"	"res_quality"										105	204	1	1000																		
+749	608	"gas_inert_corthel"	"Corthel Inert Gas"	744	6	"res_decay_resist"	"res_quality"										167	265	1	1000																		
+750	609	"gas_inert_culsion"	"Culsion Inert Gas"	744	6	"res_decay_resist"	"res_quality"										228	327	1	1000																		
+751	610	"gas_inert_dioxis"	"Dioxis Inert Gas"	744	6	"res_decay_resist"	"res_quality"										290	388	1	1000																		
+752	611	"gas_inert_hurlothrombic"	"Hurlothrombic Inert Gas"	744	6	"res_decay_resist"	"res_quality"										351	450	1	1000																		
+753	612	"gas_inert_kaylon"	"Kaylon Inert Gas"	744	6	"res_decay_resist"	"res_quality"										413	511	1	1000																		
+754	613	"gas_inert_korfaise"	"Korfaise Inert Gas"	744	6	"res_decay_resist"	"res_quality"										474	573	1	1000																		
+755	614	"gas_inert_methanagen"	"Methanagen Inert Gas"	744	6	"res_decay_resist"	"res_quality"										536	634	1	1000																		
+756	615	"gas_inert_mirth"	"Mirth Inert Gas"	744	6	"res_decay_resist"	"res_quality"										597	696	1	1000																		
+757	616	"gas_inert_obah"	"Obah Inert Gas"	744	6	"res_decay_resist"	"res_quality"										659	757	1	1000																		
+758	617	"gas_inert_rethin"	"Rethin Inert Gas"	744	6	"res_decay_resist"	"res_quality"										720	800	1	1000																		
+759	618	"energy"	"Energy"	1	2	"res_quality"	"res_potential_energy"										200	1000	1	1000																		
+760	619	"energy_renewable"	"Renewable energy"	759	3	"res_quality"	"res_potential_energy"										200	1000	1	1000																		
+761	620	"energy_renewable_site_limited"	"Site-Restricted Renewable Energy"	760	4	"res_quality"	"res_potential_energy"										200	1000	1	1000																		
+762	1102	"energy_renewable_site_limited_tidal"	"Tidal Energy"	761	5	"res_quality"	"res_potential_energy"										200	500	1	500																		
+763	929	"energy_renewable_site_limited_tidal_weak"	"Weak Tidal Renewable Energy"	762	6	"res_quality"	"res_potential_energy"										200	200	200	200																		
+764	621	"energy_renewable_site_limited_tidal_corellia"	"Corellian Tidal Renewable Energy"	762	6	"res_quality"	"res_potential_energy"										500	500	1	500																		
+765	622	"energy_renewable_site_limited_tidal_dathomir"	"Dathomirian Tidal Renewable Energy"	762	6	"res_quality"	"res_potential_energy"										500	500	1	500																		
+766	623	"energy_renewable_site_limited_tidal_dantooine"	"Dantooine Tidal Renewable Energy"	762	6	"res_quality"	"res_potential_energy"										500	500	1	500																		
+767	624	"energy_renewable_site_limited_tidal_endor"	"Endor Tidal Renewable Energy"	762	6	"res_quality"	"res_potential_energy"										500	500	1	500																		
+768	625	"energy_renewable_site_limited_tidal_lok"	"Lokian Tidal Renewable Energy"	762	6	"res_quality"	"res_potential_energy"										500	500	1	500																		
+769	626	"energy_renewable_site_limited_tidal_naboo"	"Naboo Tidal Renewable Energy"	762	6	"res_quality"	"res_potential_energy"										500	500	1	500																		
+770	627	"energy_renewable_site_limited_tidal_rori"	"Rori Tidal Renewable Energy"	762	6	"res_quality"	"res_potential_energy"										500	500	1	500																		
+771	628	"energy_renewable_site_limited_tidal_talus"	"Talusian Tidal Renewable Energy"	762	6	"res_quality"	"res_potential_energy"										500	500	1	500																		
+772	629	"energy_renewable_site_limited_tidal_tatooine"	"Tatooinian Tidal Renewable Energy"	762	6	"res_quality"	"res_potential_energy"										500	500	1	500																		
+773	630	"energy_renewable_site_limited_tidal_yavin4"	"Yavinian Tidal Renewable Energy"	762	6	"res_quality"	"res_potential_energy"										500	500	1	500																		
+774	1057	"energy_renewable_site_limited_tidal_kashyyyk"	"Kashyyykian Tidal Renewable Energy"	762	6	"res_quality"	"res_potential_energy"										500	500	1	500																		
+775	1103	"energy_renewable_site_limited_hydron3"	"Hydron-3 Energy"	761	5	"res_quality"	"res_potential_energy"										200	500	1	500																		
+776	930	"energy_renewable_site_limited_hydron3_weak"	"Weak Hydron-3 Renewable Energy"	775	6	"res_quality"	"res_potential_energy"										200	200	200	200																		
+777	631	"energy_renewable_site_limited_hydron3_corellia"	"Corellian Hydron-3 Renewable Energy"	775	6	"res_quality"	"res_potential_energy"										500	500	1	500																		
+778	632	"energy_renewable_site_limited_hydron3_dantooine"	"Dantooine Hydron-3 Renewable Energy"	775	6	"res_quality"	"res_potential_energy"										500	500	1	500																		
+779	633	"energy_renewable_site_limited_hydron3_dathomir"	"Dathomirian Hydron-3 Renewable Energy"	775	6	"res_quality"	"res_potential_energy"										500	500	1	500																		
+780	634	"energy_renewable_site_limited_hydron3_endor"	"Endorian Hydron-3 Renewable Energy"	775	6	"res_quality"	"res_potential_energy"										500	500	1	500																		
+781	635	"energy_renewable_site_limited_hydron3_lok"	"Lokian Hydron-3 Renewable Energy"	775	6	"res_quality"	"res_potential_energy"										500	500	1	500																		
+782	636	"energy_renewable_site_limited_hydron3_naboo"	"Nabooian Hydron-3 Renewable Energy"	775	6	"res_quality"	"res_potential_energy"										500	500	1	500																		
+783	637	"energy_renewable_site_limited_hydron3_rori"	"Rori Hydron-3 Renewable Energy"	775	6	"res_quality"	"res_potential_energy"										500	500	1	500																		
+784	638	"energy_renewable_site_limited_hydron3_talus"	"Talusian Hydron-3 Renewable Energy"	775	6	"res_quality"	"res_potential_energy"										500	500	1	500																		
+785	639	"energy_renewable_site_limited_hydron3_tatooine"	"Tatooinian Hydron-3 Renewable Energy"	775	6	"res_quality"	"res_potential_energy"										500	500	1	500																		
+786	640	"energy_renewable_site_limited_hydron3_yavin4"	"Yavinian Hydron-3 Renewable Energy"	775	6	"res_quality"	"res_potential_energy"										500	500	1	500																		
+787	1058	"energy_renewable_site_limited_hydron3_kashyyyk"	"Kashyyykian Hydron-3 Renewable Energy"	775	6	"res_quality"	"res_potential_energy"										500	500	1	500																		
+788	1104	"energy_renewable_site_limited_geothermal"	"Geothermal Energy"	761	5	"res_quality"	"res_potential_energy"										200	1000	200	1000																		
+789	931	"energy_renewable_site_limited_geothermal_weak"	"Weak Geothermal Renewable Energy"	788	6	"res_quality"	"res_potential_energy"										200	200	200	200																		
+790	641	"energy_renewable_site_limited_geothermal_corellia"	"Corellian Geothermal Renewable Energy"	788	6	"res_quality"	"res_potential_energy"										500	1000	200	1000																		
+791	642	"energy_renewable_site_limited_geothermal_dantooine"	"Dantooine Geothermal Renewable Energy"	788	6	"res_quality"	"res_potential_energy"										500	1000	200	1000																		
+792	643	"energy_renewable_site_limited_geothermal_dathomir"	"Dathomirian Geothermal Renewable Energy"	788	6	"res_quality"	"res_potential_energy"										500	1000	200	1000																		
+793	644	"energy_renewable_site_limited_geothermal_endor"	"Endorian Geothermal Renewable Energy"	788	6	"res_quality"	"res_potential_energy"										500	1000	200	1000																		
+794	645	"energy_renewable_site_limited_geothermal_lok"	"Lokian Geothermal Renewable Energy"	788	6	"res_quality"	"res_potential_energy"										500	1000	200	1000																		
+795	646	"energy_renewable_site_limited_geothermal_naboo"	"Nabooian Geothermal Renewable Energy"	788	6	"res_quality"	"res_potential_energy"										500	1000	200	1000																		
+796	647	"energy_renewable_site_limited_geothermal_rori"	"Rori Geothermal Renewable Energy"	788	6	"res_quality"	"res_potential_energy"										500	1000	200	1000																		
+797	648	"energy_renewable_site_limited_geothermal_talus"	"Talusian Geothermal Renewable Energy"	788	6	"res_quality"	"res_potential_energy"										500	1000	200	1000																		
+798	649	"energy_renewable_site_limited_geothermal_tatooine"	"Tatooinian Geothermal Renewable Energy"	788	6	"res_quality"	"res_potential_energy"										500	1000	200	1000																		
+799	650	"energy_renewable_site_limited_geothermal_yavin4"	"Yavinian Geothermal Renewable Energy"	788	6	"res_quality"	"res_potential_energy"										500	1000	200	1000																		
+800	1059	"energy_renewable_site_limited_geothermal_kashyyyk"	"Kashyyykian Geothermal Renewable Energy"	788	6	"res_quality"	"res_potential_energy"										500	1000	200	1000																		
+801	651	"energy_renewable_unlimited"	"Non Site-Restricted Renewable Energy"	760	4	"res_quality"	"res_potential_energy"										200	500	1	600																		
+802	903	"energy_renewable_unlimited_wind"	"Wind Energy"	801	5	"res_quality"	"res_potential_energy"										200	500	1	400																		
+803	932	"energy_renewable_unlimited_wind_weak"	"Weak Wind Renewable Energy"	802	6	"res_quality"	"res_potential_energy"										200	200	200	200																		
+804	652	"energy_renewable_unlimited_wind_corellia"	"Corellian Wind Renewable Energy"	802	6	"res_quality"	"res_potential_energy"										500	500	1	400																		
+805	653	"energy_renewable_unlimited_wind_dantooine"	"Dantooine Wind Renewable Energy"	802	6	"res_quality"	"res_potential_energy"										500	500	1	400																		
+806	654	"energy_renewable_unlimited_wind_dathomir"	"Dathomirian Wind Renewable Energy"	802	6	"res_quality"	"res_potential_energy"										500	500	1	400																		
+807	655	"energy_renewable_unlimited_wind_endor"	"Endorian Wind Renewable Energy"	802	6	"res_quality"	"res_potential_energy"										500	500	1	400																		
+808	656	"energy_renewable_unlimited_wind_lok"	"Lokian Wind Renewable Energy"	802	6	"res_quality"	"res_potential_energy"										500	500	1	400																		
+809	657	"energy_renewable_unlimited_wind_naboo"	"Nabooian Wind Renewable Energy"	802	6	"res_quality"	"res_potential_energy"										500	500	1	400																		
+810	658	"energy_renewable_unlimited_wind_rori"	"Rori Wind Renewable Energy"	802	6	"res_quality"	"res_potential_energy"										500	500	1	400																		
+811	659	"energy_renewable_unlimited_wind_talus"	"Talusian Wind Renewable Energy"	802	6	"res_quality"	"res_potential_energy"										500	500	1	400																		
+812	660	"energy_renewable_unlimited_wind_tatooine"	"Tatooinian Wind Renewable Energy"	802	6	"res_quality"	"res_potential_energy"										500	500	1	400																		
+813	661	"energy_renewable_unlimited_wind_yavin4"	"Yavinian Wind Renewable Energy"	802	6	"res_quality"	"res_potential_energy"										500	500	1	400																		
+814	1060	"energy_renewable_unlimited_wind_kashyyyk"	"Kashyyykian Wind Renewable Energy"	802	6	"res_quality"	"res_potential_energy"										500	500	1	400																		
+815	904	"energy_renewable_unlimited_solar"	"Solar Energy"	801	5	"res_quality"	"res_potential_energy"										200	500	200	600																		
+816	933	"energy_renewable_unlimited_solar_weak"	"Weak Solar Renewable Energy"	815	6	"res_quality"	"res_potential_energy"										200	200	200	200																		
+817	662	"energy_renewable_unlimited_solar_corellia"	"Corellian Solar Renewable Energy"	815	6	"res_quality"	"res_potential_energy"										500	500	200	600																		
+818	663	"energy_renewable_unlimited_solar_dantooine"	"Dantooine Solar Renewable Energy"	815	6	"res_quality"	"res_potential_energy"										500	500	200	600																		
+819	664	"energy_renewable_unlimited_solar_dathomir"	"Dathomirian Solar Renewable Energy"	815	6	"res_quality"	"res_potential_energy"										500	500	200	600																		
+820	665	"energy_renewable_unlimited_solar_endor"	"Endorian Solar Renewable Energy"	815	6	"res_quality"	"res_potential_energy"										500	500	200	600																		
+821	666	"energy_renewable_unlimited_solar_lok"	"Lokian Solar Renewable Energy"	815	6	"res_quality"	"res_potential_energy"										500	500	200	600																		
+822	667	"energy_renewable_unlimited_solar_naboo"	"Nabooian Solar Renewable Energy"	815	6	"res_quality"	"res_potential_energy"										500	500	200	600																		
+823	668	"energy_renewable_unlimited_solar_rori"	"Rori Solar Renewable Energy"	815	6	"res_quality"	"res_potential_energy"										500	500	200	600																		
+824	669	"energy_renewable_unlimited_solar_talus"	"Talusian Solar Renewable Energy"	815	6	"res_quality"	"res_potential_energy"										500	500	200	600																		
+825	670	"energy_renewable_unlimited_solar_tatooine"	"Tatooinian Solar Renewable Energy"	815	6	"res_quality"	"res_potential_energy"										500	500	200	600																		
+826	1121	"energy_renewable_unlimited_solar_yavin4"	"Yavinian Solar Renewable Energy"	815	6	"res_quality"	"res_potential_energy"										500	500	200	600																		
+827	1061	"energy_renewable_unlimited_solar_kashyyyk"	"Kashyyykian Solar Renewable Energy"	815	6	"res_quality"	"res_potential_energy"										500	500	200	600																		
+828	1000	"space_resource"	"Space Resource"	1	2	"res_quality"											500	1000																				
+829	1001	"space_metal"	"Asteroidal Mineral"	828	3	"res_quality"											500	1000																				
+830	1002	"space_metal_iron"	"Iron Asteroid"	829	4	"res_quality"											500	500																				
+831	1003	"space_metal_silicaceous"	"Silicaceous Asteroid"	829	4	"res_quality"											1000	1000																				
+832	1004	"space_metal_carbonaceous"	"Carbonaceous Asteroid"	829	4	"res_quality"											1000	1000																				
+833	1005	"space_metal_ice"	"Icy Asteroid"	829	4	"res_quality"											1000	1000																				
+834	1006	"space_metal_obsidian"	"Obsidian Asteroid"	829	4	"res_quality"											1000	1000																				
+835	1007	"space_gem"	"Asteroidal Gemstone"	828	3	"res_quality"											500	1000																				
+836	1008	"space_gem_diamond"	"Diamond Asteroid"	835	4	"res_quality"											500	500																				
+837	1009	"space_gem_crystal"	"Crystal Asteroid"	835	4	"res_quality"											1000	1000																				
+838	1010	"space_chemical"	"Asteroidal Chemical"	828	3	"res_quality"											500	1000																				
+839	1011	"space_chemical_petrochem"	"Petrochemical Asteroid"	838	4	"res_quality"											500	500																				
+840	1012	"space_chemical_acid"	"Acidic Asteroid"	838	4	"res_quality"											1000	1000																				
+841	1013	"space_chemical_cyanomethanic"	"Cyanomethanic Asteroid"	838	4	"res_quality"											1000	1000																				
+842	1014	"space_chemical_sulfuric"	"Sulfuric Asteroid"	838	4	"res_quality"											1000	1000																				
+843	1015	"space_gas"	"Asteroidal Gas"	828	3	"res_quality"											500	1000																				
+844	1016	"space_gas_methane"	"Methane Asteroid"	843	4	"res_quality"											500	500																				
+845	1017	"space_gas_organometallic"	"Organometallic Asteroid"	843	4	"res_quality"											1000	1000																				
