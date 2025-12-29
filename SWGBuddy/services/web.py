@@ -4,39 +4,31 @@ SWGBuddy WebService Module
 Wrapper to run the Flask Frontend as a ServiceManager Process.
 
 """
-import sys
-import os
-import threading
-
-
-from core.core import Core
-from core.database import DatabaseContext
-from SWGBuddy.server import app, start_response_router
+import logging
+from waitress import serve
+from SWGBuddy.core.core import Core
+from SWGBuddy.server import app, start_response_router, current_app
 
 
 
 class WebService(Core):
     def __init__(self, validation_queue, log_queue, reply_queue):
         super().__init__(log_queue)
-        self.val_queue = validation_queue
+        self.validation_queue = validation_queue
         self.reply_queue = reply_queue
 
     def run(self):
-        # 1. Inject Queues into Flask Config so app.py can use them
-        app.config['VAL_QUEUE'] = self.val_queue
-        app.config['LOG_QUEUE'] = self.log_queue
-        app.config['REPLY_QUEUE'] = self.reply_queue
+        self.info("Initializing Web Service (Waitress)...")
         
-        # 2. Start the Response Router Thread (Defined in app.py)
-        # This listens for "Success/Fail" messages from ValidationService
+        # 1. Inject Queues into Flask Config
+        # Since we are in the same process tree (or forked from it), 
+        # we can pass these objects directly.
+        app.config['VAL_QUEUE'] = self.validation_queue
+        
+        # 2. Start the Response Router (Background Thread)
         start_response_router(self.reply_queue)
-
-        # 3. Initialize DB Connection Pool for this process
-        DatabaseContext.initialize()
-
-        self.info("Starting Flask Web Server on port 5000...")
         
-        # 4. Run Flask
-        # use_reloader=False is CRITICAL when using multiprocessing
-        # otherwise Flask spawns a child process that confuses the Manager
-        app.run(host='0.0.0.0', port=5000, debug=False, use_reloader=False)
+        # 3. Start Waitress
+        # This blocks the process, serving requests indefinitely
+        self.info("Starting HTTP Server on 0.0.0.0:5000")
+        serve(app, host='0.0.0.0', port=5000, threads=6)
