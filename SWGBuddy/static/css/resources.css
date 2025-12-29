@@ -327,7 +327,7 @@ td.col-stat { font-weight: 700; }
     height: 100%;
     background: rgba(0, 0, 0, 0.85); /* Darker backdrop */
     backdrop-filter: blur(2px);
-    display: none; /* Toggled via JS class .hidden */
+    display: flex; /* Toggled via JS class .hidden */
     justify-content: center;
     align-items: center;
     z-index: 2000;
