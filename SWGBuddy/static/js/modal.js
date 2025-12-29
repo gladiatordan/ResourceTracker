@@ -107,7 +107,7 @@ const Modal = {
             // 1. Icon (Toggle for folders, Dot for leaves)
             const icon = document.createElement('span');
             icon.className = 'tree-toggle';
-            icon.innerText = isLeaf ? '•' : '▼'; 
+            icon.innerText = isLeaf ? '•' : '▶'; 
             icon.style.opacity = isLeaf ? '0.3' : '1';
             header.appendChild(icon);
 
@@ -141,7 +141,7 @@ const Modal = {
             // 4. Children
             if (!isLeaf) {
                 childrenContainer = document.createElement('div');
-                childrenContainer.className = 'modal-tree-children'; // Expanded by default
+                childrenContainer.className = 'modal-tree-children collapsed'; // Expanded by default
                 
                 node.children.forEach(child => {
                     childrenContainer.appendChild(createNode(child, depth + 1));
