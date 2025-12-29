@@ -340,6 +340,7 @@ class ValidationService(Core):
 		placeholders = ",".join(["%s"] * len(cols))
 
 		sql = f"INSERT INTO resource_spawns ({','.join(cols)}) VALUES ({placeholders})"
+		self.info(f"[ValidationService] {sql}")
 		
 		with DatabaseContext.cursor(commit=True) as cur:
 			cur.execute(sql, tuple(vals))
