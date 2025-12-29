@@ -8,36 +8,29 @@ document.addEventListener('DOMContentLoaded', async () => {
     const loader = document.getElementById('page-loader');
 
     try {
-        // 1. Initialize UI Helpers (Tabs, listeners)
         initTabs(); 
         initListeners();
 
-        // 2. Parallel Load: Session + Taxonomy + Resource Data
-        // We need Session before we can determine Permissions for the Table
         await Promise.all([
             Auth.checkSession(),
             loadTaxonomy(),
             loadResources()
         ]);
 
-        // 3. Update UI based on Role (hides/shows Add button)
         Auth.updateInterface();
 
-        // 4. Render Table (Now that we have data AND permissions)
-        // Note: loadResources calls applyAllTableTransforms internally, 
-        // but we ensure permissions are applied by calling updateInterface first.
-        // We force a re-render here to be safe if loadResources finished before checkSession
+        // Render Table & Sort Indicators
         applyAllTableTransforms();
+        updateSortVisuals(); // <--- Lights up default sort arrows
 
         console.log("Initialization Complete.");
 
     } catch (error) {
         console.error("Critical Initialization Error:", error);
         if (loader) loader.innerHTML = `<div style="color:red">ERROR LOADING APP<br>${error.message}</div>`;
-        return; // Don't remove loader if critical fail
+        return; 
     }
 
-    // 5. Fade out Loader
     if (loader) {
         loader.classList.add('fade-out');
         setTimeout(() => {
@@ -47,19 +40,12 @@ document.addEventListener('DOMContentLoaded', async () => {
 });
 
 // Listener for Server Select Change
-// When server changes, permissions might change, so we must re-check.
 const serverSelect = document.getElementById('server-select-wrapper');
 if (serverSelect) {
     serverSelect.addEventListener('change', async () => {
         console.log("Server Context Changed:", serverSelect.value);
-        
-        // Reload Resources for new server
         await loadResources(); 
-        
-        // Update Add Button visibility (User might be Admin on Server A but Guest on B)
         Auth.updateInterface();
-        
-        // Re-render table with new permissions
         applyAllTableTransforms();
     });
 }

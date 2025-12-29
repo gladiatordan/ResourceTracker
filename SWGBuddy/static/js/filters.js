@@ -88,8 +88,6 @@ function applyFilters() {
 		return matchesSearch && matchesCategory;
 	});
 
-	// Reset to page 1 if filtering changes results
-	// We don't reset if just sorting
 	renderPaginatedTable(); 
 }
 
@@ -105,7 +103,7 @@ function selectCategory(label, displayLabel = null) {
 function toggleSort(key) {
 	const idx = sortStack.findIndex(s => s.key === key);
 	
-	// Fix: Always start with 'asc' (Up Arrow)
+	// Default to 'asc' (Up Arrow) when first clicking
 	const defaultDir = 'asc';
 	const reverseDir = 'desc';
 
@@ -116,30 +114,29 @@ function toggleSort(key) {
 		// Toggle direction
 		sortStack[idx].direction = reverseDir;
 	} else {
-		// Remove if already toggled once (or keep it based on preference, here we remove)
+		// Remove if already toggled once.
+        // We do NOT force defaults back in, allowing user full control to clear sorts.
 		sortStack.splice(idx, 1);
 	}
-
-	// Keep Date and Active as fallbacks at the bottom of the stack if they aren't active
-	if (!sortStack.find(s => s.key === 'is_active')) sortStack.push({ key: 'is_active', direction: 'asc' });
-	if (!sortStack.find(s => s.key === 'date_reported')) sortStack.push({ key: 'date_reported', direction: 'asc' });
 
 	updateSortVisuals();
 	applyAllTableTransforms();
 }
 
 function updateSortVisuals() {
+	// Clear all active states
 	document.querySelectorAll('.sort-btns span').forEach(el => {
 		el.classList.remove('active-up', 'active-down');
 	});
 
-	// Only visualize the primary sort (first in stack)
+	// Visualize primary sort (first in stack)
 	if (sortStack.length > 0) {
 		const sort = sortStack[0];
-		const headerDiv = document.querySelector(`[onclick*="'${sort.key}'"]`);
-		if (headerDiv) {
-			const upArrow = headerDiv.querySelector('.up');
-			const downArrow = headerDiv.querySelector('.down');
+        // Use robust data-sort attribute selector
+		const headerTh = document.querySelector(`th[data-sort="${sort.key}"]`);
+		if (headerTh) {
+			const upArrow = headerTh.querySelector('.up');
+			const downArrow = headerTh.querySelector('.down');
 			
 			if (sort.direction === 'asc' && upArrow) upArrow.classList.add('active-up');
 			if (sort.direction === 'desc' && downArrow) downArrow.classList.add('active-down');

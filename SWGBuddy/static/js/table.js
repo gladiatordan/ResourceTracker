@@ -7,13 +7,13 @@ function renderTable(data) {
 	const tableBody = document.getElementById('resource-log-body');
 	tableBody.innerHTML = '';
 
-	// FIX: Determine if user can edit (User/Editor/Admin/SuperAdmin)
-	const canEdit = window.Auth && Auth.hasPermission('EDITOR');
+	// Check permissions
+	const canEdit = window.Auth && Auth.hasPermission('USER');
 
-	// FIX: Ensure planet list exists even if global ALL_PLANETS is missing
+	// FIX: Ensure planet list exists even if global ALL_PLANETS is missing or empty
 	let allPlanets = window.ALL_PLANETS || [];
 	if (allPlanets.length === 0 && window.validResources) {
-		// Fallback: collect from loaded taxonomy
+		// Fallback: collect unique planets from loaded taxonomy
 		const set = new Set();
 		Object.values(window.validResources).forEach(r => {
 			if (r.planets) r.planets.forEach(p => set.add(p));
@@ -39,9 +39,16 @@ function renderTable(data) {
 		const safeName = res.name.replace(/['\s]/g, '-');
 
 		const rawDate = new Date(res.date_reported);
-		const day = String(rawDate.getUTCDate()).padStart(2, '0')
-		const month = String(rawDate.getUTCMonth() + 1).padStart(2, '0')
-		const year = rawDate.getUTCFullYear();
+		// If timestamp is epoch (seconds), multiply by 1000? 
+		// Logic in modal.js uses epoch directly. Assuming date_reported here is ISO string or timestamp.
+		// Adjusting date parsing to be safe:
+		const dObj = (!isNaN(res.date_reported) && res.date_reported < 1e12) 
+					 ? new Date(res.date_reported * 1000) 
+					 : new Date(res.date_reported);
+
+		const day = String(dObj.getUTCDate()).padStart(2, '0')
+		const month = String(dObj.getUTCMonth() + 1).padStart(2, '0')
+		const year = dObj.getUTCFullYear();
 		const formattedDate = `${day}/${month}/${year}`;
 
 		// Planet Logic
@@ -54,7 +61,6 @@ function renderTable(data) {
 				.map(p => `<option value="${p}">${p}</option>`)
 				.join('');
 			
-			// FIX: Ensure this HTML is generated
 			planetControlHtml = `
 				<div class="planet-controls">
 					<select class="planet-select" onchange="togglePlanet(this, '${res.name.replace(/'/g, "\\'")}')">
@@ -66,11 +72,10 @@ function renderTable(data) {
 
 		const planetBadges = (res.planet || res.planets || []).map(p => {
 			const planetLower = p.toLowerCase();
-			// Pass the original capitalized 'p' to the handler
 			return `<span class="planet ${planetLower}" 
 							data-tooltip="${p}" 
 							onclick="handleBadgeClick(event, '${res.name.replace(/'/g, "\\'")}', '${p}')">
-							${p.charAt(0)}
+							${p}
 					</span>`;
 		}).join(' ');
 		

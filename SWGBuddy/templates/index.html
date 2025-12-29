@@ -11,29 +11,13 @@
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
-	<header class="main-header">
-		<div class="logo"><span>SWG</span>BUDDY</div>
-		<nav class="top-nav">
-			<button class="nav-btn active" data-target="resources-container">RESOURCES</button>
-			<button class="nav-btn" data-target="schematics-container">SCHEMATICS</button>
-		</nav>
-		<div class="controls-section">
-			<div class="server-select-container">
-				<label for="server-select"><i class="fa-solid fa-server"></i></label>
-				<select id="server-select-wrapper">
-					<option value="cuemu" selected>CUEmu</option>
-					</select>
-			</div>
-
-			<div id="auth-section" class="auth-section"></div>
-		</div>
-	</header>
     <div class="app-container">
-		<div id="page-loader" class="page-loader">
-			<div class="spinner"></div>
-			<div class="loader-text">INITIALIZING DATAPAD...</div>
-		</div>
 		<main id="main-content">
+            <div id="page-loader" class="page-loader">
+                <div class="spinner"></div>
+                <div class="loader-text">INITIALIZING DATAPAD...</div>
+            </div>
+
 			<section id="resources-container" class="page-container active">
 				<div class="resource-filters-row">
 					<div class="custom-dropdown" id="taxonomy-dropdown">
@@ -43,8 +27,10 @@
                         </div>
                     </div>
                     <input type="text" placeholder="Search resources..." class="search-input">
-					<button class="add-resource-btn hidden" onclick="openAddResourceModal()">Add Resource</button>
-					<div class="pagination-stack">
+					
+                    <button id="btn-add-resource" class="add-resource-btn hidden" onclick="openAddResourceModal()">Add Resource</button>
+					
+                    <div class="pagination-stack">
 						<div class="pagination-controls">
 							<label for="results-per-page">Show Results:</label>
 							<select id="results-per-page" class="results-select" onchange="changeResultsPerPage()">
@@ -67,6 +53,7 @@
 						</div>
 					</div>
 				</div>
+                
 				<div id="resource-modal" class="modal hidden">
 					<div class="modal-content">
 						<div class="modal-header">
@@ -111,8 +98,7 @@
 									<div class="stat-group"><label>UT</label><input type="number" id="res_ut" min="1" max="1000"></div>
 								</div>
 
-                                <div id="stats-container-view" class="stats-grid-view hidden">
-                                    </div>
+                                <div id="stats-container-view" class="stats-grid-view hidden"></div>
 
                                 <div id="meta-container" class="meta-grid">
                                     <div class="form-group">
@@ -141,10 +127,10 @@
 								<div id="modal-status-bar" class="status-bar"></div>
 
 								<div class="modal-footer">
-                                    <button type="button" id="btn-modal-edit" class="btn-secondary" onclick="Modal.enterEditMode()">Edit Details</button>
+									<button type="button" id="btn-modal-edit" class="btn-secondary" onclick="Modal.enterEditMode()">Edit Details</button>
                                     
                                     <div class="footer-actions">
-                                        <button type="submit" id="btn-modal-save" class="btn-primary" disabled>Save</button>
+    									<button type="submit" id="btn-modal-save" class="btn-primary" disabled>Save</button>
                                         <button type="button" id="btn-modal-cancel" class="btn-danger" onclick="Modal.cancel()">Cancel</button>
                                     </div>
 								</div>
@@ -152,25 +138,26 @@
 						</div>
 					</div>
 				</div>
+
 				<table class="resource-table">
 					<thead>
 						<tr>
-							<th class="col-name" onclick="toggleSort('name')"><div class="sort-wrapper left"><span>NAME </span><div class="sort-btns"><span class="up">▲</span><span class="down">▼</span></div></div></th>
-							<th class="col-type" onclick="toggleSort('type')"><div class="sort-wrapper left"><span>TYPE </span><div class="sort-btns"><span class="up">▲</span><span class="down">▼</span></div></div></th>
-							<th class="col-stat" onclick="toggleSort('res_weight_rating')"><div class="sort-wrapper center"><span></span>Rating</span><div class="sort-btns"><span class="up">▲</span><span class="down">▼</span></div></div></th>
-							<th class="col-stat" onclick="toggleSort('res_oq')"><div class="sort-wrapper center"><span>OQ</span><div class="sort-btns"><span class="up">▲</span><span class="down">▼</span></div></div></th>
-							<th class="col-stat" onclick="toggleSort('res_cr')"><div class="sort-wrapper center"><span>CR</span><div class="sort-btns"><span class="up">▲</span><span class="down">▼</span></div></div></th>
-							<th class="col-stat" onclick="toggleSort('res_cd')"><div class="sort-wrapper center"><span>CD</span><div class="sort-btns"><span class="up">▲</span><span class="down">▼</span></div></div></th>
-							<th class="col-stat" onclick="toggleSort('res_dr')"><div class="sort-wrapper center"><span>DR</span><div class="sort-btns"><span class="up">▲</span><span class="down">▼</span></div></div></th>
-							<th class="col-stat" onclick="toggleSort('res_fl')"><div class="sort-wrapper center"><span>FL</span><div class="sort-btns"><span class="up">▲</span><span class="down">▼</span></div></div></th>
-							<th class="col-stat" onclick="toggleSort('res_hr')"><div class="sort-wrapper center"><span>HR</span><div class="sort-btns"><span class="up">▲</span><span class="down">▼</span></div></div></th>
-							<th class="col-stat" onclick="toggleSort('res_ma')"><div class="sort-wrapper center"><span>MA</span><div class="sort-btns"><span class="up">▲</span><span class="down">▼</span></div></div></th>
-							<th class="col-stat" onclick="toggleSort('res_pe')"><div class="sort-wrapper center"><span>PE</span><div class="sort-btns"><span class="up">▲</span><span class="down">▼</span></div></div></th>
-							<th class="col-stat" onclick="toggleSort('res_sr')"><div class="sort-wrapper center"><span>SR</span><div class="sort-btns"><span class="up">▲</span><span class="down">▼</span></div></div></th>
-							<th class="col-stat" onclick="toggleSort('res_ut')"><div class="sort-wrapper center"><span>UT</span><div class="sort-btns"><span class="up">▲</span><span class="down">▼</span></div></div></th>
+							<th class="col-name" data-sort="name" onclick="toggleSort('name')"><div class="sort-wrapper left"><span>NAME </span><div class="sort-btns"><span class="up">▲</span><span class="down">▼</span></div></div></th>
+							<th class="col-type" data-sort="type" onclick="toggleSort('type')"><div class="sort-wrapper left"><span>TYPE </span><div class="sort-btns"><span class="up">▲</span><span class="down">▼</span></div></div></th>
+							<th class="col-stat" data-sort="res_weight_rating" onclick="toggleSort('res_weight_rating')"><div class="sort-wrapper center"><span>Rating</span><div class="sort-btns"><span class="up">▲</span><span class="down">▼</span></div></div></th>
+							<th class="col-stat" data-sort="res_oq" onclick="toggleSort('res_oq')"><div class="sort-wrapper center"><span>OQ</span><div class="sort-btns"><span class="up">▲</span><span class="down">▼</span></div></div></th>
+							<th class="col-stat" data-sort="res_cr" onclick="toggleSort('res_cr')"><div class="sort-wrapper center"><span>CR</span><div class="sort-btns"><span class="up">▲</span><span class="down">▼</span></div></div></th>
+							<th class="col-stat" data-sort="res_cd" onclick="toggleSort('res_cd')"><div class="sort-wrapper center"><span>CD</span><div class="sort-btns"><span class="up">▲</span><span class="down">▼</span></div></div></th>
+							<th class="col-stat" data-sort="res_dr" onclick="toggleSort('res_dr')"><div class="sort-wrapper center"><span>DR</span><div class="sort-btns"><span class="up">▲</span><span class="down">▼</span></div></div></th>
+							<th class="col-stat" data-sort="res_fl" onclick="toggleSort('res_fl')"><div class="sort-wrapper center"><span>FL</span><div class="sort-btns"><span class="up">▲</span><span class="down">▼</span></div></div></th>
+							<th class="col-stat" data-sort="res_hr" onclick="toggleSort('res_hr')"><div class="sort-wrapper center"><span>HR</span><div class="sort-btns"><span class="up">▲</span><span class="down">▼</span></div></div></th>
+							<th class="col-stat" data-sort="res_ma" onclick="toggleSort('res_ma')"><div class="sort-wrapper center"><span>MA</span><div class="sort-btns"><span class="up">▲</span><span class="down">▼</span></div></div></th>
+							<th class="col-stat" data-sort="res_pe" onclick="toggleSort('res_pe')"><div class="sort-wrapper center"><span>PE</span><div class="sort-btns"><span class="up">▲</span><span class="down">▼</span></div></div></th>
+							<th class="col-stat" data-sort="res_sr" onclick="toggleSort('res_sr')"><div class="sort-wrapper center"><span>SR</span><div class="sort-btns"><span class="up">▲</span><span class="down">▼</span></div></div></th>
+							<th class="col-stat" data-sort="res_ut" onclick="toggleSort('res_ut')"><div class="sort-wrapper center"><span>UT</span><div class="sort-btns"><span class="up">▲</span><span class="down">▼</span></div></div></th>
 							<th class="col-loc">LOCATION</th>
-							<th class="col-date" onclick="toggleSort('date_reported')"><div class="sort-wrapper center"><span>DATE</span><div class="sort-btns"><span class="up">▲</span><span class="down">▼</span></div></div></th>
-							<th class="col-status" onclick="toggleSort('is_active')"><div class="sort-wrapper center"><span>STATUS</span><div class="sort-btns"><span class="up">▲</span><span class="down">▼</span></div></div></th>
+							<th class="col-date" data-sort="date_reported" onclick="toggleSort('date_reported')"><div class="sort-wrapper center"><span>DATE</span><div class="sort-btns"><span class="up">▲</span><span class="down">▼</span></div></div></th>
+							<th class="col-status" data-sort="is_active" onclick="toggleSort('is_active')"><div class="sort-wrapper center"><span>STATUS</span><div class="sort-btns"><span class="up">▲</span><span class="down">▼</span></div></div></th>
 						</tr>
 					</thead>
 					<tbody id="resource-log-body"></tbody>
@@ -183,16 +170,33 @@
 			</section>
 		</main>
     </div>
+    
+	<header class="main-header">
+		<div class="logo"><span>SWG</span>BUDDY</div>
+		<nav class="top-nav">
+			<button class="nav-btn active" data-target="resources-container">RESOURCES</button>
+			<button class="nav-btn" data-target="schematics-container">SCHEMATICS</button>
+		</nav>
+		<div class="controls-section">
+			<div class="server-select-container">
+				<label for="server-select"><i class="fa-solid fa-server"></i></label>
+				<select id="server-select-wrapper">
+					<option value="cuemu" selected>CUEmu</option>
+				</select>
+			</div>
+
+			<div id="auth-section" class="auth-section"></div>
+		</div>
+	</header>
+
 <script src="{{ url_for('static', filename='js/config.js') }}"></script>
 <script src="{{ url_for('static', filename='js/api.js') }}"></script>
 <script src="{{ url_for('static', filename='js/taxonomy.js') }}"></script>
+<script src="{{ url_for('static', filename='js/auth.js') }}"></script> 
 <script src="{{ url_for('static', filename='js/table.js') }}"></script>
 <script src="{{ url_for('static', filename='js/filters.js') }}"></script>
 <script src="{{ url_for('static', filename='js/modal.js') }}"></script>
 <script src="{{ url_for('static', filename='js/resources.js') }}"></script>
 <script src="{{ url_for('static', filename='js/app.js') }}"></script>
-<script src="{{ url_for('static', filename='js/auth.js') }}"></script>
-
-<script></script>
 </body>
 </html>
