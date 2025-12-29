@@ -1,6 +1,6 @@
 {
     "Corellian Domesticated Milk": {
-        "resource_class_id": "7",
+        "id": "8",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -24,7 +24,7 @@
         ]
     },
     "Dantooine Domesticated Milk": {
-        "resource_class_id": "8",
+        "id": "9",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -48,7 +48,7 @@
         ]
     },
     "Dathomirian Domesticated Milk": {
-        "resource_class_id": "9",
+        "id": "10",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -72,7 +72,7 @@
         ]
     },
     "Endorian Domesticated Milk": {
-        "resource_class_id": "10",
+        "id": "11",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -96,7 +96,7 @@
         ]
     },
     "Lokian Domesticated Milk": {
-        "resource_class_id": "11",
+        "id": "12",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -120,7 +120,7 @@
         ]
     },
     "Nabooian Domesticated Milk": {
-        "resource_class_id": "12",
+        "id": "13",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -144,7 +144,7 @@
         ]
     },
     "Rori Domesticated Milk": {
-        "resource_class_id": "13",
+        "id": "14",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -168,7 +168,7 @@
         ]
     },
     "Talusian Domesticated Milk": {
-        "resource_class_id": "14",
+        "id": "15",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -192,7 +192,7 @@
         ]
     },
     "Tatooinian Domesticated Milk": {
-        "resource_class_id": "15",
+        "id": "16",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -225,7 +225,7 @@
         ]
     },
     "Yavinian Domesticated Milk": {
-        "resource_class_id": "16",
+        "id": "17",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -249,7 +249,7 @@
         ]
     },
     "Kashyyykian Domesticated Milk": {
-        "resource_class_id": "1018",
+        "id": "18",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -273,7 +273,7 @@
         ]
     },
     "Mustafarian Domesticated Milk": {
-        "resource_class_id": "1118",
+        "id": "19",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -297,7 +297,7 @@
         ]
     },
     "Corellian Wild Milk": {
-        "resource_class_id": "18",
+        "id": "21",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -321,7 +321,7 @@
         ]
     },
     "Dantooine Wild Milk": {
-        "resource_class_id": "19",
+        "id": "22",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -345,7 +345,7 @@
         ]
     },
     "Dathomirian Wild Milk": {
-        "resource_class_id": "20",
+        "id": "23",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -369,7 +369,7 @@
         ]
     },
     "Endorian Wild Milk": {
-        "resource_class_id": "21",
+        "id": "24",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -393,7 +393,7 @@
         ]
     },
     "Lokian Wild Milk": {
-        "resource_class_id": "22",
+        "id": "25",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -417,7 +417,7 @@
         ]
     },
     "Nabooian Wild Milk": {
-        "resource_class_id": "23",
+        "id": "26",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -441,7 +441,7 @@
         ]
     },
     "Rori Wild Milk": {
-        "resource_class_id": "24",
+        "id": "27",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -465,7 +465,7 @@
         ]
     },
     "Talusian Wild Milk": {
-        "resource_class_id": "25",
+        "id": "28",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -489,7 +489,7 @@
         ]
     },
     "Tatooinian Wild Milk": {
-        "resource_class_id": "26",
+        "id": "29",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -522,7 +522,7 @@
         ]
     },
     "Yavin IV Wild Milk": {
-        "resource_class_id": "27",
+        "id": "30",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -546,7 +546,7 @@
         ]
     },
     "Kashyyykian Wild Milk": {
-        "resource_class_id": "1019",
+        "id": "31",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -570,7 +570,7 @@
         ]
     },
     "Mustafarian Wild Milk": {
-        "resource_class_id": "1063",
+        "id": "32",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -594,7 +594,7 @@
         ]
     },
     "Corellian Domesticated Meat": {
-        "resource_class_id": "30",
+        "id": "36",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -618,7 +618,7 @@
         ]
     },
     "Dantooine Domesticated Meat": {
-        "resource_class_id": "31",
+        "id": "37",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -642,7 +642,7 @@
         ]
     },
     "Dathomirian Domesticated Meat": {
-        "resource_class_id": "32",
+        "id": "38",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -666,7 +666,7 @@
         ]
     },
     "Endorian Domesticated Meat": {
-        "resource_class_id": "33",
+        "id": "39",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -690,7 +690,7 @@
         ]
     },
     "Lokian Domesticated Meat": {
-        "resource_class_id": "34",
+        "id": "40",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -714,7 +714,7 @@
         ]
     },
     "Nabooian Domesticated Meat": {
-        "resource_class_id": "35",
+        "id": "41",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -738,7 +738,7 @@
         ]
     },
     "Rori Domesticated Meat": {
-        "resource_class_id": "36",
+        "id": "42",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -762,7 +762,7 @@
         ]
     },
     "Talusian Domesticated Meat": {
-        "resource_class_id": "37",
+        "id": "43",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -786,7 +786,7 @@
         ]
     },
     "Tatooinian Domesticated Meat": {
-        "resource_class_id": "38",
+        "id": "44",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -819,7 +819,7 @@
         ]
     },
     "Yavinian Domesticated Meat": {
-        "resource_class_id": "39",
+        "id": "45",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -843,7 +843,7 @@
         ]
     },
     "Kashyyykian Domesticated Meat": {
-        "resource_class_id": "1020",
+        "id": "46",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -867,7 +867,7 @@
         ]
     },
     "Mustafarian Domesticated Meat": {
-        "resource_class_id": "1064",
+        "id": "47",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -891,7 +891,7 @@
         ]
     },
     "Corellian Wild Meat": {
-        "resource_class_id": "41",
+        "id": "49",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -915,7 +915,7 @@
         ]
     },
     "Dantooine Wild Meat": {
-        "resource_class_id": "42",
+        "id": "50",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -939,7 +939,7 @@
         ]
     },
     "Dathomirian Wild Meat": {
-        "resource_class_id": "43",
+        "id": "51",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -963,7 +963,7 @@
         ]
     },
     "Endorian Wild Meat": {
-        "resource_class_id": "44",
+        "id": "52",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -987,7 +987,7 @@
         ]
     },
     "Lokian Wild Meat": {
-        "resource_class_id": "45",
+        "id": "53",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -1011,7 +1011,7 @@
         ]
     },
     "Nabooian Wild Meat": {
-        "resource_class_id": "46",
+        "id": "54",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -1035,7 +1035,7 @@
         ]
     },
     "Rori Wild Meat": {
-        "resource_class_id": "47",
+        "id": "55",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -1059,7 +1059,7 @@
         ]
     },
     "Talusian Wild Meat": {
-        "resource_class_id": "48",
+        "id": "56",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -1083,7 +1083,7 @@
         ]
     },
     "Tatooinian Wild Meat": {
-        "resource_class_id": "49",
+        "id": "57",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -1116,7 +1116,7 @@
         ]
     },
     "Yavinian Wild Meat": {
-        "resource_class_id": "50",
+        "id": "58",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -1140,7 +1140,7 @@
         ]
     },
     "Kashyyykian Wild Meat": {
-        "resource_class_id": "1021",
+        "id": "59",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -1164,7 +1164,7 @@
         ]
     },
     "Mustafarian Wild Meat": {
-        "resource_class_id": "1065",
+        "id": "60",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -1188,7 +1188,7 @@
         ]
     },
     "Corellian Herbivore Meat": {
-        "resource_class_id": "52",
+        "id": "62",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -1212,7 +1212,7 @@
         ]
     },
     "Dantooine Herbivore Meat": {
-        "resource_class_id": "53",
+        "id": "63",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -1236,7 +1236,7 @@
         ]
     },
     "Dathomirian Herbivore Meat": {
-        "resource_class_id": "54",
+        "id": "64",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -1260,7 +1260,7 @@
         ]
     },
     "Endorian Herbivore Meat": {
-        "resource_class_id": "55",
+        "id": "65",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -1284,7 +1284,7 @@
         ]
     },
     "Lokian Herbivore Meat": {
-        "resource_class_id": "56",
+        "id": "66",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -1308,7 +1308,7 @@
         ]
     },
     "Nabooian Herbivore Meat": {
-        "resource_class_id": "57",
+        "id": "67",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -1332,7 +1332,7 @@
         ]
     },
     "Rori Herbivore Meat": {
-        "resource_class_id": "58",
+        "id": "68",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -1356,7 +1356,7 @@
         ]
     },
     "Talusian Herbivore Meat": {
-        "resource_class_id": "59",
+        "id": "69",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -1380,7 +1380,7 @@
         ]
     },
     "Tatooinian Herbivore Meat": {
-        "resource_class_id": "60",
+        "id": "70",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -1413,7 +1413,7 @@
         ]
     },
     "Yavinian Herbivore Meat": {
-        "resource_class_id": "61",
+        "id": "71",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -1437,7 +1437,7 @@
         ]
     },
     "Kashyyykian Herbivore Meat": {
-        "resource_class_id": "1022",
+        "id": "72",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -1461,7 +1461,7 @@
         ]
     },
     "Mustafarian Herbivore Meat": {
-        "resource_class_id": "1066",
+        "id": "73",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -1485,7 +1485,7 @@
         ]
     },
     "Corellian Carnivore Meat": {
-        "resource_class_id": "63",
+        "id": "75",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -1509,7 +1509,7 @@
         ]
     },
     "Dantooine Carnivore Meat": {
-        "resource_class_id": "64",
+        "id": "76",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -1533,7 +1533,7 @@
         ]
     },
     "Dathomirian Carnivore Meat": {
-        "resource_class_id": "65",
+        "id": "77",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -1557,7 +1557,7 @@
         ]
     },
     "Endorian Carnivore Meat": {
-        "resource_class_id": "66",
+        "id": "78",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -1581,7 +1581,7 @@
         ]
     },
     "Lokian Carnivore Meat": {
-        "resource_class_id": "67",
+        "id": "79",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -1605,7 +1605,7 @@
         ]
     },
     "Nabooian Carnivore Meat": {
-        "resource_class_id": "68",
+        "id": "80",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -1629,7 +1629,7 @@
         ]
     },
     "Rori Carnivore Meat": {
-        "resource_class_id": "69",
+        "id": "81",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -1653,7 +1653,7 @@
         ]
     },
     "Talusian Carnivore Meat": {
-        "resource_class_id": "70",
+        "id": "82",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -1677,7 +1677,7 @@
         ]
     },
     "Tatooinian Carnivore Meat": {
-        "resource_class_id": "71",
+        "id": "83",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -1710,7 +1710,7 @@
         ]
     },
     "Yavinian Carnivore Meat": {
-        "resource_class_id": "72",
+        "id": "84",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -1734,7 +1734,7 @@
         ]
     },
     "Kashyyykian Carnivore Meat": {
-        "resource_class_id": "1023",
+        "id": "85",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -1758,7 +1758,7 @@
         ]
     },
     "Mustafarian Carnivore Meat": {
-        "resource_class_id": "1067",
+        "id": "86",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -1782,7 +1782,7 @@
         ]
     },
     "Corellian Reptillian Meat": {
-        "resource_class_id": "74",
+        "id": "88",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -1806,7 +1806,7 @@
         ]
     },
     "Dantooine Reptillian Meat": {
-        "resource_class_id": "75",
+        "id": "89",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -1830,7 +1830,7 @@
         ]
     },
     "Dathomirian Reptillian Meat": {
-        "resource_class_id": "76",
+        "id": "90",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -1854,7 +1854,7 @@
         ]
     },
     "Endorian Reptillian Meat": {
-        "resource_class_id": "77",
+        "id": "91",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -1878,7 +1878,7 @@
         ]
     },
     "Lokian Reptillian Meat": {
-        "resource_class_id": "78",
+        "id": "92",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -1902,7 +1902,7 @@
         ]
     },
     "Nabooian Reptillian Meat": {
-        "resource_class_id": "79",
+        "id": "93",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -1926,7 +1926,7 @@
         ]
     },
     "Rori Reptillian Meat": {
-        "resource_class_id": "80",
+        "id": "94",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -1950,7 +1950,7 @@
         ]
     },
     "Talusian Reptillian Meat": {
-        "resource_class_id": "81",
+        "id": "95",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -1974,7 +1974,7 @@
         ]
     },
     "Tatooinian Reptillian Meat": {
-        "resource_class_id": "82",
+        "id": "96",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -2007,7 +2007,7 @@
         ]
     },
     "Yavinian Reptillian Meat": {
-        "resource_class_id": "83",
+        "id": "97",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -2031,7 +2031,7 @@
         ]
     },
     "Kashyyykian Reptilian Meat": {
-        "resource_class_id": "1024",
+        "id": "98",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -2055,7 +2055,7 @@
         ]
     },
     "Mustafarian Reptilian Meat": {
-        "resource_class_id": "1068",
+        "id": "99",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -2079,7 +2079,7 @@
         ]
     },
     "Corellian Avian Meat": {
-        "resource_class_id": "85",
+        "id": "101",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -2103,7 +2103,7 @@
         ]
     },
     "Dantooine Avian Meat": {
-        "resource_class_id": "86",
+        "id": "102",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -2127,7 +2127,7 @@
         ]
     },
     "Dathomirian Avian Meat": {
-        "resource_class_id": "87",
+        "id": "103",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -2151,7 +2151,7 @@
         ]
     },
     "Endorian Avian Meat": {
-        "resource_class_id": "88",
+        "id": "104",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -2175,7 +2175,7 @@
         ]
     },
     "Lokian Avian Meat": {
-        "resource_class_id": "89",
+        "id": "105",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -2199,7 +2199,7 @@
         ]
     },
     "Nabooian Avian Meat": {
-        "resource_class_id": "90",
+        "id": "106",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -2223,7 +2223,7 @@
         ]
     },
     "Rori Avian Meat": {
-        "resource_class_id": "91",
+        "id": "107",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -2247,7 +2247,7 @@
         ]
     },
     "Talusian Avian Meat": {
-        "resource_class_id": "92",
+        "id": "108",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -2271,7 +2271,7 @@
         ]
     },
     "Tatooinian Avian Meat": {
-        "resource_class_id": "93",
+        "id": "109",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -2304,7 +2304,7 @@
         ]
     },
     "Yavinian Avian Meat": {
-        "resource_class_id": "94",
+        "id": "110",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -2328,7 +2328,7 @@
         ]
     },
     "Kashyyykian Avian Meat": {
-        "resource_class_id": "1025",
+        "id": "111",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -2352,7 +2352,7 @@
         ]
     },
     "Mustafarian Avian Meat": {
-        "resource_class_id": "1069",
+        "id": "112",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -2376,7 +2376,7 @@
         ]
     },
     "Corellian Egg": {
-        "resource_class_id": "96",
+        "id": "114",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -2400,7 +2400,7 @@
         ]
     },
     "Dantooine Egg": {
-        "resource_class_id": "97",
+        "id": "115",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -2424,7 +2424,7 @@
         ]
     },
     "Dathomirian Egg": {
-        "resource_class_id": "98",
+        "id": "116",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -2448,7 +2448,7 @@
         ]
     },
     "Endorian Egg": {
-        "resource_class_id": "99",
+        "id": "117",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -2472,7 +2472,7 @@
         ]
     },
     "Lokian Egg": {
-        "resource_class_id": "100",
+        "id": "118",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -2496,7 +2496,7 @@
         ]
     },
     "Nabooian Egg": {
-        "resource_class_id": "101",
+        "id": "119",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -2520,7 +2520,7 @@
         ]
     },
     "Rori Egg": {
-        "resource_class_id": "102",
+        "id": "120",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -2544,7 +2544,7 @@
         ]
     },
     "Talusian Egg": {
-        "resource_class_id": "103",
+        "id": "121",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -2568,7 +2568,7 @@
         ]
     },
     "Tatooinian Egg": {
-        "resource_class_id": "104",
+        "id": "122",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -2601,7 +2601,7 @@
         ]
     },
     "Yavinian Egg": {
-        "resource_class_id": "105",
+        "id": "123",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -2625,7 +2625,7 @@
         ]
     },
     "Kashyyykian Egg": {
-        "resource_class_id": "1026",
+        "id": "124",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -2649,7 +2649,7 @@
         ]
     },
     "Mustafarian Egg": {
-        "resource_class_id": "1070",
+        "id": "125",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -2673,7 +2673,7 @@
         ]
     },
     "Corellian Insect Meat": {
-        "resource_class_id": "107",
+        "id": "127",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -2697,7 +2697,7 @@
         ]
     },
     "Dantooine Insect Meat": {
-        "resource_class_id": "108",
+        "id": "128",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -2721,7 +2721,7 @@
         ]
     },
     "Dathomirian Insect Meat": {
-        "resource_class_id": "109",
+        "id": "129",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -2745,7 +2745,7 @@
         ]
     },
     "Endorian Insect Meat": {
-        "resource_class_id": "110",
+        "id": "130",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -2769,7 +2769,7 @@
         ]
     },
     "Lokian Insect Meat": {
-        "resource_class_id": "111",
+        "id": "131",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -2793,7 +2793,7 @@
         ]
     },
     "Nabooian Insect Meat": {
-        "resource_class_id": "112",
+        "id": "132",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -2817,7 +2817,7 @@
         ]
     },
     "Rori Insect Meat": {
-        "resource_class_id": "113",
+        "id": "133",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -2841,7 +2841,7 @@
         ]
     },
     "Talusian Insect Meat": {
-        "resource_class_id": "114",
+        "id": "134",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -2865,7 +2865,7 @@
         ]
     },
     "Tatooinian Insect Meat": {
-        "resource_class_id": "115",
+        "id": "135",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -2898,7 +2898,7 @@
         ]
     },
     "Yavinian Insect Meat": {
-        "resource_class_id": "116",
+        "id": "136",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -2922,7 +2922,7 @@
         ]
     },
     "Kashyyykian Insect Meat": {
-        "resource_class_id": "1027",
+        "id": "137",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -2946,7 +2946,7 @@
         ]
     },
     "Mustafarian Insect Meat": {
-        "resource_class_id": "1071",
+        "id": "138",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -2970,7 +2970,7 @@
         ]
     },
     "Corellian Fish Meat": {
-        "resource_class_id": "118",
+        "id": "142",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -2994,7 +2994,7 @@
         ]
     },
     "Dantooine Fish Meat": {
-        "resource_class_id": "119",
+        "id": "143",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -3018,7 +3018,7 @@
         ]
     },
     "Dathomirian Fish Meat": {
-        "resource_class_id": "120",
+        "id": "144",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -3042,7 +3042,7 @@
         ]
     },
     "Endorian Fish Meat": {
-        "resource_class_id": "121",
+        "id": "145",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -3066,7 +3066,7 @@
         ]
     },
     "Lokian Fish Meat": {
-        "resource_class_id": "122",
+        "id": "146",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -3090,7 +3090,7 @@
         ]
     },
     "Nabooian Fish Meat": {
-        "resource_class_id": "123",
+        "id": "147",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -3114,7 +3114,7 @@
         ]
     },
     "Rori Fish Meat": {
-        "resource_class_id": "124",
+        "id": "148",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -3138,7 +3138,7 @@
         ]
     },
     "Talusian Fish Meat": {
-        "resource_class_id": "125",
+        "id": "149",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -3162,7 +3162,7 @@
         ]
     },
     "Tatooinian Fish Meat": {
-        "resource_class_id": "126",
+        "id": "150",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -3195,7 +3195,7 @@
         ]
     },
     "Yavinian Fish Meat": {
-        "resource_class_id": "127",
+        "id": "151",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -3219,7 +3219,7 @@
         ]
     },
     "Kashyyykian Fish Meat": {
-        "resource_class_id": "1028",
+        "id": "152",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -3243,7 +3243,7 @@
         ]
     },
     "Mustafarian Fish Meat": {
-        "resource_class_id": "1072",
+        "id": "153",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -3267,7 +3267,7 @@
         ]
     },
     "Corellia Crustacean Meat": {
-        "resource_class_id": "129",
+        "id": "155",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -3291,7 +3291,7 @@
         ]
     },
     "Dantooine Crustacean Meat": {
-        "resource_class_id": "130",
+        "id": "156",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -3315,7 +3315,7 @@
         ]
     },
     "Dathomirian Crustacean Meat": {
-        "resource_class_id": "131",
+        "id": "157",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -3339,7 +3339,7 @@
         ]
     },
     "Endorian Crustacean Meat": {
-        "resource_class_id": "132",
+        "id": "158",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -3363,7 +3363,7 @@
         ]
     },
     "Lokian Crustacean Meat": {
-        "resource_class_id": "133",
+        "id": "159",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -3387,7 +3387,7 @@
         ]
     },
     "Nabooian Crustacean Meat": {
-        "resource_class_id": "134",
+        "id": "160",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -3411,7 +3411,7 @@
         ]
     },
     "Rori Crustacean Meat": {
-        "resource_class_id": "135",
+        "id": "161",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -3435,7 +3435,7 @@
         ]
     },
     "Talusian Crustacean Meat": {
-        "resource_class_id": "136",
+        "id": "162",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -3459,7 +3459,7 @@
         ]
     },
     "Tatooinian Crustacean Meat": {
-        "resource_class_id": "137",
+        "id": "163",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -3492,7 +3492,7 @@
         ]
     },
     "Yavinian Crustacean Meat": {
-        "resource_class_id": "138",
+        "id": "164",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -3516,7 +3516,7 @@
         ]
     },
     "Kashyyykian Crustacean Meat": {
-        "resource_class_id": "1029",
+        "id": "165",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -3540,7 +3540,7 @@
         ]
     },
     "Mustafarian Crustacean Meat": {
-        "resource_class_id": "1073",
+        "id": "166",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -3564,7 +3564,7 @@
         ]
     },
     "Corellia Mollusk Meat": {
-        "resource_class_id": "139",
+        "id": "168",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -3588,7 +3588,7 @@
         ]
     },
     "Dantooine Mollusk Meat": {
-        "resource_class_id": "140",
+        "id": "169",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -3612,7 +3612,7 @@
         ]
     },
     "Dathomirian Mollusk Meat": {
-        "resource_class_id": "141",
+        "id": "170",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -3636,7 +3636,7 @@
         ]
     },
     "Endorian Mollusk Meat": {
-        "resource_class_id": "142",
+        "id": "171",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -3660,7 +3660,7 @@
         ]
     },
     "Lokian Mollusk Meat": {
-        "resource_class_id": "143",
+        "id": "172",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -3684,7 +3684,7 @@
         ]
     },
     "Nabooian Mollusk Meat": {
-        "resource_class_id": "144",
+        "id": "173",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -3708,7 +3708,7 @@
         ]
     },
     "Rori Mollusk Meat": {
-        "resource_class_id": "145",
+        "id": "174",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -3732,7 +3732,7 @@
         ]
     },
     "Talusian Mollusk Meat": {
-        "resource_class_id": "146",
+        "id": "175",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -3756,7 +3756,7 @@
         ]
     },
     "Tatooinian Mollusk Meat": {
-        "resource_class_id": "147",
+        "id": "176",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -3789,7 +3789,7 @@
         ]
     },
     "Yavinian Mollusk Meat": {
-        "resource_class_id": "148",
+        "id": "177",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -3813,7 +3813,7 @@
         ]
     },
     "Kashyyykian Mollusk Meat": {
-        "resource_class_id": "1030",
+        "id": "178",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -3837,7 +3837,7 @@
         ]
     },
     "Mustafarian Mollusk Meat": {
-        "resource_class_id": "1074",
+        "id": "179",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -3861,7 +3861,7 @@
         ]
     },
     "Corellian Animal Bones": {
-        "resource_class_id": "151",
+        "id": "183",
         "stats": {
             "res_dr": {
                 "min": 300,
@@ -3889,7 +3889,7 @@
         ]
     },
     "Dantooine Animal Bones": {
-        "resource_class_id": "152",
+        "id": "184",
         "stats": {
             "res_dr": {
                 "min": 300,
@@ -3917,7 +3917,7 @@
         ]
     },
     "Dathomirian Animal Bones": {
-        "resource_class_id": "153",
+        "id": "185",
         "stats": {
             "res_dr": {
                 "min": 300,
@@ -3945,7 +3945,7 @@
         ]
     },
     "Endorian Animal Bones": {
-        "resource_class_id": "154",
+        "id": "186",
         "stats": {
             "res_dr": {
                 "min": 300,
@@ -3973,7 +3973,7 @@
         ]
     },
     "Lokian Animal Bones": {
-        "resource_class_id": "155",
+        "id": "187",
         "stats": {
             "res_dr": {
                 "min": 300,
@@ -4001,7 +4001,7 @@
         ]
     },
     "Nabooian Animal Bones": {
-        "resource_class_id": "156",
+        "id": "188",
         "stats": {
             "res_dr": {
                 "min": 300,
@@ -4029,7 +4029,7 @@
         ]
     },
     "Rori Animal Bones": {
-        "resource_class_id": "157",
+        "id": "189",
         "stats": {
             "res_dr": {
                 "min": 300,
@@ -4057,7 +4057,7 @@
         ]
     },
     "Talusian Animal Bones": {
-        "resource_class_id": "158",
+        "id": "190",
         "stats": {
             "res_dr": {
                 "min": 300,
@@ -4085,7 +4085,7 @@
         ]
     },
     "Tatooinian Animal Bones": {
-        "resource_class_id": "159",
+        "id": "191",
         "stats": {
             "res_dr": {
                 "min": 300,
@@ -4122,7 +4122,7 @@
         ]
     },
     "Yavinian Animal Bones": {
-        "resource_class_id": "160",
+        "id": "192",
         "stats": {
             "res_dr": {
                 "min": 300,
@@ -4150,7 +4150,7 @@
         ]
     },
     "Kashyyykian Animal Bones": {
-        "resource_class_id": "1031",
+        "id": "193",
         "stats": {
             "res_dr": {
                 "min": 300,
@@ -4178,7 +4178,7 @@
         ]
     },
     "Mustafarian Animal Bones": {
-        "resource_class_id": "1075",
+        "id": "194",
         "stats": {
             "res_dr": {
                 "min": 300,
@@ -4206,7 +4206,7 @@
         ]
     },
     "Corellian Avian Bones": {
-        "resource_class_id": "173",
+        "id": "196",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -4234,7 +4234,7 @@
         ]
     },
     "Dantooine Avian Bones": {
-        "resource_class_id": "174",
+        "id": "197",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -4262,7 +4262,7 @@
         ]
     },
     "Dathomirian Avian Bones": {
-        "resource_class_id": "175",
+        "id": "198",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -4290,7 +4290,7 @@
         ]
     },
     "Endorian Avian Bones": {
-        "resource_class_id": "176",
+        "id": "199",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -4318,7 +4318,7 @@
         ]
     },
     "Lokian Avian Bones": {
-        "resource_class_id": "177",
+        "id": "200",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -4346,7 +4346,7 @@
         ]
     },
     "Nabooian Avian Bones": {
-        "resource_class_id": "178",
+        "id": "201",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -4374,7 +4374,7 @@
         ]
     },
     "Rori Avian Bones": {
-        "resource_class_id": "179",
+        "id": "202",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -4402,7 +4402,7 @@
         ]
     },
     "Talusian Avian Bones": {
-        "resource_class_id": "180",
+        "id": "203",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -4430,7 +4430,7 @@
         ]
     },
     "Tatooinian Avian Bones": {
-        "resource_class_id": "181",
+        "id": "204",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -4467,7 +4467,7 @@
         ]
     },
     "Yavinian Avian Bones": {
-        "resource_class_id": "182",
+        "id": "205",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -4495,7 +4495,7 @@
         ]
     },
     "Kashyyykian Avian Bones": {
-        "resource_class_id": "1032",
+        "id": "206",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -4523,7 +4523,7 @@
         ]
     },
     "Mustafarian Avian Bones": {
-        "resource_class_id": "1076",
+        "id": "207",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -4551,7 +4551,7 @@
         ]
     },
     "Corellian Horn": {
-        "resource_class_id": "162",
+        "id": "210",
         "stats": {
             "res_dr": {
                 "min": 200,
@@ -4579,7 +4579,7 @@
         ]
     },
     "Dantooine Horn": {
-        "resource_class_id": "163",
+        "id": "211",
         "stats": {
             "res_dr": {
                 "min": 200,
@@ -4607,7 +4607,7 @@
         ]
     },
     "Dothomirian Horn": {
-        "resource_class_id": "164",
+        "id": "212",
         "stats": {
             "res_dr": {
                 "min": 200,
@@ -4644,7 +4644,7 @@
         ]
     },
     "Endorian Horn": {
-        "resource_class_id": "165",
+        "id": "213",
         "stats": {
             "res_dr": {
                 "min": 200,
@@ -4672,7 +4672,7 @@
         ]
     },
     "Lokian Horn": {
-        "resource_class_id": "166",
+        "id": "214",
         "stats": {
             "res_dr": {
                 "min": 200,
@@ -4700,7 +4700,7 @@
         ]
     },
     "Nabooian Horn": {
-        "resource_class_id": "167",
+        "id": "215",
         "stats": {
             "res_dr": {
                 "min": 200,
@@ -4728,7 +4728,7 @@
         ]
     },
     "Rori Horn": {
-        "resource_class_id": "168",
+        "id": "216",
         "stats": {
             "res_dr": {
                 "min": 200,
@@ -4756,7 +4756,7 @@
         ]
     },
     "Talusian Horn": {
-        "resource_class_id": "169",
+        "id": "217",
         "stats": {
             "res_dr": {
                 "min": 200,
@@ -4784,7 +4784,7 @@
         ]
     },
     "Tatooinian Horn": {
-        "resource_class_id": "170",
+        "id": "218",
         "stats": {
             "res_dr": {
                 "min": 200,
@@ -4821,7 +4821,7 @@
         ]
     },
     "Yavinian Horn": {
-        "resource_class_id": "171",
+        "id": "219",
         "stats": {
             "res_dr": {
                 "min": 200,
@@ -4849,7 +4849,7 @@
         ]
     },
     "Kashyyykian Horn": {
-        "resource_class_id": "1033",
+        "id": "220",
         "stats": {
             "res_dr": {
                 "min": 200,
@@ -4877,7 +4877,7 @@
         ]
     },
     "Mustafarian Horn": {
-        "resource_class_id": "1077",
+        "id": "221",
         "stats": {
             "res_dr": {
                 "min": 200,
@@ -4905,7 +4905,7 @@
         ]
     },
     "Corellian Wooly Hide": {
-        "resource_class_id": "185",
+        "id": "225",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -4933,7 +4933,7 @@
         ]
     },
     "Dantooine Wooly Hide": {
-        "resource_class_id": "186",
+        "id": "226",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -4961,7 +4961,7 @@
         ]
     },
     "Dathomirian Wooly Hide": {
-        "resource_class_id": "187",
+        "id": "227",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -4989,7 +4989,7 @@
         ]
     },
     "Endorian Wooly Hide": {
-        "resource_class_id": "188",
+        "id": "228",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -5017,7 +5017,7 @@
         ]
     },
     "Lokian Wooly Hide": {
-        "resource_class_id": "189",
+        "id": "229",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -5045,7 +5045,7 @@
         ]
     },
     "Nabooian Wooly Hide": {
-        "resource_class_id": "190",
+        "id": "230",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -5073,7 +5073,7 @@
         ]
     },
     "Rori Wooly Hide": {
-        "resource_class_id": "191",
+        "id": "231",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -5101,7 +5101,7 @@
         ]
     },
     "Talusian Wooly Hide": {
-        "resource_class_id": "192",
+        "id": "232",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -5129,7 +5129,7 @@
         ]
     },
     "Tatooinian Wooly Hide": {
-        "resource_class_id": "193",
+        "id": "233",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -5166,7 +5166,7 @@
         ]
     },
     "Yavinian Wooly Hide": {
-        "resource_class_id": "194",
+        "id": "234",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -5194,7 +5194,7 @@
         ]
     },
     "Kashyyykian Wooly Hide": {
-        "resource_class_id": "1034",
+        "id": "235",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -5222,7 +5222,7 @@
         ]
     },
     "Mustafarian Wooly Hide": {
-        "resource_class_id": "1078",
+        "id": "236",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -5250,7 +5250,7 @@
         ]
     },
     "Corellian Bristley Hide": {
-        "resource_class_id": "196",
+        "id": "238",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -5278,7 +5278,7 @@
         ]
     },
     "Dantooine Bristley Hide": {
-        "resource_class_id": "197",
+        "id": "239",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -5306,7 +5306,7 @@
         ]
     },
     "Dathomirian Bristley Hide": {
-        "resource_class_id": "198",
+        "id": "240",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -5334,7 +5334,7 @@
         ]
     },
     "Endorian Bristley Hide": {
-        "resource_class_id": "199",
+        "id": "241",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -5362,7 +5362,7 @@
         ]
     },
     "Lokian Bristley Hide": {
-        "resource_class_id": "200",
+        "id": "242",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -5390,7 +5390,7 @@
         ]
     },
     "Nabooian Bristley Hide": {
-        "resource_class_id": "201",
+        "id": "243",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -5418,7 +5418,7 @@
         ]
     },
     "Rori Bristley Hide": {
-        "resource_class_id": "202",
+        "id": "244",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -5446,7 +5446,7 @@
         ]
     },
     "Talusian Bristley Hide": {
-        "resource_class_id": "203",
+        "id": "245",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -5474,7 +5474,7 @@
         ]
     },
     "Tatooinian Bristley Hide": {
-        "resource_class_id": "204",
+        "id": "246",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -5511,7 +5511,7 @@
         ]
     },
     "Yavinian Bristley Hide": {
-        "resource_class_id": "205",
+        "id": "247",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -5539,7 +5539,7 @@
         ]
     },
     "Kashyyykian Bristley Hide": {
-        "resource_class_id": "1035",
+        "id": "248",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -5567,7 +5567,7 @@
         ]
     },
     "Mustafarian Bristley Hide": {
-        "resource_class_id": "1079",
+        "id": "249",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -5595,7 +5595,7 @@
         ]
     },
     "Corellian Leathery Hide": {
-        "resource_class_id": "207",
+        "id": "251",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -5623,7 +5623,7 @@
         ]
     },
     "Dantooine Leathery Hide": {
-        "resource_class_id": "208",
+        "id": "252",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -5651,7 +5651,7 @@
         ]
     },
     "Dathomirian Leathery Hide": {
-        "resource_class_id": "209",
+        "id": "253",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -5679,7 +5679,7 @@
         ]
     },
     "Endorian Leathery Hide": {
-        "resource_class_id": "210",
+        "id": "254",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -5707,7 +5707,7 @@
         ]
     },
     "Lokian Leathery Hide": {
-        "resource_class_id": "211",
+        "id": "255",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -5735,7 +5735,7 @@
         ]
     },
     "Nabooian Leathery Hide": {
-        "resource_class_id": "212",
+        "id": "256",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -5763,7 +5763,7 @@
         ]
     },
     "Rori Leathery Hide": {
-        "resource_class_id": "213",
+        "id": "257",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -5791,7 +5791,7 @@
         ]
     },
     "Talusian Leathery Hide": {
-        "resource_class_id": "214",
+        "id": "258",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -5819,7 +5819,7 @@
         ]
     },
     "Tatooinian Leathery Hide": {
-        "resource_class_id": "215",
+        "id": "259",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -5856,7 +5856,7 @@
         ]
     },
     "Yavinian Leathery Hide": {
-        "resource_class_id": "216",
+        "id": "260",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -5884,7 +5884,7 @@
         ]
     },
     "Kashyyykian Leathery Hide": {
-        "resource_class_id": "1036",
+        "id": "261",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -5912,7 +5912,7 @@
         ]
     },
     "Mustafarian Leathery Hide": {
-        "resource_class_id": "1080",
+        "id": "262",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -5940,7 +5940,7 @@
         ]
     },
     "Corellian Scaley Hide": {
-        "resource_class_id": "218",
+        "id": "264",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -5968,7 +5968,7 @@
         ]
     },
     "Dantooine Scaley Hide": {
-        "resource_class_id": "219",
+        "id": "265",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -5996,7 +5996,7 @@
         ]
     },
     "Dathomirian Scaley Hide": {
-        "resource_class_id": "220",
+        "id": "266",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -6024,7 +6024,7 @@
         ]
     },
     "Endorian Scaley Hide": {
-        "resource_class_id": "221",
+        "id": "267",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -6052,7 +6052,7 @@
         ]
     },
     "Lokian Scaley Hide": {
-        "resource_class_id": "222",
+        "id": "268",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -6080,7 +6080,7 @@
         ]
     },
     "Nabooian Scaley Hide": {
-        "resource_class_id": "223",
+        "id": "269",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -6108,7 +6108,7 @@
         ]
     },
     "Rori Scaley Hide": {
-        "resource_class_id": "224",
+        "id": "270",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -6136,7 +6136,7 @@
         ]
     },
     "Talusian Scaley Hide": {
-        "resource_class_id": "225",
+        "id": "271",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -6164,7 +6164,7 @@
         ]
     },
     "Tatooinian Scaley Hide": {
-        "resource_class_id": "226",
+        "id": "272",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -6201,7 +6201,7 @@
         ]
     },
     "Yavinian Scaley Hide": {
-        "resource_class_id": "227",
+        "id": "273",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -6229,7 +6229,7 @@
         ]
     },
     "Kashyyykian Scaley Hide": {
-        "resource_class_id": "1037",
+        "id": "274",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -6257,7 +6257,7 @@
         ]
     },
     "Mustafarian Scaley Hide": {
-        "resource_class_id": "1081",
+        "id": "275",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -6285,7 +6285,7 @@
         ]
     },
     "Corellian Domesticated Corn": {
-        "resource_class_id": "233",
+        "id": "282",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -6309,7 +6309,7 @@
         ]
     },
     "Dantooine Domesticated Corn": {
-        "resource_class_id": "234",
+        "id": "283",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -6333,7 +6333,7 @@
         ]
     },
     "Dathomirian Domesticated Corn": {
-        "resource_class_id": "235",
+        "id": "284",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -6357,7 +6357,7 @@
         ]
     },
     "Endorian Domesticated Corn": {
-        "resource_class_id": "236",
+        "id": "285",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -6381,7 +6381,7 @@
         ]
     },
     "Lokian Domesticated Corn": {
-        "resource_class_id": "237",
+        "id": "286",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -6405,7 +6405,7 @@
         ]
     },
     "Nabooian Domesticated Corn": {
-        "resource_class_id": "238",
+        "id": "287",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -6429,7 +6429,7 @@
         ]
     },
     "Rori Domesticated Corn": {
-        "resource_class_id": "239",
+        "id": "288",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -6453,7 +6453,7 @@
         ]
     },
     "Talusian Domesticated Corn": {
-        "resource_class_id": "240",
+        "id": "289",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -6477,7 +6477,7 @@
         ]
     },
     "Tatooinian Domesticated Corn": {
-        "resource_class_id": "241",
+        "id": "290",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -6510,7 +6510,7 @@
         ]
     },
     "Yavinian Domesticated Corn": {
-        "resource_class_id": "242",
+        "id": "291",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -6534,7 +6534,7 @@
         ]
     },
     "Kashyyykian Domesticated Corn": {
-        "resource_class_id": "1038",
+        "id": "292",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -6558,7 +6558,7 @@
         ]
     },
     "Mustafarian Domesticated Corn": {
-        "resource_class_id": "1082",
+        "id": "293",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -6582,7 +6582,7 @@
         ]
     },
     "Corellian Wild Corn": {
-        "resource_class_id": "244",
+        "id": "295",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -6606,7 +6606,7 @@
         ]
     },
     "Dantooine Wild Corn": {
-        "resource_class_id": "245",
+        "id": "296",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -6630,7 +6630,7 @@
         ]
     },
     "Dathomirian Wild Corn": {
-        "resource_class_id": "246",
+        "id": "297",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -6654,7 +6654,7 @@
         ]
     },
     "Endorian Wild Corn": {
-        "resource_class_id": "247",
+        "id": "298",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -6678,7 +6678,7 @@
         ]
     },
     "Lokian Wild Corn": {
-        "resource_class_id": "248",
+        "id": "299",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -6702,7 +6702,7 @@
         ]
     },
     "Nabooian Wild Corn": {
-        "resource_class_id": "249",
+        "id": "300",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -6726,7 +6726,7 @@
         ]
     },
     "Rori Wild Corn": {
-        "resource_class_id": "250",
+        "id": "301",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -6750,7 +6750,7 @@
         ]
     },
     "Talusian Wild Corn": {
-        "resource_class_id": "251",
+        "id": "302",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -6774,7 +6774,7 @@
         ]
     },
     "Tatooinian Wild Corn": {
-        "resource_class_id": "252",
+        "id": "303",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -6807,7 +6807,7 @@
         ]
     },
     "Yavinian Wild Corn": {
-        "resource_class_id": "253",
+        "id": "304",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -6831,7 +6831,7 @@
         ]
     },
     "Kashyyykian Wild Corn": {
-        "resource_class_id": "1039",
+        "id": "305",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -6855,7 +6855,7 @@
         ]
     },
     "Mustafarian Wild Corn": {
-        "resource_class_id": "1083",
+        "id": "306",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -6879,7 +6879,7 @@
         ]
     },
     "Corellian Domesticated Rice": {
-        "resource_class_id": "256",
+        "id": "309",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -6903,7 +6903,7 @@
         ]
     },
     "Dantooine Domesticated Rice": {
-        "resource_class_id": "257",
+        "id": "310",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -6927,7 +6927,7 @@
         ]
     },
     "Dathomirian Domesticated Rice": {
-        "resource_class_id": "258",
+        "id": "311",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -6951,7 +6951,7 @@
         ]
     },
     "Endorian Domesticated Rice": {
-        "resource_class_id": "259",
+        "id": "312",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -6975,7 +6975,7 @@
         ]
     },
     "Lokian Domesticated Rice": {
-        "resource_class_id": "260",
+        "id": "313",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -6999,7 +6999,7 @@
         ]
     },
     "Nabooian Domesticated Rice": {
-        "resource_class_id": "261",
+        "id": "314",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -7023,7 +7023,7 @@
         ]
     },
     "Rori Domesticated Rice": {
-        "resource_class_id": "262",
+        "id": "315",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -7047,7 +7047,7 @@
         ]
     },
     "Talusian Domesticated Rice": {
-        "resource_class_id": "263",
+        "id": "316",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -7071,7 +7071,7 @@
         ]
     },
     "Tatooinian Domesticated Rice": {
-        "resource_class_id": "264",
+        "id": "317",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -7104,7 +7104,7 @@
         ]
     },
     "Yavinian Domesticated Rice": {
-        "resource_class_id": "265",
+        "id": "318",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -7128,7 +7128,7 @@
         ]
     },
     "Kashyyykian Domesticated Rice": {
-        "resource_class_id": "1040",
+        "id": "319",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -7152,7 +7152,7 @@
         ]
     },
     "Mustafarian Domesticated Rice": {
-        "resource_class_id": "1084",
+        "id": "320",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -7176,7 +7176,7 @@
         ]
     },
     "Corellian Wild Rice": {
-        "resource_class_id": "267",
+        "id": "322",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -7200,7 +7200,7 @@
         ]
     },
     "Dantooine Wild Rice": {
-        "resource_class_id": "268",
+        "id": "323",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -7224,7 +7224,7 @@
         ]
     },
     "Dathomirian Wild Rice": {
-        "resource_class_id": "269",
+        "id": "324",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -7248,7 +7248,7 @@
         ]
     },
     "Endorian Wild Rice": {
-        "resource_class_id": "270",
+        "id": "325",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -7272,7 +7272,7 @@
         ]
     },
     "Lokian Wild Rice": {
-        "resource_class_id": "271",
+        "id": "326",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -7296,7 +7296,7 @@
         ]
     },
     "Nabooian Wild Rice": {
-        "resource_class_id": "272",
+        "id": "327",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -7320,7 +7320,7 @@
         ]
     },
     "Rori Wild Rice": {
-        "resource_class_id": "273",
+        "id": "328",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -7344,7 +7344,7 @@
         ]
     },
     "Talusian Wild Rice": {
-        "resource_class_id": "274",
+        "id": "329",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -7368,7 +7368,7 @@
         ]
     },
     "Tatooinian Wild Rice": {
-        "resource_class_id": "275",
+        "id": "330",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -7401,7 +7401,7 @@
         ]
     },
     "Yavinian Wild Rice": {
-        "resource_class_id": "276",
+        "id": "331",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -7425,7 +7425,7 @@
         ]
     },
     "Kashyyykian Wild Rice": {
-        "resource_class_id": "1041",
+        "id": "332",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -7449,7 +7449,7 @@
         ]
     },
     "Mustafarian Wild Rice": {
-        "resource_class_id": "1085",
+        "id": "333",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -7473,7 +7473,7 @@
         ]
     },
     "Corellian Domesticated Oats": {
-        "resource_class_id": "279",
+        "id": "336",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -7497,7 +7497,7 @@
         ]
     },
     "Dantooine Domesticated Oats": {
-        "resource_class_id": "280",
+        "id": "337",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -7521,7 +7521,7 @@
         ]
     },
     "Dathomirian Domesticated Oats": {
-        "resource_class_id": "281",
+        "id": "338",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -7545,7 +7545,7 @@
         ]
     },
     "Endorian Domesticated Oats": {
-        "resource_class_id": "282",
+        "id": "339",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -7569,7 +7569,7 @@
         ]
     },
     "Lokian Domesticated Oats": {
-        "resource_class_id": "283",
+        "id": "340",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -7593,7 +7593,7 @@
         ]
     },
     "Nabooian Domesticated Oats": {
-        "resource_class_id": "284",
+        "id": "341",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -7617,7 +7617,7 @@
         ]
     },
     "Rori Domesticated Oats": {
-        "resource_class_id": "285",
+        "id": "342",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -7641,7 +7641,7 @@
         ]
     },
     "Talusian Domesticated Oats": {
-        "resource_class_id": "286",
+        "id": "343",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -7665,7 +7665,7 @@
         ]
     },
     "Tatooinian Domesticated Oats": {
-        "resource_class_id": "287",
+        "id": "344",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -7698,7 +7698,7 @@
         ]
     },
     "Yavinian Domesticated Oats": {
-        "resource_class_id": "288",
+        "id": "345",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -7722,7 +7722,7 @@
         ]
     },
     "Kashyyykian Domesticated Oats": {
-        "resource_class_id": "1042",
+        "id": "346",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -7746,7 +7746,7 @@
         ]
     },
     "Mustafarian Domesticated Oats": {
-        "resource_class_id": "1086",
+        "id": "347",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -7770,7 +7770,7 @@
         ]
     },
     "Corellian Wild Oats": {
-        "resource_class_id": "290",
+        "id": "349",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -7794,7 +7794,7 @@
         ]
     },
     "Dantooine Wild Oats": {
-        "resource_class_id": "291",
+        "id": "350",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -7818,7 +7818,7 @@
         ]
     },
     "Dathomirian Wild Oats": {
-        "resource_class_id": "292",
+        "id": "351",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -7842,7 +7842,7 @@
         ]
     },
     "Endorian Wild Oats": {
-        "resource_class_id": "293",
+        "id": "352",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -7866,7 +7866,7 @@
         ]
     },
     "Lokian Wild Oats": {
-        "resource_class_id": "294",
+        "id": "353",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -7890,7 +7890,7 @@
         ]
     },
     "Nabooian Wild Oats": {
-        "resource_class_id": "295",
+        "id": "354",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -7914,7 +7914,7 @@
         ]
     },
     "Rori Wild Oats": {
-        "resource_class_id": "296",
+        "id": "355",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -7938,7 +7938,7 @@
         ]
     },
     "Talusian Wild Oats": {
-        "resource_class_id": "297",
+        "id": "356",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -7962,7 +7962,7 @@
         ]
     },
     "Tatooinian Wild Oats": {
-        "resource_class_id": "298",
+        "id": "357",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -7995,7 +7995,7 @@
         ]
     },
     "Yavinian Wild Oats": {
-        "resource_class_id": "299",
+        "id": "358",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -8019,7 +8019,7 @@
         ]
     },
     "Kashyyykian Wild Oats": {
-        "resource_class_id": "1043",
+        "id": "359",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -8043,7 +8043,7 @@
         ]
     },
     "Mustafarian Wild Oats": {
-        "resource_class_id": "1087",
+        "id": "360",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -8067,7 +8067,7 @@
         ]
     },
     "Corellian Domesticated Wheat": {
-        "resource_class_id": "302",
+        "id": "363",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -8091,7 +8091,7 @@
         ]
     },
     "Dantooine Domesticated Wheat": {
-        "resource_class_id": "303",
+        "id": "364",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -8115,7 +8115,7 @@
         ]
     },
     "Dathomirian Domesticated Wheat": {
-        "resource_class_id": "304",
+        "id": "365",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -8139,7 +8139,7 @@
         ]
     },
     "Endorian Domesticated Wheat": {
-        "resource_class_id": "305",
+        "id": "366",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -8163,7 +8163,7 @@
         ]
     },
     "Lokian Domesticated Wheat": {
-        "resource_class_id": "306",
+        "id": "367",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -8187,7 +8187,7 @@
         ]
     },
     "Nabooian Domesticated Wheat": {
-        "resource_class_id": "307",
+        "id": "368",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -8211,7 +8211,7 @@
         ]
     },
     "Rori Domesticated Wheat": {
-        "resource_class_id": "308",
+        "id": "369",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -8235,7 +8235,7 @@
         ]
     },
     "Talusian Domesticated Wheat": {
-        "resource_class_id": "309",
+        "id": "370",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -8259,7 +8259,7 @@
         ]
     },
     "Tatooinian Domesticated Wheat": {
-        "resource_class_id": "310",
+        "id": "371",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -8292,7 +8292,7 @@
         ]
     },
     "Yavinian Domesticated Wheat": {
-        "resource_class_id": "311",
+        "id": "372",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -8316,7 +8316,7 @@
         ]
     },
     "Kashyyykian Domesticated Wheat": {
-        "resource_class_id": "1044",
+        "id": "373",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -8340,7 +8340,7 @@
         ]
     },
     "Mustafarian Domesticated Wheat": {
-        "resource_class_id": "1088",
+        "id": "374",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -8364,7 +8364,7 @@
         ]
     },
     "Corellian Wild Wheat": {
-        "resource_class_id": "313",
+        "id": "376",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -8388,7 +8388,7 @@
         ]
     },
     "Dantooine Wild Wheat": {
-        "resource_class_id": "314",
+        "id": "377",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -8412,7 +8412,7 @@
         ]
     },
     "Dathomir Wild Wheat": {
-        "resource_class_id": "315",
+        "id": "378",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -8436,7 +8436,7 @@
         ]
     },
     "Endorian Wild Wheat": {
-        "resource_class_id": "316",
+        "id": "379",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -8460,7 +8460,7 @@
         ]
     },
     "Lokian Wild Wheat": {
-        "resource_class_id": "317",
+        "id": "380",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -8484,7 +8484,7 @@
         ]
     },
     "Nabooian Wild Wheat": {
-        "resource_class_id": "318",
+        "id": "381",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -8508,7 +8508,7 @@
         ]
     },
     "Rori Wild Wheat": {
-        "resource_class_id": "319",
+        "id": "382",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -8532,7 +8532,7 @@
         ]
     },
     "Talusian Wild Wheat": {
-        "resource_class_id": "320",
+        "id": "383",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -8556,7 +8556,7 @@
         ]
     },
     "Tatooinian Wild Wheat": {
-        "resource_class_id": "321",
+        "id": "384",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -8589,7 +8589,7 @@
         ]
     },
     "Yavinian Wild Wheat": {
-        "resource_class_id": "322",
+        "id": "385",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -8613,7 +8613,7 @@
         ]
     },
     "Kashyyykian Wild Wheat": {
-        "resource_class_id": "1045",
+        "id": "386",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -8637,7 +8637,7 @@
         ]
     },
     "Mustafarian Wild Wheat": {
-        "resource_class_id": "1089",
+        "id": "387",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -8661,7 +8661,7 @@
         ]
     },
     "Corellian Vegetable Greens": {
-        "resource_class_id": "326",
+        "id": "392",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -8685,7 +8685,7 @@
         ]
     },
     "Dantooine Vegetable Greens": {
-        "resource_class_id": "327",
+        "id": "393",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -8709,7 +8709,7 @@
         ]
     },
     "Dathomirian Vegetable Greens": {
-        "resource_class_id": "328",
+        "id": "394",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -8733,7 +8733,7 @@
         ]
     },
     "Endorian Vegetable Greens": {
-        "resource_class_id": "329",
+        "id": "395",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -8757,7 +8757,7 @@
         ]
     },
     "Lokian Vegetable Greens": {
-        "resource_class_id": "330",
+        "id": "396",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -8781,7 +8781,7 @@
         ]
     },
     "Nabooian Vegetable Greens": {
-        "resource_class_id": "331",
+        "id": "397",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -8805,7 +8805,7 @@
         ]
     },
     "Rori Vegetable Greens": {
-        "resource_class_id": "332",
+        "id": "398",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -8829,7 +8829,7 @@
         ]
     },
     "Talusian Vegetable Greens": {
-        "resource_class_id": "333",
+        "id": "399",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -8853,7 +8853,7 @@
         ]
     },
     "Tatooinian Vegetable Greens": {
-        "resource_class_id": "334",
+        "id": "400",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -8886,7 +8886,7 @@
         ]
     },
     "Yavinian Vegetable Greens": {
-        "resource_class_id": "335",
+        "id": "401",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -8910,7 +8910,7 @@
         ]
     },
     "Kashyyykian Vegetable Greens": {
-        "resource_class_id": "1046",
+        "id": "402",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -8934,7 +8934,7 @@
         ]
     },
     "Mustafarian Vegetable Greens": {
-        "resource_class_id": "1090",
+        "id": "403",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -8958,7 +8958,7 @@
         ]
     },
     "Corellian Vegetable Beans": {
-        "resource_class_id": "337",
+        "id": "405",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -8982,7 +8982,7 @@
         ]
     },
     "Dantooine Vegetable Beans": {
-        "resource_class_id": "338",
+        "id": "406",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -9006,7 +9006,7 @@
         ]
     },
     "Dathomirian Vegetable Beans": {
-        "resource_class_id": "339",
+        "id": "407",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -9030,7 +9030,7 @@
         ]
     },
     "Endorian Vegetable Beans": {
-        "resource_class_id": "340",
+        "id": "408",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -9054,7 +9054,7 @@
         ]
     },
     "Lokian Vegetable Beans": {
-        "resource_class_id": "341",
+        "id": "409",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -9078,7 +9078,7 @@
         ]
     },
     "Nabooian Vegetable Beans": {
-        "resource_class_id": "342",
+        "id": "410",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -9102,7 +9102,7 @@
         ]
     },
     "Rori Vegetable Beans": {
-        "resource_class_id": "343",
+        "id": "411",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -9126,7 +9126,7 @@
         ]
     },
     "Talusian Vegetable Beans": {
-        "resource_class_id": "344",
+        "id": "412",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -9150,7 +9150,7 @@
         ]
     },
     "Tatooinian Vegetable Beans": {
-        "resource_class_id": "345",
+        "id": "413",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -9183,7 +9183,7 @@
         ]
     },
     "Yavinian Vegetable Beans": {
-        "resource_class_id": "346",
+        "id": "414",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -9207,7 +9207,7 @@
         ]
     },
     "Kashyyykian Vegetable Beans": {
-        "resource_class_id": "1047",
+        "id": "415",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -9231,7 +9231,7 @@
         ]
     },
     "Mustafarian Vegetable Beans": {
-        "resource_class_id": "1091",
+        "id": "416",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -9255,7 +9255,7 @@
         ]
     },
     "Corellian Vegetable Tubers": {
-        "resource_class_id": "348",
+        "id": "418",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -9279,7 +9279,7 @@
         ]
     },
     "Dantooine Vegetable Tubers": {
-        "resource_class_id": "349",
+        "id": "419",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -9303,7 +9303,7 @@
         ]
     },
     "Dathomirian Vegetable Tubers": {
-        "resource_class_id": "350",
+        "id": "420",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -9327,7 +9327,7 @@
         ]
     },
     "Endorian Vegetable Tubers": {
-        "resource_class_id": "351",
+        "id": "421",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -9351,7 +9351,7 @@
         ]
     },
     "Lokian Vegetable Tubers": {
-        "resource_class_id": "352",
+        "id": "422",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -9375,7 +9375,7 @@
         ]
     },
     "Nabooian Vegetable Tubers": {
-        "resource_class_id": "353",
+        "id": "423",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -9399,7 +9399,7 @@
         ]
     },
     "Rori Vegetable Tubers": {
-        "resource_class_id": "354",
+        "id": "424",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -9423,7 +9423,7 @@
         ]
     },
     "Talusian Vegetable Tubers": {
-        "resource_class_id": "355",
+        "id": "425",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -9447,7 +9447,7 @@
         ]
     },
     "Tatooinian Vegetable Tubers": {
-        "resource_class_id": "356",
+        "id": "426",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -9480,7 +9480,7 @@
         ]
     },
     "Yavinian Vegetable Tubers": {
-        "resource_class_id": "357",
+        "id": "427",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -9504,7 +9504,7 @@
         ]
     },
     "Kashyyykian Vegetable Tubers": {
-        "resource_class_id": "1048",
+        "id": "428",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -9528,7 +9528,7 @@
         ]
     },
     "Mustafarian Vegetable Tubers": {
-        "resource_class_id": "1092",
+        "id": "429",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -9552,7 +9552,7 @@
         ]
     },
     "Corellian Vegetable Fungus": {
-        "resource_class_id": "359",
+        "id": "431",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -9576,7 +9576,7 @@
         ]
     },
     "Dantooine Vegetable Fungus": {
-        "resource_class_id": "360",
+        "id": "432",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -9600,7 +9600,7 @@
         ]
     },
     "Dathomirian Vegetable Fungus": {
-        "resource_class_id": "361",
+        "id": "433",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -9624,7 +9624,7 @@
         ]
     },
     "Endorian Vegetable Fungus": {
-        "resource_class_id": "362",
+        "id": "434",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -9648,7 +9648,7 @@
         ]
     },
     "Lokian Vegetable Fungus": {
-        "resource_class_id": "363",
+        "id": "435",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -9672,7 +9672,7 @@
         ]
     },
     "Nabooian Vegetable Fungus": {
-        "resource_class_id": "364",
+        "id": "436",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -9696,7 +9696,7 @@
         ]
     },
     "Rori Vegetable Fungus": {
-        "resource_class_id": "365",
+        "id": "437",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -9720,7 +9720,7 @@
         ]
     },
     "Talusian Vegetable Fungus": {
-        "resource_class_id": "366",
+        "id": "438",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -9744,7 +9744,7 @@
         ]
     },
     "Tatooinian Vegetable Fungus": {
-        "resource_class_id": "367",
+        "id": "439",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -9777,7 +9777,7 @@
         ]
     },
     "Yavinian Vegetable Fungus": {
-        "resource_class_id": "368",
+        "id": "440",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -9801,7 +9801,7 @@
         ]
     },
     "Kashyyykian Vegetable Fungus": {
-        "resource_class_id": "1049",
+        "id": "441",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -9825,7 +9825,7 @@
         ]
     },
     "Mustafarian Vegetable Fungus": {
-        "resource_class_id": "1093",
+        "id": "442",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -9849,7 +9849,7 @@
         ]
     },
     "Corellian Fruit": {
-        "resource_class_id": "371",
+        "id": "446",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -9873,7 +9873,7 @@
         ]
     },
     "Dantooine Fruit": {
-        "resource_class_id": "372",
+        "id": "447",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -9897,7 +9897,7 @@
         ]
     },
     "Dathomirian Fruit": {
-        "resource_class_id": "373",
+        "id": "448",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -9921,7 +9921,7 @@
         ]
     },
     "Endorian Fruit": {
-        "resource_class_id": "374",
+        "id": "449",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -9945,7 +9945,7 @@
         ]
     },
     "Lokian Fruit": {
-        "resource_class_id": "375",
+        "id": "450",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -9969,7 +9969,7 @@
         ]
     },
     "Nabooian Fruit": {
-        "resource_class_id": "376",
+        "id": "451",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -9993,7 +9993,7 @@
         ]
     },
     "Rori Fruit": {
-        "resource_class_id": "377",
+        "id": "452",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -10017,7 +10017,7 @@
         ]
     },
     "Talusian Fruit": {
-        "resource_class_id": "378",
+        "id": "453",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -10041,7 +10041,7 @@
         ]
     },
     "Tatooinian Fruit": {
-        "resource_class_id": "379",
+        "id": "454",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -10074,7 +10074,7 @@
         ]
     },
     "Yavinian Fruit": {
-        "resource_class_id": "380",
+        "id": "455",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -10098,7 +10098,7 @@
         ]
     },
     "Kashyyykian Fruit": {
-        "resource_class_id": "1050",
+        "id": "456",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -10122,7 +10122,7 @@
         ]
     },
     "Mustafarian Fruit": {
-        "resource_class_id": "1094",
+        "id": "457",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -10146,7 +10146,7 @@
         ]
     },
     "Corellia Berry Fruit": {
-        "resource_class_id": "382",
+        "id": "459",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -10170,7 +10170,7 @@
         ]
     },
     "Dantooine Berry Fruit": {
-        "resource_class_id": "383",
+        "id": "460",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -10194,7 +10194,7 @@
         ]
     },
     "Dathomirian Berry Fruit": {
-        "resource_class_id": "384",
+        "id": "461",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -10218,7 +10218,7 @@
         ]
     },
     "Endorian Berry Fruit": {
-        "resource_class_id": "385",
+        "id": "462",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -10242,7 +10242,7 @@
         ]
     },
     "Lokian Berry Fruit": {
-        "resource_class_id": "386",
+        "id": "463",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -10266,7 +10266,7 @@
         ]
     },
     "Nabooian Berry Fruit": {
-        "resource_class_id": "387",
+        "id": "464",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -10290,7 +10290,7 @@
         ]
     },
     "Rori Berry Fruit": {
-        "resource_class_id": "388",
+        "id": "465",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -10314,7 +10314,7 @@
         ]
     },
     "Talusian Berry Fruit": {
-        "resource_class_id": "389",
+        "id": "466",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -10338,7 +10338,7 @@
         ]
     },
     "Tatooinian Berry Fruit": {
-        "resource_class_id": "390",
+        "id": "467",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -10371,7 +10371,7 @@
         ]
     },
     "Yavinian Berry Fruit": {
-        "resource_class_id": "391",
+        "id": "468",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -10395,7 +10395,7 @@
         ]
     },
     "Kashyyykian Berry Fruit": {
-        "resource_class_id": "1051",
+        "id": "469",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -10419,7 +10419,7 @@
         ]
     },
     "Mustafarian Berry Fruit": {
-        "resource_class_id": "1095",
+        "id": "470",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -10443,7 +10443,7 @@
         ]
     },
     "Corellia Flower Fruit": {
-        "resource_class_id": "393",
+        "id": "472",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -10467,7 +10467,7 @@
         ]
     },
     "Dantooine Flower Fruit": {
-        "resource_class_id": "394",
+        "id": "473",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -10491,7 +10491,7 @@
         ]
     },
     "Dathomirian Flower Fruit": {
-        "resource_class_id": "395",
+        "id": "474",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -10515,7 +10515,7 @@
         ]
     },
     "Endorian Flower Fruit": {
-        "resource_class_id": "396",
+        "id": "475",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -10539,7 +10539,7 @@
         ]
     },
     "Lokian Flower Fruit": {
-        "resource_class_id": "397",
+        "id": "476",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -10563,7 +10563,7 @@
         ]
     },
     "Nabooian Flower Fruit": {
-        "resource_class_id": "398",
+        "id": "477",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -10587,7 +10587,7 @@
         ]
     },
     "Rori Flower Fruit": {
-        "resource_class_id": "399",
+        "id": "478",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -10611,7 +10611,7 @@
         ]
     },
     "Talusian Flower Fruit": {
-        "resource_class_id": "400",
+        "id": "479",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -10635,7 +10635,7 @@
         ]
     },
     "Tatooinian Flower Fruit": {
-        "resource_class_id": "401",
+        "id": "480",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -10668,7 +10668,7 @@
         ]
     },
     "Yavinian Flower Fruit": {
-        "resource_class_id": "402",
+        "id": "481",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -10692,7 +10692,7 @@
         ]
     },
     "Kashyyykian Flower Fruit": {
-        "resource_class_id": "1052",
+        "id": "482",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -10716,7 +10716,7 @@
         ]
     },
     "Mustafarian Flower Fruit": {
-        "resource_class_id": "1096",
+        "id": "483",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -10740,7 +10740,7 @@
         ]
     },
     "Corellian Deciduous Wood": {
-        "resource_class_id": "406",
+        "id": "488",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -10768,7 +10768,7 @@
         ]
     },
     "Dantooine Deciduous Wood": {
-        "resource_class_id": "407",
+        "id": "489",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -10796,7 +10796,7 @@
         ]
     },
     "Dathomirian Deciduous Wood": {
-        "resource_class_id": "408",
+        "id": "490",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -10824,7 +10824,7 @@
         ]
     },
     "Endorian Deciduous Wood": {
-        "resource_class_id": "409",
+        "id": "491",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -10852,7 +10852,7 @@
         ]
     },
     "Lokian Deciduous Wood": {
-        "resource_class_id": "410",
+        "id": "492",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -10880,7 +10880,7 @@
         ]
     },
     "Nabooian Deciduous Wood": {
-        "resource_class_id": "411",
+        "id": "493",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -10908,7 +10908,7 @@
         ]
     },
     "Rori Deciduous Wood": {
-        "resource_class_id": "412",
+        "id": "494",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -10936,7 +10936,7 @@
         ]
     },
     "Talusian Deciduous Wood": {
-        "resource_class_id": "413",
+        "id": "495",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -10964,7 +10964,7 @@
         ]
     },
     "Tatooinian Deciduous Wood": {
-        "resource_class_id": "414",
+        "id": "496",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -11001,7 +11001,7 @@
         ]
     },
     "Yavinian Deciduous Wood": {
-        "resource_class_id": "415",
+        "id": "497",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -11029,7 +11029,7 @@
         ]
     },
     "Kashyyykian Deciduous Wood": {
-        "resource_class_id": "1053",
+        "id": "498",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -11057,7 +11057,7 @@
         ]
     },
     "Mustafarian Deciduous Wood": {
-        "resource_class_id": "1097",
+        "id": "499",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -11085,7 +11085,7 @@
         ]
     },
     "Corellian Conifer Wood": {
-        "resource_class_id": "417",
+        "id": "501",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -11113,7 +11113,7 @@
         ]
     },
     "Dantooine Conifer Wood": {
-        "resource_class_id": "418",
+        "id": "502",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -11141,7 +11141,7 @@
         ]
     },
     "Dathomirian Conifer Wood": {
-        "resource_class_id": "419",
+        "id": "503",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -11169,7 +11169,7 @@
         ]
     },
     "Endorian Conifer Wood": {
-        "resource_class_id": "420",
+        "id": "504",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -11197,7 +11197,7 @@
         ]
     },
     "Lokian Conifer Wood": {
-        "resource_class_id": "421",
+        "id": "505",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -11225,7 +11225,7 @@
         ]
     },
     "Nabooian Conifer Wood": {
-        "resource_class_id": "422",
+        "id": "506",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -11253,7 +11253,7 @@
         ]
     },
     "Rori Conifer Wood": {
-        "resource_class_id": "423",
+        "id": "507",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -11281,7 +11281,7 @@
         ]
     },
     "Talusian Conifer Wood": {
-        "resource_class_id": "424",
+        "id": "508",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -11309,7 +11309,7 @@
         ]
     },
     "Tatooinian Conifer Wood": {
-        "resource_class_id": "425",
+        "id": "509",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -11346,7 +11346,7 @@
         ]
     },
     "Yavinian Conifer Wood": {
-        "resource_class_id": "426",
+        "id": "510",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -11374,7 +11374,7 @@
         ]
     },
     "Kashyyykian Conifer Wood": {
-        "resource_class_id": "1054",
+        "id": "511",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -11402,7 +11402,7 @@
         ]
     },
     "Mustafarian Conifer Wood": {
-        "resource_class_id": "1098",
+        "id": "512",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -11430,7 +11430,7 @@
         ]
     },
     "Corellia Evergreen Wood": {
-        "resource_class_id": "428",
+        "id": "514",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -11458,7 +11458,7 @@
         ]
     },
     "Dantooine Evergreen Wood": {
-        "resource_class_id": "429",
+        "id": "515",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -11486,7 +11486,7 @@
         ]
     },
     "Dathomirian Evergreen Wood": {
-        "resource_class_id": "430",
+        "id": "516",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -11514,7 +11514,7 @@
         ]
     },
     "Endorian Evergreen Wood": {
-        "resource_class_id": "431",
+        "id": "517",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -11542,7 +11542,7 @@
         ]
     },
     "Lokian Evergreen Wood": {
-        "resource_class_id": "432",
+        "id": "518",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -11570,7 +11570,7 @@
         ]
     },
     "Nabooian Evergreen Wood": {
-        "resource_class_id": "433",
+        "id": "519",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -11598,7 +11598,7 @@
         ]
     },
     "Rori Evergreen Wood": {
-        "resource_class_id": "434",
+        "id": "520",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -11626,7 +11626,7 @@
         ]
     },
     "Talusian Evergreen Wood": {
-        "resource_class_id": "435",
+        "id": "521",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -11654,7 +11654,7 @@
         ]
     },
     "Tatooinian Evergreen Wood": {
-        "resource_class_id": "436",
+        "id": "522",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -11691,7 +11691,7 @@
         ]
     },
     "Yavinian Evergreen Wood": {
-        "resource_class_id": "437",
+        "id": "523",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -11719,7 +11719,7 @@
         ]
     },
     "Kashyyykian Evergreen Wood": {
-        "resource_class_id": "1055",
+        "id": "524",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -11747,7 +11747,7 @@
         ]
     },
     "Mustafarian Evergreen Wood": {
-        "resource_class_id": "1099",
+        "id": "525",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -11775,7 +11775,7 @@
         ]
     },
     "Unknown Liquid Petrochem Fuel": {
-        "resource_class_id": "441",
+        "id": "530",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -11804,7 +11804,7 @@
         ]
     },
     "Class 1 Liquid Petro Fuel": {
-        "resource_class_id": "443",
+        "id": "532",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -11833,7 +11833,7 @@
         ]
     },
     "Class 2 Liquid Petro Fuel": {
-        "resource_class_id": "444",
+        "id": "533",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -11862,7 +11862,7 @@
         ]
     },
     "Class 3 Liquid Petro Fuel": {
-        "resource_class_id": "445",
+        "id": "534",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -11891,7 +11891,7 @@
         ]
     },
     "Class 4 Liquid Petro Fuel": {
-        "resource_class_id": "446",
+        "id": "535",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -11920,7 +11920,7 @@
         ]
     },
     "Class 5 Liquid Petro Fuel": {
-        "resource_class_id": "447",
+        "id": "536",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -11949,7 +11949,7 @@
         ]
     },
     "Class 6 Liquid Petro Fuel": {
-        "resource_class_id": "448",
+        "id": "537",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -11978,7 +11978,7 @@
         ]
     },
     "Class 7 Liquid Petro Fuel": {
-        "resource_class_id": "449",
+        "id": "538",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -12007,7 +12007,7 @@
         ]
     },
     "Mustafarian Liquid Petro Fuel": {
-        "resource_class_id": "1117",
+        "id": "539",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -12027,7 +12027,7 @@
         ]
     },
     "Lubricating Oil": {
-        "resource_class_id": "451",
+        "id": "541",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -12052,7 +12052,7 @@
         ]
     },
     "Polymer": {
-        "resource_class_id": "452",
+        "id": "542",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -12089,7 +12089,7 @@
         ]
     },
     "Corellia Fiberplast": {
-        "resource_class_id": "672",
+        "id": "544",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -12117,7 +12117,7 @@
         ]
     },
     "Dantooine Fiberplast": {
-        "resource_class_id": "673",
+        "id": "545",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -12145,7 +12145,7 @@
         ]
     },
     "Dathomirian Fiberplast": {
-        "resource_class_id": "674",
+        "id": "546",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -12173,7 +12173,7 @@
         ]
     },
     "Endorian Fiberplast": {
-        "resource_class_id": "675",
+        "id": "547",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -12201,7 +12201,7 @@
         ]
     },
     "Lokian Fiberplast": {
-        "resource_class_id": "676",
+        "id": "548",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -12229,7 +12229,7 @@
         ]
     },
     "Nabooian Fiberplast": {
-        "resource_class_id": "677",
+        "id": "549",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -12257,7 +12257,7 @@
         ]
     },
     "Rori Fiberplast": {
-        "resource_class_id": "678",
+        "id": "550",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -12285,7 +12285,7 @@
         ]
     },
     "Talusian Fiberplast": {
-        "resource_class_id": "679",
+        "id": "551",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -12313,7 +12313,7 @@
         ]
     },
     "Tatooinian Fiberplast": {
-        "resource_class_id": "680",
+        "id": "552",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -12350,7 +12350,7 @@
         ]
     },
     "Gravitonic Fiberplast": {
-        "resource_class_id": "688",
+        "id": "553",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -12387,7 +12387,7 @@
         ]
     },
     "Yavinian Fiberplast": {
-        "resource_class_id": "681",
+        "id": "554",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -12415,7 +12415,7 @@
         ]
     },
     "Kashyyykian Fiberplast": {
-        "resource_class_id": "1062",
+        "id": "555",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -12443,7 +12443,7 @@
         ]
     },
     "Mustafarian Fiberplast": {
-        "resource_class_id": "1100",
+        "id": "556",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -12471,7 +12471,7 @@
         ]
     },
     "Corellian Water Vapor": {
-        "resource_class_id": "454",
+        "id": "559",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -12487,7 +12487,7 @@
         ]
     },
     "Dantooine Water Vapor": {
-        "resource_class_id": "455",
+        "id": "560",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -12503,7 +12503,7 @@
         ]
     },
     "Dathomir Water Vapor": {
-        "resource_class_id": "456",
+        "id": "561",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -12519,7 +12519,7 @@
         ]
     },
     "Endorian Water Vapor": {
-        "resource_class_id": "457",
+        "id": "562",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -12535,7 +12535,7 @@
         ]
     },
     "Lokian Water Vapor": {
-        "resource_class_id": "458",
+        "id": "563",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -12551,7 +12551,7 @@
         ]
     },
     "Nabooian Water Vapor": {
-        "resource_class_id": "459",
+        "id": "564",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -12567,7 +12567,7 @@
         ]
     },
     "Rori Water Vapor": {
-        "resource_class_id": "460",
+        "id": "565",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -12583,7 +12583,7 @@
         ]
     },
     "Talusian Water Vapor": {
-        "resource_class_id": "461",
+        "id": "566",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -12599,7 +12599,7 @@
         ]
     },
     "Tatooinian Water Vapor": {
-        "resource_class_id": "462",
+        "id": "567",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -12624,7 +12624,7 @@
         ]
     },
     "Yavinian Water Vapor": {
-        "resource_class_id": "463",
+        "id": "568",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -12640,7 +12640,7 @@
         ]
     },
     "Kashyyykian Water Vapor": {
-        "resource_class_id": "1056",
+        "id": "569",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -12656,7 +12656,7 @@
         ]
     },
     "Mustafarian Water Vapor": {
-        "resource_class_id": "1101",
+        "id": "570",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -12672,7 +12672,7 @@
         ]
     },
     "Unknown Solid Petrochem Fuel": {
-        "resource_class_id": "466",
+        "id": "574",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -12701,7 +12701,7 @@
         ]
     },
     "Class 1 Solid Petro Fuel": {
-        "resource_class_id": "468",
+        "id": "576",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -12730,7 +12730,7 @@
         ]
     },
     "Class 2 Solid Petro Fuel": {
-        "resource_class_id": "469",
+        "id": "577",
         "stats": {
             "res_dr": {
                 "min": 81,
@@ -12759,7 +12759,7 @@
         ]
     },
     "Class 3 Solid Petro Fuel": {
-        "resource_class_id": "470",
+        "id": "578",
         "stats": {
             "res_dr": {
                 "min": 195,
@@ -12788,7 +12788,7 @@
         ]
     },
     "Class 4 Solid Petro Fuel": {
-        "resource_class_id": "471",
+        "id": "579",
         "stats": {
             "res_dr": {
                 "min": 309,
@@ -12817,7 +12817,7 @@
         ]
     },
     "Class 5 Solid Petro Fuel": {
-        "resource_class_id": "472",
+        "id": "580",
         "stats": {
             "res_dr": {
                 "min": 423,
@@ -12846,7 +12846,7 @@
         ]
     },
     "Class 6 Solid Petro Fuel": {
-        "resource_class_id": "473",
+        "id": "581",
         "stats": {
             "res_dr": {
                 "min": 537,
@@ -12875,7 +12875,7 @@
         ]
     },
     "Class 7 Solid Petro Fuel": {
-        "resource_class_id": "474",
+        "id": "582",
         "stats": {
             "res_dr": {
                 "min": 652,
@@ -12904,7 +12904,7 @@
         ]
     },
     "Mustafarian Solid Petro Fuel": {
-        "resource_class_id": "1106",
+        "id": "583",
         "stats": {
             "res_dr": {
                 "min": 750,
@@ -12924,7 +12924,7 @@
         ]
     },
     "Unknown Radioactive": {
-        "resource_class_id": "476",
+        "id": "586",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -12953,7 +12953,7 @@
         ]
     },
     "Class 1 Radioactive": {
-        "resource_class_id": "478",
+        "id": "588",
         "stats": {
             "res_dr": {
                 "min": 400,
@@ -12982,7 +12982,7 @@
         ]
     },
     "Class 2 Radioactive": {
-        "resource_class_id": "479",
+        "id": "589",
         "stats": {
             "res_dr": {
                 "min": 440,
@@ -13011,7 +13011,7 @@
         ]
     },
     "Class 3 Radioactive": {
-        "resource_class_id": "480",
+        "id": "590",
         "stats": {
             "res_dr": {
                 "min": 497,
@@ -13040,7 +13040,7 @@
         ]
     },
     "Class 4 Radioactive": {
-        "resource_class_id": "481",
+        "id": "591",
         "stats": {
             "res_dr": {
                 "min": 554,
@@ -13069,7 +13069,7 @@
         ]
     },
     "Class 5 Radioactive": {
-        "resource_class_id": "482",
+        "id": "592",
         "stats": {
             "res_dr": {
                 "min": 611,
@@ -13098,7 +13098,7 @@
         ]
     },
     "Class 6 Radioactive": {
-        "resource_class_id": "483",
+        "id": "593",
         "stats": {
             "res_dr": {
                 "min": 669,
@@ -13127,7 +13127,7 @@
         ]
     },
     "Class 7 Radioactive": {
-        "resource_class_id": "484",
+        "id": "594",
         "stats": {
             "res_dr": {
                 "min": 726,
@@ -13156,7 +13156,7 @@
         ]
     },
     "Mustafarian Radioactive": {
-        "resource_class_id": "1107",
+        "id": "595",
         "stats": {
             "res_dr": {
                 "min": 900,
@@ -13176,7 +13176,7 @@
         ]
     },
     "High Grade Polymetric Radioactive": {
-        "resource_class_id": "689",
+        "id": "596",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -13205,7 +13205,7 @@
         ]
     },
     "Unknown Ferrous Metal": {
-        "resource_class_id": "487",
+        "id": "600",
         "stats": {
             "res_dr": {
                 "min": 300,
@@ -13254,7 +13254,7 @@
         ]
     },
     "Rhodium Steel": {
-        "resource_class_id": "489",
+        "id": "603",
         "stats": {
             "res_dr": {
                 "min": 500,
@@ -13303,7 +13303,7 @@
         ]
     },
     "Kiirium Steel": {
-        "resource_class_id": "490",
+        "id": "604",
         "stats": {
             "res_dr": {
                 "min": 535,
@@ -13352,7 +13352,7 @@
         ]
     },
     "Cubirian Steel": {
-        "resource_class_id": "491",
+        "id": "605",
         "stats": {
             "res_dr": {
                 "min": 585,
@@ -13401,7 +13401,7 @@
         ]
     },
     "Thoranium Steel": {
-        "resource_class_id": "492",
+        "id": "606",
         "stats": {
             "res_dr": {
                 "min": 635,
@@ -13450,7 +13450,7 @@
         ]
     },
     "Neutronium Steel": {
-        "resource_class_id": "493",
+        "id": "607",
         "stats": {
             "res_dr": {
                 "min": 685,
@@ -13499,7 +13499,7 @@
         ]
     },
     "Duranium Steel": {
-        "resource_class_id": "494",
+        "id": "608",
         "stats": {
             "res_dr": {
                 "min": 735,
@@ -13548,7 +13548,7 @@
         ]
     },
     "Ditanium Steel": {
-        "resource_class_id": "495",
+        "id": "609",
         "stats": {
             "res_dr": {
                 "min": 785,
@@ -13597,7 +13597,7 @@
         ]
     },
     "Quadranium Steel": {
-        "resource_class_id": "496",
+        "id": "610",
         "stats": {
             "res_dr": {
                 "min": 835,
@@ -13646,7 +13646,7 @@
         ]
     },
     "Carbonite Steel": {
-        "resource_class_id": "497",
+        "id": "611",
         "stats": {
             "res_dr": {
                 "min": 885,
@@ -13695,7 +13695,7 @@
         ]
     },
     "Hardened Arveshium Steel": {
-        "resource_class_id": "682",
+        "id": "612",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -13744,7 +13744,7 @@
         ]
     },
     "Crystallized Bicorbantium Steel": {
-        "resource_class_id": "683",
+        "id": "613",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -13793,7 +13793,7 @@
         ]
     },
     "Duralloy Steel": {
-        "resource_class_id": "498",
+        "id": "614",
         "stats": {
             "res_dr": {
                 "min": 935,
@@ -13842,7 +13842,7 @@
         ]
     },
     "Mustafarian Steel": {
-        "resource_class_id": "1108",
+        "id": "615",
         "stats": {
             "res_dr": {
                 "min": 935,
@@ -13882,7 +13882,7 @@
         ]
     },
     "Plumbum Iron": {
-        "resource_class_id": "500",
+        "id": "618",
         "stats": {
             "res_dr": {
                 "min": 300,
@@ -13931,7 +13931,7 @@
         ]
     },
     "Polonium Iron": {
-        "resource_class_id": "501",
+        "id": "619",
         "stats": {
             "res_dr": {
                 "min": 361,
@@ -13980,7 +13980,7 @@
         ]
     },
     "Axidite Iron": {
-        "resource_class_id": "502",
+        "id": "620",
         "stats": {
             "res_dr": {
                 "min": 559,
@@ -14029,7 +14029,7 @@
         ]
     },
     "Bronzium Iron": {
-        "resource_class_id": "503",
+        "id": "621",
         "stats": {
             "res_dr": {
                 "min": 536,
@@ -14078,7 +14078,7 @@
         ]
     },
     "Colat Iron": {
-        "resource_class_id": "504",
+        "id": "622",
         "stats": {
             "res_dr": {
                 "min": 624,
@@ -14127,7 +14127,7 @@
         ]
     },
     "Dolovite Iron": {
-        "resource_class_id": "505",
+        "id": "623",
         "stats": {
             "res_dr": {
                 "min": 711,
@@ -14176,7 +14176,7 @@
         ]
     },
     "Doonium Iron": {
-        "resource_class_id": "506",
+        "id": "624",
         "stats": {
             "res_dr": {
                 "min": 799,
@@ -14225,7 +14225,7 @@
         ]
     },
     "Kammris Iron": {
-        "resource_class_id": "507",
+        "id": "625",
         "stats": {
             "res_dr": {
                 "min": 886,
@@ -14274,7 +14274,7 @@
         ]
     },
     "Mustafarian Iron": {
-        "resource_class_id": "1109",
+        "id": "626",
         "stats": {
             "res_dr": {
                 "min": 886,
@@ -14314,7 +14314,7 @@
         ]
     },
     "Unknown Non-Ferrous Metal": {
-        "resource_class_id": "509",
+        "id": "629",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -14363,7 +14363,7 @@
         ]
     },
     "Titanium Aluminum": {
-        "resource_class_id": "511",
+        "id": "632",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -14412,7 +14412,7 @@
         ]
     },
     "Agrinium Aluminum": {
-        "resource_class_id": "512",
+        "id": "633",
         "stats": {
             "res_dr": {
                 "min": 94,
@@ -14461,7 +14461,7 @@
         ]
     },
     "Chromium Aluminum": {
-        "resource_class_id": "513",
+        "id": "634",
         "stats": {
             "res_dr": {
                 "min": 227,
@@ -14510,7 +14510,7 @@
         ]
     },
     "Duralumin Aluminum": {
-        "resource_class_id": "514",
+        "id": "635",
         "stats": {
             "res_dr": {
                 "min": 361,
@@ -14559,7 +14559,7 @@
         ]
     },
     "Link-Steel Aluminum": {
-        "resource_class_id": "515",
+        "id": "636",
         "stats": {
             "res_dr": {
                 "min": 494,
@@ -14608,7 +14608,7 @@
         ]
     },
     "Perovskitic Aluminum": {
-        "resource_class_id": "686",
+        "id": "637",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -14657,7 +14657,7 @@
         ]
     },
     "Phrik Aluminum": {
-        "resource_class_id": "516",
+        "id": "638",
         "stats": {
             "res_dr": {
                 "min": 627,
@@ -14706,7 +14706,7 @@
         ]
     },
     "Mustafarian Aluminum": {
-        "resource_class_id": "1110",
+        "id": "639",
         "stats": {
             "res_dr": {
                 "min": 800,
@@ -14746,7 +14746,7 @@
         ]
     },
     "Desh Copper": {
-        "resource_class_id": "518",
+        "id": "642",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -14795,7 +14795,7 @@
         ]
     },
     "Thallium Copper": {
-        "resource_class_id": "519",
+        "id": "643",
         "stats": {
             "res_dr": {
                 "min": 55,
@@ -14844,7 +14844,7 @@
         ]
     },
     "Beyrllius Copper": {
-        "resource_class_id": "520",
+        "id": "644",
         "stats": {
             "res_dr": {
                 "min": 133,
@@ -14893,7 +14893,7 @@
         ]
     },
     "Codoan Copper": {
-        "resource_class_id": "521",
+        "id": "645",
         "stats": {
             "res_dr": {
                 "min": 211,
@@ -14942,7 +14942,7 @@
         ]
     },
     "Diatium Copper": {
-        "resource_class_id": "522",
+        "id": "646",
         "stats": {
             "res_dr": {
                 "min": 288,
@@ -14991,7 +14991,7 @@
         ]
     },
     "Kelsh Copper": {
-        "resource_class_id": "523",
+        "id": "647",
         "stats": {
             "res_dr": {
                 "min": 366,
@@ -15040,7 +15040,7 @@
         ]
     },
     "Mythra Copper": {
-        "resource_class_id": "524",
+        "id": "648",
         "stats": {
             "res_dr": {
                 "min": 444,
@@ -15089,7 +15089,7 @@
         ]
     },
     "Platinite Copper": {
-        "resource_class_id": "525",
+        "id": "649",
         "stats": {
             "res_dr": {
                 "min": 521,
@@ -15138,7 +15138,7 @@
         ]
     },
     "Polysteel Copper": {
-        "resource_class_id": "526",
+        "id": "650",
         "stats": {
             "res_dr": {
                 "min": 599,
@@ -15187,7 +15187,7 @@
         ]
     },
     "Conductive Borcarbitic Copper": {
-        "resource_class_id": "684",
+        "id": "651",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -15236,7 +15236,7 @@
         ]
     },
     "Mustafarian Copper": {
-        "resource_class_id": "1111",
+        "id": "652",
         "stats": {
             "res_dr": {
                 "min": 650,
@@ -15276,7 +15276,7 @@
         ]
     },
     "Unknown Igneous Ore": {
-        "resource_class_id": "529",
+        "id": "656",
         "stats": {
             "res_dr": {
                 "min": 300,
@@ -15321,7 +15321,7 @@
         ]
     },
     "Bene Extrusive Ore": {
-        "resource_class_id": "531",
+        "id": "658",
         "stats": {
             "res_dr": {
                 "min": 300,
@@ -15366,7 +15366,7 @@
         ]
     },
     "Chronamite Extrusive Ore": {
-        "resource_class_id": "532",
+        "id": "659",
         "stats": {
             "res_dr": {
                 "min": 349,
@@ -15411,7 +15411,7 @@
         ]
     },
     "Ilimium Extrusive Ore": {
-        "resource_class_id": "533",
+        "id": "660",
         "stats": {
             "res_dr": {
                 "min": 419,
@@ -15456,7 +15456,7 @@
         ]
     },
     "Kalonterium Extrusive Ore": {
-        "resource_class_id": "534",
+        "id": "661",
         "stats": {
             "res_dr": {
                 "min": 489,
@@ -15501,7 +15501,7 @@
         ]
     },
     "Keschel Extrusive Ore": {
-        "resource_class_id": "535",
+        "id": "662",
         "stats": {
             "res_dr": {
                 "min": 559,
@@ -15546,7 +15546,7 @@
         ]
     },
     "Lidium Extrusive Ore": {
-        "resource_class_id": "536",
+        "id": "663",
         "stats": {
             "res_dr": {
                 "min": 629,
@@ -15591,7 +15591,7 @@
         ]
     },
     "Maranium Extrusive Ore": {
-        "resource_class_id": "537",
+        "id": "664",
         "stats": {
             "res_dr": {
                 "min": 699,
@@ -15636,7 +15636,7 @@
         ]
     },
     "Pholokite Extrusive Ore": {
-        "resource_class_id": "538",
+        "id": "665",
         "stats": {
             "res_dr": {
                 "min": 769,
@@ -15681,7 +15681,7 @@
         ]
     },
     "Quadrenium Extrusive Ore": {
-        "resource_class_id": "539",
+        "id": "666",
         "stats": {
             "res_dr": {
                 "min": 839,
@@ -15726,7 +15726,7 @@
         ]
     },
     "Vintrium Extrusive Ore": {
-        "resource_class_id": "540",
+        "id": "667",
         "stats": {
             "res_dr": {
                 "min": 909,
@@ -15771,7 +15771,7 @@
         ]
     },
     "Mustafarian Extrusive Ore": {
-        "resource_class_id": "1112",
+        "id": "668",
         "stats": {
             "res_dr": {
                 "min": 909,
@@ -15807,7 +15807,7 @@
         ]
     },
     "Berubium Intrusive Ore": {
-        "resource_class_id": "542",
+        "id": "670",
         "stats": {
             "res_dr": {
                 "min": 300,
@@ -15852,7 +15852,7 @@
         ]
     },
     "Chanlon Intrusive Ore": {
-        "resource_class_id": "543",
+        "id": "671",
         "stats": {
             "res_dr": {
                 "min": 354,
@@ -15897,7 +15897,7 @@
         ]
     },
     "Corintium Intrusive Ore": {
-        "resource_class_id": "544",
+        "id": "672",
         "stats": {
             "res_dr": {
                 "min": 432,
@@ -15942,7 +15942,7 @@
         ]
     },
     "Derillium Intrusive Ore": {
-        "resource_class_id": "545",
+        "id": "673",
         "stats": {
             "res_dr": {
                 "min": 510,
@@ -15987,7 +15987,7 @@
         ]
     },
     "Oridium Intrusive Ore": {
-        "resource_class_id": "546",
+        "id": "674",
         "stats": {
             "res_dr": {
                 "min": 588,
@@ -16032,7 +16032,7 @@
         ]
     },
     "Dylinium Intrusive Ore": {
-        "resource_class_id": "547",
+        "id": "675",
         "stats": {
             "res_dr": {
                 "min": 666,
@@ -16077,7 +16077,7 @@
         ]
     },
     "Hollinium Intrusive Ore": {
-        "resource_class_id": "548",
+        "id": "676",
         "stats": {
             "res_dr": {
                 "min": 743,
@@ -16122,7 +16122,7 @@
         ]
     },
     "Ionite Intrusive Ore": {
-        "resource_class_id": "549",
+        "id": "677",
         "stats": {
             "res_dr": {
                 "min": 821,
@@ -16167,7 +16167,7 @@
         ]
     },
     "Katrium Intrusive Ore": {
-        "resource_class_id": "550",
+        "id": "678",
         "stats": {
             "res_dr": {
                 "min": 899,
@@ -16212,7 +16212,7 @@
         ]
     },
     "Mustafarian Intrusive Ore": {
-        "resource_class_id": "1113",
+        "id": "679",
         "stats": {
             "res_dr": {
                 "min": 899,
@@ -16248,7 +16248,7 @@
         ]
     },
     "Unknown Sedimentary Ore": {
-        "resource_class_id": "552",
+        "id": "682",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -16293,7 +16293,7 @@
         ]
     },
     "Alantium Carbonate Ore": {
-        "resource_class_id": "554",
+        "id": "684",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -16338,7 +16338,7 @@
         ]
     },
     "Barthierium Carbonate Ore": {
-        "resource_class_id": "555",
+        "id": "685",
         "stats": {
             "res_dr": {
                 "min": 62,
@@ -16383,7 +16383,7 @@
         ]
     },
     "Chromite Carbonate Ore": {
-        "resource_class_id": "556",
+        "id": "686",
         "stats": {
             "res_dr": {
                 "min": 150,
@@ -16428,7 +16428,7 @@
         ]
     },
     "Frasium Carbonate Ore": {
-        "resource_class_id": "557",
+        "id": "687",
         "stats": {
             "res_dr": {
                 "min": 237,
@@ -16473,7 +16473,7 @@
         ]
     },
     "Lommite Carbonate Ore": {
-        "resource_class_id": "558",
+        "id": "688",
         "stats": {
             "res_dr": {
                 "min": 324,
@@ -16518,7 +16518,7 @@
         ]
     },
     "Ostrine Carbonate Ore": {
-        "resource_class_id": "559",
+        "id": "689",
         "stats": {
             "res_dr": {
                 "min": 412,
@@ -16563,7 +16563,7 @@
         ]
     },
     "Varium Carbonate Ore": {
-        "resource_class_id": "560",
+        "id": "690",
         "stats": {
             "res_dr": {
                 "min": 499,
@@ -16608,7 +16608,7 @@
         ]
     },
     "Zinsiam Carbonate Ore": {
-        "resource_class_id": "561",
+        "id": "691",
         "stats": {
             "res_dr": {
                 "min": 586,
@@ -16653,7 +16653,7 @@
         ]
     },
     "Ardanium Siliclastic Ore": {
-        "resource_class_id": "563",
+        "id": "694",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -16698,7 +16698,7 @@
         ]
     },
     "Cortosis Siliclastic Ore": {
-        "resource_class_id": "564",
+        "id": "695",
         "stats": {
             "res_dr": {
                 "min": 83,
@@ -16743,7 +16743,7 @@
         ]
     },
     "Crism Siliclastic Ore": {
-        "resource_class_id": "565",
+        "id": "696",
         "stats": {
             "res_dr": {
                 "min": 199,
@@ -16788,7 +16788,7 @@
         ]
     },
     "Malab Siliclastic Ore": {
-        "resource_class_id": "566",
+        "id": "697",
         "stats": {
             "res_dr": {
                 "min": 316,
@@ -16833,7 +16833,7 @@
         ]
     },
     "Robindun Siliclastic Ore": {
-        "resource_class_id": "567",
+        "id": "698",
         "stats": {
             "res_dr": {
                 "min": 432,
@@ -16878,7 +16878,7 @@
         ]
     },
     "Fermionic Siliclastic Ore": {
-        "resource_class_id": "685",
+        "id": "699",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -16923,7 +16923,7 @@
         ]
     },
     "Tertian Siliclastic Ore": {
-        "resource_class_id": "568",
+        "id": "700",
         "stats": {
             "res_dr": {
                 "min": 549,
@@ -16968,7 +16968,7 @@
         ]
     },
     "Unknown Gem Type": {
-        "resource_class_id": "570",
+        "id": "703",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -17017,7 +17017,7 @@
         ]
     },
     "Bospridium Amorphous Gemstone": {
-        "resource_class_id": "572",
+        "id": "705",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -17066,7 +17066,7 @@
         ]
     },
     "Baradium Amorphous Gemstone": {
-        "resource_class_id": "573",
+        "id": "706",
         "stats": {
             "res_dr": {
                 "min": 71,
@@ -17115,7 +17115,7 @@
         ]
     },
     "Regvis Amorphous Gemstone": {
-        "resource_class_id": "574",
+        "id": "707",
         "stats": {
             "res_dr": {
                 "min": 171,
@@ -17164,7 +17164,7 @@
         ]
     },
     "Plexite Amorphous Gemstone": {
-        "resource_class_id": "575",
+        "id": "708",
         "stats": {
             "res_dr": {
                 "min": 271,
@@ -17213,7 +17213,7 @@
         ]
     },
     "Rudic Amorphous Gemstone": {
-        "resource_class_id": "576",
+        "id": "709",
         "stats": {
             "res_dr": {
                 "min": 371,
@@ -17262,7 +17262,7 @@
         ]
     },
     "Ryll Amorphous Gemstone": {
-        "resource_class_id": "577",
+        "id": "710",
         "stats": {
             "res_dr": {
                 "min": 471,
@@ -17311,7 +17311,7 @@
         ]
     },
     "Sedrellium Amorphous Gemstone": {
-        "resource_class_id": "578",
+        "id": "711",
         "stats": {
             "res_dr": {
                 "min": 570,
@@ -17360,7 +17360,7 @@
         ]
     },
     "Stygium Amorphous Gemstone": {
-        "resource_class_id": "579",
+        "id": "712",
         "stats": {
             "res_dr": {
                 "min": 670,
@@ -17409,7 +17409,7 @@
         ]
     },
     "Vendusii Crystal Amorphous Gemstone": {
-        "resource_class_id": "580",
+        "id": "713",
         "stats": {
             "res_dr": {
                 "min": 770,
@@ -17458,7 +17458,7 @@
         ]
     },
     "Bal'ta'ran Crystal Amorphous Gemstone": {
-        "resource_class_id": "581",
+        "id": "714",
         "stats": {
             "res_dr": {
                 "min": 870,
@@ -17507,7 +17507,7 @@
         ]
     },
     "Mustafarian Type 1 Crystal Amorphous Gem": {
-        "resource_class_id": "1114",
+        "id": "715",
         "stats": {
             "res_dr": {
                 "min": 870,
@@ -17547,7 +17547,7 @@
         ]
     },
     "Mustafarian Type 2 Crystal Amorphous Gem": {
-        "resource_class_id": "1115",
+        "id": "716",
         "stats": {
             "res_dr": {
                 "min": 870,
@@ -17587,7 +17587,7 @@
         ]
     },
     "Byrothsis Crystalline Gemstone": {
-        "resource_class_id": "583",
+        "id": "718",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -17636,7 +17636,7 @@
         ]
     },
     "Gallinorian Rainbow Gem Crystalline Gemstone": {
-        "resource_class_id": "584",
+        "id": "719",
         "stats": {
             "res_dr": {
                 "min": 88,
@@ -17685,7 +17685,7 @@
         ]
     },
     "Green Diamond Crystalline Gemstone": {
-        "resource_class_id": "585",
+        "id": "720",
         "stats": {
             "res_dr": {
                 "min": 213,
@@ -17734,7 +17734,7 @@
         ]
     },
     "Kerol Fire-Gem Crystalline Gemstone": {
-        "resource_class_id": "586",
+        "id": "721",
         "stats": {
             "res_dr": {
                 "min": 338,
@@ -17783,7 +17783,7 @@
         ]
     },
     "Seafah Jewel Crystalline Gemstone": {
-        "resource_class_id": "587",
+        "id": "722",
         "stats": {
             "res_dr": {
                 "min": 463,
@@ -17832,7 +17832,7 @@
         ]
     },
     "Sormahil Fire Gem Crystalline Gemstone": {
-        "resource_class_id": "588",
+        "id": "723",
         "stats": {
             "res_dr": {
                 "min": 588,
@@ -17881,7 +17881,7 @@
         ]
     },
     "Laboi Mineral Crystal Crystalline Gemstone": {
-        "resource_class_id": "589",
+        "id": "724",
         "stats": {
             "res_dr": {
                 "min": 713,
@@ -17930,7 +17930,7 @@
         ]
     },
     "Vertex Crystalline Gemstone": {
-        "resource_class_id": "590",
+        "id": "725",
         "stats": {
             "res_dr": {
                 "min": 838,
@@ -17979,7 +17979,7 @@
         ]
     },
     "Mustafarian Type 1 Crystalline Gem": {
-        "resource_class_id": "1119",
+        "id": "726",
         "stats": {
             "res_dr": {
                 "min": 838,
@@ -18019,7 +18019,7 @@
         ]
     },
     "Mustafarian Type 2 Crystalline Gem": {
-        "resource_class_id": "1120",
+        "id": "727",
         "stats": {
             "res_dr": {
                 "min": 838,
@@ -18059,7 +18059,7 @@
         ]
     },
     "Unknown Reactive Gas": {
-        "resource_class_id": "593",
+        "id": "730",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -18084,7 +18084,7 @@
         ]
     },
     "Eleton Reactive Gas": {
-        "resource_class_id": "595",
+        "id": "733",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -18109,7 +18109,7 @@
         ]
     },
     "Irolunn Reactive Gas": {
-        "resource_class_id": "596",
+        "id": "734",
         "stats": {
             "res_dr": {
                 "min": 100,
@@ -18134,7 +18134,7 @@
         ]
     },
     "Methane Reactive Gas": {
-        "resource_class_id": "597",
+        "id": "735",
         "stats": {
             "res_dr": {
                 "min": 200,
@@ -18159,7 +18159,7 @@
         ]
     },
     "Orveth Reactive Gas": {
-        "resource_class_id": "598",
+        "id": "736",
         "stats": {
             "res_dr": {
                 "min": 300,
@@ -18184,7 +18184,7 @@
         ]
     },
     "Sig Reactive Gas": {
-        "resource_class_id": "599",
+        "id": "737",
         "stats": {
             "res_dr": {
                 "min": 300,
@@ -18209,7 +18209,7 @@
         ]
     },
     "Skevon Reactive Gas": {
-        "resource_class_id": "600",
+        "id": "738",
         "stats": {
             "res_dr": {
                 "min": 400,
@@ -18234,7 +18234,7 @@
         ]
     },
     "Unstable Organometallic Reactive Gas": {
-        "resource_class_id": "687",
+        "id": "739",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -18259,7 +18259,7 @@
         ]
     },
     "Tolium Reactive Gas": {
-        "resource_class_id": "601",
+        "id": "740",
         "stats": {
             "res_dr": {
                 "min": 500,
@@ -18284,7 +18284,7 @@
         ]
     },
     "Mustafarian Reactive Gas": {
-        "resource_class_id": "1116",
+        "id": "741",
         "stats": {
             "res_dr": {
                 "min": 800,
@@ -18300,7 +18300,7 @@
         ]
     },
     "Unknown Inert Gas": {
-        "resource_class_id": "603",
+        "id": "743",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -18325,7 +18325,7 @@
         ]
     },
     "Hydron-3 Inert Gas": {
-        "resource_class_id": "605",
+        "id": "746",
         "stats": {
             "res_dr": {
                 "min": 1,
@@ -18350,7 +18350,7 @@
         ]
     },
     "Malium Inert Gas": {
-        "resource_class_id": "606",
+        "id": "747",
         "stats": {
             "res_dr": {
                 "min": 44,
@@ -18375,7 +18375,7 @@
         ]
     },
     "Bilal gas Inert Gas": {
-        "resource_class_id": "607",
+        "id": "748",
         "stats": {
             "res_dr": {
                 "min": 105,
@@ -18400,7 +18400,7 @@
         ]
     },
     "Corthel Inert Gas": {
-        "resource_class_id": "608",
+        "id": "749",
         "stats": {
             "res_dr": {
                 "min": 167,
@@ -18425,7 +18425,7 @@
         ]
     },
     "Culsion Inert Gas": {
-        "resource_class_id": "609",
+        "id": "750",
         "stats": {
             "res_dr": {
                 "min": 228,
@@ -18450,7 +18450,7 @@
         ]
     },
     "Dioxis Inert Gas": {
-        "resource_class_id": "610",
+        "id": "751",
         "stats": {
             "res_dr": {
                 "min": 290,
@@ -18475,7 +18475,7 @@
         ]
     },
     "Hurlothrombic Inert Gas": {
-        "resource_class_id": "611",
+        "id": "752",
         "stats": {
             "res_dr": {
                 "min": 351,
@@ -18500,7 +18500,7 @@
         ]
     },
     "Kaylon Inert Gas": {
-        "resource_class_id": "612",
+        "id": "753",
         "stats": {
             "res_dr": {
                 "min": 413,
@@ -18525,7 +18525,7 @@
         ]
     },
     "Korfaise Inert Gas": {
-        "resource_class_id": "613",
+        "id": "754",
         "stats": {
             "res_dr": {
                 "min": 474,
@@ -18550,7 +18550,7 @@
         ]
     },
     "Methanagen Inert Gas": {
-        "resource_class_id": "614",
+        "id": "755",
         "stats": {
             "res_dr": {
                 "min": 536,
@@ -18575,7 +18575,7 @@
         ]
     },
     "Mirth Inert Gas": {
-        "resource_class_id": "615",
+        "id": "756",
         "stats": {
             "res_dr": {
                 "min": 597,
@@ -18600,7 +18600,7 @@
         ]
     },
     "Obah Inert Gas": {
-        "resource_class_id": "616",
+        "id": "757",
         "stats": {
             "res_dr": {
                 "min": 659,
@@ -18625,7 +18625,7 @@
         ]
     },
     "Rethin Inert Gas": {
-        "resource_class_id": "617",
+        "id": "758",
         "stats": {
             "res_dr": {
                 "min": 720,
@@ -18650,7 +18650,7 @@
         ]
     },
     "Corellian Tidal Renewable Energy": {
-        "resource_class_id": "621",
+        "id": "764",
         "stats": {
             "res_oq": {
                 "min": 500,
@@ -18666,7 +18666,7 @@
         ]
     },
     "Dathomirian Tidal Renewable Energy": {
-        "resource_class_id": "622",
+        "id": "765",
         "stats": {
             "res_oq": {
                 "min": 500,
@@ -18682,7 +18682,7 @@
         ]
     },
     "Dantooine Tidal Renewable Energy": {
-        "resource_class_id": "623",
+        "id": "766",
         "stats": {
             "res_oq": {
                 "min": 500,
@@ -18698,7 +18698,7 @@
         ]
     },
     "Endor Tidal Renewable Energy": {
-        "resource_class_id": "624",
+        "id": "767",
         "stats": {
             "res_oq": {
                 "min": 500,
@@ -18714,7 +18714,7 @@
         ]
     },
     "Lokian Tidal Renewable Energy": {
-        "resource_class_id": "625",
+        "id": "768",
         "stats": {
             "res_oq": {
                 "min": 500,
@@ -18730,7 +18730,7 @@
         ]
     },
     "Naboo Tidal Renewable Energy": {
-        "resource_class_id": "626",
+        "id": "769",
         "stats": {
             "res_oq": {
                 "min": 500,
@@ -18746,7 +18746,7 @@
         ]
     },
     "Rori Tidal Renewable Energy": {
-        "resource_class_id": "627",
+        "id": "770",
         "stats": {
             "res_oq": {
                 "min": 500,
@@ -18762,7 +18762,7 @@
         ]
     },
     "Talusian Tidal Renewable Energy": {
-        "resource_class_id": "628",
+        "id": "771",
         "stats": {
             "res_oq": {
                 "min": 500,
@@ -18778,7 +18778,7 @@
         ]
     },
     "Tatooinian Tidal Renewable Energy": {
-        "resource_class_id": "629",
+        "id": "772",
         "stats": {
             "res_oq": {
                 "min": 500,
@@ -18803,7 +18803,7 @@
         ]
     },
     "Yavinian Tidal Renewable Energy": {
-        "resource_class_id": "630",
+        "id": "773",
         "stats": {
             "res_oq": {
                 "min": 500,
@@ -18819,7 +18819,7 @@
         ]
     },
     "Kashyyykian Tidal Renewable Energy": {
-        "resource_class_id": "1057",
+        "id": "774",
         "stats": {
             "res_oq": {
                 "min": 500,
@@ -18835,7 +18835,7 @@
         ]
     },
     "Corellian Hydron-3 Renewable Energy": {
-        "resource_class_id": "631",
+        "id": "777",
         "stats": {
             "res_oq": {
                 "min": 500,
@@ -18851,7 +18851,7 @@
         ]
     },
     "Dantooine Hydron-3 Renewable Energy": {
-        "resource_class_id": "632",
+        "id": "778",
         "stats": {
             "res_oq": {
                 "min": 500,
@@ -18867,7 +18867,7 @@
         ]
     },
     "Dathomirian Hydron-3 Renewable Energy": {
-        "resource_class_id": "633",
+        "id": "779",
         "stats": {
             "res_oq": {
                 "min": 500,
@@ -18883,7 +18883,7 @@
         ]
     },
     "Endorian Hydron-3 Renewable Energy": {
-        "resource_class_id": "634",
+        "id": "780",
         "stats": {
             "res_oq": {
                 "min": 500,
@@ -18899,7 +18899,7 @@
         ]
     },
     "Lokian Hydron-3 Renewable Energy": {
-        "resource_class_id": "635",
+        "id": "781",
         "stats": {
             "res_oq": {
                 "min": 500,
@@ -18915,7 +18915,7 @@
         ]
     },
     "Nabooian Hydron-3 Renewable Energy": {
-        "resource_class_id": "636",
+        "id": "782",
         "stats": {
             "res_oq": {
                 "min": 500,
@@ -18931,7 +18931,7 @@
         ]
     },
     "Rori Hydron-3 Renewable Energy": {
-        "resource_class_id": "637",
+        "id": "783",
         "stats": {
             "res_oq": {
                 "min": 500,
@@ -18947,7 +18947,7 @@
         ]
     },
     "Talusian Hydron-3 Renewable Energy": {
-        "resource_class_id": "638",
+        "id": "784",
         "stats": {
             "res_oq": {
                 "min": 500,
@@ -18963,7 +18963,7 @@
         ]
     },
     "Tatooinian Hydron-3 Renewable Energy": {
-        "resource_class_id": "639",
+        "id": "785",
         "stats": {
             "res_oq": {
                 "min": 500,
@@ -18988,7 +18988,7 @@
         ]
     },
     "Yavinian Hydron-3 Renewable Energy": {
-        "resource_class_id": "640",
+        "id": "786",
         "stats": {
             "res_oq": {
                 "min": 500,
@@ -19004,7 +19004,7 @@
         ]
     },
     "Kashyyykian Hydron-3 Renewable Energy": {
-        "resource_class_id": "1058",
+        "id": "787",
         "stats": {
             "res_oq": {
                 "min": 500,
@@ -19020,7 +19020,7 @@
         ]
     },
     "Corellian Geothermal Renewable Energy": {
-        "resource_class_id": "641",
+        "id": "790",
         "stats": {
             "res_oq": {
                 "min": 500,
@@ -19036,7 +19036,7 @@
         ]
     },
     "Dantooine Geothermal Renewable Energy": {
-        "resource_class_id": "642",
+        "id": "791",
         "stats": {
             "res_oq": {
                 "min": 500,
@@ -19052,7 +19052,7 @@
         ]
     },
     "Dathomirian Geothermal Renewable Energy": {
-        "resource_class_id": "643",
+        "id": "792",
         "stats": {
             "res_oq": {
                 "min": 500,
@@ -19068,7 +19068,7 @@
         ]
     },
     "Endorian Geothermal Renewable Energy": {
-        "resource_class_id": "644",
+        "id": "793",
         "stats": {
             "res_oq": {
                 "min": 500,
@@ -19084,7 +19084,7 @@
         ]
     },
     "Lokian Geothermal Renewable Energy": {
-        "resource_class_id": "645",
+        "id": "794",
         "stats": {
             "res_oq": {
                 "min": 500,
@@ -19100,7 +19100,7 @@
         ]
     },
     "Nabooian Geothermal Renewable Energy": {
-        "resource_class_id": "646",
+        "id": "795",
         "stats": {
             "res_oq": {
                 "min": 500,
@@ -19116,7 +19116,7 @@
         ]
     },
     "Rori Geothermal Renewable Energy": {
-        "resource_class_id": "647",
+        "id": "796",
         "stats": {
             "res_oq": {
                 "min": 500,
@@ -19132,7 +19132,7 @@
         ]
     },
     "Talusian Geothermal Renewable Energy": {
-        "resource_class_id": "648",
+        "id": "797",
         "stats": {
             "res_oq": {
                 "min": 500,
@@ -19148,7 +19148,7 @@
         ]
     },
     "Tatooinian Geothermal Renewable Energy": {
-        "resource_class_id": "649",
+        "id": "798",
         "stats": {
             "res_oq": {
                 "min": 500,
@@ -19173,7 +19173,7 @@
         ]
     },
     "Yavinian Geothermal Renewable Energy": {
-        "resource_class_id": "650",
+        "id": "799",
         "stats": {
             "res_oq": {
                 "min": 500,
@@ -19189,7 +19189,7 @@
         ]
     },
     "Kashyyykian Geothermal Renewable Energy": {
-        "resource_class_id": "1059",
+        "id": "800",
         "stats": {
             "res_oq": {
                 "min": 500,
@@ -19205,7 +19205,7 @@
         ]
     },
     "Corellian Wind Renewable Energy": {
-        "resource_class_id": "652",
+        "id": "804",
         "stats": {
             "res_oq": {
                 "min": 500,
@@ -19221,7 +19221,7 @@
         ]
     },
     "Dantooine Wind Renewable Energy": {
-        "resource_class_id": "653",
+        "id": "805",
         "stats": {
             "res_oq": {
                 "min": 500,
@@ -19237,7 +19237,7 @@
         ]
     },
     "Dathomirian Wind Renewable Energy": {
-        "resource_class_id": "654",
+        "id": "806",
         "stats": {
             "res_oq": {
                 "min": 500,
@@ -19253,7 +19253,7 @@
         ]
     },
     "Endorian Wind Renewable Energy": {
-        "resource_class_id": "655",
+        "id": "807",
         "stats": {
             "res_oq": {
                 "min": 500,
@@ -19269,7 +19269,7 @@
         ]
     },
     "Lokian Wind Renewable Energy": {
-        "resource_class_id": "656",
+        "id": "808",
         "stats": {
             "res_oq": {
                 "min": 500,
@@ -19285,7 +19285,7 @@
         ]
     },
     "Nabooian Wind Renewable Energy": {
-        "resource_class_id": "657",
+        "id": "809",
         "stats": {
             "res_oq": {
                 "min": 500,
@@ -19301,7 +19301,7 @@
         ]
     },
     "Rori Wind Renewable Energy": {
-        "resource_class_id": "658",
+        "id": "810",
         "stats": {
             "res_oq": {
                 "min": 500,
@@ -19317,7 +19317,7 @@
         ]
     },
     "Talusian Wind Renewable Energy": {
-        "resource_class_id": "659",
+        "id": "811",
         "stats": {
             "res_oq": {
                 "min": 500,
@@ -19333,7 +19333,7 @@
         ]
     },
     "Tatooinian Wind Renewable Energy": {
-        "resource_class_id": "660",
+        "id": "812",
         "stats": {
             "res_oq": {
                 "min": 500,
@@ -19358,7 +19358,7 @@
         ]
     },
     "Yavinian Wind Renewable Energy": {
-        "resource_class_id": "661",
+        "id": "813",
         "stats": {
             "res_oq": {
                 "min": 500,
@@ -19374,7 +19374,7 @@
         ]
     },
     "Kashyyykian Wind Renewable Energy": {
-        "resource_class_id": "1060",
+        "id": "814",
         "stats": {
             "res_oq": {
                 "min": 500,
@@ -19390,7 +19390,7 @@
         ]
     },
     "Corellian Solar Renewable Energy": {
-        "resource_class_id": "662",
+        "id": "817",
         "stats": {
             "res_oq": {
                 "min": 500,
@@ -19406,7 +19406,7 @@
         ]
     },
     "Dantooine Solar Renewable Energy": {
-        "resource_class_id": "663",
+        "id": "818",
         "stats": {
             "res_oq": {
                 "min": 500,
@@ -19422,7 +19422,7 @@
         ]
     },
     "Dathomirian Solar Renewable Energy": {
-        "resource_class_id": "664",
+        "id": "819",
         "stats": {
             "res_oq": {
                 "min": 500,
@@ -19438,7 +19438,7 @@
         ]
     },
     "Endorian Solar Renewable Energy": {
-        "resource_class_id": "665",
+        "id": "820",
         "stats": {
             "res_oq": {
                 "min": 500,
@@ -19454,7 +19454,7 @@
         ]
     },
     "Lokian Solar Renewable Energy": {
-        "resource_class_id": "666",
+        "id": "821",
         "stats": {
             "res_oq": {
                 "min": 500,
@@ -19470,7 +19470,7 @@
         ]
     },
     "Nabooian Solar Renewable Energy": {
-        "resource_class_id": "667",
+        "id": "822",
         "stats": {
             "res_oq": {
                 "min": 500,
@@ -19486,7 +19486,7 @@
         ]
     },
     "Rori Solar Renewable Energy": {
-        "resource_class_id": "668",
+        "id": "823",
         "stats": {
             "res_oq": {
                 "min": 500,
@@ -19502,7 +19502,7 @@
         ]
     },
     "Talusian Solar Renewable Energy": {
-        "resource_class_id": "669",
+        "id": "824",
         "stats": {
             "res_oq": {
                 "min": 500,
@@ -19518,7 +19518,7 @@
         ]
     },
     "Tatooinian Solar Renewable Energy": {
-        "resource_class_id": "670",
+        "id": "825",
         "stats": {
             "res_oq": {
                 "min": 500,
@@ -19543,7 +19543,7 @@
         ]
     },
     "Yavinian Solar Renewable Energy": {
-        "resource_class_id": "1121",
+        "id": "826",
         "stats": {
             "res_oq": {
                 "min": 500,
@@ -19559,7 +19559,7 @@
         ]
     },
     "Kashyyykian Solar Renewable Energy": {
-        "resource_class_id": "1061",
+        "id": "827",
         "stats": {
             "res_oq": {
                 "min": 500,

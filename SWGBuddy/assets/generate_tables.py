@@ -78,7 +78,6 @@ def main():
     
     for row in rows:
         r_id = row['id']
-        class_id = row['swg_index']
         p_id = clean_str(row.get('parent_id'))
         
         # Track Parents
@@ -87,7 +86,6 @@ def main():
             
         nodes[r_id] = {
             "id": r_id,
-            "resource_class_id": class_id,
             "parent_id": p_id,
             "label": clean_str(row.get('class_label')),
             "enum": clean_str(row.get('enum_name')),
@@ -184,7 +182,7 @@ def main():
         # --- CONSTRUCT ENTRY ---
         
         valid_resources[label] = {
-            "resource_class_id": node["resource_class_id"],
+            "id": node["id"],
             "stats": stats_obj,
             "planets": get_planet_list(label)
         }
