@@ -97,8 +97,35 @@ async function togglePlanet(selectElement, resourceName) {
 }
 
 async function handleBadgeClick(event, resourceName, planetValue) {
-	// Optional: Implement removal logic here if needed
-	console.log(`Remove ${planetValue} from ${resourceName}`);
+	const newPlanet = selectElement.value;
+    if (!newPlanet) return;
+
+    const resource = rawResourceData.find(r => r.name === resourceName);
+    if (!resource) return;
+
+    // Add planet to local list to prevent UI lag
+    if (!resource.planets) resource.planets = [];
+    if (!resource.planets.includes(newPlanet)) {
+        resource.planets.push(newPlanet);
+    }
+
+    try {
+        await API.updateResource({
+            id: resource.id,
+            name: resource.name,
+            type: resource.type,
+            planet: newPlanet 
+        });
+
+        selectElement.value = "";
+        if (typeof applyAllTableTransforms === 'function') {
+            applyAllTableTransforms();
+        }
+    } catch (error) {
+        console.error("Failed to add planet:", error);
+        alert("Error adding planet: " + error.message);
+        await loadResources(); // Revert local state on error
+    }
 }
 
 function getStatColorClass(rating) {

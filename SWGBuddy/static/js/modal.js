@@ -196,7 +196,7 @@ const Modal = {
 		document.getElementById('res-reporter').textContent = res.reporter_name || "Unknown";
 		
 		// Planets
-		const planets = (res.planets || []).join(', ') || "None";
+		const planets = (res.planet || []).join(', ') || "None";
 		document.getElementById('res-planets').textContent = planets;
 		
 		// Status
