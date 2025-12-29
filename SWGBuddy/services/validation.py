@@ -337,9 +337,7 @@ class ValidationService(Core):
 				cols.append(f"{stat}_rating")
 				vals.append(data[f"{stat}_rating"])
 
-		placeholders = ",".join(["%s"] * len(cols))
-
-		sql = f"INSERT INTO resource_spawns ({','.join(cols)}) VALUES ({placeholders})"
+		sql = f"INSERT INTO resource_spawns ({','.join(cols)}) VALUES ({','.join(vals)})"
 		self.info(f"[ValidationService] {sql}")
 		
 		with DatabaseContext.cursor(commit=True) as cur:
