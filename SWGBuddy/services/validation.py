@@ -2,7 +2,6 @@
 SWGBuddy ValidationService Module
 
 The Gatekeeper. Handles all writes, permission checks, data integrity, and stat calculations.
-
 """
 import sys
 import json
@@ -10,8 +9,6 @@ import os
 import traceback
 from core.core import Core
 from core.database import DatabaseContext
-
-
 
 class ValidationService(Core):
 	# Role Power Levels
@@ -37,7 +34,6 @@ class ValidationService(Core):
 		
 		# Caches
 		self.valid_resources = {} 
-		self.id_to_label = {}     
 		self.command_permissions = {} 
 
 	def run(self):
@@ -46,7 +42,6 @@ class ValidationService(Core):
 		
 		# 1. Load Static JSON Rules
 		try:
-			# Assumes running from root directory via 'python3 -m SWGBuddy.main'
 			json_path = os.path.join(os.getcwd(), "assets", "valid_resource_table.json")
 			with open(json_path, 'r') as f:
 				self.valid_resources = json.load(f)
@@ -57,7 +52,6 @@ class ValidationService(Core):
 
 		# 2. Hydrate DB Caches
 		try:
-			self._hydrate_id_map()
 			self._hydrate_permissions()
 		except Exception as e:
 			self.critical(f"FATAL: Failed to hydrate DB maps: {e}")
@@ -75,14 +69,6 @@ class ValidationService(Core):
 				self.running = False
 			except Exception as e:
 				self.error(f"Worker Loop Crash: {e}\n{traceback.format_exc()}")
-
-	def _hydrate_id_map(self):
-		"""Maps swg_index (int) -> class_label (str) for rule lookup."""
-		with DatabaseContext.cursor() as cur:
-			cur.execute("SELECT swg_index, class_label FROM resource_taxonomy")
-			rows = cur.fetchall()
-		self.id_to_label = {r['swg_index']: r['class_label'] for r in rows}
-		self.info(f"Hydrated ID Map with {len(self.id_to_label)} entries.")
 
 	def _hydrate_permissions(self):
 		"""Loads command permissions from the database."""
@@ -106,17 +92,17 @@ class ValidationService(Core):
 
 		try:
 			# 1. Check Command Registry
-			# Default to 100 (SuperAdmin only) if command not found for safety
 			required_power = self.command_permissions.get(action, 100)
 			
+			# EXCEPTION: sync_user is allowed for Guests (login flow)
+			if action == 'sync_user':
+				required_power = 0
+
 			# 2. Verify Permissions
 			if required_power > 0:
 				is_allowed, user_role = self._check_permission(user_ctx, server_id, required_power)
 				if not is_allowed:
 					raise PermissionError(f"Insufficient Permissions. Your Role: {user_role}, Required Level: {required_power}")
-			
-			# Pass role to handlers that need it (like set_user_role)
-			# We re-fetch inside specific handlers if needed, but passing context is cleaner.
 
 			# 3. Route Command
 			if action == "sync_user":
@@ -167,7 +153,6 @@ class ValidationService(Core):
 
 		# 3. DB Write
 		if is_new:
-			# Check for existing resource name on this server
 			name = data.get('name')
 			if self._resource_exists(name, server_id):
 				raise ValueError(f"Error: {name} already exists for {server_id}")
@@ -177,7 +162,6 @@ class ValidationService(Core):
 			self._update_resource(data)
 
 	def _resource_exists(self, name, server_id):
-		"""Checks if a resource name is already in use for the server."""
 		if not name: return False
 		with DatabaseContext.cursor() as cur:
 			cur.execute("SELECT 1 FROM resource_spawns WHERE name = %s AND server_id = %s", (name, server_id))
@@ -202,28 +186,20 @@ class ValidationService(Core):
 			cur.execute(sql_delete, (res_id, server_id))
 
 	def _set_user_role(self, requester_ctx, payload, server_id):
-		"""
-		Handles role assignment based on the strict hierarchy:
-		SuperAdmin -> Can assign anything.
-		Admin (3)  -> Can assign up to Editor (2).
-		Editor (2) -> Can assign up to User (1).
-		"""
 		target_uid = payload.get('target_user_id')
 		target_role = payload.get('role').upper()
 		
 		if target_role not in self.ROLE_HIERARCHY:
 			raise ValueError(f"Invalid role: {target_role}")
 
-		# 1. Determine Requester Power
 		req_uid = requester_ctx.get('id')
-		is_allowed, req_role_name = self._check_permission(requester_ctx, server_id, 0) # Get current role
+		is_allowed, req_role_name = self._check_permission(requester_ctx, server_id, 0)
 		
 		req_power = self.ROLE_HIERARCHY.get(req_role_name, 0)
 		target_power = self.ROLE_HIERARCHY.get(target_role, 0)
 
-		# 2. Hierarchy Logic
 		if req_role_name == 'SUPERADMIN':
-			pass # Superadmin can do anything
+			pass 
 		elif req_role_name == 'ADMIN':
 			if target_power >= 3: 
 				raise PermissionError("Admins cannot promote users to Admin or SuperAdmin.")
@@ -233,7 +209,6 @@ class ValidationService(Core):
 		else:
 			raise PermissionError("Your role cannot assign permissions.")
 
-		# 3. Execute Assignment
 		sql = """
 			INSERT INTO server_permissions (user_id, server_id, role, assigned_by)
 			VALUES (%s, %s, %s, %s)
@@ -247,14 +222,7 @@ class ValidationService(Core):
 	# STAT CALCULATIONS & VALIDATION
 	# ----------------------------------------------------------------------
 	def _get_rules(self, data):
-		# Handle string labels directly if passed, or ID lookup
-		# Frontend now sends 'type' string (label)
 		label = data.get('type') 
-		
-		# Fallback for old ID behavior if needed
-		if not label and data.get('resource_class_id'):
-			label = self.id_to_label.get(int(data['resource_class_id']))
-
 		if not label:
 			raise ValueError(f"Missing Resource Type/Label")
 		
@@ -268,19 +236,14 @@ class ValidationService(Core):
 		stats_def = rules.get('stats', {})
 		allowed_planets = rules.get('planets', [])
 
-		# 1. Planet Validation
-		# Data might come in as 'planet' (string) or 'planets' (list) from frontend tweaks
+		# Planet Validation
 		planet = data.get('planet')
-		if planet:
-			if planet not in allowed_planets:
-				# Relaxed check for "Kashyyykian" etc if not strictly in list but derived? 
-				# For now strict check based on valid_resource_table.json
-				raise ValueError(f"Planet '{planet}' is not valid for this resource type.")
+		if planet and planet not in allowed_planets:
+			raise ValueError(f"Planet '{planet}' is not valid for this resource type.")
 
-		# 2. Stat Validation
+		# Stat Validation
 		for stat in self.STAT_COLS:
 			val = data.get(stat)
-			# If 0 or None, skip unless required? Assuming 0 is valid "empty"
 			if val is None or val == "": continue
 			
 			try:
@@ -308,7 +271,6 @@ class ValidationService(Core):
 				
 			val = int(val)
 			stat_max = stats_def[stat]['max']
-			# Divide by Max to get 0.0-1.0
 			rating = round(val / stat_max, 3) if stat_max > 0 else 0.0
 			
 			data[f"{stat}_rating"] = rating
@@ -324,11 +286,27 @@ class ValidationService(Core):
 	# DB UTILS
 	# ----------------------------------------------------------------------
 	def _insert_resource(self, data, server_id):
-		res_class_id = data.get('resource_class_id')
-		
-		cols = ["server_id", "resource_class_id", "name", "planet", "res_weight_rating"]
-		vals = [server_id, res_class_id, data['name'], data.get('planet'), data['res_weight_rating']]
+		# 1. Get Class ID directly from Config
+		label = data.get('type')
+		rules = self.valid_resources.get(label, {})
+		res_class_id = rules.get('resource_class_id')
 
+		# Safety: Fail if ID is missing (Bug check)
+		if res_class_id is None:
+			raise ValueError(f"Configuration Error: 'resource_class_id' missing for type '{label}'. Check valid_resource_table.json.")
+
+		# 2. Prepare Columns and Values
+		cols = ["server_id", "resource_class_id", "name", "planet", "res_weight_rating", "notes"]
+		vals = [
+			server_id, 
+			res_class_id, 
+			data['name'], 
+			data.get('planet'), 
+			data.get('res_weight_rating', 0.0), # Default to 0.0 if missing
+			data.get('notes', '')
+		]
+
+		# Add Stats
 		for stat in self.STAT_COLS:
 			if data.get(stat):
 				cols.append(stat)
@@ -337,8 +315,11 @@ class ValidationService(Core):
 				cols.append(f"{stat}_rating")
 				vals.append(data[f"{stat}_rating"])
 
-		sql = f"INSERT INTO resource_spawns ({','.join(cols)}) VALUES ({','.join(vals)})"
-		self.info(f"[ValidationService] {sql}")
+		# 3. Generate SQL with Placeholders (Safe)
+		placeholders = ",".join(["%s"] * len(vals))
+		sql = f"INSERT INTO resource_spawns ({','.join(cols)}) VALUES ({placeholders})"
+		
+		self.info(f"[ValidationService] Adding Resource: {data['name']} (ID: {res_class_id})")
 		
 		with DatabaseContext.cursor(commit=True) as cur:
 			cur.execute(sql, tuple(vals))
@@ -346,7 +327,7 @@ class ValidationService(Core):
 	def _update_resource(self, data):
 		res_id = data.get('id')
 		set_clauses = ["last_modified = NOW()", "res_weight_rating = %s"]
-		vals = [data['res_weight_rating']]
+		vals = [data.get('res_weight_rating', 0.0)]
 		
 		for stat in self.STAT_COLS:
 			if stat in data:
@@ -368,7 +349,6 @@ class ValidationService(Core):
 			cur.execute(sql, tuple(vals))
 
 	def _check_permission(self, user_ctx, server_id, required_power):
-		"""Returns (bool is_allowed, str user_role)"""
 		if not user_ctx or not user_ctx.get('id'): return False, 'GUEST'
 		uid = user_ctx.get('id')
 		
@@ -380,8 +360,8 @@ class ValidationService(Core):
 			cur.execute("SELECT role FROM server_permissions WHERE user_id = %s AND server_id = %s", (uid, server_id))
 			p = cur.fetchone()
 			
-		role = p['role'] if p else 'GUEST' # Default to GUEST if logged in
-		user_power = self.ROLE_HIERARCHY.get(role, 0) # User = 1
+		role = p['role'] if p else 'GUEST'
+		user_power = self.ROLE_HIERARCHY.get(role, 0)
 		
 		return user_power >= required_power, role
 
