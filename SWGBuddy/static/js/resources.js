@@ -39,30 +39,27 @@ async function toggleStatus(button, resourceName) {
 	const currentlyActive = statusSpan.textContent === "Active";
 	const newState = !currentlyActive;
 
-	// Optimistic UI update
+	// Optimistic UI
 	statusSpan.textContent = newState ? "Active" : "Inactive";
 	statusSpan.className = `status-text ${newState ? 'active' : 'inactive'}`;
 
 	try {
-		// Fix: Send 'type' which is required by validation.py
-		await API.updateStatus(resourceName, newState, resource.type);
+		// UNIFIED CALL: Use updateResource instead of specific endpoint
+		await API.updateResource({
+			id: resource.id,
+			name: resource.name,
+			type: resource.type, // <--- CRITICAL: Required for validation lookup
+			is_active: newState
+		});
 		
-		// Update local state
 		resource.is_active = newState;
 	} catch (error) {
 		console.error("Failed to save status:", error);
+		// Revert UI
 		statusSpan.textContent = currentlyActive ? "Active" : "Inactive";
 		statusSpan.className = `status-text ${currentlyActive ? 'active' : 'inactive'}`;
-		alert("Failed to update status: " + error.message);
+		alert("Failed: " + error.message);
 	}
-}
-
-function getStatColorClass(rating) {
-	if (!rating || rating === '-') return '';
-	if (rating >= 0.950) return 'stat-red';
-	if (rating >= 0.900 && rating < 0.950) return 'stat-yellow';
-	if (rating >= 0.500 && rating < 0.900) return 'stat-green';
-	return '';
 }
 
 // ------------------------------------------------------------------
@@ -76,30 +73,26 @@ async function togglePlanet(selectElement, resourceName) {
 	const resource = rawResourceData.find(r => r.name === resourceName);
 	if (!resource) return;
 
-	// Add planet to local list to prevent UI lag
 	if (!resource.planets) resource.planets = [];
 	if (!resource.planets.includes(newPlanet)) {
 		resource.planets.push(newPlanet);
 	}
 
 	try {
-		// Send update to server (Requires type for validation)
-		// We send the specific 'planet' field to add it
-		await API.updateStatus({
+		await API.updateResource({
 			id: resource.id,
 			name: resource.name,
-			type: resource.type,
-			planet: newPlanet // ValidationService adds this to the list
+			type: resource.type, // <--- CRITICAL
+			planet: newPlanet
 		});
 
-		// Reset dropdown and refresh row
 		selectElement.value = "";
 		if (typeof applyAllTableTransforms === 'function') {
 			applyAllTableTransforms();
 		}
 	} catch (error) {
 		console.error("Failed to add planet:", error);
-		alert("Error adding planet: " + error.message);
+		alert("Error: " + error.message);
 	}
 }
 

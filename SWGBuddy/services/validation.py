@@ -33,21 +33,37 @@ class ValidationService(Core):
 		self.running = True
 		
 		# Caches
-		self.valid_resources = {} 
-		self.command_permissions = {} 
+		self.valid_resources = {} # Will be populated by flattening the tree
+	
+	def _flatten_taxonomy(self, nodes):
+		"""Recursively walks the tree to build the label -> config map."""
+		for node in nodes:
+			if node.get('is_valid'):
+				self.valid_resources[node['label']] = {
+					"id": node['id'],
+					"stats": node.get('stats', {}),
+					"planets": node.get('planets', [])
+				}
+			
+			if node.get('children'):
+				self._flatten_taxonomy(node['children'])
 
 	def run(self):
 		DatabaseContext.initialize()
 		self.info("Initializing Validation Service...")
 		
-		# 1. Load Static JSON Rules
+		# 1. Load Single Taxonomy File
 		try:
-			json_path = os.path.join(os.getcwd(), "assets", "valid_resource_table.json")
+			json_path = os.path.join(os.getcwd(), "assets", "resource_taxonomy.json")
 			with open(json_path, 'r') as f:
-				self.valid_resources = json.load(f)
-			self.info(f"Loaded rules for {len(self.valid_resources)} resource types.")
+				tree_data = json.load(f)
+			
+			# Flatten tree into self.valid_resources map
+			self._flatten_taxonomy(tree_data)
+			self.info(f"Loaded taxonomy. Valid types: {len(self.valid_resources)}")
+			
 		except Exception as e:
-			self.critical(f"FATAL: Failed to load valid_resource_table.json: {e}")
+			self.critical(f"FATAL: Failed to load resource_taxonomy.json: {e}")
 			return
 
 		# 2. Hydrate DB Caches
