@@ -16,14 +16,15 @@ class ServiceManager:
         # Shared Queues
         self.log_queue = multiprocessing.Queue()
         self.validation_queue = multiprocessing.Queue()
+        self.reply_queue = multiprocessing.Queue()
 
     def start(self):
         print("[Manager] Spawning Services...")
 
         services = [
             ("Logger", LogService, (self.log_queue,)),
-            ("Validation", ValidationService, (self.validation_queue, self.log_queue)),
-            ("Web", WebService, (self.validation_queue, self.log_queue))
+            ("Validation", ValidationService, (self.validation_queue, self.log_queue, self.reply_queue)),
+            ("Web", WebService, (self.validation_queue, self.log_queue, self.reply_queue))
         ]
 
         for name, cls, args in services:
