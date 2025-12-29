@@ -13,8 +13,7 @@ const STAT_MAPPING = {
 const Modal = {
     isOpen: false,
     mode: 'add', // 'add' or 'edit'
-    currentResourceId: null,
-
+    
     elements: {
         overlay: document.getElementById('resource-modal'),
         title: document.getElementById('modal-title'),
@@ -34,6 +33,7 @@ const Modal = {
         // Listen for Type changes to update UI
         this.elements.typeSelect.addEventListener('change', (e) => {
             this.updateStatFields(e.target.value);
+            this.updatePlanetFields(e.target.value);
         });
 
         // Handle Submit
@@ -45,11 +45,10 @@ const Modal = {
 
     openAdd() {
         this.mode = 'add';
-        this.currentResourceId = null;
         this.elements.title.textContent = "Report New Resource";
         this.resetForm();
         this.populateTypeDropdown();
-        this.populatePlanets(); // Ensure planets are loaded
+        this.populatePlanets(); 
         
         this.elements.overlay.classList.remove('hidden');
         this.elements.overlay.style.display = 'flex';
@@ -65,53 +64,50 @@ const Modal = {
         const select = this.elements.typeSelect;
         select.innerHTML = '<option value="">Select Resource Type...</option>';
 
-        // SAFETY CHECK: If taxonomy failed to load, don't crash
-        if (!VALID_TYPES || VALID_TYPES.size === 0) {
+        // Use RESOURCE_CONFIG keys (Labels)
+        if (!RESOURCE_CONFIG || Object.keys(RESOURCE_CONFIG).length === 0) {
             const opt = document.createElement('option');
             opt.disabled = true;
-            opt.textContent = "Error: Taxonomy not loaded. Refresh page.";
+            opt.textContent = "Loading types...";
             select.appendChild(opt);
             return;
         }
 
-        // Filter TAXONOMY_TREE using VALID_TYPES set
-        const sortedTypes = Array.from(VALID_TYPES)
-            .filter(id => TAXONOMY_TREE[id]) // Extra safety check
-            .map(id => ({ id: id, name: TAXONOMY_TREE[id].class_label }))
-            .sort((a, b) => a.name.localeCompare(b.name));
+        const sortedTypes = Object.keys(RESOURCE_CONFIG).sort();
 
-        sortedTypes.forEach(type => {
+        sortedTypes.forEach(label => {
             const opt = document.createElement('option');
-            opt.value = type.id;
-            opt.textContent = type.name;
+            opt.value = label;
+            opt.textContent = label;
             select.appendChild(opt);
         });
     },
 
-    populatePlanets() {
-        // TODO: Move planet list to config or DB
-        const planets = ["Corellia", "Dantooine", "Dathomir", "Endor", "Lok", "Naboo", "Rori", "Talus", "Tatooine", "Yavin"];
+    populatePlanets(allowedPlanets = null) {
         const select = this.elements.planetSelect;
-        if (select.children.length <= 1) { // Only populate if empty
-            planets.forEach(p => {
-                const opt = document.createElement('option');
-                opt.value = p;
-                opt.textContent = p;
-                select.appendChild(opt);
-            });
-        }
+        select.innerHTML = ''; // Reset
+        
+        // Use Global ALL_PLANETS from config.js if no restriction
+        const list = allowedPlanets || ALL_PLANETS;
+        
+        list.forEach(p => {
+            const opt = document.createElement('option');
+            opt.value = p;
+            opt.textContent = p;
+            select.appendChild(opt);
+        });
     },
 
-    updateStatFields(typeId) {
-        if (!typeId) return;
+    updateStatFields(label) {
+        if (!label) return;
 
-        const config = getResourceTypeConfig(typeId);
+        const config = getResourceTypeConfig(label);
         if (!config) return;
 
         // Loop through all stat inputs
         Object.entries(STAT_MAPPING).forEach(([inputId, attrCode]) => {
             const input = this.elements.inputs[inputId];
-            const statConfig = config.stats[attrCode];
+            const statConfig = config.stats[attrCode]; // e.g. {min: 1, max: 1000}
 
             if (statConfig) {
                 // Valid Stat
@@ -129,6 +125,17 @@ const Modal = {
             }
         });
     },
+    
+    updatePlanetFields(label) {
+        if (!label) return;
+        const config = getResourceTypeConfig(label);
+        // config.planets is an array of strings e.g. ["Tatooine", "Naboo"]
+        if (config && config.planets) {
+            this.populatePlanets(config.planets);
+        } else {
+            this.populatePlanets(null); // Fallback to all
+        }
+    },
 
     async submit() {
         const btn = this.elements.form.querySelector('button[type="submit"]');
@@ -142,16 +149,22 @@ const Modal = {
 
             // 2. Gather Data
             const formData = {
-                resource_class_id: this.elements.typeSelect.value,
+                type: this.elements.typeSelect.value, // Sending Label now
                 name: document.getElementById('res-name').value,
-                planet: this.elements.planetSelect.value,
-                // Server ID is handled by API wrapper from Auth context
+                planets: [this.elements.planetSelect.value], // Array expected?
+                // Server ID handled by API
             };
+            
+            // Backend might expect 'planet' (string) or 'planets' (list) depending on validation.py
+            // Safe bet based on previous code: 'planet': string
+            formData.planet = this.elements.planetSelect.value;
 
             // Add stats
             Object.keys(STAT_MAPPING).forEach(key => {
                 const val = document.getElementById(key).value;
-                if (val) formData[key] = parseInt(val);
+                if (val && !document.getElementById(key).disabled) {
+                    formData[key] = parseInt(val);
+                }
             });
 
             // 3. Send Request
@@ -182,7 +195,7 @@ const Modal = {
     setStatus(msg, type) {
         const bar = this.elements.statusBar;
         bar.textContent = msg;
-        bar.className = `status-bar status-${type}`; // css: .status-error, .status-success
+        bar.className = `status-bar status-${type}`; 
     },
 
     resetStatusBar() {
@@ -200,7 +213,6 @@ const Modal = {
     }
 };
 
-// Helper to inject status bar if missing from HTML
 function createStatusBar() {
     const div = document.createElement('div');
     div.id = 'modal-status-bar';
@@ -209,9 +221,7 @@ function createStatusBar() {
     return div;
 }
 
-// Global hooks for HTML onClick
 window.openAddResourceModal = () => Modal.openAdd();
-window.closeResourceModal = () => Modal.close(); // Need to update HTML close button
+window.closeResourceModal = () => Modal.close(); 
 
-// Init on load
 document.addEventListener('DOMContentLoaded', () => Modal.init());

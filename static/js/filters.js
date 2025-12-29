@@ -1,6 +1,6 @@
 /**
  * Filtering & Sorting Component
- * Handles the data transformation pipeline
+ * Handles the data transformation pipeline.
  */
 
 const columnTypes = {
@@ -60,10 +60,14 @@ function applyAllTableTransforms() {
 
 function applyFilters() {
     const searchTerm = document.querySelector('.search-input').value.toLowerCase();
-    const isRoot = currentSelectedId === 1; //
-    const validLabels = isRoot ? [] : [currentSelectedLabel, ...getDescendantLabels(currentSelectedId)]; //
+    
+    // Taxonomy Logic (Label Based)
+    // Note: getDescendantLabels is provided by taxonomy.js
+    const isRoot = currentSelectedLabel === "Resources" || currentSelectedLabel === "All Resources";
+    
+    // If not root, we match the selected label AND all its children
+    const validLabels = isRoot ? [] : [currentSelectedLabel.toLowerCase(), ...getDescendantLabels(currentSelectedLabel)];
 
-    // Filter the ALREADY SORTED data
     filteredData = filteredData.filter(res => {
         const name = (res.name || "").toLowerCase();
         const type = (res.type || "").toLowerCase();
@@ -75,26 +79,37 @@ function applyFilters() {
     });
 
     currentPage = 1; 
-    renderPaginatedTable(); //
+    renderPaginatedTable(); 
+}
+
+function selectCategory(label, displayLabel = null) {
+    if (!label) label = "Resources";
+
+	// Update the UI text
+	document.querySelector('.dropdown-selected').textContent = displayLabel || label;
+	
+	currentSelectedLabel = label;
+	
+	// Close the dropdown
+    const list = document.getElementById('taxonomy-list');
+	if(list) list.style.display = 'none';
+	
+	// Trigger the combined filter
+	applyAllTableTransforms();
 }
 
 function toggleSort(key) {
     const idx = sortStack.findIndex(s => s.key === key);
     const type = columnTypes[key] || 'alpha';
     
-    // Step 1: Define what the "First Click" (Natural) direction is
-    // Alpha: Up (asc) = A-Z | Numeric: Up (desc) = High-Low
     const naturalDir = (type === 'alpha') ? 'asc' : 'desc';
     const reverseDir = (type === 'alpha') ? 'desc' : 'asc';
 
     if (idx === -1) {
-        // First click: Start with Natural Direction
         sortStack.push({ key, direction: naturalDir });
     } else if (sortStack[idx].direction === naturalDir) {
-        // Second click: Switch to Reverse Direction
         sortStack[idx].direction = reverseDir;
     } else {
-        // Third click: Remove from sort (The "Off" state)
         sortStack.splice(idx, 1);
     }
 
@@ -103,56 +118,25 @@ function toggleSort(key) {
 }
 
 function updateSortVisuals() {
-    // 1. Clear all active classes
     document.querySelectorAll('.sort-btns span').forEach(el => {
         el.classList.remove('active-up', 'active-down');
     });
 
-    // 2. Re-apply based on current stack
     sortStack.forEach(sort => {
-        const type = columnTypes[sort.key];
         const headerDiv = document.querySelector(`[onclick*="'${sort.key}'"]`);
         if (!headerDiv) return;
 
         const upArrow = headerDiv.querySelector('.up');
         const downArrow = headerDiv.querySelector('.down');
 
-        if (type === 'alpha') {
-            // Alpha: Up = asc (A-Z), Down = desc (Z-A)
-            if (sort.direction === 'asc') upArrow.classList.add('active-up');
-            else if (sort.direction === 'desc') downArrow.classList.add('active-down');
-        } else {
-            // Numeric/Date: Up = desc (High-to-Low), Down = asc (Low-to-High)
-            if (sort.direction === 'desc') upArrow.classList.add('active-up');
-            else if (sort.direction === 'asc') downArrow.classList.add('active-down');
+        if (sort.direction === 'asc' || sort.direction === 'desc') {
+             // Visual mapping: ASC (A-Z) = Up Arrow, DESC (Z-A) = Down Arrow
+             // Note: This can be subjective. Often Table UP = Ascending.
+             if (sort.direction === 'asc') {
+                 if(upArrow) upArrow.classList.add('active-up');
+             } else {
+                 if(downArrow) downArrow.classList.add('active-down');
+             }
         }
     });
-}
-
-function selectCategory(id, classLabel, displayLabel = null) {
-	// Update the UI text - use displayLabel if provided (e.g., "All Resources")
-	document.querySelector('.dropdown-selected').textContent = displayLabel || classLabel;
-	
-	currentSelectedId = id;
-	currentSelectedLabel = classLabel.toLowerCase();
-	
-	// Close the dropdown
-	document.getElementById('taxonomy-list').style.display = 'none';
-	
-	// Trigger the combined filter
-	applyAllTableTransforms();
-}
-
-function getDescendantLabels(parentId) {
-	let labels = [];
-	const childrenIds = taxonomyMap[parentId] || [];
-
-	childrenIds.forEach(childId => {
-		const child = taxonomyData.find(t => t.id === childId);
-		if (child) {
-			labels.push(child.class_label.toLowerCase());
-			labels = labels.concat(getDescendantLabels(childId));
-		}
-	});
-	return labels;
 }

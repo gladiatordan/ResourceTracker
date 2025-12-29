@@ -1,20 +1,20 @@
 const ALL_PLANETS = ["Corellia", "Dantooine", "Dathomir", "Endor", "Kashyyyk", "Lok", "Mustafar", "Naboo", "Rori", "Talus", "Tatooine", "Yavin"];
 
-// Selection states used by filters and sorting
-let currentSelectedId = 1; 
-let currentSelectedLabel = "Resources";
-let selectedResourceName = null;
-let originalModalData = null;
+// Global State
+let currentSelectedLabel = "Resources"; // Default to Root
+let selectedResourceName = null;      // For row highlighting
+
+// Sorting Defaults
 let sortStack = [
 	{ key: 'date_reported', direction: 'desc' }, 
 	{ key: 'is_active', direction: 'desc' }
 ];
-let rawResourceData = [];
-let LAST_SYNC_TIMESTAMP = 0;
-let taxonomyData = [];
-let taxonomyMap = {};
-// config.js
+
+// Data Stores
+let rawResourceData = [];       // Master list from DB
+let filteredData = [];          // List after search/category filters
+let LAST_SYNC_TIMESTAMP = 0;    // For delta updates
+
+// Pagination
 let currentPage = 1;
 let resultsPerPage = 50;
-let filteredData = []; // To store data after filters but before pagination
-let isNewResource = false;
