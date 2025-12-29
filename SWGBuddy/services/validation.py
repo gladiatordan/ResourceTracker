@@ -296,7 +296,7 @@ class ValidationService(Core):
 			raise ValueError(f"Configuration Error: 'id' missing for type '{label}'. Check valid_resource_table.json.")
 
 		# 2. Prepare Columns and Values
-		cols = ["server_id", "id", "name", "planet", "res_weight_rating", "notes"]
+		cols = ["server_id", "resource_class_id", "name", "planet", "res_weight_rating", "notes"]
 		vals = [
 			server_id, 
 			res_class_id, 
