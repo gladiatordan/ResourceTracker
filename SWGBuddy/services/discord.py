@@ -17,7 +17,6 @@ from discord import app_commands
 from queue import Empty
 
 # Local Imports
-from core.ipc import create_packet
 from core.core import Core
 
 class DiscordBotService(Core):

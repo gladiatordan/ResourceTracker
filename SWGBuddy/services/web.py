@@ -8,12 +8,12 @@ import sys
 import os
 import threading
 
-# Ensure root directory is in path
-sys.path.append(os.getcwd())
 
-from ..core.core import Core
-from ..core.database import DatabaseContext
-from app import app, start_response_router
+from core.core import Core
+from core.database import DatabaseContext
+from SWGBuddy.server import app, start_response_router
+
+
 
 class WebService(Core):
     def __init__(self, validation_queue, log_queue, reply_queue):
