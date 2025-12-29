@@ -44,17 +44,18 @@ async function toggleStatus(button, resourceName) {
 	statusSpan.className = `status-text ${newState ? 'active' : 'inactive'}`;
 
 	try {
-		// FIX: Send full object so validation.py can recalculate ratings if needed
-		const payload = {
-			...resource, 
-			is_active: newState,
-			// Ensure we use the correct array format for planets if present
-			planet: resource.planet || [] 
-		};
+        // Prepare payload
+        const payload = { ...resource, is_active: newState };
+        
+        // FIX: Remove planet fields to prevent accidental toggling/updates
+        // validation.py now handles lists gracefully, but it's safer to just 
+        // not send 'planet' if we aren't changing it.
+        delete payload.planet;
+        delete payload.planets;
 
-		await API.updateResource(payload);
-		
-		resource.is_active = newState;
+        await API.updateResource(payload);
+        
+        resource.is_active = newState;
 	} catch (error) {
 		console.error("Failed to save status:", error);
 		statusSpan.textContent = currentlyActive ? "Active" : "Inactive";

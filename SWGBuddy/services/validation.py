@@ -263,20 +263,27 @@ class ValidationService(Core):
 		stats_def = rules.get('stats', {})
 		allowed_planets = rules.get('planets', [])
 
-		# Planet Validation (FIX: Enforce Capitalization)
-		planet = data.get('planet')
-		if planet:
-			planet = [p.capitalize() for p in planet]
-			for p in planet:
-				if p not in allowed_planets:
-					raise ValueError(f"Planet '{p}' is not valid for this resource type.")
-			data['planet'] = planet # Save back to data for DB consistency
+		# Planet Validation (Handles both String (Toggle) and List (Replace))
+		planet_input = data.get('planet')
+		if planet_input:
+			if isinstance(planet_input, list):
+				# Case A: List -> Sanitize all items
+				clean_list = [str(p).capitalize() for p in planet_input]
+				data['planet'] = clean_list # Update payload
+				for p in clean_list:
+					if p not in allowed_planets:
+						raise ValueError(f"Planet '{p}' is not valid for this resource type.")
+			else:
+				# Case B: String -> Sanitize single item
+				planet_str = str(planet_input).capitalize()
+				data['planet'] = planet_str # Update payload
+				if planet_str not in allowed_planets:
+					raise ValueError(f"Planet '{planet_str}' is not valid for this resource type.")
 
 		# Stat Validation
 		for stat in self.STAT_COLS:
 			val = data.get(stat)
 			if val is None or val == "": continue
-			
 			try:
 				val = int(val)
 			except: 
@@ -363,18 +370,25 @@ class ValidationService(Core):
 				set_clauses.append(f"{stat}_rating = %s")
 				vals.append(data[f"{stat}_rating"])
 
-		# FIX: Loop no longer includes 'planet' because it needs special array logic
 		for field in ['notes', 'is_active']:
 			if field in data:
 				set_clauses.append(f"{field} = %s")
 				vals.append(data[field])
 
-		# FIX: Planet Array Toggle Logic (Add if missing, Remove if present)
-		if 'planet' in data and data['planet']:
+		# FIX: Smart Planet Logic
+		if 'planet' in data:
 			planet_val = data['planet']
-			# Postgres ARRAY Logic: CASE WHEN val in array THEN remove ELSE append
-			set_clauses.append("planet = CASE WHEN %s = ANY(COALESCE(planet, ARRAY[]::text[])) THEN array_remove(planet, %s) ELSE array_append(COALESCE(planet, ARRAY[]::text[]), %s) END")
-			vals.extend([planet_val, planet_val, planet_val])
+			
+			if isinstance(planet_val, list):
+				# MODE 1: List provided? Perform FULL REPLACE (Overwrite)
+				# This handles 'toggleStatus' sending the full current list
+				set_clauses.append("planet = %s")
+				vals.append(planet_val) 
+			elif planet_val:
+				# MODE 2: String provided? Perform TOGGLE (Add/Remove)
+				# This handles 'togglePlanet' sending a single name
+				set_clauses.append("planet = CASE WHEN %s = ANY(COALESCE(planet, ARRAY[]::text[])) THEN array_remove(planet, %s) ELSE array_append(COALESCE(planet, ARRAY[]::text[]), %s) END")
+				vals.extend([planet_val, planet_val, planet_val])
 
 		vals.append(res_id)
 		sql = f"UPDATE resource_spawns SET {', '.join(set_clauses)} WHERE id = %s"
