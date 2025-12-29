@@ -4,7 +4,8 @@ import json
 import threading
 import time
 import requests
-import logging
+import secrets
+import urllib.parse
 from queue import Queue, Empty
 from flask import Flask, jsonify, request, render_template, redirect, url_for, session, current_app
 from flask_cors import CORS
@@ -13,10 +14,12 @@ from SWGBuddy.core.database import DatabaseContext
 app = Flask(__name__)
 CORS(app)
 
+# Configuration
 app.secret_key = os.getenv("FLASK_SECRET_KEY", "dev_secret_key_change_me")
 DISCORD_CLIENT_ID = os.getenv("DISCORD_CLIENT_ID")
 DISCORD_CLIENT_SECRET = os.getenv("DISCORD_CLIENT_SECRET")
-DISCORD_REDIRECT_URI = "https://swgbuddy.com/callback"
+# Default to live site, but allow override for dev
+DISCORD_REDIRECT_URI = os.getenv("DISCORD_REDIRECT_URI", "https://swgbuddy.com/callback")
 DISCORD_API_URL = "https://discord.com/api"
 
 # --------------------------------------------------------------------------
@@ -84,23 +87,43 @@ def index():
 
 @app.route('/login')
 def login():
-    import urllib.parse
+    # 1. Generate State for CSRF Protection
+    state = secrets.token_urlsafe(16)
+    session['oauth_state'] = state
+    
+    # 2. Build Auth URL
     scope = "identify"
-    encoded_redirect = urllib.parse.quote(DISCORD_REDIRECT_URI, safe='')
-    return redirect(f"{DISCORD_API_URL}/oauth2/authorize?client_id={DISCORD_CLIENT_ID}&redirect_uri={encoded_redirect}&response_type=code&scope={scope}")
+    params = {
+        'client_id': DISCORD_CLIENT_ID,
+        'redirect_uri': DISCORD_REDIRECT_URI,
+        'response_type': 'code',
+        'scope': scope,
+        'state': state
+    }
+    
+    url = f"{DISCORD_API_URL}/oauth2/authorize?{urllib.parse.urlencode(params)}"
+    return redirect(url)
 
 @app.route('/callback')
 def callback():
-    code = request.args.get('code')
-    if not code: return "Error: No code", 400
+    # 1. Verify State
+    received_state = request.args.get('state')
+    stored_state = session.pop('oauth_state', None) # Pop to ensure one-time use
+    
+    if not received_state or received_state != stored_state:
+        return "Error: State mismatch (CSRF warning). Please try logging in again.", 400
 
+    # 2. Get Code
+    code = request.args.get('code')
+    if not code: return "Error: No code provided", 400
+
+    # 3. Exchange Code for Token
     data = {
         'client_id': DISCORD_CLIENT_ID,
         'client_secret': DISCORD_CLIENT_SECRET,
         'grant_type': 'authorization_code',
         'code': code,
-        'redirect_uri': DISCORD_REDIRECT_URI,
-        'scope': 'identify'
+        'redirect_uri': DISCORD_REDIRECT_URI
     }
     
     try:
@@ -108,12 +131,17 @@ def callback():
         token_resp.raise_for_status()
         access_token = token_resp.json()['access_token']
 
+        # 4. Fetch User Data
         user_resp = requests.get(f"{DISCORD_API_URL}/users/@me", headers={"Authorization": f"Bearer {access_token}"})
         user_resp.raise_for_status()
         user_data = user_resp.json()
 
+        # 5. Sync User to DB (Async Command)
+        # We fire this off but don't strictly wait for it to login the user session
         send_command("sync_user", user_data)
         
+        # 6. Set Session
+        session.permanent = True
         session['discord_id'] = user_data['id']
         session['username'] = user_data['username']
         session['avatar'] = user_data['avatar']
@@ -121,7 +149,8 @@ def callback():
         return redirect(url_for('index'))
 
     except Exception as e:
-        return f"Login Failed: {e}", 500
+        print(f"Login Error: {e}")
+        return f"Login Failed: {str(e)}", 500
 
 @app.route('/logout')
 def logout():
@@ -138,6 +167,7 @@ def get_current_user():
     perms = {}
     
     try:
+        # Check permissions live from DB to ensure they are up to date
         with DatabaseContext.cursor() as cur:
             cur.execute("SELECT is_superadmin FROM users WHERE discord_id = %s", (uid,))
             row = cur.fetchone()
@@ -149,6 +179,7 @@ def get_current_user():
     except Exception as e:
         print(f"DB Error in /api/me: {e}")
 
+    # Update session cache just in case
     session['server_perms'] = perms
     session['is_superadmin'] = is_super
 
@@ -195,27 +226,30 @@ def queryResourceLog():
 def get_taxonomy():
     """Serves the hierarchy tree structure."""
     try:
-        path = os.path.join("SWGBuddy", "assets", "resource_hierarchy_table.json")
+        # Use relative pathing from file location to ensure it works in package mode
+        base_dir = os.path.dirname(os.path.abspath(__file__))
+        path = os.path.join(base_dir, "assets", "resource_hierarchy_table.json")
         with open(path, 'r') as f:
             data = json.load(f)
         resp = jsonify(data)
         resp.headers['Cache-Control'] = 'public, max-age=86400'
         return resp
     except Exception as e:
-        return jsonify({"error": "Taxonomy unavailable"}), 500
+        return jsonify({"error": f"Taxonomy unavailable: {e}"}), 500
 
 @app.route('/api/types', methods=['GET'])
 def get_resource_types():
     """Serves the valid types configuration (stats, planets)."""
     try:
-        path = os.path.join("SWGBuddy", "assets", "valid_resource_table.json")
+        base_dir = os.path.dirname(os.path.abspath(__file__))
+        path = os.path.join(base_dir, "assets", "valid_resource_table.json")
         with open(path, 'r') as f:
             data = json.load(f)
         resp = jsonify(data)
         resp.headers['Cache-Control'] = 'public, max-age=86400'
         return resp
     except Exception as e:
-        return jsonify({"error": "Types config unavailable"}), 500
+        return jsonify({"error": f"Types config unavailable: {e}"}), 500
 
 # --- WRITE OPERATIONS ---
 
