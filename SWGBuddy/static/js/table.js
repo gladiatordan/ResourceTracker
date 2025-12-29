@@ -33,15 +33,17 @@ function renderTable(data) {
 		const assignedPlanets = (res.planets || []).map(p => p.toLowerCase());
 		const availableOptions = ALL_PLANETS
 			.filter(p => !assignedPlanets.includes(p.toLowerCase()))
-			.map(p => `<option value="${p.toLowerCase()}">${p}</option>`)
+			.map(p => `<option value="${p}">${p}</option>`)
 			.join('');
 
 		const planetBadges = (res.planets || []).map(p => {
+            // We keep planetLower for the CSS class (e.g. .tatooine)
 			const planetLower = p.toLowerCase();
 			return `<span class="planet ${planetLower}" 
 							data-tooltip="${p}" 
-							onclick="handleBadgeClick(event, '${res.name}', '${planetLower}')">
-							${p.charAt(0).toUpperCase()}
+                            /* FIX: Pass 'p' (Capitalized) to handleBadgeClick instead of planetLower */
+							onclick="handleBadgeClick(event, '${res.name}', '${p}')">
+							${p}
 					</span>`;
 		}).join(' ');
         row.id = `row-${safeName}`;
