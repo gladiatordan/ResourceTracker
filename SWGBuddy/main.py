@@ -2,9 +2,9 @@ import time
 import signal
 import sys
 import multiprocessing
-from SWGBuddy.services.logger import LogService
-from SWGBuddy.services.validation import ValidationService
-from SWGBuddy.services.web import WebService
+from services.logger import LogService
+from services.validation import ValidationService
+from services.web import WebService
 
 class ServiceManager:
     def __init__(self):
