@@ -3,33 +3,29 @@
  * Handles data fetching, status toggling, and row refreshing.
  */
 
+// Global Store
+let rawResourceData = [];
+let lastSyncTime = 0;
+
 /**
  * Main Loader Function
  */
 async function loadResources() {
-    try {
-        // 1. Fetch Data
-        const dataPacket = await API.fetchResources(0); 
-        
-        // 2. Extract Resources list
-        const newResources = dataPacket.resources || [];
-        
-        // 3. Update Global Store
-        rawResourceData = newResources;
-        lastSyncTime = Date.now();
+	try {
+		const dataPacket = await API.fetchResources(0); 
+		const newResources = dataPacket.resources || [];
+		
+		rawResourceData = newResources;
+		lastSyncTime = Date.now();
 
-        // Note: We no longer look for valid_types here. 
-        // Taxonomy.js handles that via loadTaxonomy().
-
-        // 4. Render Table
-        if (typeof applyAllTableTransforms === 'function') {
-            applyAllTableTransforms();
-        }
-        
-        console.log(`Resources Loaded: ${rawResourceData.length}`);
-    } catch (error) {
-        console.error("Failed to load resources:", error);
-    }
+		if (typeof applyAllTableTransforms === 'function') {
+			applyAllTableTransforms();
+		}
+		
+		console.log(`Resources Loaded: ${rawResourceData.length}`);
+	} catch (error) {
+		console.error("Failed to load resources:", error);
+	}
 }
 
 // ------------------------------------------------------------------
@@ -37,44 +33,37 @@ async function loadResources() {
 // ------------------------------------------------------------------
 
 async function toggleStatus(button, resourceName) {
-    const statusSpan = button.previousElementSibling;
-    const currentlyActive = statusSpan.textContent === "Active";
-    const newState = !currentlyActive;
+	const resource = rawResourceData.find(r => r.name === resourceName);
+	if (!resource) return console.error("Resource not found:", resourceName);
 
-    // Optimistic UI update
-    statusSpan.textContent = newState ? "Active" : "Inactive";
-    statusSpan.className = `status-text ${newState ? 'active' : 'inactive'}`;
+	const statusSpan = button.previousElementSibling;
+	const currentlyActive = statusSpan.textContent === "Active";
+	const newState = !currentlyActive;
 
-    try {
-        // Use API Wrapper
-        await API.updateStatus(resourceName, newState);
-        
-        // Refresh to ensure DB sync
-        await refreshSingleRow(resourceName);
-    } catch (error) {
-        console.error("Failed to save status:", error);
-        // Revert on failure
-        statusSpan.textContent = currentlyActive ? "Active" : "Inactive";
-        statusSpan.className = `status-text ${currentlyActive ? 'active' : 'inactive'}`;
-        alert("Failed to update status. " + error.message);
-    }
+	// Optimistic UI update
+	statusSpan.textContent = newState ? "Active" : "Inactive";
+	statusSpan.className = `status-text ${newState ? 'active' : 'inactive'}`;
+
+	try {
+		// Fix: Send 'type' which is required by validation.py
+		await API.updateStatus(resourceName, newState, resource.type);
+		
+		// Update local state
+		resource.is_active = newState;
+	} catch (error) {
+		console.error("Failed to save status:", error);
+		statusSpan.textContent = currentlyActive ? "Active" : "Inactive";
+		statusSpan.className = `status-text ${currentlyActive ? 'active' : 'inactive'}`;
+		alert("Failed to update status: " + error.message);
+	}
 }
 
 function getStatColorClass(rating) {
-    if (!rating || rating === '-') return '';
-    if (rating >= 0.950) return 'stat-red';
-    if (rating >= 0.900 && rating < 0.950) return 'stat-yellow';
-    if (rating >= 0.500 && rating < 0.900) return 'stat-green';
-    return '';
-}
-
-async function refreshSingleRow(resourceName) {
-    try {
-        // Simple fallback: reload all to keep sort order correct
-        await loadResources();
-    } catch (e) {
-        console.error("Error refreshing row:", e);
-    }
+	if (!rating || rating === '-') return '';
+	if (rating >= 0.950) return 'stat-red';
+	if (rating >= 0.900 && rating < 0.950) return 'stat-yellow';
+	if (rating >= 0.500 && rating < 0.900) return 'stat-green';
+	return '';
 }
 
 // ------------------------------------------------------------------
@@ -82,10 +71,56 @@ async function refreshSingleRow(resourceName) {
 // ------------------------------------------------------------------
 
 async function togglePlanet(selectElement, resourceName) {
-    // Placeholder - Logic depends on update-resource endpoint implementation
-    console.log("Toggle planet not fully implemented yet.");
+	const newPlanet = selectElement.value;
+	if (!newPlanet) return;
+
+	const resource = rawResourceData.find(r => r.name === resourceName);
+	if (!resource) return;
+
+	// Add planet to local list to prevent UI lag
+	if (!resource.planets) resource.planets = [];
+	if (!resource.planets.includes(newPlanet)) {
+		resource.planets.push(newPlanet);
+	}
+
+	try {
+		// Send update to server (Requires type for validation)
+		// We send the specific 'planet' field to add it
+		await API.updateResource({
+			id: resource.id,
+			name: resource.name,
+			type: resource.type,
+			planet: newPlanet // ValidationService adds this to the list
+		});
+
+		// Reset dropdown and refresh row
+		selectElement.value = "";
+		if (typeof applyAllTableTransforms === 'function') {
+			applyAllTableTransforms();
+		}
+	} catch (error) {
+		console.error("Failed to add planet:", error);
+		alert("Error adding planet: " + error.message);
+	}
 }
 
 async function handleBadgeClick(event, resourceName, planetValue) {
-    console.log(`Remove ${planetValue} from ${resourceName}`);
+	// Optional: Implement removal logic here if needed
+	console.log(`Remove ${planetValue} from ${resourceName}`);
+}
+
+// ------------------------------------------------------------------
+// MODAL BRIDGE
+// ------------------------------------------------------------------
+
+function openResourceModal(resourceName) {
+	// Find the data object
+	const resource = rawResourceData.find(r => r.name === resourceName);
+	
+	if (resource && window.Modal) {
+		// Call the Modal controller to open in Edit mode
+		window.Modal.openEdit(resource);
+	} else {
+		console.error("Cannot open modal: Resource not found or Modal not loaded.");
+	}
 }
