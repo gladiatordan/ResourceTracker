@@ -402,8 +402,8 @@ class ValidationService(Core):
             cur.execute("SELECT role FROM server_permissions WHERE user_id = %s AND server_id = %s", (uid, server_id))
             p = cur.fetchone()
             
-        role = p['role'] if p else 'USER' # Default to USER if logged in
-        user_power = self.ROLE_HIERARCHY.get(role, 1) # User = 1
+        role = p['role'] if p else 'GUEST' # Default to GUEST if logged in
+        user_power = self.ROLE_HIERARCHY.get(role, 0) # User = 1
         
         return user_power >= required_power, role
 
