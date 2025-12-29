@@ -207,11 +207,17 @@ def queryResourceLog():
         since = 0
     
     sql = """
-        SELECT * FROM resource_spawns 
-        WHERE server_id = %s 
-        AND (EXTRACT(EPOCH FROM date_reported) > %s 
-             OR (last_modified IS NOT NULL AND EXTRACT(EPOCH FROM last_modified) > %s))
-        ORDER BY date_reported DESC
+        SELECT 
+			rs.*, 
+			rt.class_label AS type 
+		FROM resource_spawns rs
+		JOIN resource_taxonomy rt ON rs.resource_class_id = rt.swg_index
+		WHERE rs.server_id = %s 
+		AND (
+			EXTRACT(EPOCH FROM rs.date_reported) > %s 
+			OR (rs.last_modified IS NOT NULL AND EXTRACT(EPOCH FROM rs.last_modified) > %s)
+		)
+		ORDER BY rs.date_reported DESC;
     """
     
     try:
