@@ -336,18 +336,8 @@ class ValidationService(Core):
 			if data.get(f"{stat}_rating") is not None:
 				cols.append(f"{stat}_rating")
 				vals.append(data[f"{stat}_rating"])
-		
-		# pop unneeded columns and values before adding to query
-		cols.pop()
-		vals.pop()
 
 		placeholders = ",".join(["%s"] * len(cols))
-		
-		# Note: 'type' column added to SQL to future proof string labels
-		# If DB schema doesn't have 'type', this will fail. 
-		# Removing 'type' from cols for safety with existing legacy schema.
-		cols.pop() 
-		vals.pop()
 
 		sql = f"INSERT INTO resource_spawns ({','.join(cols)}) VALUES ({placeholders})"
 		
