@@ -198,7 +198,7 @@ def queryResourceLog():
 	sql = """
 		SELECT rs.*, rt.class_label as type, u.username as reporter_name
 		FROM resource_spawns rs
-		JOIN resource_taxonomy rt ON rs.resource_class_id = rt.swg_index
+		JOIN resource_taxonomy rt ON rs.resource_class_id = rt.id
 		LEFT JOIN users u ON rs.reporter_id = u.discord_id
 		WHERE rs.server_id = %s 
 		AND (EXTRACT(EPOCH FROM rs.date_reported) > %s 
