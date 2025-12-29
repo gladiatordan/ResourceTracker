@@ -30,11 +30,18 @@ class DatabaseContext:
                 cls._pool = psycopg2.pool.ThreadedConnectionPool(
                     minconn=1, 
                     maxconn=20, # Allow up to 20 concurrent connections per service
+                    # mTLS Configuration
                     host=os.getenv("SWG_DB_HOST", "127.0.0.1"),
                     database=os.getenv("SWG_DB_NAME", "swgbuddy"),
                     user=os.getenv("SWG_DB_USER", "swgbuddy_service"),
-                    password=os.getenv("SWG_DB_PASSWORD"), 
-                    sslmode="prefer", # Use 'verify-full' in production if using mTLS
+                    password=None, # Unused due to mTLS authentication
+                    
+                    # SSL strict mode and cert paths
+                    sslmode="verify-full",
+                    sslrootcert=os.getenv("SWG_SSL_ROOT_CERT"),
+                    sslcert=os.getenv("SWG_SSL_CLIENT_CERT"),
+                    sslkey=os.getenv("SWG_SSL_CLIENT_KEY"),
+                    
                     cursor_factory=RealDictCursor
                 )
             except Exception as e:

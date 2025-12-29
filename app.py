@@ -165,6 +165,10 @@ def get_current_user():
 
 @app.route('/api/resource_log', methods=['GET'])
 def queryResourceLog():
+    # PERMISSION CHECK: Guests cannot read data
+    if 'discord_id' not in session:
+        return jsonify({"error": "Unauthorized", "resources": []}), 401
+
     server_id = request.args.get('server', 'cuemu')
     try:
         since = float(request.args.get('since', 0))
@@ -237,13 +241,9 @@ def update_resource():
 
 @app.route('/api/update-status', methods=['POST'])
 def update_status():
-    """Specific endpoint for toggling active/inactive status."""
     if 'discord_id' not in session: return jsonify({"error": "Unauthorized"}), 401
     
     data = request.json
-    # Map frontend 'is_active' toggle to backend expected payload if needed
-    # Assuming ValidationService handles "update_resource" with partial data or we send a specific command
-    # For now, let's reuse update_resource command but ensure we pass the context
     resp = send_command("update_resource", data, server_id=data.get('server_id', 'cuemu'))
     
     if resp['status'] == 'success': return jsonify({"success": True})
@@ -255,6 +255,16 @@ def retire_resource():
     
     data = request.json
     resp = send_command("retire_resource", data, server_id=data.get('server_id', 'cuemu'))
+    
+    if resp['status'] == 'success': return jsonify({"success": True})
+    return jsonify({"error": resp.get('error')}), 500
+
+@app.route('/api/set-role', methods=['POST'])
+def set_role():
+    if 'discord_id' not in session: return jsonify({"error": "Unauthorized"}), 401
+    
+    data = request.json
+    resp = send_command("set_user_role", data, server_id=data.get('server_id', 'cuemu'))
     
     if resp['status'] == 'success': return jsonify({"success": True})
     return jsonify({"error": resp.get('error')}), 500

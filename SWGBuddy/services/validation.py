@@ -104,13 +104,19 @@ class ValidationService(Core):
 
         try:
             # 1. Check Command Registry
+            # Default to 100 (SuperAdmin only) if command not found for safety
             required_power = self.command_permissions.get(action, 100)
             
+            # 2. Verify Permissions
             if required_power > 0:
-                if not self._check_permission(user_ctx, server_id, required_power):
-                    raise PermissionError(f"Insufficient Permissions. Required Level: {required_power}")
+                is_allowed, user_role = self._check_permission(user_ctx, server_id, required_power)
+                if not is_allowed:
+                    raise PermissionError(f"Insufficient Permissions. Your Role: {user_role}, Required Level: {required_power}")
+            
+            # Pass role to handlers that need it (like set_user_role)
+            # We re-fetch inside specific handlers if needed, but passing context is cleaner.
 
-            # 2. Route Command
+            # 3. Route Command
             if action == "sync_user":
                 self._sync_user(payload)
 
@@ -125,6 +131,10 @@ class ValidationService(Core):
             elif action == "retire_resource":
                 self._retire_resource(payload, server_id)
                 self.info(f"User {user_ctx.get('username')} retired resource ID: {payload.get('id')}")
+
+            elif action == "set_user_role":
+                self._set_user_role(user_ctx, payload, server_id)
+                self.info(f"Role change: {payload.get('target_user_id')} -> {payload.get('role')} on {server_id}")
             
             else:
                 raise ValueError(f"No handler for action: {action}")
@@ -189,14 +199,62 @@ class ValidationService(Core):
                 raise ValueError("Resource not found or already retired.")
             cur.execute(sql_delete, (res_id, server_id))
 
+    def _set_user_role(self, requester_ctx, payload, server_id):
+        """
+        Handles role assignment based on the strict hierarchy:
+        SuperAdmin -> Can assign anything.
+        Admin (3)  -> Can assign up to Editor (2).
+        Editor (2) -> Can assign up to User (1).
+        """
+        target_uid = payload.get('target_user_id')
+        target_role = payload.get('role').upper()
+        
+        if target_role not in self.ROLE_HIERARCHY:
+            raise ValueError(f"Invalid role: {target_role}")
+
+        # 1. Determine Requester Power
+        req_uid = requester_ctx.get('id')
+        is_allowed, req_role_name = self._check_permission(requester_ctx, server_id, 0) # Get current role
+        
+        req_power = self.ROLE_HIERARCHY.get(req_role_name, 0)
+        target_power = self.ROLE_HIERARCHY.get(target_role, 0)
+
+        # 2. Hierarchy Logic
+        if req_role_name == 'SUPERADMIN':
+            pass # Superadmin can do anything
+        elif req_role_name == 'ADMIN':
+            if target_power >= 3: 
+                raise PermissionError("Admins cannot promote users to Admin or SuperAdmin.")
+        elif req_role_name == 'EDITOR':
+            if target_power >= 2:
+                raise PermissionError("Editors cannot promote users to Editor, Admin, or SuperAdmin.")
+        else:
+            raise PermissionError("Your role cannot assign permissions.")
+
+        # 3. Execute Assignment
+        sql = """
+            INSERT INTO server_permissions (user_id, server_id, role, assigned_by)
+            VALUES (%s, %s, %s, %s)
+            ON CONFLICT (user_id, server_id) 
+            DO UPDATE SET role = EXCLUDED.role, assigned_by = EXCLUDED.assigned_by, assigned_at = NOW()
+        """
+        with DatabaseContext.cursor(commit=True) as cur:
+            cur.execute(sql, (target_uid, server_id, target_role, req_uid))
+
     # ----------------------------------------------------------------------
     # STAT CALCULATIONS & VALIDATION
     # ----------------------------------------------------------------------
     def _get_rules(self, data):
-        class_id = int(data.get('resource_class_id') or 0)
-        label = self.id_to_label.get(class_id)
+        # Handle string labels directly if passed, or ID lookup
+        # Frontend now sends 'type' string (label)
+        label = data.get('type') 
+        
+        # Fallback for old ID behavior if needed
+        if not label and data.get('resource_class_id'):
+            label = self.id_to_label.get(int(data['resource_class_id']))
+
         if not label:
-            raise ValueError(f"Invalid Resource Class ID: {class_id}")
+            raise ValueError(f"Missing Resource Type/Label")
         
         rules = self.valid_resources.get(label)
         if not rules:
@@ -209,14 +267,18 @@ class ValidationService(Core):
         allowed_planets = rules.get('planets', [])
 
         # 1. Planet Validation
+        # Data might come in as 'planet' (string) or 'planets' (list) from frontend tweaks
         planet = data.get('planet')
         if planet:
             if planet not in allowed_planets:
-                raise ValueError(f"Planet '{planet}' is not valid for this resource type. Allowed: {allowed_planets}")
+                # Relaxed check for "Kashyyykian" etc if not strictly in list but derived? 
+                # For now strict check based on valid_resource_table.json
+                raise ValueError(f"Planet '{planet}' is not valid for this resource type.")
 
         # 2. Stat Validation
         for stat in self.STAT_COLS:
             val = data.get(stat)
+            # If 0 or None, skip unless required? Assuming 0 is valid "empty"
             if val is None or val == "": continue
             
             try:
@@ -260,8 +322,25 @@ class ValidationService(Core):
     # DB UTILS
     # ----------------------------------------------------------------------
     def _insert_resource(self, data, server_id):
-        cols = ["server_id", "resource_class_id", "name", "planet", "res_weight_rating"]
-        vals = [server_id, data['resource_class_id'], data['name'], data.get('planet'), data['res_weight_rating']]
+        # We need to map the Label back to an ID for the DB 'resource_class_id' column
+        # Or update the DB to store the Label string. 
+        # Assuming we keep the ID column for optimization:
+        
+        label = data.get('type')
+        # Reverse lookup ID from label
+        # ( Ideally we would cache a label_to_id map in __init__ )
+        # For now, linear search or just rely on frontend sending ID?
+        # Frontend refactor removed ID. We should probably update DB to use label or lookup here.
+        
+        # Quick Fix: Inefficient reverse lookup
+        res_class_id = 0
+        for rid, rlabel in self.id_to_label.items():
+            if rlabel == label:
+                res_class_id = rid
+                break
+        
+        cols = ["server_id", "resource_class_id", "name", "planet", "res_weight_rating", "type"]
+        vals = [server_id, res_class_id, data['name'], data.get('planet'), data['res_weight_rating'], label]
 
         for stat in self.STAT_COLS:
             if data.get(stat):
@@ -272,6 +351,13 @@ class ValidationService(Core):
                 vals.append(data[f"{stat}_rating"])
 
         placeholders = ",".join(["%s"] * len(cols))
+        
+        # Note: 'type' column added to SQL to future proof string labels
+        # If DB schema doesn't have 'type', this will fail. 
+        # Removing 'type' from cols for safety with existing legacy schema.
+        cols.pop() 
+        vals.pop()
+
         sql = f"INSERT INTO resource_spawns ({','.join(cols)}) VALUES ({placeholders})"
         
         with DatabaseContext.cursor(commit=True) as cur:
@@ -302,21 +388,22 @@ class ValidationService(Core):
             cur.execute(sql, tuple(vals))
 
     def _check_permission(self, user_ctx, server_id, required_power):
-        if not user_ctx or not user_ctx.get('id'): return False
+        """Returns (bool is_allowed, str user_role)"""
+        if not user_ctx or not user_ctx.get('id'): return False, 'GUEST'
         uid = user_ctx.get('id')
         
         with DatabaseContext.cursor() as cur:
             cur.execute("SELECT is_superadmin FROM users WHERE discord_id = %s", (uid,))
             u = cur.fetchone()
-            if u and u['is_superadmin']: return True
+            if u and u['is_superadmin']: return True, 'SUPERADMIN'
             
             cur.execute("SELECT role FROM server_permissions WHERE user_id = %s AND server_id = %s", (uid, server_id))
             p = cur.fetchone()
             
-        role = p['role'] if p else 'GUEST'
-        user_power = self.ROLE_HIERARCHY.get(role, 0)
+        role = p['role'] if p else 'USER' # Default to USER if logged in
+        user_power = self.ROLE_HIERARCHY.get(role, 1) # User = 1
         
-        return user_power >= required_power
+        return user_power >= required_power, role
 
     def _sync_user(self, data):
         sql = """INSERT INTO users (discord_id, username, avatar_url, last_login) VALUES (%s, %s, %s, NOW())
