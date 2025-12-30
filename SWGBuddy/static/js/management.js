@@ -110,7 +110,7 @@ const Management = {
         const listArea = this.elements.userListScroll;
         try {
             listArea.innerHTML = '<div style="padding:10px; color:#888;">Loading users...</div>';
-            this.elements.userDetail.innerHTML = '<div style="opacity:0.5; margin-top:20px;">Select a user to edit</div>';
+            this.elements.userDetail.innerHTML = '<div style="opacity:0.5; margin-top:20px;"></div>';
             
             const data = await API.fetchManagedUsers(this.currentServer);
             this.users = data.users || [];
@@ -141,7 +141,7 @@ const Management = {
         }
 
 		// Ensure avatar is used as a direct URL
-        const avatarSrc = user.avatar || '/static/img/default-avatar.png';
+        const avatarSrc = user.avatar_url || '/static/img/default-avatar.png';
 
         this.filteredUsers.forEach(user => {
             const div = document.createElement('div');
@@ -173,7 +173,7 @@ const Management = {
         const myLevel = hierarchy.indexOf(myRole);
 
 		// Ensure avatar is used as a direct URL
-    	const avatarSrc = user.avatar || '/static/img/default-avatar.png';
+    	const avatarSrc = user.avatar_url || '/static/img/default-avatar.png';
         
         let options = '';
         hierarchy.forEach((role, idx) => {
@@ -184,7 +184,7 @@ const Management = {
         });
 
         this.elements.userDetail.innerHTML = `
-            <img src="${avatarSrc}" class="mgmt-avatar-large">
+            <img src="${user.avatar_url}" class="mgmt-avatar-large">
             <div class="mgmt-username-large">${user.username}</div>
             
             <div class="role-select-container">

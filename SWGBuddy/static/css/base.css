@@ -388,6 +388,10 @@ select:focus,
     box-shadow: 0 0 40px rgba(0,0,0,0.8);
 }
 
+.mgmt-server-select {
+	margin-left: 20px;
+}
+
 /* Sidebar & Layout */
 .permissions-layout {
     display: flex;
