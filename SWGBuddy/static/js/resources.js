@@ -44,6 +44,9 @@ async function loadResources(isDelta = false) {
 				toggleSort();
 			}
 		}
+
+		// Reset the timer after every successful load (auto or manual)
+		resetPolling();
 		
 	} catch (error) {
 		console.error("Failed to load resources:", error);
@@ -54,16 +57,21 @@ async function loadResources(isDelta = false) {
 // INITIALIZATION & POLLING
 // ------------------------------------------------------------------
 
-// Start polling when the script loads (or call this from app.js init)
-function startPolling() {
-	if (pollingInterval) clearInterval(pollingInterval);
-	// Poll every 5 seconds for updates
-	pollingInterval = setInterval(() => loadResources(true), 5000);
-	console.log("Resource polling started (5s interval).");
+/**
+ * Resets the polling timer.
+ * Only schedules the next poll if the resource table is currently visible.
+ */
+function resetPolling() {
+    if (pollingTimer) clearTimeout(pollingTimer);
+    
+    pollingTimer = setTimeout(() => {
+        const tableBody = document.getElementById('resource-log-body');
+        // Check if table is present and visible (offsetParent is null if display: none)
+        if (tableBody && tableBody.offsetParent !== null) {
+            loadResources(true);
+        }
+    }, POLL_INTERVAL);
 }
-
-// Auto-start polling
-startPolling();
 
 
 // ------------------------------------------------------------------

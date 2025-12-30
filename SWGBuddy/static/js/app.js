@@ -59,6 +59,19 @@ function initTabs() {
             btn.classList.add('active');
             const target = btn.getAttribute('data-target');
             document.getElementById(target).classList.add('active');
+
+			if (targetPage) {
+				targetPage.classList.add('active');
+
+				// check if we just switched to the Resources page
+				// We identify it by looking for the unique table body ID inside the target page
+				if (targetPage.querySelector('#resource-log-body')) {
+					console.log("Resources tab activated: Triggering sync...");
+					if (typeof loadResources === 'function') {
+						loadResources(true); // Trigger delta sync and resume polling
+					}
+				}
+			}
         });
     });
 }

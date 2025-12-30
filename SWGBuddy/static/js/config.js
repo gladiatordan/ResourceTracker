@@ -8,7 +8,8 @@ let selectedResourceName = null;      // For row highlighting
 let rawResourceData = [];       // Master list from DB
 let filteredData = [];          // List after search/category filters
 let LAST_SYNC_TIMESTAMP = 0;    // For delta updates
-let pollingInterval = null;
+let pollingTimer = null;
+const POLL_INTERVAL = 15000;
 
 // Pagination
 let currentPage = 1;
