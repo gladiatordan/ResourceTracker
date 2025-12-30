@@ -141,7 +141,7 @@ const Management = {
         }
 
 		// Ensure avatar is used as a direct URL
-        const avatarSrc = `https://cdn.discordapp.com/avatars/${user.id}/${user.avatar_url}.png`;
+        const avatarSrc = `https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.png`;
 
         this.filteredUsers.forEach(user => {
             const div = document.createElement('div');
@@ -173,7 +173,7 @@ const Management = {
         const myLevel = hierarchy.indexOf(myRole);
 
 		// Ensure avatar is used as a direct URL
-    	const avatarSrc = `https://cdn.discordapp.com/avatars/${user.id}/${user.avatar_url}.png`;;
+    	const avatarSrc = `https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.png`;;
         
         let options = '';
         hierarchy.forEach((role, idx) => {
