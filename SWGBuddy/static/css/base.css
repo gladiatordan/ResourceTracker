@@ -447,10 +447,15 @@ select:focus,
     background: #222;
     border: 1px solid var(--border-color);
     color: var(--accent-blue);
-    padding: 0 10px;
+    padding: 0;
     cursor: pointer;
     border-radius: 3px;
     transition: all 0.2s;
+	width: 36px;
+	aspect-ratio: 1;
+	display: flex;
+	justify-content: center;
+	align-items: center;
 }
 .mgmt-refresh-btn:hover { background: #333; color: #fff; }
 
@@ -533,6 +538,7 @@ select:focus,
     padding: 20px;
     overflow-y: auto;
     display: none; /* Hidden by default, toggled via JS */
+	flex-direction: column;
 }
 
 .mgmt-view.active {

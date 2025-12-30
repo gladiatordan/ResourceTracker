@@ -84,6 +84,13 @@ class DatabaseContext:
 		if cls._pool:
 			try:
 				cls._pool.putconn(conn)
+			except psycopg2.pool.PoolError:
+				# FIX: Connection belongs to a different/closed pool (e.g. after restart).
+				# Just close it silently to clean up resources.
+				try:
+					conn.close()
+				except:
+					pass
 			except Exception as e:
 				logging.error(f"[Database] Error returning connection: {e}")
 				# If return fails, try to close explicitly to prevent leaks
