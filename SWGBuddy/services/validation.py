@@ -4,6 +4,7 @@ SWGBuddy ValidationService Module
 The Gatekeeper. Handles all writes, permission checks, data integrity, and stat calculations.
 """
 import sys
+import re
 import json
 import os
 import traceback
