@@ -69,14 +69,86 @@ body {
 .page-container.active { display: block; }
 
 /* User Profile Styles */
+.user-profile-container {
+    position: relative;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+}
+
 .user-profile {
+	position: relative;
     display: flex;
     align-items: center;
     gap: 10px;
     background: var(--bg-secondary);
     padding: 4px 12px;
+	padding-right: 25px;
     border-radius: 20px;
     border: 1px solid var(--border-color);
+}
+
+.user-profile::after {
+    content: '▼';
+    font-size: 0.7rem;
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--text-dim);
+    transition: transform 0.2s;
+}
+
+.user-profile-container:hover .user-profile::after {
+    transform: translateY(-50%) rotate(180deg);
+}
+
+/* Dropdown Menu */
+.user-dropdown-menu {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    width: 200px;
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: 0 0 4px 4px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.5);
+    display: none;
+    flex-direction: column;
+    z-index: 3000;
+    margin-top: 5px;
+}
+
+.user-profile-container:hover .user-dropdown-menu {
+    display: flex;
+}
+
+.dropdown-item {
+    padding: 12px 15px;
+    color: var(--text-main);
+    text-decoration: none;
+    font-size: 0.9rem;
+    transition: background 0.2s;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+}
+
+.dropdown-item:last-child {
+    border-bottom: none;
+}
+
+.dropdown-item:hover {
+    background: rgba(255,255,255,0.1);
+    color: var(--accent-blue);
+}
+
+.dropdown-item i {
+    width: 20px;
+    text-align: center;
 }
 
 .user-avatar {
@@ -270,3 +342,142 @@ input:disabled {
 
 @keyframes spin { 100% { transform: rotate(360deg); } }
 @keyframes pulse { 0% { opacity: 0.6; } 50% { opacity: 1; } 100% { opacity: 0.6; } }
+
+
+/* Management Modal Specifics */
+.management-modal-content {
+    width: 800px; /* Wider than resource modal */
+    height: 600px;
+    padding: 0; /* Custom padding internal */
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.mgmt-header {
+    padding: 15px 20px;
+    border-bottom: 1px solid var(--border-color);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: rgba(0,0,0,0.2);
+}
+
+.mgmt-server-select {
+    background: #000;
+    color: var(--accent-blue);
+    border: 1px solid var(--accent-blue);
+    padding: 5px 10px;
+    border-radius: 4px;
+    font-family: 'Rajdhani', sans-serif;
+    font-weight: 700;
+    margin-left: 15px;
+}
+
+.mgmt-body {
+    display: flex;
+    flex: 1;
+    overflow: hidden;
+}
+
+/* Sidebar */
+.mgmt-sidebar {
+    width: 200px;
+    background: rgba(0,0,0,0.3);
+    border-right: 1px solid var(--border-color);
+    display: flex;
+    flex-direction: column;
+    padding: 10px 0;
+}
+
+.mgmt-nav-btn {
+    background: transparent;
+    border: none;
+    color: var(--text-dim);
+    padding: 12px 20px;
+    text-align: left;
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.2s;
+    border-left: 3px solid transparent;
+}
+
+.mgmt-nav-btn:hover {
+    color: var(--text-main);
+    background: rgba(255,255,255,0.05);
+}
+
+.mgmt-nav-btn.active {
+    color: var(--accent-blue);
+    background: rgba(0, 212, 255, 0.1);
+    border-left-color: var(--accent-blue);
+}
+
+/* Content Area */
+.mgmt-view {
+    flex: 1;
+    padding: 20px;
+    overflow-y: auto;
+    display: none; /* Hidden by default, toggled via JS */
+}
+
+.mgmt-view.active {
+    display: flex; /* or block depending on layout */
+}
+
+/* Permissions View Layout */
+.permissions-layout {
+    display: flex;
+    gap: 20px;
+    height: 100%;
+}
+
+.user-list-pane {
+    width: 40%;
+    border-right: 1px solid var(--border-color);
+    padding-right: 10px;
+    overflow-y: auto;
+}
+
+.user-detail-pane {
+    flex: 1;
+    padding-left: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    padding-top: 40px;
+}
+
+/* User List Items */
+.mgmt-user-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background 0.2s;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+}
+
+.mgmt-user-item:hover { background: rgba(255,255,255,0.05); }
+.mgmt-user-item.selected { background: rgba(0, 212, 255, 0.15); border: 1px solid var(--accent-blue); }
+
+.mgmt-avatar-small { width: 32px; height: 32px; border-radius: 50%; }
+.mgmt-user-role { font-size: 0.7rem; color: var(--text-dim); text-transform: uppercase; }
+
+/* Detail View */
+.mgmt-avatar-large { 
+    width: 80px; height: 80px; border-radius: 50%; 
+    border: 3px solid var(--accent-blue);
+    margin-bottom: 15px;
+}
+
+.mgmt-username-large { font-size: 1.5rem; font-family: 'Orbitron', sans-serif; margin-bottom: 20px; }
+
+.role-select-container {
+    width: 100%;
+    max-width: 250px;
+}

@@ -11,6 +11,16 @@ from flask import Flask, jsonify, request, render_template, redirect, url_for, s
 from flask_cors import CORS
 from SWGBuddy.core.database import DatabaseContext
 
+
+# Helper for Role Levels (Duplicate of ValidationService for Read Logic)
+ROLE_HIERARCHY = {
+    'SUPERADMIN': 100,
+    'ADMIN': 3,
+    'EDITOR': 2,
+    'USER': 1,
+    'GUEST': 0
+}
+
 app = Flask(__name__)
 CORS(app)
 
@@ -288,6 +298,62 @@ def reload_cache():
     if resp['status'] == 'success':
         return jsonify({"success": True, "message": "Cache reloaded successfully."})
     return jsonify({"error": resp.get('error')}), 500
+
+@app.route('/api/admin/users', methods=['GET'])
+def get_managed_users():
+    if 'discord_id' not in session: 
+        return jsonify({"error": "Unauthorized"}), 401
+
+    uid = session['discord_id']
+    server_id = request.args.get('server', 'cuemu')
+    
+    # 1. Determine Requester's Role Level
+    req_level = 0
+    if session.get('is_superadmin'):
+        req_level = 100
+    else:
+        perms = session.get('server_perms', {})
+        role_str = perms.get(server_id, 'GUEST')
+        req_level = ROLE_HIERARCHY.get(role_str, 0)
+
+    # Only Editors (2) and up can manage
+    if req_level < 2:
+        return jsonify({"error": "Forbidden"}), 403
+
+    # 2. Fetch All Users for this Server
+    # We join users with server_permissions
+    sql = """
+        SELECT u.discord_id, u.username, u.avatar_url, sp.role
+        FROM server_permissions sp
+        JOIN users u ON sp.user_id = u.discord_id
+        WHERE sp.server_id = %s
+    """
+    
+    try:
+        with DatabaseContext.cursor() as cur:
+            cur.execute(sql, (server_id,))
+            all_users = cur.fetchall()
+            
+        # 3. Filter: Only show users with strictly LOWER role level
+        manageable_users = []
+        for u in all_users:
+            u_role = u['role']
+            u_level = ROLE_HIERARCHY.get(u_role, 0)
+            
+            # SuperAdmins can see everyone except other SuperAdmins (optional, or maybe they can?)
+            # Prompt says "whose role is lower than yours"
+            if u_level < req_level:
+                manageable_users.append({
+                    "id": u['discord_id'],
+                    "username": u['username'],
+                    "avatar": u['avatar_url'],
+                    "role": u_role
+                })
+                
+        return jsonify({"users": manageable_users})
+
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
 
 if __name__ == '__main__':
 	app.run(debug=True, port=5000)

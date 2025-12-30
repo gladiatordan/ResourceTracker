@@ -25,22 +25,34 @@ const Auth = {
 
 			if (data.authenticated) {
 				this.user = data;
-				
-				// 1. Determine Role for Badge
 				const role = this.getCurrentRole(); 
-				const roleClass = `role-${role.toLowerCase()}`; // e.g. role-admin
+				const roleClass = `role-${role.toLowerCase()}`;
 
-				// 2. Render Profile with Badge
+				// New Dropdown HTML Structure
+				// Show Management Link if Editor (Level 2) or higher
+				// Using 'onclick' to trigger the new global function
+				const showMgmt = this.hasPermission('EDITOR');
+				const mgmtLink = showMgmt 
+					? `<div class="dropdown-item" onclick="openServerManagement()">
+						 <i class="fa-solid fa-server"></i> Server Management
+					   </div>` 
+					: '';
+
 				authSection.innerHTML = `
-					<div class="user-profile">
-						<img src="https://cdn.discordapp.com/avatars/${data.id}/${data.avatar}.png" class="user-avatar" alt="">
-						<div class="user-info">
-							<span class="username">${data.username}</span>
-							<span class="role-badge ${roleClass}">${role}</span>
+					<div class="user-profile-container">
+						<div class="user-profile">
+							<img src="https://cdn.discordapp.com/avatars/${data.id}/${data.avatar}.png" class="user-avatar" alt="">
+							<div class="user-info">
+								<span class="username">${data.username}</span>
+								<span class="role-badge ${roleClass}">${role}</span>
+							</div>
 						</div>
-						<a href="/logout" class="btn-logout" title="Logout">
-							<i class="fa-solid fa-sign-out-alt"></i>
-						</a>
+						<div class="user-dropdown-menu">
+							${mgmtLink}
+							<a href="/logout" class="dropdown-item">
+								<i class="fa-solid fa-sign-out-alt"></i> Logout
+							</a>
+						</div>
 					</div>
 				`;
 			} else {
@@ -64,9 +76,9 @@ const Auth = {
 		if (!this.user) return 'GUEST';
 		if (this.user.is_superadmin) return 'SUPERADMIN';
 		
-		const serverId = API.getServerContext(); // e.g. 'cuemu'
+		// Use global API context helper or fallback
+		const serverId = API.getServerContext ? API.getServerContext() : 'cuemu';
 		const perms = this.user.server_perms || {};
-		
 		return perms[serverId] || 'GUEST';
 	},
 
@@ -77,12 +89,10 @@ const Auth = {
 	hasPermission(requiredLevel) {
 		const role = this.getCurrentRole();
 		const currentLevel = this.ROLES[role] || 0;
-		
 		let req = requiredLevel;
 		if (typeof requiredLevel === 'string') {
 			req = this.ROLES[requiredLevel] || 0;
 		}
-		
 		return currentLevel >= req;
 	},
 	
@@ -91,18 +101,16 @@ const Auth = {
 	 * e.g. Shows/Hides "Add Resource" button.
 	 */
 	updateInterface() {
-		// 1. Handle Add Resource Button
 		const addBtn = document.getElementById('btn-add-resource');
 		if (addBtn) {
-			// FIX: Ensure this is explicitly checking EDITOR level (2)
 			if (this.hasPermission('EDITOR')) {
 				addBtn.classList.remove('hidden');
 			} else {
 				addBtn.classList.add('hidden');
 			}
 		}
-
-		// 2. Re-render Badge if Server Changed
+		
+		// Update Badge if present
 		const badge = document.querySelector('.role-badge');
 		if (badge && this.user) {
 			const role = this.getCurrentRole();
