@@ -324,7 +324,7 @@ const Modal = {
 			const isLeaf = !node.children || node.children.length === 0;
 			const isValid = window.validResources && window.validResources.hasOwnProperty(node.label);
 			// if node if a leaf but isn't valid we don't even show it
-			if (isLeaf && !isValid) return;
+			// if (isLeaf && !isValid) return;
 			const icon = document.createElement('span');
 			icon.className = 'tree-toggle';
 			icon.innerText = isLeaf ? '•' : '▶'; 
