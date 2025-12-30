@@ -291,24 +291,38 @@ class ValidationService(Core):
 		stats_def = rules.get('stats', {})
 		allowed_planets = rules.get('planets', [])
 
-		# Planet Validation (Handles both String (Toggle) and List (Replace))
+		# HARDENING 1: Name Validation (Regex: Alphanumeric, spaces, parens, hyphens)
+		name = data.get('name', '')
+		if not name:
+			raise ValueError("Resource name is required.")
+		if not re.match(r'^[a-zA-Z0-9\s\-\(\)\.]+$', name):
+			raise ValueError("Invalid characters in Resource Name.")
+		if len(name) > 100:
+			raise ValueError("Name too long.")
+
+		# HARDENING 2: Sanitize Notes (Strip HTML tags)
+		notes = data.get('notes', '')
+		if notes:
+			# Simple tag stripping since we don't have bleach
+			clean_notes = re.sub(r'<[^>]*>', '', notes) 
+			data['notes'] = clean_notes
+
+		# Planet Validation
 		planet_input = data.get('planet')
 		if planet_input:
 			if isinstance(planet_input, list):
-				# Case A: List -> Sanitize all items
 				clean_list = [str(p).capitalize() for p in planet_input]
-				data['planet'] = clean_list # Update payload
+				data['planet'] = clean_list 
 				for p in clean_list:
 					if p not in allowed_planets:
 						raise ValueError(f"Planet '{p}' is not valid for this resource type.")
 			else:
-				# Case B: String -> Sanitize single item
 				planet_str = str(planet_input).capitalize()
-				data['planet'] = planet_str # Update payload
+				data['planet'] = planet_str 
 				if planet_str not in allowed_planets:
 					raise ValueError(f"Planet '{planet_str}' is not valid for this resource type.")
 
-		# Stat Validation
+		# Stat Validation (Unchanged)
 		for stat in self.STAT_COLS:
 			val = data.get(stat)
 			if val is None or val == "": continue

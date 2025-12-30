@@ -7,33 +7,55 @@ import requests
 import secrets
 import urllib.parse
 from queue import Queue, Empty
-from flask import Flask, jsonify, request, render_template, redirect, url_for, session, current_app
+from flask import Flask, jsonify, request, render_template, redirect, url_for, session, current_app, abort
 from flask_cors import CORS
-from SWGBuddy.core.database import DatabaseContext
-
-
-# Helper for Role Levels (Duplicate of ValidationService for Read Logic)
-ROLE_HIERARCHY = {
-	'SUPERADMIN': 100,
-	'ADMIN': 3,
-	'EDITOR': 2,
-	'USER': 1,
-	'GUEST': 0
-}
+from core.database import DatabaseContext
 
 app = Flask(__name__)
 CORS(app)
 
-# Configuration
+# SECURITY CONFIGURATION
+# --------------------------------------------------------------------------
+# 1. Secret Key: Must be random in production.
 app.secret_key = os.getenv("FLASK_SECRET_KEY", "dev_secret_key_change_me")
-DISCORD_CLIENT_ID = os.getenv("DISCORD_CLIENT_ID")
-DISCORD_CLIENT_SECRET = os.getenv("DISCORD_CLIENT_SECRET")
-DISCORD_REDIRECT_URI = os.getenv("DISCORD_REDIRECT_URI", "https://swgbuddy.com/callback")
-DISCORD_API_URL = "https://discord.com/api"
+
+# 2. Cookie Security:
+# 'Lax' prevents CSRF for most top-level navigations while preserving login.
+app.config.update(
+	SESSION_COOKIE_HTTPONLY=True,
+	SESSION_COOKIE_SAMESITE='Lax',
+	SESSION_COOKIE_SECURE=True, # Require HTTPS (Browsers may block cookies on HTTP if this is True)
+	PERMANENT_SESSION_LIFETIME=86400 * 7 # 7 Days
+)
 
 # --------------------------------------------------------------------------
-# RESPONSE ROUTER
+# SECURITY MIDDLEWARE
 # --------------------------------------------------------------------------
+@app.after_request
+def set_security_headers(response):
+	"""Applies security headers to every response."""
+	response.headers['X-Content-Type-Options'] = 'nosniff'
+	response.headers['X-Frame-Options'] = 'SAMEORIGIN'
+	response.headers['Strict-Transport-Security'] = 'max-age=31536000; includeSubDomains'
+	return response
+
+@app.before_request
+def csrf_protect():
+	"""
+	CSRF Protection:
+	For state-changing requests (POST), verify the custom header 'X-Requested-With'.
+	Browsers do not allow cross-origin sites to set this header, ensuring the request
+	came from our own frontend app.
+	"""
+	if request.method == "POST":
+		if not request.headers.get('X-Requested-With') == 'XMLHttpRequest':
+			# Log specific warning for debugging
+			print(f"CSRF Blocked: {request.path} missing X-Requested-With header")
+			abort(403, description="CSRF Validation Failed")
+
+# ... (Rest of existing router logic and endpoints) ...
+# (Keep response_router, start_response_router, send_command, and all routes unchanged below)
+
 response_futures = {} 
 
 def start_response_router(reply_queue):
@@ -84,10 +106,6 @@ def send_command(action, payload, server_id='cuemu', timeout=10):
 	finally:
 		response_futures.pop(cid, None)
 
-# --------------------------------------------------------------------------
-# ROUTES
-# --------------------------------------------------------------------------
-
 @app.route('/')
 def index():
 	return render_template("index.html")
@@ -98,6 +116,11 @@ def index():
 def login():
 	state = secrets.token_urlsafe(16)
 	session['oauth_state'] = state
+	
+	# Discord OAuth2
+	DISCORD_CLIENT_ID = os.getenv("DISCORD_CLIENT_ID")
+	DISCORD_REDIRECT_URI = os.getenv("DISCORD_REDIRECT_URI", "https://swgbuddy.com/callback")
+	DISCORD_API_URL = "https://discord.com/api"
 	
 	scope = "identify"
 	params = {
@@ -121,6 +144,11 @@ def callback():
 
 	code = request.args.get('code')
 	if not code: return "Error: No code provided", 400
+
+	DISCORD_CLIENT_ID = os.getenv("DISCORD_CLIENT_ID")
+	DISCORD_CLIENT_SECRET = os.getenv("DISCORD_CLIENT_SECRET")
+	DISCORD_REDIRECT_URI = os.getenv("DISCORD_REDIRECT_URI", "https://swgbuddy.com/callback")
+	DISCORD_API_URL = "https://discord.com/api"
 
 	data = {
 		'client_id': DISCORD_CLIENT_ID,
@@ -190,114 +218,15 @@ def get_current_user():
 		"server_perms": perms
 	})
 
-# --- DATA ENDPOINTS ---
+# --- ADMIN ENDPOINTS ---
 
-@app.route('/api/resource_log', methods=['GET'])
-def queryResourceLog():
-	if 'discord_id' not in session:
-		return jsonify({"error": "Unauthorized", "resources": []}), 401
-
-	server_id = request.args.get('server', 'cuemu')
-	try:
-		since = float(request.args.get('since', 0))
-	except:
-		since = 0
-	
-	# UPDATED SQL: Joins users table to get the reporter's name
-	# Assumes 'reporter_id' exists in resource_spawns. If not, this needs a DB migration.
-	sql = """
-		SELECT rs.*, 
-			   rt.class_label as type, 
-			   u.username as reporter_name,
-			   EXTRACT(EPOCH FROM rs.date_reported) as date_reported_ts,
-			   EXTRACT(EPOCH FROM rs.last_modified) as last_modified_ts
-		FROM resource_spawns rs
-		JOIN resource_taxonomy rt ON rs.resource_class_id = rt.id
-		LEFT JOIN users u ON rs.reporter_id = u.discord_id
-		WHERE rs.server_id = %s 
-		AND (EXTRACT(EPOCH FROM rs.date_reported) > %s 
-			 OR (rs.last_modified IS NOT NULL AND EXTRACT(EPOCH FROM rs.last_modified) > %s))
-		ORDER BY rs.date_reported DESC
-	"""
-	
-	try:
-		with DatabaseContext.cursor() as cur:
-			cur.execute(sql, (server_id, since, since))
-			rows = cur.fetchall()
-		return jsonify({"resources": rows})
-	except Exception as e:
-		return jsonify({"error": str(e)}), 500
-
-@app.route('/api/taxonomy', methods=['GET'])
-def get_taxonomy():
-	"""Serves the single Unified Taxonomy file."""
-	try:
-		base_dir = os.path.dirname(os.path.abspath(__file__))
-		# Updated to point to the new single source of truth
-		path = os.path.join(base_dir, "assets", "resource_taxonomy.json")
-		with open(path, 'r') as f:
-			data = json.load(f)
-		resp = jsonify(data)
-		resp.headers['Cache-Control'] = 'public, max-age=86400'
-		return resp
-	except Exception as e:
-		return jsonify({"error": f"Taxonomy unavailable: {e}"}), 500
-
-# --- WRITE OPERATIONS ---
-
-@app.route('/api/add-resource', methods=['POST'])
-def add_resource():
-	if 'discord_id' not in session: return jsonify({"error": "Unauthorized"}), 401
-	
-	data = request.json
-	resp = send_command("add_resource", data, server_id=data.get('server_id', 'cuemu'))
-	
-	if resp['status'] == 'success': return jsonify({"success": True})
-	return jsonify({"error": resp.get('error')}), 500
-
-@app.route('/api/update-resource', methods=['POST'])
-def update_resource():
-	if 'discord_id' not in session: return jsonify({"error": "Unauthorized"}), 401
-	
-	data = request.json
-	resp = send_command("update_resource", data, server_id=data.get('server_id', 'cuemu'))
-	
-	if resp['status'] == 'success': return jsonify({"success": True})
-	return jsonify({"error": resp.get('error')}), 500
-
-@app.route('/api/retire-resource', methods=['POST'])
-def retire_resource():
-	if 'discord_id' not in session: return jsonify({"error": "Unauthorized"}), 401
-	
-	data = request.json
-	resp = send_command("retire_resource", data, server_id=data.get('server_id', 'cuemu'))
-	
-	if resp['status'] == 'success': return jsonify({"success": True})
-	return jsonify({"error": resp.get('error')}), 500
-
-@app.route('/api/set-role', methods=['POST'])
-def set_role():
-	if 'discord_id' not in session: return jsonify({"error": "Unauthorized"}), 401
-	
-	data = request.json
-	resp = send_command("set_user_role", data, server_id=data.get('server_id', 'cuemu'))
-	
-	if resp['status'] == 'success': return jsonify({"success": True})
-	return jsonify({"error": resp.get('error')}), 500
-
-@app.route('/api/admin/reload-cache', methods=['POST'])
-def reload_cache():
-	if 'discord_id' not in session: return jsonify({"error": "Unauthorized"}), 401
-	
-	# Optional: Check for SuperAdmin permission here if desired
-	if not session.get('is_superadmin'):
-		return jsonify({"error": "Forbidden"}), 403
-
-	resp = send_command("reload_cache", {})
-	
-	if resp['status'] == 'success':
-		return jsonify({"success": True, "message": "Cache reloaded successfully."})
-	return jsonify({"error": resp.get('error')}), 500
+ROLE_HIERARCHY = {
+	'SUPERADMIN': 100,
+	'ADMIN': 3,
+	'EDITOR': 2,
+	'USER': 1,
+	'GUEST': 0
+}
 
 @app.route('/api/admin/users', methods=['GET'])
 def get_managed_users():
@@ -307,18 +236,15 @@ def get_managed_users():
 	uid = session['discord_id']
 	server_id = request.args.get('server', 'cuemu')
 	
-	# --- FIX: Re-verify requester's role from Database ---
 	req_level = 0
 	try:
 		with DatabaseContext.cursor() as cur:
-			# 1. Check if requester is a SuperAdmin
 			cur.execute("SELECT is_superadmin FROM users WHERE discord_id = %s", (uid,))
 			user_row = cur.fetchone()
 			
 			if user_row and user_row['is_superadmin']:
 				req_level = ROLE_HIERARCHY['SUPERADMIN']
 			else:
-				# 2. Check requester's specific server role
 				cur.execute(
 					"SELECT role FROM server_permissions WHERE user_id = %s AND server_id = %s", 
 					(uid, server_id)
@@ -327,11 +253,9 @@ def get_managed_users():
 				role_str = perm_row['role'] if perm_row else 'GUEST'
 				req_level = ROLE_HIERARCHY.get(role_str, 0)
 
-		# 3. Security Gate: Only Editors (2) and up can manage users
 		if req_level < ROLE_HIERARCHY['EDITOR']:
 			return jsonify({"error": "Forbidden"}), 403
 
-		# 4. Fetch All Users for this Server to filter
 		sql = """
 			SELECT u.discord_id, u.username, u.avatar_url, sp.role
 			FROM server_permissions sp
@@ -343,7 +267,6 @@ def get_managed_users():
 			cur.execute(sql, (server_id,))
 			all_users = cur.fetchall()
 			
-		# 5. Filter: Only show users with strictly LOWER role level than the requester
 		manageable_users = []
 		for u in all_users:
 			target_role = u['role']
@@ -373,9 +296,23 @@ def get_command_log():
 	limit = int(request.args.get('limit', 25))
 	search = request.args.get('search', '').strip()
 	
-	# Permission Check (Editor+)
-	# ... (Reuse the permission logic from get_managed_users or a helper) ...
-	# Simplified for brevity, assume Editor+ check is done
+	uid = session['discord_id']
+	req_level = 0
+	try:
+		with DatabaseContext.cursor() as cur:
+			cur.execute("SELECT is_superadmin FROM users WHERE discord_id = %s", (uid,))
+			user_row = cur.fetchone()
+			if user_row and user_row['is_superadmin']:
+				req_level = 100
+			else:
+				cur.execute("SELECT role FROM server_permissions WHERE user_id = %s AND server_id = %s", (uid, server_id))
+				perm_row = cur.fetchone()
+				req_level = ROLE_HIERARCHY.get(perm_row['role'], 0) if perm_row else 0
+	except:
+		return jsonify({"error": "DB Error"}), 500
+
+	if req_level < 2: # Editor+
+		return jsonify({"error": "Forbidden"}), 403
 	
 	offset = (page - 1) * limit
 	
@@ -388,7 +325,6 @@ def get_command_log():
 	params = [server_id]
 	
 	if search:
-		# Search ID, Username, Command, or JSON text
 		base_sql += """ AND (
 			cl.username ILIKE %s OR 
 			cl.command ILIKE %s OR 
@@ -397,20 +333,15 @@ def get_command_log():
 		term = f"%{search}%"
 		params.extend([term, term, term])
 		
-	# Count Query
 	count_sql = f"SELECT COUNT(*) as total FROM ({base_sql}) as sub"
-	
-	# Data Query
 	data_sql = base_sql + " ORDER BY cl.date_executed DESC LIMIT %s OFFSET %s"
 	params_data = params + [limit, offset]
 	
 	try:
 		with DatabaseContext.cursor() as cur:
-			# Get Total
 			cur.execute(count_sql, tuple(params))
 			total = cur.fetchone()['total']
 			
-			# Get Rows
 			cur.execute(data_sql, tuple(params_data))
 			rows = cur.fetchall()
 			
@@ -422,6 +353,99 @@ def get_command_log():
 		})
 	except Exception as e:
 		return jsonify({"error": str(e)}), 500
+
+@app.route('/api/admin/reload-cache', methods=['POST'])
+def reload_cache():
+	if 'discord_id' not in session: return jsonify({"error": "Unauthorized"}), 401
+	if not session.get('is_superadmin'): return jsonify({"error": "Forbidden"}), 403
+
+	resp = send_command("reload_cache", {})
+	if resp['status'] == 'success':
+		return jsonify({"success": True, "message": "Cache reloaded."})
+	return jsonify({"error": resp.get('error')}), 500
+
+# --- DATA ENDPOINTS ---
+
+@app.route('/api/resource_log', methods=['GET'])
+def queryResourceLog():
+	if 'discord_id' not in session:
+		return jsonify({"error": "Unauthorized", "resources": []}), 401
+
+	server_id = request.args.get('server', 'cuemu')
+	try:
+		since = float(request.args.get('since', 0))
+	except:
+		since = 0
+	
+	sql = """
+		SELECT rs.*, 
+			   rt.class_label as type, 
+			   u.username as reporter_name,
+			   EXTRACT(EPOCH FROM rs.date_reported) as date_reported_ts,
+			   EXTRACT(EPOCH FROM rs.last_modified) as last_modified_ts
+		FROM resource_spawns rs
+		JOIN resource_taxonomy rt ON rs.resource_class_id = rt.id
+		LEFT JOIN users u ON rs.reporter_id = u.discord_id
+		WHERE rs.server_id = %s 
+		AND (EXTRACT(EPOCH FROM rs.date_reported) > %s 
+			 OR (rs.last_modified IS NOT NULL AND EXTRACT(EPOCH FROM rs.last_modified) > %s))
+		ORDER BY rs.date_reported DESC
+	"""
+	
+	try:
+		with DatabaseContext.cursor() as cur:
+			cur.execute(sql, (server_id, since, since))
+			rows = cur.fetchall()
+		return jsonify({"resources": rows})
+	except Exception as e:
+		return jsonify({"error": str(e)}), 500
+
+@app.route('/api/taxonomy', methods=['GET'])
+def get_taxonomy():
+	try:
+		base_dir = os.path.dirname(os.path.abspath(__file__))
+		path = os.path.join(base_dir, "assets", "resource_taxonomy.json")
+		with open(path, 'r') as f:
+			data = json.load(f)
+		resp = jsonify(data)
+		resp.headers['Cache-Control'] = 'public, max-age=86400'
+		return resp
+	except Exception as e:
+		return jsonify({"error": f"Taxonomy unavailable: {e}"}), 500
+
+# --- WRITE OPERATIONS ---
+
+@app.route('/api/add-resource', methods=['POST'])
+def add_resource():
+	if 'discord_id' not in session: return jsonify({"error": "Unauthorized"}), 401
+	data = request.json
+	resp = send_command("add_resource", data, server_id=data.get('server_id', 'cuemu'))
+	if resp['status'] == 'success': return jsonify({"success": True})
+	return jsonify({"error": resp.get('error')}), 500
+
+@app.route('/api/update-resource', methods=['POST'])
+def update_resource():
+	if 'discord_id' not in session: return jsonify({"error": "Unauthorized"}), 401
+	data = request.json
+	resp = send_command("update_resource", data, server_id=data.get('server_id', 'cuemu'))
+	if resp['status'] == 'success': return jsonify({"success": True})
+	return jsonify({"error": resp.get('error')}), 500
+
+@app.route('/api/retire-resource', methods=['POST'])
+def retire_resource():
+	if 'discord_id' not in session: return jsonify({"error": "Unauthorized"}), 401
+	data = request.json
+	resp = send_command("retire_resource", data, server_id=data.get('server_id', 'cuemu'))
+	if resp['status'] == 'success': return jsonify({"success": True})
+	return jsonify({"error": resp.get('error')}), 500
+
+@app.route('/api/set-role', methods=['POST'])
+def set_role():
+	if 'discord_id' not in session: return jsonify({"error": "Unauthorized"}), 401
+	data = request.json
+	resp = send_command("set_user_role", data, server_id=data.get('server_id', 'cuemu'))
+	if resp['status'] == 'success': return jsonify({"success": True})
+	return jsonify({"error": resp.get('error')}), 500
 
 if __name__ == '__main__':
 	app.run(debug=True, port=5000)
