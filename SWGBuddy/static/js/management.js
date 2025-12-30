@@ -140,11 +140,10 @@ const Management = {
             return;
         }
 
-		// Ensure avatar is used as a direct URL
-        const avatarSrc = `https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.png`;
-
         this.filteredUsers.forEach(user => {
             const div = document.createElement('div');
+			// Ensure avatar is used as a direct URL
+        	const avatarSrc = `https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.png`;
             div.className = 'mgmt-user-item';
             div.innerHTML = `
                 <img src="${avatarSrc}" class="mgmt-avatar-small">
