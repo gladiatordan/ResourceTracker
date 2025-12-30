@@ -362,12 +362,7 @@ const Modal = {
 			}
 			return container;
 		};
-		window.TAXONOMY_TREE.forEach(rootNode => {
-			// Skip Space Resource tree
-			if (rootNode.label === "Space Resource") return;
-
-			list.appendChild(createNode(rootNode, 0));
-		});
+		window.TAXONOMY_TREE.forEach(rootNode => list.appendChild(createNode(rootNode, 0)));
 	},
 
 	selectType(label) {
