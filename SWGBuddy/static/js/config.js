@@ -4,12 +4,6 @@ const ALL_PLANETS = ["Corellia", "Dantooine", "Dathomir", "Endor", "Kashyyyk", "
 let currentSelectedLabel = "Resources"; // Default to Root
 let selectedResourceName = null;      // For row highlighting
 
-// Sorting Defaults
-let sortStack = [
-	{ key: 'date_reported', direction: 'desc' }, 
-	{ key: 'is_active', direction: 'desc' }
-];
-
 // Data Stores
 let rawResourceData = [];       // Master list from DB
 let filteredData = [];          // List after search/category filters
