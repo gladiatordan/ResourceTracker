@@ -374,7 +374,7 @@ select:focus,
 }
 
 /* Management Modal Updates */
-.management-modal-content {
+.modal-content.management-modal-content {
     width: 1100px; /* Wider */
     max-width: 95vw;
     height: 700px; /* Taller */
