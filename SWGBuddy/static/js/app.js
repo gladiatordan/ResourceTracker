@@ -58,7 +58,8 @@ function initTabs() {
             
             btn.classList.add('active');
             const target = btn.getAttribute('data-target');
-            document.getElementById(target).classList.add('active');
+			const targetPage = document.getElementById(target);
+            // document.getElementById(target).classList.add('active');
 
 			if (targetPage) {
 				targetPage.classList.add('active');
