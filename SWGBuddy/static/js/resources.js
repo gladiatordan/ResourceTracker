@@ -101,7 +101,7 @@ async function toggleStatus(button, resourceName) {
 		statusSpan.className = `status-text ${currentlyActive ? 'active' : 'inactive'}`;
 		alert("Failed: " + error.message);
 	}
-	toggleSort();
+	// toggleSort();
 }
 
 function getStatColorClass(rating) {
@@ -139,7 +139,7 @@ async function togglePlanet(selectElement, resourceName) {
 		console.error("Failed to add planet:", error);
 		alert("Error: " + error.message);
 	}
-	toggleSort();
+	// toggleSort();
 }
 
 async function handleBadgeClick(event, resourceName, planetValue) {
@@ -173,7 +173,7 @@ async function handleBadgeClick(event, resourceName, planetValue) {
 		console.error("Failed to remove planet:", error);
 		alert("Error: " + error.message);
 	}
-	toggleSort();
+	// toggleSort();
 }
 
 // ------------------------------------------------------------------

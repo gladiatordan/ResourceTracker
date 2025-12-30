@@ -59,8 +59,12 @@ const Auth = {
 					</div>
 				`;
 			} else {
-				// ... (Login button logic remains the same)
-			}
+				this.user = null;
+                authSection.innerHTML = `
+                    <a href="/login" class="btn-discord">
+                        <i class="fa-brands fa-discord"></i> Login
+                    </a>
+			`}
 		} catch (error) {
 			console.error("Session check failed:", error);
 			this.user = null;
