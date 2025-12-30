@@ -349,17 +349,7 @@ const Management = {
 		return u.avatar_url 
 			? `https://cdn.discordapp.com/avatars/${u.user_id}/${u.avatar_url}.png`
 			: '/static/img/default-avatar.png';
-	},
-
-	// ... (Updated switchTab to call loadLogs) ...
-	switchTab(tabName) {
-		this.currentTab = tabName;
-		// ... (class toggling) ...
-		
-		if (tabName === 'logs') {
-			this.loadLogs();
-		}
-	},
+	}
 };
 
 window.openServerManagement = () => Management.open();
