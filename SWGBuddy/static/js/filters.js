@@ -9,16 +9,12 @@
 const SORT_BEHAVIOR = {
 	// Name/Type: Up = A-Z (Ascending)
 	alpha: 'asc', 
-	
 	// Stats/Rating: Up = Highest to Lowest (Descending)
 	numeric: 'desc',
-	
 	// Date: Up = Most Recent (Large TS) to Oldest (Small TS) (Descending)
 	date: 'desc',
-	
 	// Status: Up = Active(1) to Inactive(0) (Descending)
 	status: 'desc',
-	
 	// Location: Up = A-Z string representation (Ascending)
 	planet: 'asc'
 };

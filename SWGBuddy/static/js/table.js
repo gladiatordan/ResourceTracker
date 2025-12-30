@@ -7,13 +7,10 @@ function renderTable(data) {
 	const tableBody = document.getElementById('resource-log-body');
 	tableBody.innerHTML = '';
 
-	// Check permissions
 	const canEdit = window.Auth && Auth.hasPermission('USER');
 
-	// FIX: Ensure planet list exists even if global ALL_PLANETS is missing or empty
 	let allPlanets = window.ALL_PLANETS || [];
 	if (allPlanets.length === 0 && window.validResources) {
-		// Fallback: collect unique planets from loaded taxonomy
 		const set = new Set();
 		Object.values(window.validResources).forEach(r => {
 			if (r.planets) r.planets.forEach(p => set.add(p));
@@ -39,9 +36,6 @@ function renderTable(data) {
 		const safeName = res.name.replace(/['\s]/g, '-');
 
 		const rawDate = new Date(res.date_reported);
-		// If timestamp is epoch (seconds), multiply by 1000? 
-		// Logic in modal.js uses epoch directly. Assuming date_reported here is ISO string or timestamp.
-		// Adjusting date parsing to be safe:
 		const dObj = (!isNaN(res.date_reported) && res.date_reported < 1e12) 
 					 ? new Date(res.date_reported * 1000) 
 					 : new Date(res.date_reported);
@@ -52,12 +46,16 @@ function renderTable(data) {
 		const formattedDate = `${day}/${month}/${year}`;
 
 		// Planet Logic
-		const assignedPlanets = (res.planet || res.planets || []).map(p => p.toLowerCase());
+		const rawPlanets = res.planet || res.planets || [];
+		
+		// FIX: Sort planets alphabetically for display consistency
+		const sortedPlanets = rawPlanets.slice().sort((a, b) => a.localeCompare(b));
+		const assignedPlanetsLower = sortedPlanets.map(p => p.toLowerCase());
 		
 		let planetControlHtml = '';
 		if (canEdit) {
 			const availableOptions = allPlanets
-				.filter(p => !assignedPlanets.includes(p.toLowerCase()))
+				.filter(p => !assignedPlanetsLower.includes(p.toLowerCase()))
 				.map(p => `<option value="${p}">${p}</option>`)
 				.join('');
 			
@@ -70,7 +68,8 @@ function renderTable(data) {
 				</div>`;
 		}
 
-		const planetBadges = (res.planet || res.planets || []).map(p => {
+		// FIX: Generate badges from the sorted list and display full name
+		const planetBadges = sortedPlanets.map(p => {
 			const planetLower = p.toLowerCase();
 			return `<span class="planet ${planetLower}" 
 							data-tooltip="${p}" 
@@ -100,7 +99,6 @@ function renderTable(data) {
 			return `<td class="col-stat ${colorClass}" ${tooltipAttr}>${displayVal}</td>`;
 		}).join('');
 
-		// Status Logic
 		let statusHtml = `
 			<span class="status-text ${res.is_active ? 'active' : 'inactive'}">${res.is_active ? 'Active' : 'Inactive'}</span>
 		`;
@@ -134,6 +132,7 @@ function renderTable(data) {
 	});
 }
 
+// ... (Rest of pagination functions remain unchanged)
 function renderPaginatedTable() {
 	const start = (currentPage - 1) * resultsPerPage;
 	const end = start + resultsPerPage;
