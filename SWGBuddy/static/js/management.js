@@ -140,11 +140,14 @@ const Management = {
             return;
         }
 
+		// Ensure avatar is used as a direct URL
+        const avatarSrc = user.avatar || '/static/img/default-avatar.png';
+
         this.filteredUsers.forEach(user => {
             const div = document.createElement('div');
             div.className = 'mgmt-user-item';
             div.innerHTML = `
-                <img src="${user.avatar}" class="mgmt-avatar-small">
+                <img src="${avatarSrc}" class="mgmt-avatar-small">
                 <div>
                     <div style="font-weight:bold; color:var(--text-main);">${user.username}</div>
                     <div class="mgmt-user-role">${user.role}</div>
@@ -168,6 +171,9 @@ const Management = {
         const myRole = Auth.getCurrentRole();
         const hierarchy = ['GUEST', 'USER', 'EDITOR', 'ADMIN', 'SUPERADMIN'];
         const myLevel = hierarchy.indexOf(myRole);
+
+		// Ensure avatar is used as a direct URL
+    	const avatarSrc = user.avatar || '/static/img/default-avatar.png';
         
         let options = '';
         hierarchy.forEach((role, idx) => {
@@ -178,7 +184,7 @@ const Management = {
         });
 
         this.elements.userDetail.innerHTML = `
-            <img src="${user.avatar}" class="mgmt-avatar-large">
+            <img src="${avatarSrc}" class="mgmt-avatar-large">
             <div class="mgmt-username-large">${user.username}</div>
             
             <div class="role-select-container">

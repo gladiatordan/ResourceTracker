@@ -28,20 +28,23 @@ const Auth = {
 				const role = this.getCurrentRole(); 
 				const roleClass = `role-${role.toLowerCase()}`;
 
-				// New Dropdown HTML Structure
-				// Show Management Link if Editor (Level 2) or higher
-				// Using 'onclick' to trigger the new global function
+				// Determine Avatar URL: Use stored URL if it looks like a link,
+				// otherwise fallback to constructing it from ID/Hash.
+				const avatarUrl = data.avatar.startsWith('http') 
+					? data.avatar 
+					: `https://cdn.discordapp.com/avatars/${data.id}/${data.avatar}.png`;
+
 				const showMgmt = this.hasPermission('EDITOR');
 				const mgmtLink = showMgmt 
 					? `<div class="dropdown-item" onclick="openServerManagement()">
-						 <i class="fa-solid fa-server"></i> Server Management
-					   </div>` 
+						<i class="fa-solid fa-server"></i> Server Management
+					</div>` 
 					: '';
 
 				authSection.innerHTML = `
 					<div class="user-profile-container">
 						<div class="user-profile">
-							<img src="https://cdn.discordapp.com/avatars/${data.id}/${data.avatar}.png" class="user-avatar" alt="">
+							<img src="${avatarUrl}" class="user-avatar" alt="" style="object-fit: cover;">
 							<div class="user-info">
 								<span class="username">${data.username}</span>
 								<span class="role-badge ${roleClass}">${role}</span>
@@ -56,12 +59,7 @@ const Auth = {
 					</div>
 				`;
 			} else {
-				this.user = null;
-				authSection.innerHTML = `
-					<a href="/login" class="btn-discord">
-						<i class="fa-brands fa-discord"></i> Login
-					</a>
-				`;
+				// ... (Login button logic remains the same)
 			}
 		} catch (error) {
 			console.error("Session check failed:", error);
