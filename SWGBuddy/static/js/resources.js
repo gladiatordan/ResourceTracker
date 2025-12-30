@@ -31,6 +31,7 @@ async function loadResources(isDelta = false) {
 				// Only re-render if we actually changed data
 				if (typeof applyAllTableTransforms === 'function') {
 					applyAllTableTransforms();
+					toggleSort();
 				}
 			}
 		} else {
@@ -40,6 +41,7 @@ async function loadResources(isDelta = false) {
 			
 			if (typeof applyAllTableTransforms === 'function') {
 				applyAllTableTransforms();
+				toggleSort();
 			}
 		}
 		
@@ -99,6 +101,7 @@ async function toggleStatus(button, resourceName) {
 		statusSpan.className = `status-text ${currentlyActive ? 'active' : 'inactive'}`;
 		alert("Failed: " + error.message);
 	}
+	toggleSort();
 }
 
 function getStatColorClass(rating) {
@@ -136,6 +139,7 @@ async function togglePlanet(selectElement, resourceName) {
 		console.error("Failed to add planet:", error);
 		alert("Error: " + error.message);
 	}
+	toggleSort();
 }
 
 async function handleBadgeClick(event, resourceName, planetValue) {
@@ -169,6 +173,7 @@ async function handleBadgeClick(event, resourceName, planetValue) {
 		console.error("Failed to remove planet:", error);
 		alert("Error: " + error.message);
 	}
+	toggleSort();
 }
 
 // ------------------------------------------------------------------
