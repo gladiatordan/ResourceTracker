@@ -97,6 +97,10 @@ const Management = {
 		});
 		document.getElementById('mgmt-view-permissions').classList.toggle('active', tabName === 'permissions');
 		document.getElementById('mgmt-view-logs').classList.toggle('active', tabName === 'logs');
+
+		if (tabName === 'logs') {
+			this.loadLogs();
+		}
 	},
 
 	async loadServerData(serverId) {
