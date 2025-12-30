@@ -129,5 +129,14 @@ const API = {
         const result = await response.json();
         if (!result.success) throw new Error(result.error || 'Reload failed');
         return result;
+    },
+
+	/**
+     * READ: Fetch Users for Management Panel
+     */
+    async fetchManagedUsers(serverId) {
+        const response = await fetch(`/api/admin/users?server=${serverId}`);
+        if (!response.ok) throw new Error('Failed to fetch users');
+        return await response.json();
     }
 };

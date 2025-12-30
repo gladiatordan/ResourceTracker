@@ -391,7 +391,7 @@ input:disabled {
 }
 
 .mgmt-nav-btn {
-    background: transparent;
+    background-color: rgb(var(--panel-bg) / 50%);
     border: none;
     color: var(--text-dim);
     padding: 12px 20px;
