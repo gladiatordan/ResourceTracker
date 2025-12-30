@@ -162,7 +162,7 @@ td.col-stat { font-weight: 700; }
 
 .sort-btns span { font-size: 10px; }
 .sort-btns span.active-up   { color: var(--stat-high); text-shadow: 0 0 5px var(--stat-high); }
-.sort-btns span.active-down { color: var(--accent-blue); text-shadow: 0 0 5px var(--accent-blue); }
+.sort-btns span.active-down { color: var(--stat-high); text-shadow: 0 0 5px var(--stat-high); }
 
 /* =========================================
    5. Dropdowns & Taxonomy
