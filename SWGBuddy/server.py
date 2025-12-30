@@ -307,52 +307,61 @@ def get_managed_users():
 	uid = session['discord_id']
 	server_id = request.args.get('server', 'cuemu')
 	
-	# 1. Determine Requester's Role Level
+	# --- FIX: Re-verify requester's role from Database ---
 	req_level = 0
-	if session.get('is_superadmin'):
-		req_level = 100
-	else:
-		perms = session.get('server_perms', {})
-		role_str = perms.get(server_id, 'GUEST')
-		req_level = ROLE_HIERARCHY.get(role_str, 0)
-
-	# Only Editors (2) and up can manage
-	if req_level < 2:
-		return jsonify({"error": "Forbidden"}), 403
-
-	# 2. Fetch All Users for this Server
-	# We join users with server_permissions
-	sql = """
-		SELECT u.discord_id, u.username, u.avatar_url, sp.role
-		FROM server_permissions sp
-		JOIN users u ON sp.user_id = u.discord_id
-		WHERE sp.server_id = %s
-	"""
-	
 	try:
+		with DatabaseContext.cursor() as cur:
+			# 1. Check if requester is a SuperAdmin
+			cur.execute("SELECT is_superadmin FROM users WHERE discord_id = %s", (uid,))
+			user_row = cur.fetchone()
+			
+			if user_row and user_row['is_superadmin']:
+				req_level = ROLE_HIERARCHY['SUPERADMIN']
+			else:
+				# 2. Check requester's specific server role
+				cur.execute(
+					"SELECT role FROM server_permissions WHERE user_id = %s AND server_id = %s", 
+					(uid, server_id)
+				)
+				perm_row = cur.fetchone()
+				role_str = perm_row['role'] if perm_row else 'GUEST'
+				req_level = ROLE_HIERARCHY.get(role_str, 0)
+
+		# 3. Security Gate: Only Editors (2) and up can manage users
+		if req_level < ROLE_HIERARCHY['EDITOR']:
+			return jsonify({"error": "Forbidden"}), 403
+
+		# 4. Fetch All Users for this Server to filter
+		sql = """
+			SELECT u.discord_id, u.username, u.avatar_url, sp.role
+			FROM server_permissions sp
+			JOIN users u ON sp.user_id = u.discord_id
+			WHERE sp.server_id = %s
+		"""
+		
 		with DatabaseContext.cursor() as cur:
 			cur.execute(sql, (server_id,))
 			all_users = cur.fetchall()
 			
-		# 3. Filter: Only show users with strictly LOWER role level
+		# 5. Filter: Only show users with strictly LOWER role level than the requester
 		manageable_users = []
 		for u in all_users:
-			u_role = u['role']
-			u_level = ROLE_HIERARCHY.get(u_role, 0)
+			target_role = u['role']
+			target_level = ROLE_HIERARCHY.get(target_role, 0)
 			
-			# SuperAdmins can see everyone except other SuperAdmins
-			if u_level < req_level:
+			if target_level < req_level:
 				manageable_users.append({
 					"id": u['discord_id'],
 					"username": u['username'],
 					"avatar": u['avatar_url'],
-					"role": u_role
+					"role": target_role
 				})
 				
 		return jsonify({"users": manageable_users})
 
 	except Exception as e:
-		return jsonify({"error": str(e)}), 500
+		print(f"Error in get_managed_users: {e}")
+		return jsonify({"error": "Internal Server Error"}), 500
 
 if __name__ == '__main__':
 	app.run(debug=True, port=5000)
