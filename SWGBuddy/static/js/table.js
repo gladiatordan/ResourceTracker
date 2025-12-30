@@ -75,7 +75,7 @@ function renderTable(data) {
 			return `<span class="planet ${planetLower}" 
 							data-tooltip="${p}" 
 							onclick="handleBadgeClick(event, '${res.name.replace(/'/g, "\\'")}', '${p}')">
-							${p}
+							${p.charAt(0)}
 					</span>`;
 		}).join(' ');
 		

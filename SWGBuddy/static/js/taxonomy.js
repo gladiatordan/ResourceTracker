@@ -54,31 +54,81 @@ function renderTaxonomyDropdown() {
 	const list = document.getElementById('taxonomy-list');
 	if (!list) return;
 
-	// Reset list with just the Root option
-	list.innerHTML = `<div class="dropdown-item root-item" onclick="selectCategory(null, 'All Resources')">All Resources</div>`;
+	list.innerHTML = '';
 
-	// Recursive render
-	function buildHtml(nodes, depth) {
-		let html = '';
-		nodes.forEach(node => {
-			const padding = depth * 15;
-			// Use label as the identifier now
-			const safeLabel = node.label.replace(/'/g, "\\'");
-			
-			html += `<div class="dropdown-item" 
-						  style="padding-left: ${padding}px;" 
-						  onclick="selectCategory('${safeLabel}', '${safeLabel}')">
-						  ${node.label}
-					 </div>`;
-			
-			if (node.children && node.children.length > 0) {
-				html += buildHtml(node.children, depth + 1);
-			}
-		});
-		return html;
-	}
+	// Root Option
+	const rootDiv = document.createElement('div');
+	rootDiv.className = 'dropdown-item root-item';
+	rootDiv.textContent = 'All Resources';
+	rootDiv.onclick = () => selectCategory(null, 'All Resources');
+	list.appendChild(rootDiv);
 
-	list.innerHTML += buildHtml(TAXONOMY_TREE, 1);
+	// Recursive Tree Builder
+	const createNode = (node, depth) => {
+		const container = document.createElement('div');
+		
+		// Row Label
+		const row = document.createElement('div');
+		row.className = 'dropdown-item';
+		row.style.paddingLeft = (depth * 15 + 10) + 'px';
+		row.style.display = 'flex';
+		row.style.alignItems = 'center';
+
+		const isLeaf = !node.children || node.children.length === 0;
+
+		// 1. Toggle Icon
+		const icon = document.createElement('span');
+		icon.style.width = '20px';
+		icon.style.textAlign = 'center';
+		icon.style.marginRight = '5px';
+		icon.style.cursor = 'pointer';
+		icon.style.color = 'var(--accent-color)';
+		// Default: Collapsed (Right Arrow) unless leaf
+		icon.innerText = isLeaf ? '•' : '▶'; 
+		
+		// 2. Label Text
+		const text = document.createElement('span');
+		text.innerText = node.label;
+		text.style.cursor = 'pointer';
+		text.style.flex = '1';
+
+		row.appendChild(icon);
+		row.appendChild(text);
+		container.appendChild(row);
+
+		// 3. Children Container
+		let childrenContainer = null;
+		if (!isLeaf) {
+			childrenContainer = document.createElement('div');
+			childrenContainer.style.display = 'none'; // Default Collapsed
+			
+			node.children.forEach(child => {
+				childrenContainer.appendChild(createNode(child, depth + 1));
+			});
+			container.appendChild(childrenContainer);
+
+			// Toggle Logic
+			const toggle = (e) => {
+				e.stopPropagation(); // Prevent selection
+				const isHidden = childrenContainer.style.display === 'none';
+				childrenContainer.style.display = isHidden ? 'block' : 'none';
+				icon.innerText = isHidden ? '▼' : '▶';
+			};
+			icon.onclick = toggle;
+		}
+
+		// Selection Logic (Clicking text selects the category)
+		text.onclick = (e) => {
+			// Note: Filter allows selecting Folders (e.g. "Inorganic")
+			selectCategory(node.label, node.label);
+		};
+
+		return container;
+	};
+
+	TAXONOMY_TREE.forEach(node => {
+		list.appendChild(createNode(node, 0));
+	});
 }
 
 /**
@@ -87,10 +137,8 @@ function renderTaxonomyDropdown() {
  */
 function getDescendantLabels(parentLabel) {
 	if (!parentLabel) return [];
-	
 	let descendants = [];
 	
-	// Recursive search to find the node
 	function findNode(nodes, target) {
 		for (const node of nodes) {
 			if (node.label === target) return node;
@@ -104,7 +152,6 @@ function getDescendantLabels(parentLabel) {
 
 	const parentNode = findNode(TAXONOMY_TREE, parentLabel);
 	
-	// Collect all children recursively
 	function collect(node) {
 		if (node.children) {
 			node.children.forEach(child => {

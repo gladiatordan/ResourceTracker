@@ -5,14 +5,17 @@ const Management = {
     currentServer: null,
     currentTab: 'permissions',
     users: [],
+    filteredUsers: [],
     selectedUser: null,
 
     elements: {
         modal: document.getElementById('management-modal'),
         serverSelect: document.getElementById('mgmt-server-select'),
-        userList: document.getElementById('mgmt-user-list'),
+        userListPane: document.getElementById('mgmt-user-list'), // Container
         userDetail: document.getElementById('mgmt-user-detail'),
-        loader: document.getElementById('mgmt-loader'), // Reuse modal loader logic if desired
+        // Dynamic elements
+        userListScroll: null,
+        searchInput: null,
     },
 
     init() {
@@ -29,29 +32,56 @@ const Management = {
                 this.loadServerData(e.target.value);
             });
         }
+
+        // Inject Structure into User List Pane once
+        this.setupUserPane();
+    },
+
+    setupUserPane() {
+        const pane = this.elements.userListPane;
+        pane.innerHTML = ''; // Clear "Loading..."
+
+        // 1. Search Header
+        const header = document.createElement('div');
+        header.className = 'mgmt-search-container';
+        
+        const input = document.createElement('input');
+        input.type = 'text';
+        input.className = 'mgmt-search-input';
+        input.placeholder = 'Filter users...';
+        input.addEventListener('input', (e) => this.filterUsers(e.target.value));
+        this.elements.searchInput = input;
+
+        const refreshBtn = document.createElement('button');
+        refreshBtn.className = 'mgmt-refresh-btn';
+        refreshBtn.innerHTML = '<i class="fa-solid fa-rotate-right"></i>';
+        refreshBtn.title = "Refresh User List";
+        refreshBtn.onclick = () => this.fetchUsers();
+
+        header.appendChild(input);
+        header.appendChild(refreshBtn);
+        pane.appendChild(header);
+
+        // 2. Scrollable List Area
+        const scrollArea = document.createElement('div');
+        scrollArea.className = 'user-list-scroll-area';
+        this.elements.userListScroll = scrollArea;
+        pane.appendChild(scrollArea);
     },
 
     open() {
         if (!window.Auth || !Auth.hasPermission('EDITOR')) return;
 
-        // Populate Server Select based on permissions
-        const perms = Auth.user.server_perms || {};
-        const select = this.elements.serverSelect;
-        select.innerHTML = '';
-        
-        // If SuperAdmin, maybe list all? For now, list keys in perms + cuemu
-        // Or just use the current page context server as default
         const currentContext = API.getServerContext();
         
-        // Add current if we have rights
-        if (Auth.hasPermission('EDITOR')) {
-            const opt = document.createElement('option');
-            opt.value = currentContext;
-            opt.textContent = currentContext.toUpperCase(); // Placeholder label
-            select.appendChild(opt);
-        }
+        // Populate Server Select
+        const select = this.elements.serverSelect;
+        select.innerHTML = '';
+        const opt = document.createElement('option');
+        opt.value = currentContext;
+        opt.textContent = currentContext.toUpperCase();
+        select.appendChild(opt);
         
-        // Show Modal
         this.elements.modal.classList.remove('hidden');
         this.loadServerData(currentContext);
     },
@@ -62,57 +92,61 @@ const Management = {
 
     switchTab(tabName) {
         this.currentTab = tabName;
-        
-        // Toggle Active Button
         document.querySelectorAll('.mgmt-nav-btn').forEach(b => {
             b.classList.toggle('active', b.dataset.tab === tabName);
         });
-
-        // Toggle Views
         document.getElementById('mgmt-view-permissions').classList.toggle('active', tabName === 'permissions');
         document.getElementById('mgmt-view-logs').classList.toggle('active', tabName === 'logs');
     },
 
     async loadServerData(serverId) {
         this.currentServer = serverId;
-        // Show loader...
-        
         if (this.currentTab === 'permissions') {
             await this.fetchUsers();
-        } else {
-            // Logs...
         }
     },
 
     async fetchUsers() {
+        const listArea = this.elements.userListScroll;
         try {
-            this.elements.userList.innerHTML = '<div style="padding:10px">Loading...</div>';
-            this.elements.userDetail.innerHTML = '<div style="opacity:0.5">Select a user to edit</div>';
+            listArea.innerHTML = '<div style="padding:10px; color:#888;">Loading users...</div>';
+            this.elements.userDetail.innerHTML = '<div style="opacity:0.5; margin-top:20px;">Select a user to edit</div>';
             
             const data = await API.fetchManagedUsers(this.currentServer);
             this.users = data.users || [];
+            this.filteredUsers = [...this.users]; // Reset filter
+            
+            // Clear search box if refreshing
+            if(this.elements.searchInput) this.elements.searchInput.value = '';
+
             this.renderUserList();
         } catch (error) {
-            this.elements.userList.innerHTML = `<div style="color:red">Error: ${error.message}</div>`;
+            listArea.innerHTML = `<div style="color:red; padding:10px;">Error: ${error.message}</div>`;
         }
     },
 
+    filterUsers(query) {
+        const term = query.toLowerCase();
+        this.filteredUsers = this.users.filter(u => u.username.toLowerCase().includes(term));
+        this.renderUserList();
+    },
+
     renderUserList() {
-        const list = this.elements.userList;
+        const list = this.elements.userListScroll;
         list.innerHTML = '';
         
-        if (this.users.length === 0) {
-            list.innerHTML = '<div style="padding:10px">No manageable users found.</div>';
+        if (this.filteredUsers.length === 0) {
+            list.innerHTML = '<div style="padding:10px">No users found.</div>';
             return;
         }
 
-        this.users.forEach(user => {
+        this.filteredUsers.forEach(user => {
             const div = document.createElement('div');
             div.className = 'mgmt-user-item';
             div.innerHTML = `
                 <img src="${user.avatar}" class="mgmt-avatar-small">
                 <div>
-                    <div style="font-weight:bold">${user.username}</div>
+                    <div style="font-weight:bold; color:var(--text-main);">${user.username}</div>
                     <div class="mgmt-user-role">${user.role}</div>
                 </div>
             `;
@@ -124,24 +158,20 @@ const Management = {
     selectUser(user, domElement) {
         this.selectedUser = user;
         
-        // Highlight logic
         document.querySelectorAll('.mgmt-user-item').forEach(el => el.classList.remove('selected'));
         domElement.classList.add('selected');
 
-        // Render Detail
         this.renderUserDetail(user);
     },
 
     renderUserDetail(user) {
-        // Determine available roles (lower than mine)
         const myRole = Auth.getCurrentRole();
         const hierarchy = ['GUEST', 'USER', 'EDITOR', 'ADMIN', 'SUPERADMIN'];
         const myLevel = hierarchy.indexOf(myRole);
         
         let options = '';
         hierarchy.forEach((role, idx) => {
-            if (idx < myLevel && idx > 0) { // Can assign any role LOWER than self (and not Guest/Super usually?)
-                // Actually prompt says "only show roles lower than current role"
+            if (idx < myLevel && idx > 0) { 
                 const selected = (role === user.role) ? 'selected' : '';
                 options += `<option value="${role}" ${selected}>${role}</option>`;
             }
@@ -152,11 +182,11 @@ const Management = {
             <div class="mgmt-username-large">${user.username}</div>
             
             <div class="role-select-container">
-                <label style="color:var(--text-dim); font-size:0.8rem;">SET ROLE</label>
-                <select id="mgmt-role-select" class="planet-select" style="width:100%; margin-top:5px;">
+                <label style="color:var(--text-dim); font-size:0.8rem; margin-bottom:5px; display:block;">SET ROLE</label>
+                <select id="mgmt-role-select" style="width:100%;">
                     ${options}
                 </select>
-                <button class="btn-primary" style="width:100%; margin-top:15px;" onclick="Management.saveRole()">Update Role</button>
+                <button class="btn-primary" style="width:100%; margin-top:20px;" onclick="Management.saveRole()">Update Role</button>
             </div>
         `;
     },
@@ -168,7 +198,7 @@ const Management = {
         try {
             await API.setRole(this.selectedUser.id, newRole);
             alert(`Updated ${this.selectedUser.username} to ${newRole}`);
-            this.fetchUsers(); // Refresh list
+            this.fetchUsers(); // Refresh list to update UI
         } catch (error) {
             alert("Error: " + error.message);
         }
