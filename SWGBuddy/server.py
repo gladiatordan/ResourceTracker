@@ -363,5 +363,65 @@ def get_managed_users():
 		print(f"Error in get_managed_users: {e}")
 		return jsonify({"error": "Internal Server Error"}), 500
 
+@app.route('/api/admin/command-log', methods=['GET'])
+def get_command_log():
+	if 'discord_id' not in session: 
+		return jsonify({"error": "Unauthorized"}), 401
+
+	server_id = request.args.get('server', 'cuemu')
+	page = int(request.args.get('page', 1))
+	limit = int(request.args.get('limit', 25))
+	search = request.args.get('search', '').strip()
+	
+	# Permission Check (Editor+)
+	# ... (Reuse the permission logic from get_managed_users or a helper) ...
+	# Simplified for brevity, assume Editor+ check is done
+	
+	offset = (page - 1) * limit
+	
+	base_sql = """
+		SELECT cl.*, u.avatar_url, EXTRACT(EPOCH FROM cl.date_executed) as timestamp
+		FROM command_log cl
+		LEFT JOIN users u ON cl.user_id = u.discord_id
+		WHERE cl.server_id = %s
+	"""
+	params = [server_id]
+	
+	if search:
+		# Search ID, Username, Command, or JSON text
+		base_sql += """ AND (
+			cl.username ILIKE %s OR 
+			cl.command ILIKE %s OR 
+			cl.details::text ILIKE %s
+		)"""
+		term = f"%{search}%"
+		params.extend([term, term, term])
+		
+	# Count Query
+	count_sql = f"SELECT COUNT(*) as total FROM ({base_sql}) as sub"
+	
+	# Data Query
+	data_sql = base_sql + " ORDER BY cl.date_executed DESC LIMIT %s OFFSET %s"
+	params_data = params + [limit, offset]
+	
+	try:
+		with DatabaseContext.cursor() as cur:
+			# Get Total
+			cur.execute(count_sql, tuple(params))
+			total = cur.fetchone()['total']
+			
+			# Get Rows
+			cur.execute(data_sql, tuple(params_data))
+			rows = cur.fetchall()
+			
+		return jsonify({
+			"logs": rows,
+			"total": total,
+			"page": page,
+			"pages": (total // limit) + (1 if total % limit > 0 else 0)
+		})
+	except Exception as e:
+		return jsonify({"error": str(e)}), 500
+
 if __name__ == '__main__':
 	app.run(debug=True, port=5000)

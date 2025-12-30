@@ -119,21 +119,26 @@ class ValidationService(Core):
 
 			if action == "sync_user":
 				self._sync_user(payload)
+				# self._log_command(server_id, user_ctx, action, payload)
 
 			elif action == "add_resource":
-				self._handle_write(payload, server_id, is_new=True, user_ctx=user_ctx) 
+				self._handle_write(payload, server_id, is_new=True, user_ctx=user_ctx)
+				self._log_command(server_id, user_ctx, action, payload) # <--- Log
 				self.info(f"User {user_ctx.get('username')} added resource: {payload.get('name')}")
 
 			elif action == "update_resource":
 				self._handle_write(payload, server_id, is_new=False, user_ctx=user_ctx)
+				self._log_command(server_id, user_ctx, action, payload) # <--- Log
 				self.info(f"User {user_ctx.get('username')} updated resource ID: {payload.get('id')}")
 
 			elif action == "retire_resource":
 				self._retire_resource(payload, server_id)
+				self._log_command(server_id, user_ctx, action, payload) # <--- Log
 				self.info(f"User {user_ctx.get('username')} retired resource ID: {payload.get('id')}")
 
 			elif action == "set_user_role":
 				self._set_user_role(user_ctx, payload, server_id)
+				self._log_command(server_id, user_ctx, action, payload) # <--- Log
 				self.info(f"Role change: {payload.get('target_user_id')} -> {payload.get('role')} on {server_id}")
 			
 			elif action == "reload_cache":
@@ -154,6 +159,29 @@ class ValidationService(Core):
 		
 		if self.reply_queue and correlation_id:
 			self.reply_queue.put(response)
+	
+	def _log_command(self, server_id, user_ctx, command, details):
+		"""Inserts a record into the command_log."""
+		try:
+			sql = """
+				INSERT INTO command_log (server_id, user_id, username, command, details)
+				VALUES (%s, %s, %s, %s, %s)
+			"""
+			
+			# Use json.dumps for the JSONB column
+			# Filter sensitive data from details if necessary here
+			details_json = json.dumps(details)
+			
+			with DatabaseContext.cursor(commit=True) as cur:
+				cur.execute(sql, (
+					server_id, 
+					user_ctx.get('id'), 
+					user_ctx.get('username'), 
+					command, 
+					details_json
+				))
+		except Exception as e:
+			self.error(f"Failed to write to command log: {e}")
 
 	def _reload_cache(self):
 		"""Re-reads the JSON taxonomy from disk."""
