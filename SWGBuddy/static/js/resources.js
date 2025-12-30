@@ -9,26 +9,60 @@
 /**
  * Main Loader Function
  */
-async function loadResources() {
+async function loadResources(isDelta = false) {
 	try {
-		const dataPacket = await API.fetchResources(0); 
+		const dataPacket = await API.fetchResources(isDelta); 
 		const newResources = dataPacket.resources || [];
 		
-		rawResourceData = newResources;
-		// Use global variable for tracking delta syncs if applicable
-		if (typeof LAST_SYNC_TIMESTAMP !== 'undefined') {
-			LAST_SYNC_TIMESTAMP = Date.now();
-		}
-
-		if (typeof applyAllTableTransforms === 'function') {
-			applyAllTableTransforms();
+		if (isDelta) {
+			// MERGE LOGIC: Update existing, Append new
+			if (newResources.length > 0) {
+				console.log(`Delta Sync: Received ${newResources.length} updates.`);
+				newResources.forEach(updatedRes => {
+					const idx = rawResourceData.findIndex(r => r.id === updatedRes.id);
+					if (idx !== -1) {
+						// Update existing entry
+						rawResourceData[idx] = updatedRes;
+					} else {
+						// Append new entry
+						rawResourceData.push(updatedRes);
+					}
+				});
+				// Only re-render if we actually changed data
+				if (typeof applyAllTableTransforms === 'function') {
+					applyAllTableTransforms();
+				}
+			}
+		} else {
+			// FULL LOAD: Overwrite
+			rawResourceData = newResources;
+			console.log(`Full Sync: Loaded ${rawResourceData.length} resources.`);
+			
+			if (typeof applyAllTableTransforms === 'function') {
+				applyAllTableTransforms();
+			}
 		}
 		
-		console.log(`Resources Loaded: ${rawResourceData.length}`);
 	} catch (error) {
 		console.error("Failed to load resources:", error);
 	}
 }
+
+// ------------------------------------------------------------------
+// INITIALIZATION & POLLING
+// ------------------------------------------------------------------
+
+// Start polling when the script loads (or call this from app.js init)
+function startPolling() {
+	if (pollingInterval) clearInterval(pollingInterval);
+	// Poll every 5 seconds for updates
+	pollingInterval = setInterval(() => loadResources(true), 5000);
+	console.log("Resource polling started (5s interval).");
+}
+
+// Auto-start polling
+startPolling();
+
 
 // ------------------------------------------------------------------
 // STATUS & ROW MANAGEMENT
@@ -47,18 +81,17 @@ async function toggleStatus(button, resourceName) {
 	statusSpan.className = `status-text ${newState ? 'active' : 'inactive'}`;
 
 	try {
-		// FIX: Send full object so validation.py can recalculate ratings
 		const payload = { ...resource, is_active: newState };
-		
-		// FIX: Remove planet fields entirely for status updates.
-		// This prevents the backend from triggering "Replace Planet List" logic,
-		// avoiding race conditions or accidental overwrites.
 		delete payload.planet;
 		delete payload.planets;
 
 		await API.updateResource(payload);
 		
 		resource.is_active = newState;
+		
+		// Trigger a delta sync to ensure consistency (e.g. last_modified timestamp)
+		loadResources(true);
+
 	} catch (error) {
 		console.error("Failed to save status:", error);
 		// Revert UI
@@ -66,6 +99,14 @@ async function toggleStatus(button, resourceName) {
 		statusSpan.className = `status-text ${currentlyActive ? 'active' : 'inactive'}`;
 		alert("Failed: " + error.message);
 	}
+}
+
+function getStatColorClass(rating) {
+	if (!rating || rating === '-') return '';
+	if (rating >= 0.950) return 'stat-red';
+	if (rating >= 0.900 && rating < 0.950) return 'stat-yellow';
+	if (rating >= 0.500 && rating < 0.900) return 'stat-green';
+	return '';
 }
 
 // ------------------------------------------------------------------
@@ -80,8 +121,6 @@ async function togglePlanet(selectElement, resourceName) {
 	if (!resource) return;
 
 	try {
-		// FIX: Send full object (stats) + new planet string
-		// Sending 'planet' as a String triggers the atomic Toggle logic in backend
 		const payload = {
 			...resource,
 			planet: newPlanet 
@@ -90,8 +129,8 @@ async function togglePlanet(selectElement, resourceName) {
 		await API.updateResource(payload);
 
 		selectElement.value = "";
-		// Reload is required to get the sorted/verified list from DB
-		await loadResources(); 
+		// Efficient Delta Reload
+		await loadResources(true); 
 		
 	} catch (error) {
 		console.error("Failed to add planet:", error);
@@ -110,7 +149,6 @@ async function handleBadgeClick(event, resourceName, planetValue) {
 	const resource = rawResourceData.find(r => r.name === resourceName);
 	if (!resource) return;
 
-	// Check "Don't Prompt" preference
 	const skipConfirmation = localStorage.getItem('swgbuddy_skip_planet_confirm') === 'true';
 
 	if (!skipConfirmation) {
@@ -120,24 +158,17 @@ async function handleBadgeClick(event, resourceName, planetValue) {
 	try {
 		const payload = {
 			...resource,
-			planet: planetValue // Triggers toggle (remove if present)
+			planet: planetValue 
 		};
 
 		await API.updateResource(payload);
-		await loadResources(); 
+		// Efficient Delta Reload
+		await loadResources(true); 
 
 	} catch (error) {
 		console.error("Failed to remove planet:", error);
 		alert("Error: " + error.message);
 	}
-}
-
-function getStatColorClass(rating) {
-	if (!rating || rating === '-') return '';
-	if (rating >= 0.950) return 'stat-red';
-	if (rating >= 0.900 && rating < 0.950) return 'stat-yellow';
-	if (rating >= 0.500 && rating < 0.900) return 'stat-green';
-	return '';
 }
 
 // ------------------------------------------------------------------
