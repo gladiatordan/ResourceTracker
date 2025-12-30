@@ -305,7 +305,6 @@ def get_managed_users():
 		return jsonify({"error": "Unauthorized"}), 401
 
 	uid = session['discord_id']
-	print(session)
 	server_id = request.args.get('server', 'cuemu')
 	
 	# 1. Determine Requester's Role Level
@@ -313,7 +312,6 @@ def get_managed_users():
 	if session.get('is_superadmin'):
 		req_level = 100
 	else:
-		print(f"USER {uid} is not a superadmin for {server_id}")
 		perms = session.get('server_perms', {})
 		role_str = perms.get(server_id, 'GUEST')
 		req_level = ROLE_HIERARCHY.get(role_str, 0)
@@ -354,7 +352,6 @@ def get_managed_users():
 		return jsonify({"users": manageable_users})
 
 	except Exception as e:
-		print(str(e))
 		return jsonify({"error": str(e)}), 500
 
 if __name__ == '__main__':
