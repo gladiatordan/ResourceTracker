@@ -26,11 +26,10 @@ class DatabaseContext:
 		Initializes the connection pool. 
 		MUST be called once at the start of each Process (Web, Validation, etc).
 		"""
-		if cls._pool:
-			cls.close() # Close existing if any
-
 		if cls._pool is None:
 			try:
+				if cls._pool:
+					cls.close() # Close existing if any
 					
 				# ThreadedConnectionPool allows multiple threads in Flask to share this pool safely.
 				cls._pool = psycopg2.pool.ThreadedConnectionPool(
