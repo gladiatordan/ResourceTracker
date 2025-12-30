@@ -353,7 +353,7 @@ def get_managed_users():
 				manageable_users.append({
 					"id": u['discord_id'],
 					"username": u['username'],
-					"avatar": u['avatar_url'],
+					"avatar": f"https://cdn.discordapp.com/avatars/${u['discord_id']}/${u['avatar_url']}.png",
 					"role": target_role
 				})
 				
