@@ -483,7 +483,7 @@ select:focus,
     background: rgba(0,0,0,0.2);
 }
 
-.mgmt-server-select {
+/* .mgmt-server-select {
     background: #000;
     color: var(--accent-blue);
     border: 1px solid var(--accent-blue);
@@ -492,7 +492,7 @@ select:focus,
     font-family: 'Rajdhani', sans-serif;
     font-weight: 700;
     margin-left: 15px;
-}
+} */
 
 .mgmt-body {
     display: flex;
