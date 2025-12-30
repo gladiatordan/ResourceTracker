@@ -1514,7 +1514,7 @@
                             {
                                 "id": "528",
                                 "label": "Chemical Compound",
-                                "is_valid": true,
+                                "is_valid": false,
                                 "stats": {
                                     "res_dr": {
                                         "min": 200,
@@ -2765,7 +2765,7 @@
                                             {
                                                 "id": "745",
                                                 "label": "Mixed Inert Gas",
-                                                "is_valid": true,
+                                                "is_valid": false,
                                                 "stats": {
                                                     "res_dr": {
                                                         "min": 200,
@@ -2995,7 +2995,7 @@
                                             {
                                                 "id": "732",
                                                 "label": "Mixed Reactive Gas",
-                                                "is_valid": true,
+                                                "is_valid": false,
                                                 "stats": {
                                                     "res_dr": {
                                                         "min": 200,
@@ -4492,7 +4492,7 @@
                                     {
                                         "id": "702",
                                         "label": "Low Quality Gemstones",
-                                        "is_valid": true,
+                                        "is_valid": false,
                                         "stats": {
                                             "res_dr": {
                                                 "min": 200,
@@ -5732,7 +5732,7 @@
                                             {
                                                 "id": "655",
                                                 "label": "Low Grade Ore (igneous)",
-                                                "is_valid": true,
+                                                "is_valid": false,
                                                 "stats": {
                                                     "res_dr": {
                                                         "min": 200,
@@ -6284,54 +6284,6 @@
                                                 ]
                                             },
                                             {
-                                                "id": "681",
-                                                "label": "Low Grade Ore (sedimentary)",
-                                                "is_valid": true,
-                                                "stats": {
-                                                    "res_dr": {
-                                                        "min": 200,
-                                                        "max": 200
-                                                    },
-                                                    "res_oq": {
-                                                        "min": 200,
-                                                        "max": 200
-                                                    },
-                                                    "res_cr": {
-                                                        "min": 200,
-                                                        "max": 200
-                                                    },
-                                                    "res_hr": {
-                                                        "min": 200,
-                                                        "max": 200
-                                                    },
-                                                    "res_ma": {
-                                                        "min": 200,
-                                                        "max": 200
-                                                    },
-                                                    "res_ut": {
-                                                        "min": 200,
-                                                        "max": 200
-                                                    },
-                                                    "res_sr": {
-                                                        "min": 200,
-                                                        "max": 200
-                                                    }
-                                                },
-                                                "children": [],
-                                                "planets": [
-                                                    "Corellia",
-                                                    "Dantooine",
-                                                    "Dathomir",
-                                                    "Endor",
-                                                    "Lok",
-                                                    "Naboo",
-                                                    "Rori",
-                                                    "Talus",
-                                                    "Tatooine",
-                                                    "Yavin"
-                                                ]
-                                            },
-                                            {
                                                 "id": "692",
                                                 "label": "Siliclastic Ore",
                                                 "is_valid": false,
@@ -6750,6 +6702,54 @@
                                                             "Yavin"
                                                         ]
                                                     }
+                                                ]
+                                            },
+											{
+                                                "id": "681",
+                                                "label": "Low Grade Ore (sedimentary)",
+                                                "is_valid": false,
+                                                "stats": {
+                                                    "res_dr": {
+                                                        "min": 200,
+                                                        "max": 200
+                                                    },
+                                                    "res_oq": {
+                                                        "min": 200,
+                                                        "max": 200
+                                                    },
+                                                    "res_cr": {
+                                                        "min": 200,
+                                                        "max": 200
+                                                    },
+                                                    "res_hr": {
+                                                        "min": 200,
+                                                        "max": 200
+                                                    },
+                                                    "res_ma": {
+                                                        "min": 200,
+                                                        "max": 200
+                                                    },
+                                                    "res_ut": {
+                                                        "min": 200,
+                                                        "max": 200
+                                                    },
+                                                    "res_sr": {
+                                                        "min": 200,
+                                                        "max": 200
+                                                    }
+                                                },
+                                                "children": [],
+                                                "planets": [
+                                                    "Corellia",
+                                                    "Dantooine",
+                                                    "Dathomir",
+                                                    "Endor",
+                                                    "Lok",
+                                                    "Naboo",
+                                                    "Rori",
+                                                    "Talus",
+                                                    "Tatooine",
+                                                    "Yavin"
                                                 ]
                                             },
                                             {
@@ -7383,7 +7383,7 @@
                                                     {
                                                         "id": "617",
                                                         "label": "Smelted Iron",
-                                                        "is_valid": true,
+                                                        "is_valid": false,
                                                         "stats": {
                                                             "res_dr": {
                                                                 "min": 200,
@@ -7432,58 +7432,6 @@
                                                             "Yavin"
                                                         ]
                                                     }
-                                                ]
-                                            },
-                                            {
-                                                "id": "599",
-                                                "label": "Smelted Ferrous Metal",
-                                                "is_valid": true,
-                                                "stats": {
-                                                    "res_dr": {
-                                                        "min": 200,
-                                                        "max": 200
-                                                    },
-                                                    "res_oq": {
-                                                        "min": 200,
-                                                        "max": 200
-                                                    },
-                                                    "res_cr": {
-                                                        "min": 200,
-                                                        "max": 200
-                                                    },
-                                                    "res_hr": {
-                                                        "min": 200,
-                                                        "max": 200
-                                                    },
-                                                    "res_ma": {
-                                                        "min": 200,
-                                                        "max": 200
-                                                    },
-                                                    "res_ut": {
-                                                        "min": 200,
-                                                        "max": 200
-                                                    },
-                                                    "res_sr": {
-                                                        "min": 200,
-                                                        "max": 200
-                                                    },
-                                                    "res_cd": {
-                                                        "min": 200,
-                                                        "max": 200
-                                                    }
-                                                },
-                                                "children": [],
-                                                "planets": [
-                                                    "Corellia",
-                                                    "Dantooine",
-                                                    "Dathomir",
-                                                    "Endor",
-                                                    "Lok",
-                                                    "Naboo",
-                                                    "Rori",
-                                                    "Talus",
-                                                    "Tatooine",
-                                                    "Yavin"
                                                 ]
                                             },
                                             {
@@ -8143,7 +8091,7 @@
                                                     {
                                                         "id": "602",
                                                         "label": "Smelted Steel",
-                                                        "is_valid": true,
+                                                        "is_valid": false,
                                                         "stats": {
                                                             "res_dr": {
                                                                 "min": 200,
@@ -8244,6 +8192,58 @@
                                                             "Yavin"
                                                         ]
                                                     }
+                                                ]
+                                            },
+											{
+                                                "id": "599",
+                                                "label": "Smelted Ferrous Metal",
+                                                "is_valid": false,
+                                                "stats": {
+                                                    "res_dr": {
+                                                        "min": 200,
+                                                        "max": 200
+                                                    },
+                                                    "res_oq": {
+                                                        "min": 200,
+                                                        "max": 200
+                                                    },
+                                                    "res_cr": {
+                                                        "min": 200,
+                                                        "max": 200
+                                                    },
+                                                    "res_hr": {
+                                                        "min": 200,
+                                                        "max": 200
+                                                    },
+                                                    "res_ma": {
+                                                        "min": 200,
+                                                        "max": 200
+                                                    },
+                                                    "res_ut": {
+                                                        "min": 200,
+                                                        "max": 200
+                                                    },
+                                                    "res_sr": {
+                                                        "min": 200,
+                                                        "max": 200
+                                                    },
+                                                    "res_cd": {
+                                                        "min": 200,
+                                                        "max": 200
+                                                    }
+                                                },
+                                                "children": [],
+                                                "planets": [
+                                                    "Corellia",
+                                                    "Dantooine",
+                                                    "Dathomir",
+                                                    "Endor",
+                                                    "Lok",
+                                                    "Naboo",
+                                                    "Rori",
+                                                    "Talus",
+                                                    "Tatooine",
+                                                    "Yavin"
                                                 ]
                                             },
                                             {
@@ -8736,7 +8736,7 @@
                                                     {
                                                         "id": "631",
                                                         "label": "Smelted Aluminum",
-                                                        "is_valid": true,
+                                                        "is_valid": false,
                                                         "stats": {
                                                             "res_dr": {
                                                                 "min": 200,
@@ -9392,7 +9392,7 @@
                                                     {
                                                         "id": "641",
                                                         "label": "Smelted Copper",
-                                                        "is_valid": true,
+                                                        "is_valid": false,
                                                         "stats": {
                                                             "res_dr": {
                                                                 "min": 200,
@@ -9498,7 +9498,7 @@
                                             {
                                                 "id": "628",
                                                 "label": "Smelted Non-Ferrous Metal",
-                                                "is_valid": true,
+                                                "is_valid": false,
                                                 "stats": {
                                                     "res_dr": {
                                                         "min": 200,
@@ -9622,39 +9622,7 @@
                                     }
                                 },
                                 "children": [
-                                    {
-                                        "id": "585",
-                                        "label": "Combined Radioactive Isotopes",
-                                        "is_valid": true,
-                                        "stats": {
-                                            "res_dr": {
-                                                "min": 200,
-                                                "max": 200
-                                            },
-                                            "res_oq": {
-                                                "min": 200,
-                                                "max": 200
-                                            },
-                                            "res_pe": {
-                                                "min": 200,
-                                                "max": 200
-                                            }
-                                        },
-                                        "children": [],
-                                        "planets": [
-                                            "Corellia",
-                                            "Dantooine",
-                                            "Dathomir",
-                                            "Endor",
-                                            "Lok",
-                                            "Naboo",
-                                            "Rori",
-                                            "Talus",
-                                            "Tatooine",
-                                            "Yavin"
-                                        ]
-                                    },
-                                    {
+									{
                                         "id": "587",
                                         "label": "Known Radioactive",
                                         "is_valid": false,
@@ -9955,6 +9923,38 @@
                                         ]
                                     },
                                     {
+                                        "id": "585",
+                                        "label": "Combined Radioactive Isotopes",
+                                        "is_valid": false,
+                                        "stats": {
+                                            "res_dr": {
+                                                "min": 200,
+                                                "max": 200
+                                            },
+                                            "res_oq": {
+                                                "min": 200,
+                                                "max": 200
+                                            },
+                                            "res_pe": {
+                                                "min": 200,
+                                                "max": 200
+                                            }
+                                        },
+                                        "children": [],
+                                        "planets": [
+                                            "Corellia",
+                                            "Dantooine",
+                                            "Dathomir",
+                                            "Endor",
+                                            "Lok",
+                                            "Naboo",
+                                            "Rori",
+                                            "Talus",
+                                            "Tatooine",
+                                            "Yavin"
+                                        ]
+                                    },
+                                    {
                                         "id": "586",
                                         "label": "Unknown Radioactive",
                                         "is_valid": true,
@@ -10007,38 +10007,6 @@
                                     }
                                 },
                                 "children": [
-                                    {
-                                        "id": "573",
-                                        "label": "Degraded Solid Petrochem Fuel",
-                                        "is_valid": true,
-                                        "stats": {
-                                            "res_dr": {
-                                                "min": 200,
-                                                "max": 200
-                                            },
-                                            "res_oq": {
-                                                "min": 200,
-                                                "max": 200
-                                            },
-                                            "res_pe": {
-                                                "min": 200,
-                                                "max": 200
-                                            }
-                                        },
-                                        "children": [],
-                                        "planets": [
-                                            "Corellia",
-                                            "Dantooine",
-                                            "Dathomir",
-                                            "Endor",
-                                            "Lok",
-                                            "Naboo",
-                                            "Rori",
-                                            "Talus",
-                                            "Tatooine",
-                                            "Yavin"
-                                        ]
-                                    },
                                     {
                                         "id": "575",
                                         "label": "Known Solid Petrochem Fuel",
@@ -10305,6 +10273,38 @@
                                                     "Mustafar"
                                                 ]
                                             }
+                                        ]
+                                    },
+									{
+                                        "id": "573",
+                                        "label": "Degraded Solid Petrochem Fuel",
+                                        "is_valid": false,
+                                        "stats": {
+                                            "res_dr": {
+                                                "min": 200,
+                                                "max": 200
+                                            },
+                                            "res_oq": {
+                                                "min": 200,
+                                                "max": 200
+                                            },
+                                            "res_pe": {
+                                                "min": 200,
+                                                "max": 200
+                                            }
+                                        },
+                                        "children": [],
+                                        "planets": [
+                                            "Corellia",
+                                            "Dantooine",
+                                            "Dathomir",
+                                            "Endor",
+                                            "Lok",
+                                            "Naboo",
+                                            "Rori",
+                                            "Talus",
+                                            "Tatooine",
+                                            "Yavin"
                                         ]
                                     },
                                     {
@@ -10579,7 +10579,7 @@
                             {
                                 "id": "558",
                                 "label": "Water Solution",
-                                "is_valid": true,
+                                "is_valid": false,
                                 "stats": {
                                     "res_dr": {
                                         "min": 200,
@@ -12892,42 +12892,6 @@
                                                 ]
                                             },
                                             {
-                                                "id": "34",
-                                                "label": "Processed Meat",
-                                                "is_valid": true,
-                                                "stats": {
-                                                    "res_dr": {
-                                                        "min": 200,
-                                                        "max": 200
-                                                    },
-                                                    "res_oq": {
-                                                        "min": 200,
-                                                        "max": 200
-                                                    },
-                                                    "res_fl": {
-                                                        "min": 200,
-                                                        "max": 200
-                                                    },
-                                                    "res_pe": {
-                                                        "min": 200,
-                                                        "max": 200
-                                                    }
-                                                },
-                                                "children": [],
-                                                "planets": [
-                                                    "Corellia",
-                                                    "Dantooine",
-                                                    "Dathomir",
-                                                    "Endor",
-                                                    "Lok",
-                                                    "Naboo",
-                                                    "Rori",
-                                                    "Talus",
-                                                    "Tatooine",
-                                                    "Yavin"
-                                                ]
-                                            },
-                                            {
                                                 "id": "87",
                                                 "label": "Reptillian Meat",
                                                 "is_valid": false,
@@ -15164,7 +15128,7 @@
                                             {
                                                 "id": "6",
                                                 "label": "Homogenized Milk",
-                                                "is_valid": true,
+                                                "is_valid": false,
                                                 "stats": {
                                                     "res_dr": {
                                                         "min": 200,
@@ -16150,7 +16114,7 @@
                                             {
                                                 "id": "182",
                                                 "label": "Ground Bones",
-                                                "is_valid": true,
+                                                "is_valid": false,
                                                 "stats": {
                                                     "res_dr": {
                                                         "min": 200,
@@ -17706,7 +17670,7 @@
                                             {
                                                 "id": "223",
                                                 "label": "Synthesized Hides",
-                                                "is_valid": true,
+                                                "is_valid": false,
                                                 "stats": {
                                                     "res_dr": {
                                                         "min": 200,
@@ -20184,7 +20148,7 @@
                                             {
                                                 "id": "279",
                                                 "label": "Processed Cereal",
-                                                "is_valid": true,
+                                                "is_valid": false,
                                                 "stats": {
                                                     "res_dr": {
                                                         "min": 200,
@@ -22824,7 +22788,7 @@
                                                     {
                                                         "id": "444",
                                                         "label": "Mixed Fruits",
-                                                        "is_valid": true,
+                                                        "is_valid": false,
                                                         "stats": {
                                                             "res_dr": {
                                                                 "min": 200,
@@ -23959,7 +23923,7 @@
                                                     {
                                                         "id": "390",
                                                         "label": "Mixed Vegetables",
-                                                        "is_valid": true,
+                                                        "is_valid": false,
                                                         "stats": {
                                                             "res_dr": {
                                                                 "min": 200,
@@ -24413,7 +24377,7 @@
                                             {
                                                 "id": "486",
                                                 "label": "Blended Wood",
-                                                "is_valid": true,
+                                                "is_valid": false,
                                                 "stats": {
                                                     "res_dr": {
                                                         "min": 200,
@@ -24887,131 +24851,7 @@
                                                     }
                                                 },
                                                 "children": [
-                                                    {
-                                                        "id": "501",
-                                                        "label": "Corellian Conifer Wood",
-                                                        "is_valid": true,
-                                                        "stats": {
-                                                            "res_dr": {
-                                                                "min": 1,
-                                                                "max": 600
-                                                            },
-                                                            "res_oq": {
-                                                                "min": 1,
-                                                                "max": 1000
-                                                            },
-                                                            "res_ma": {
-                                                                "min": 600,
-                                                                "max": 1000
-                                                            },
-                                                            "res_ut": {
-                                                                "min": 1,
-                                                                "max": 300
-                                                            },
-                                                            "res_sr": {
-                                                                "min": 100,
-                                                                "max": 400
-                                                            }
-                                                        },
-                                                        "children": [],
-                                                        "planets": [
-                                                            "Corellia"
-                                                        ]
-                                                    },
-                                                    {
-                                                        "id": "502",
-                                                        "label": "Dantooine Conifer Wood",
-                                                        "is_valid": true,
-                                                        "stats": {
-                                                            "res_dr": {
-                                                                "min": 1,
-                                                                "max": 600
-                                                            },
-                                                            "res_oq": {
-                                                                "min": 1,
-                                                                "max": 1000
-                                                            },
-                                                            "res_ma": {
-                                                                "min": 600,
-                                                                "max": 1000
-                                                            },
-                                                            "res_ut": {
-                                                                "min": 1,
-                                                                "max": 300
-                                                            },
-                                                            "res_sr": {
-                                                                "min": 100,
-                                                                "max": 400
-                                                            }
-                                                        },
-                                                        "children": [],
-                                                        "planets": [
-                                                            "Dantooine"
-                                                        ]
-                                                    },
-                                                    {
-                                                        "id": "503",
-                                                        "label": "Dathomirian Conifer Wood",
-                                                        "is_valid": true,
-                                                        "stats": {
-                                                            "res_dr": {
-                                                                "min": 1,
-                                                                "max": 600
-                                                            },
-                                                            "res_oq": {
-                                                                "min": 1,
-                                                                "max": 1000
-                                                            },
-                                                            "res_ma": {
-                                                                "min": 600,
-                                                                "max": 1000
-                                                            },
-                                                            "res_ut": {
-                                                                "min": 1,
-                                                                "max": 300
-                                                            },
-                                                            "res_sr": {
-                                                                "min": 100,
-                                                                "max": 400
-                                                            }
-                                                        },
-                                                        "children": [],
-                                                        "planets": [
-                                                            "Dathomir"
-                                                        ]
-                                                    },
-                                                    {
-                                                        "id": "504",
-                                                        "label": "Endorian Conifer Wood",
-                                                        "is_valid": true,
-                                                        "stats": {
-                                                            "res_dr": {
-                                                                "min": 1,
-                                                                "max": 600
-                                                            },
-                                                            "res_oq": {
-                                                                "min": 1,
-                                                                "max": 1000
-                                                            },
-                                                            "res_ma": {
-                                                                "min": 600,
-                                                                "max": 1000
-                                                            },
-                                                            "res_ut": {
-                                                                "min": 1,
-                                                                "max": 300
-                                                            },
-                                                            "res_sr": {
-                                                                "min": 100,
-                                                                "max": 400
-                                                            }
-                                                        },
-                                                        "children": [],
-                                                        "planets": [
-                                                            "Endor"
-                                                        ]
-                                                    },
-                                                    {
+													{
                                                         "id": "513",
                                                         "label": "Evergreen Soft Wood",
                                                         "is_valid": false,
@@ -25376,16 +25216,7 @@
                                                                 },
                                                                 "children": [],
                                                                 "planets": [
-                                                                    "Corellia",
-                                                                    "Dantooine",
-                                                                    "Dathomir",
-                                                                    "Endor",
-                                                                    "Lok",
-                                                                    "Naboo",
-                                                                    "Rori",
-                                                                    "Talus",
-                                                                    "Tatooine",
-                                                                    "Yavin"
+                                                                    "Tatooine"
                                                                 ]
                                                             },
                                                             {
@@ -25419,6 +25250,130 @@
                                                                     "Yavin"
                                                                 ]
                                                             }
+                                                        ]
+                                                    },
+                                                    {
+                                                        "id": "501",
+                                                        "label": "Corellian Conifer Wood",
+                                                        "is_valid": true,
+                                                        "stats": {
+                                                            "res_dr": {
+                                                                "min": 1,
+                                                                "max": 600
+                                                            },
+                                                            "res_oq": {
+                                                                "min": 1,
+                                                                "max": 1000
+                                                            },
+                                                            "res_ma": {
+                                                                "min": 600,
+                                                                "max": 1000
+                                                            },
+                                                            "res_ut": {
+                                                                "min": 1,
+                                                                "max": 300
+                                                            },
+                                                            "res_sr": {
+                                                                "min": 100,
+                                                                "max": 400
+                                                            }
+                                                        },
+                                                        "children": [],
+                                                        "planets": [
+                                                            "Corellia"
+                                                        ]
+                                                    },
+                                                    {
+                                                        "id": "502",
+                                                        "label": "Dantooine Conifer Wood",
+                                                        "is_valid": true,
+                                                        "stats": {
+                                                            "res_dr": {
+                                                                "min": 1,
+                                                                "max": 600
+                                                            },
+                                                            "res_oq": {
+                                                                "min": 1,
+                                                                "max": 1000
+                                                            },
+                                                            "res_ma": {
+                                                                "min": 600,
+                                                                "max": 1000
+                                                            },
+                                                            "res_ut": {
+                                                                "min": 1,
+                                                                "max": 300
+                                                            },
+                                                            "res_sr": {
+                                                                "min": 100,
+                                                                "max": 400
+                                                            }
+                                                        },
+                                                        "children": [],
+                                                        "planets": [
+                                                            "Dantooine"
+                                                        ]
+                                                    },
+                                                    {
+                                                        "id": "503",
+                                                        "label": "Dathomirian Conifer Wood",
+                                                        "is_valid": true,
+                                                        "stats": {
+                                                            "res_dr": {
+                                                                "min": 1,
+                                                                "max": 600
+                                                            },
+                                                            "res_oq": {
+                                                                "min": 1,
+                                                                "max": 1000
+                                                            },
+                                                            "res_ma": {
+                                                                "min": 600,
+                                                                "max": 1000
+                                                            },
+                                                            "res_ut": {
+                                                                "min": 1,
+                                                                "max": 300
+                                                            },
+                                                            "res_sr": {
+                                                                "min": 100,
+                                                                "max": 400
+                                                            }
+                                                        },
+                                                        "children": [],
+                                                        "planets": [
+                                                            "Dathomir"
+                                                        ]
+                                                    },
+                                                    {
+                                                        "id": "504",
+                                                        "label": "Endorian Conifer Wood",
+                                                        "is_valid": true,
+                                                        "stats": {
+                                                            "res_dr": {
+                                                                "min": 1,
+                                                                "max": 600
+                                                            },
+                                                            "res_oq": {
+                                                                "min": 1,
+                                                                "max": 1000
+                                                            },
+                                                            "res_ma": {
+                                                                "min": 600,
+                                                                "max": 1000
+                                                            },
+                                                            "res_ut": {
+                                                                "min": 1,
+                                                                "max": 300
+                                                            },
+                                                            "res_sr": {
+                                                                "min": 100,
+                                                                "max": 400
+                                                            }
+                                                        },
+                                                        "children": [],
+                                                        "planets": [
+                                                            "Endor"
                                                         ]
                                                     },
                                                     {
