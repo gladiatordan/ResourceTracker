@@ -803,3 +803,27 @@ td.col-stat { font-weight: 700; }
     cursor: pointer;
 }
 .res-link:hover { text-shadow: 0 0 10px var(--accent-blue); }
+
+.dropdown-search-wrapper {
+    padding: 8px;
+    background: #000;
+    border-bottom: 1px solid var(--border-color);
+    position: sticky;
+    top: 0;
+    z-index: 10;
+}
+
+.dropdown-search {
+    width: 100%;
+    background: #111;
+    border: 1px solid var(--border-color);
+    color: var(--text-main);
+    padding: 5px 10px;
+    border-radius: 3px;
+    font-family: 'Rajdhani', sans-serif;
+    outline: none;
+}
+
+.dropdown-search:focus {
+    border-color: var(--accent-blue);
+}

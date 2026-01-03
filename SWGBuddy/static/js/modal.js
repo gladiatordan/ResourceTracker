@@ -312,19 +312,26 @@ const Modal = {
 	// ... Tree Helpers (populateTypeTree, selectType, updateStatFields, toggleDropdown, resetState) ...
 	populateTypeTree() {
 		const list = document.getElementById('modal-type-list');
-		list.innerHTML = ''; 
+		list.innerHTML = `
+			<div class="dropdown-search-wrapper">
+            <input type="text" placeholder="Search types..." class="dropdown-search" 
+                   oninput="filterModalTree(this)" onclick="event.stopPropagation()">
+        	</div>
+		`; 
 		if (!window.TAXONOMY_TREE || window.TAXONOMY_TREE.length === 0) return;
 		
 		const createNode = (node, depth) => {
+			const isLeaf = !node.children || node.children.length === 0;
+			const isValid = window.validResources && window.validResources.hasOwnProperty(node.label);
+			// if node if a leaf but isn't valid we don't even show it
+			if (isLeaf && !isValid) return null;
+
 			const container = document.createElement('div');
 			container.className = 'modal-tree-node';
 			const header = document.createElement('div');
 			header.className = 'modal-tree-label';
 			header.style.paddingLeft = (depth * 15 + 5) + 'px';
-			const isLeaf = !node.children || node.children.length === 0;
-			const isValid = window.validResources && window.validResources.hasOwnProperty(node.label);
-			// if node if a leaf but isn't valid we don't even show it
-			// if (isLeaf && !isValid) return;
+
 			const icon = document.createElement('span');
 			icon.className = 'tree-toggle';
 			icon.innerText = isLeaf ? '•' : '▶'; 
@@ -488,6 +495,31 @@ const Modal = {
 		}
 	}
 };
+
+// Function for the Main Filter
+function filterDropdown(input) {
+    const term = input.value.toLowerCase();
+    const items = input.closest('.dropdown-list').querySelectorAll('.dropdown-item, .branch-container');
+    
+    items.forEach(item => {
+        const text = item.textContent.toLowerCase();
+        // Toggle visibility based on match
+        item.style.display = text.includes(term) ? '' : 'none';
+    });
+}
+
+// Function for the Modal Tree
+function filterModalTree(input) {
+    const term = input.value.toLowerCase();
+    const nodes = document.querySelectorAll('.modal-tree-node');
+    
+    nodes.forEach(node => {
+        const label = node.querySelector('.modal-tree-label').textContent.toLowerCase();
+        const isMatch = label.includes(term);
+        // Show the node if it matches, or hide if it doesn't
+        node.style.display = isMatch ? '' : 'none';
+    });
+}
 
 window.openAddResourceModal = () => Modal.openAdd();
 window.closeResourceModal = () => Modal.close();
