@@ -550,28 +550,42 @@ function filterModalTree(input) {
 
 window.filterModalTree = function(input) {
     const term = input.value.toLowerCase();
-    const nodes = document.querySelectorAll('.modal-tree-node');
-    
-    // Simple flat filtering: Show node if its label matches
-    // Note: This simple version hides parents if they don't match, 
-    // which might hide the child. A better approach is the recursive one used in taxonomy.js,
-    // but for the Modal (which is flatter), this might suffice if "Expanded" by default during search.
-    
-    // Improved Logic:
-    nodes.forEach(node => {
+    // Only select top-level nodes to start the recursion
+    const roots = document.querySelectorAll('#modal-type-list > .modal-tree-node'); 
+
+    function processNode(node) {
         const label = node.querySelector('.modal-tree-label').textContent.toLowerCase();
-        // If we are searching, we generally want to see matches.
-        // We really should walk the tree, but for now let's just show matches.
-        const isMatch = label.includes(term);
-        node.style.display = isMatch ? 'block' : 'none';
+        const childrenContainer = node.querySelector('.modal-tree-children');
         
-        // Auto-expand parents? (Requires traversing up DOM, tricky with this structure)
-        // Alternative: If term is empty, reset.
-        if (term === '') {
-             node.style.display = 'block';
-             // Reset collapsed state? Optional.
+        let childMatched = false;
+        if (childrenContainer) {
+             const children = childrenContainer.querySelectorAll(':scope > .modal-tree-node');
+             children.forEach(child => {
+                 if (processNode(child)) childMatched = true;
+             });
         }
-    });
+        
+        const selfMatch = label.includes(term);
+        const shouldShow = selfMatch || childMatched;
+        
+        node.style.display = shouldShow ? 'block' : 'none';
+        
+        // Auto-expand logic
+        if (childMatched && childrenContainer) {
+            childrenContainer.classList.remove('collapsed');
+            const icon = node.querySelector('.tree-toggle');
+            if (icon) icon.innerText = '▼';
+        } else if (term === '' && childrenContainer) {
+            // Reset to collapsed on clear
+            childrenContainer.classList.add('collapsed');
+            const icon = node.querySelector('.tree-toggle');
+            if (icon) icon.innerText = '▶';
+        }
+        
+        return shouldShow;
+    }
+    
+    roots.forEach(processNode);
 };
 
 window.openAddResourceModal = () => Modal.openAdd();

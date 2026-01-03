@@ -93,11 +93,8 @@ function renderTaxonomyDropdown() {
 		const icon = document.createElement('span');
 		icon.className = 'toggle-icon';
 		icon.style.width = '20px';
-		// icon.style.textAlign = 'center';
-		// icon.style.marginRight = '5px';
 		icon.style.cursor = 'pointer';
 		icon.style.color = 'var(--accent-color)';
-		// Default: Collapsed (Right Arrow) unless leaf
 		icon.innerText = isLeaf ? '•' : '▶'; 
 		
 		// 2. Label Text
@@ -115,6 +112,8 @@ function renderTaxonomyDropdown() {
 		// let childrenContainer = null;
 		if (!isLeaf) {
 			const childrenContainer = document.createElement('div');
+			// FIX: Add specific class for the filter to find later
+            childrenContainer.className = 'branch-children';
 			childrenContainer.style.display = 'none'; // Default Collapsed
 			
 			node.children.forEach(child => {
@@ -146,17 +145,17 @@ function renderTaxonomyDropdown() {
 	});
 }
 
-function filterTaxonomyList(term) {
+window.filterTaxonomyList = function(term) {
     term = term.toLowerCase();
     const roots = document.querySelectorAll('#taxonomy-list > .branch-container');
 
     function processNode(container) {
         const label = container.querySelector('.item-label').textContent.toLowerCase();
-        const childrenContainer = container.querySelector('div[style]'); // The nested children div
+        // FIX: Select by class, not style, to avoid grabbing the row element
+        const childrenContainer = container.querySelector('.branch-children'); 
         
         let childMatched = false;
         if (childrenContainer) {
-            // Check all direct children branches
             const childBranches = childrenContainer.querySelectorAll(':scope > .branch-container');
             childBranches.forEach(branch => {
                 if (processNode(branch)) childMatched = true;
@@ -166,21 +165,25 @@ function filterTaxonomyList(term) {
         const selfMatch = label.includes(term);
         const shouldShow = selfMatch || childMatched;
 
-        // Toggle visibility
         container.style.display = shouldShow ? 'block' : 'none';
         
-        // If children matched, ensure this folder is expanded
+        // Expand if children matched so user sees them
         if (childMatched && childrenContainer) {
             childrenContainer.style.display = 'block';
             const icon = container.querySelector('.toggle-icon');
             if (icon) icon.innerText = '▼';
+        } else if (term === '' && childrenContainer) {
+            // Optional: Collapse everything on clear
+            childrenContainer.style.display = 'none';
+            const icon = container.querySelector('.toggle-icon');
+            if (icon) icon.innerText = '▶';
         }
 
         return shouldShow;
     }
 
     roots.forEach(processNode);
-}
+};
 
 /**
  * Returns a flattened list of all descendant labels for a given parent label.
