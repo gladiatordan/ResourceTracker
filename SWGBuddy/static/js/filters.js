@@ -187,3 +187,33 @@ function updateSortVisuals() {
 		}
 	});
 }
+
+function clearSearch() {
+    const searchInput = document.querySelector('.search-input');
+    if (searchInput) {
+        searchInput.value = '';
+        applyAllTableTransforms();
+    }
+}
+
+const originalApplyTransforms = applyAllTableTransforms;
+applyAllTableTransforms = function() {
+    // 1. Run the original logic
+    originalApplyTransforms();
+
+    // 2. Handle Reset Button Visibility
+    const searchInput = document.querySelector('.search-input');
+    const searchReset = document.getElementById('reset-search');
+    const catReset = document.getElementById('reset-category');
+
+    // Show search reset if text exists
+    if (searchReset) {
+        searchReset.style.display = (searchInput && searchInput.value) ? 'block' : 'none';
+    }
+
+    // Show category reset if something other than "All Resources" is selected
+    if (catReset) {
+        const isRoot = !currentSelectedLabel || currentSelectedLabel === "Resources" || currentSelectedLabel === "All Resources";
+        catReset.style.display = isRoot ? 'none' : 'block';
+    }
+};

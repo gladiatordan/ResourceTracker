@@ -76,14 +76,23 @@
 
 			<section id="resources-container" class="page-container active">
 				<div class="resource-filters-row">
-					<div class="custom-dropdown" id="taxonomy-dropdown">
-                        <div class="dropdown-selected" onclick="toggleDropdown()">All Resources</div>
-                        <div class="dropdown-list" id="taxonomy-list">
-                            <div class="dropdown-item root-item" data-id="" data-label="" onclick="selectCategory(1, 'Resources', 'All Resources')">All Resources</div>
-                        </div>
-                    </div>
-                    <input type="text" placeholder="Search resources..." class="search-input">
-					
+					<div class="filter-input-wrapper">
+						<div class="custom-dropdown" id="taxonomy-dropdown">
+							<div class="dropdown-selected" onclick="toggleDropdown()">All Resources</div>
+							<div class="dropdown-list" id="taxonomy-list">
+								<div class="dropdown-item root-item" data-id="" data-label="" onclick="selectCategory(1, 'Resources', 'All Resources')">All Resources</div>
+							</div>
+						</div>
+						<button class="reset-filter-btn" id="reset-category" title="Reset Category" onclick="selectCategory('', 'Resources', 'All Resources')">
+							<i class="fa-solid fa-circle-xmark"></i>
+						</button>
+					</div>
+					<div class="filter-input-wrapper">
+                    	<input type="text" placeholder="Search resources..." class="search-input">
+						<button class="reset-filter-btn" id="reset-search" title="Clear Search" onclick="clearSearch()">
+							<i class="fa-solid fa-circle-xmark"></i>
+						</button>
+					</div>
                     <button id="btn-add-resource" class="add-resource-btn hidden" onclick="openAddResourceModal()">Add Resource</button>
 					
                     <div class="pagination-stack">

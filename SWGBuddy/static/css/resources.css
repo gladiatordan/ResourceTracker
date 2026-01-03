@@ -1,6 +1,38 @@
 /* =========================================
    1. Filters & Controls
    ========================================= */
+.filter-input-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.reset-filter-btn {
+    position: absolute;
+    right: 10px;
+    background: none;
+    border: none;
+    color: var(--text-dim);
+    cursor: pointer;
+    font-size: 14px;
+    padding: 0;
+    z-index: 1001; /* Above dropdown */
+    display: none; /* Hidden by default, shown via JS when input is not empty */
+    transition: color 0.2s;
+}
+
+.reset-filter-btn:hover {
+    color: var(--accent-blue);
+}
+
+/* Adjust padding on inputs to make room for the X button */
+.resource-filters-row .search-input {
+    padding-right: 30px; 
+}
+.dropdown-selected {
+    padding-right: 30px;
+}
+
 .resource-filters-row {
     display: flex;
     gap: 15px;
