@@ -189,10 +189,15 @@
                                         <div id="res-status" class="static-value">-</div>
                                     </div>
                                 </div>
-
 								<div class="form-group full-width" style="margin-top: 15px;">
 									<label>Notes</label>
 									<textarea id="res-notes" class="modal-textarea" placeholder="Enter notes here..."></textarea>
+								</div>
+								<div class="form-group full-width" id="import-section" style="margin-bottom: 20px; border-bottom: 1px solid var(--border-color); padding-bottom: 15px;">
+									<button type="button" class="btn-secondary" onclick="Modal.importClipboard()" style="width: 100%; display: flex; align-items: center; justify-content: center; gap: 10px;">
+										<i class="fa-solid fa-clipboard"></i> Paste Image from Clipboard
+									</button>
+									<div id="paste-error" style="color: #ff4444; font-size: 0.8rem; margin-top: 5px; text-align: center; display: none;"></div>
 								</div>
 
 								<div id="modal-status-bar" class="status-bar"></div>
