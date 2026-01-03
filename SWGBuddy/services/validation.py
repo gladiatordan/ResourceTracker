@@ -372,7 +372,7 @@ class ValidationService(Core):
 		res_class_id = rules.get('id')
 		allowed_planets = rules.get('planets')
 		# Get Reporter ID
-		reporter_id = user_ctx.get('id') if user_ctx else None)
+		reporter_id = user_ctx.get('id') if user_ctx else None
 		# FIX: Wrap planet string in a list so psycopg2 adapts it to SQL ARRAY
 		planet_val = data.get('planet')
 
