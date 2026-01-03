@@ -14,9 +14,20 @@ const API = {
 		
 		const response = await fetch(url, options);
 		if (!response.ok) {
-			// Handle 403 specifically
-			if (response.status === 403) throw new Error("Access Denied or CSRF Error");
-			throw new Error(`Request failed: ${response.statusText}`);
+			let errorMessage = `Request failed: ${response.status} ${response.statusText}`;
+			try {
+				const errorData = await response.json();
+				if (errorData && errorData.error) {
+					errorMessage = errorData.error;
+				}
+			} catch (e) {
+				// response was not JSON, stick to generic status text
+			}
+			// Handle generic 403s if no specific message was returned
+			if (response.status === 403 && errorMessage.includes(response.statusText)) {
+				errorMessage = "Access Denied or CSRF Error";
+			}
+			throw new Error(errorMessage);
 		}
 		return response;
 	},
