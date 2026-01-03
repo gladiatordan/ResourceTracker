@@ -447,5 +447,72 @@ def set_role():
 	if resp['status'] == 'success': return jsonify({"success": True})
 	return jsonify({"error": resp.get('error')}), 500
 
+
+# IMAGE SCANNING
+@app.route('/api/scan-image', methods=['POST'])
+def scan_image():
+    if 'discord_id' not in session: 
+        return jsonify({"error": "Unauthorized"}), 401
+    
+    if 'image' not in request.files:
+        return jsonify({"error": "No image provided"}), 400
+
+    file = request.files['image']
+    
+    try:
+        # 1. Open and Sanitize Image (Strip metadata/exif)
+        img = Image.open(file.stream)
+        # Convert to RGB to handle alpha channels or palettes which might confuse simple OCR
+        img = img.convert('RGB')
+        
+        # 2. Perform OCR
+        # Custom config: assume single block of text (6), preserve structure
+        raw_text = pytesseract.image_to_string(img, config='--psm 6')
+        
+        # 3. Parse Data (SWG Resource Window format)
+        extracted = {
+            "name": "",
+            "type": "",
+            "stats": {}
+        }
+        
+        lines = [l.strip() for l in raw_text.split('\n') if l.strip()]
+        
+        # Heuristic: Line 1 is usually Name, Line 2 is usually Type
+        if len(lines) > 0: extracted['name'] = lines[0]
+        # We don't set Type automatically from OCR as it often misreads complex names.
+        # Instead, we rely on the user or fuzzy matching if you wanted to go deeper.
+        
+        # Regex for Stats (e.g., "OQ: 954" or "Overall Quality 954")
+        # Matches standard abbreviations or full names roughly
+        stat_patterns = {
+            'res_cr': r'(Cold Resistance).*?(\d{1,4})',
+            'res_cd': r'(Conductivity).*?(\d{1,4})',
+            'res_dr': r'(Decay Resistance).*?(\d{1,4})',
+            'res_fl': r'(Flavor).*?(\d{1,4})',
+            'res_hr': r'(Heat Resistance).*?(\d{1,4})',
+            'res_ma': r'(Malleability).*?(\d{1,4})',
+            'res_pe': r'(Potential Energy).*?(\d{1,4})',
+            'res_oq': r'(Overall Quality).*?(\d{1,4})',
+            'res_sr': r'(Shock Resistance).*?(\d{1,4})',
+            'res_ut': r'(Unit Toughness).*?(\d{1,4})'
+        }
+        
+        for key, pattern in stat_patterns.items():
+            match = re.search(pattern, raw_text, re.IGNORECASE)
+            if match:
+                # Group 2 is the number
+                val = int(match.group(2))
+                # Sanity check SWG stats range
+                if 1 <= val <= 1000:
+                    extracted['stats'][key] = val
+
+        return jsonify({"success": True, "data": extracted})
+
+    except Exception as e:
+        print(f"OCR Error: {e}")
+        return jsonify({"error": "Failed to process image. Ensure Tesseract is installed on server."}), 500
+
+
 if __name__ == '__main__':
 	app.run(debug=True, port=5000)

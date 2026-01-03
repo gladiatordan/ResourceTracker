@@ -405,6 +405,87 @@ const Modal = {
 		this.elements.loader.classList.add('hidden');
 		this.isSubmitting = false;
 		document.getElementById('modal-type-selected').textContent = "Select Resource Type...";
+	},
+
+	importClipboard: async function() {
+		const errorDiv = document.getElementById('paste-error');
+		errorDiv.style.display = 'none';
+
+		try {
+			// 1. Read Clipboard
+			const items = await navigator.clipboard.read();
+			let imageBlob = null;
+
+			for (const item of items) {
+				// Look for image types
+				const type = item.types.find(t => t.startsWith('image/'));
+				if (type) {
+					imageBlob = await item.getType(type);
+					break;
+				}
+			}
+
+			if (!imageBlob) {
+				throw new Error("No image found in clipboard.");
+			}
+
+			// 2. Prepare Upload
+			this.elements.loader.classList.remove('hidden');
+			document.querySelector('.loader-text').textContent = "ANALYZING IMAGE...";
+
+			const formData = new FormData();
+			formData.append('image', imageBlob);
+
+			// 3. Send to Backend
+			// We use fetch directly here to handle FormData easily, 
+			// but manually adding the CSRF header is good practice if your API._fetch does it.
+			// Since API._fetch is JSON oriented, we'll do a raw fetch or adapt API.
+			const response = await fetch('/api/scan-image', {
+				method: 'POST',
+				headers: {
+					'X-Requested-With': 'XMLHttpRequest' 
+				},
+				body: formData
+			});
+
+			const result = await response.json();
+			
+			if (!result.success) {
+				throw new Error(result.error || "Scan failed");
+			}
+
+			// 4. Populate Fields
+			const data = result.data;
+			
+			// Name (Only if currently empty to avoid overwriting user edits)
+			if (data.name && !this.elements.nameInput.value) {
+				this.elements.nameInput.value = data.name;
+			}
+
+			// Stats
+			if (data.stats) {
+				Object.entries(data.stats).forEach(([key, val]) => {
+					const input = this.elements.inputs[key];
+					// Only populate if input exists (is compatible with current Type)
+					// and is currently empty (don't overwrite manual entry)
+					if (input && !input.disabled && !input.value) {
+						input.value = val;
+					}
+				});
+			}
+			
+			// 5. Success Feedback
+			this.elements.statusBar.textContent = "Image imported successfully. Please review fields.";
+			this.elements.statusBar.className = "status-bar status-success"; // You might need CSS for this class
+
+		} catch (error) {
+			console.error("Paste Error:", error);
+			errorDiv.textContent = error.message;
+			errorDiv.style.display = 'block';
+		} finally {
+			this.elements.loader.classList.add('hidden');
+			document.querySelector('.loader-text').textContent = "PROCESSING..."; // Reset text
+		}
 	}
 };
 

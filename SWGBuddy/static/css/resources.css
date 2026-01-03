@@ -471,6 +471,14 @@ td.col-stat { font-weight: 700; }
 
 .close-modal:hover { color: #fff; }
 
+/* Ensure the button looks good */
+#import-section button i {
+    color: var(--text-dim);
+}
+#import-section button:hover i {
+    color: #fff;
+}
+
 /* Form Inputs */
 .form-group {
     margin-bottom: 12px;

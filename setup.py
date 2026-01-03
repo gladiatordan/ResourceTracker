@@ -12,6 +12,8 @@ setup(
         "psycopg2",  # or psycopg2
 		"discord.py",
 		"watchdog",
+		"pytesseract",
+		"Pillow"
         # Add other dependencies here if you want pip to handle them
     ],
 	package_data={
