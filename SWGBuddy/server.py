@@ -484,8 +484,11 @@ def scan_image():
 		lines = [l.strip() for l in raw_text.split('\n') if l.strip()]
 		
 		# Heuristic: Line 1 is usually Name, Line 2 is usually Type
-		if len(lines) > 0: extracted['name'] = lines[0]
-		print(lines)
+		if len(lines) > 0: 
+			for i in range(len(lines)):
+				if "Resource Type:" in lines[i]:
+					extracted['name'] = lines[i].split(": ")[1]
+
 		# We don't set Type automatically from OCR as it often misreads complex names.
 		# Instead, we rely on the user or fuzzy matching if you wanted to go deeper.
 		
