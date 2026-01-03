@@ -117,8 +117,12 @@ function multiColumnComparator(a, b) {
 		} else {
 			// Numeric / Boolean
 			// Handle nulls/undefined as -1 (always bottom?) or 0
-			const nA = (valA === null || valA === undefined) ? -1 : Number(valA);
-			const nB = (valB === null || valB === undefined) ? -1 : Number(valB);
+			let nA = (typeof valA === 'string' && isNaN(valA)) ? Date.parse(valA) : Number(valA);
+            let nB = (typeof valB === 'string' && isNaN(valB)) ? Date.parse(valB) : Number(valB);
+			
+			// Fallback for nulls/NaN to keep them at the bottom
+            if (isNaN(nA)) nA = -1;
+            if (isNaN(nB)) nB = -1;
 			
 			if (nA !== nB) {
 				return direction === 'asc' ? (nA - nB) : (nB - nA);
