@@ -9,6 +9,20 @@
 /**
  * Main Loader Function
  */
+
+function requestUserConfirmation(message) {
+	const skipConfirmation = localStorage.getItem('swgbuddy_skip_planet_confirm');
+	if (skipConfirmation) return true;
+
+	try {
+		return confirm(message);
+	} catch (e) {
+		console.warn("Browser dialogs are disabled or restricted!");
+		// proceed with the command anyway, implicit trust in editors
+		return true;
+	}
+}
+
 async function loadResources(isDelta = false) {
 	try {
 		const dataPacket = await API.fetchResources(isDelta); 
@@ -133,7 +147,7 @@ async function togglePlanet(selectElement, resourceName) {
 
 	// 1. Optimistic Update: Update local data immediately
 	if (!resource.planet) resource.planet = [];
-	if (!resource.planet.includes(newPlanter)) {
+	if (!resource.planet.includes(newPlanet)) {
 		resource.planet.push(newPlanet);
 	}
 	applyAllTableTransforms();
@@ -163,6 +177,9 @@ async function handleBadgeClick(event, resourceName, planetValue) {
 
 	const resource = rawResourceData.find(r => r.name === resourceName);
 	if (!resource) return;
+
+	// use the helper
+	if (!requestUserConfirmation(`Remove ${planetValue} from ${resourceName}`)) return;
 
 	const skipConfirmation = localStorage.getItem('swgbuddy_skip_planet_confirm') === 'true';
 
