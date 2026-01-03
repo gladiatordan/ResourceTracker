@@ -511,7 +511,7 @@ def scan_image():
                 # Sanity check SWG stats range
                 if 1 <= val <= 1000:
                     extracted['stats'][key] = val
-
+		print(f"Extracted -> {extracted}")
         return jsonify({"success": True, "data": extracted})
 
     except Exception as e:
