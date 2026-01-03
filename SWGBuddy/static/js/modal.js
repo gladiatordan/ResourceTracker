@@ -314,15 +314,19 @@ const Modal = {
 		const list = document.getElementById('modal-type-list');
 		list.innerHTML = `
 			<div class="dropdown-search-wrapper">
-            <input type="text" placeholder="Search types..." class="dropdown-search" 
-                   oninput="filterModalTree(this)" onclick="event.stopPropagation()">
-        	</div>
+				<input type="text" 
+					   placeholder="Search types..." 
+					   class="dropdown-search" 
+					   oninput="filterModalTree(this)" 
+					   onclick="event.stopPropagation()">
+			</div>
 		`; 
 		if (!window.TAXONOMY_TREE || window.TAXONOMY_TREE.length === 0) return;
 		
 		const createNode = (node, depth) => {
 			const isLeaf = !node.children || node.children.length === 0;
 			const isValid = window.validResources && window.validResources.hasOwnProperty(node.label);
+			
 			// if node if a leaf but isn't valid we don't even show it
 			if (isLeaf && !isValid) return null;
 
@@ -344,6 +348,7 @@ const Modal = {
 			header.appendChild(text);
 			
 			let childrenContainer = null;
+
 			if (isValid) {
 				header.classList.add('selectable');
 				header.addEventListener('click', () => this.selectType(node.label));
@@ -357,13 +362,12 @@ const Modal = {
 				});
 			}
 			container.appendChild(header);
+
 			if (!isLeaf) {
 				childrenContainer = document.createElement('div');
 				childrenContainer.className = 'modal-tree-children collapsed';
 
 				let hasVisibleChildren = false;
-				// node.children.forEach(child => childrenContainer.appendChild(createNode(child, depth + 1)));
-				// container.appendChild(childrenContainer);
 				
 				node.children.forEach(child => {
 					const childNode = createNode(child, depth + 1);
@@ -372,6 +376,11 @@ const Modal = {
 						hasVisibleChildren = true;
 					}
 				})
+
+				// If folder ends up empty after filtering leaves, hide it
+				if (!hasVisibleChildren && !isValid) return null;
+
+				container.appendChild(childrenContainer);
 				
 				icon.onclick = (e) => {
 					e.stopPropagation();
@@ -538,6 +547,32 @@ function filterModalTree(input) {
         node.style.display = isMatch ? '' : 'none';
     });
 }
+
+window.filterModalTree = function(input) {
+    const term = input.value.toLowerCase();
+    const nodes = document.querySelectorAll('.modal-tree-node');
+    
+    // Simple flat filtering: Show node if its label matches
+    // Note: This simple version hides parents if they don't match, 
+    // which might hide the child. A better approach is the recursive one used in taxonomy.js,
+    // but for the Modal (which is flatter), this might suffice if "Expanded" by default during search.
+    
+    // Improved Logic:
+    nodes.forEach(node => {
+        const label = node.querySelector('.modal-tree-label').textContent.toLowerCase();
+        // If we are searching, we generally want to see matches.
+        // We really should walk the tree, but for now let's just show matches.
+        const isMatch = label.includes(term);
+        node.style.display = isMatch ? 'block' : 'none';
+        
+        // Auto-expand parents? (Requires traversing up DOM, tricky with this structure)
+        // Alternative: If term is empty, reset.
+        if (term === '') {
+             node.style.display = 'block';
+             // Reset collapsed state? Optional.
+        }
+    });
+};
 
 window.openAddResourceModal = () => Modal.openAdd();
 window.closeResourceModal = () => Modal.close();

@@ -44,8 +44,10 @@ window.toggleDropdown = function() {
 
 document.addEventListener('click', function(event) {
 	const dropdown = document.getElementById('taxonomy-dropdown');
+	// If we click inside the dropdown (e.g. the search box), DO NOT close it.
 	if (dropdown && !dropdown.contains(event.target)) {
-		document.getElementById('taxonomy-list').style.display = 'none';
+		const list = document.getElementById('taxonomy-list');
+        if (list) list.style.display = 'none';
 	}
 });
 

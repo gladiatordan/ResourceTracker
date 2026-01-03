@@ -51,20 +51,22 @@ function flattenTree(nodes) {
  * Renders the nested dropdown for filtering.
  */
 function renderTaxonomyDropdown() {
-	const container = document.getElementById('taxonomy-dropdown');
-	container.innerHTML = `
-		<input type="text" 
-               class="dropdown-search-input" 
-               placeholder="Filter Category..." 
-               onfocus="this.value=''; toggleDropdown(true)"
-               oninput="filterTaxonomyList(this.value)">
-        <div class="dropdown-list" id="taxonomy-list"></div>
-	`;
-
 	const list = document.getElementById('taxonomy-list');
 	if (!list) return;
 
 	list.innerHTML = '';
+
+	// Add sticky search box
+	const searchWrapper = document.createElement('div');
+	searchWrapper.className = 'dropdown-search-wrapper';
+	searchWrapper.innerHTML = `
+		<input type="text" 
+               class="dropdown-search" 
+               placeholder="Filter Category..." 
+               oninput="filterTaxonomyList(this.value)" 
+               onclick="event.stopPropagation()">
+	`;
+	list.appendChild(searchWrapper);
 
 	// Root Option
 	const rootDiv = document.createElement('div');
@@ -76,7 +78,8 @@ function renderTaxonomyDropdown() {
 	// Recursive Tree Builder
 	const createNode = (node, depth) => {
 		const container = document.createElement('div');
-		
+		container.className = 'branch-container';
+
 		// Row Label
 		const row = document.createElement('div');
 		row.className = 'dropdown-item';
@@ -88,9 +91,10 @@ function renderTaxonomyDropdown() {
 
 		// 1. Toggle Icon
 		const icon = document.createElement('span');
+		icon.className = 'toggle-icon';
 		icon.style.width = '20px';
-		icon.style.textAlign = 'center';
-		icon.style.marginRight = '5px';
+		// icon.style.textAlign = 'center';
+		// icon.style.marginRight = '5px';
 		icon.style.cursor = 'pointer';
 		icon.style.color = 'var(--accent-color)';
 		// Default: Collapsed (Right Arrow) unless leaf
@@ -101,15 +105,16 @@ function renderTaxonomyDropdown() {
 		text.innerText = node.label;
 		text.style.cursor = 'pointer';
 		text.style.flex = '1';
+		text.className = 'item-label';
 
 		row.appendChild(icon);
 		row.appendChild(text);
 		container.appendChild(row);
 
 		// 3. Children Container
-		let childrenContainer = null;
+		// let childrenContainer = null;
 		if (!isLeaf) {
-			childrenContainer = document.createElement('div');
+			const childrenContainer = document.createElement('div');
 			childrenContainer.style.display = 'none'; // Default Collapsed
 			
 			node.children.forEach(child => {
@@ -128,7 +133,7 @@ function renderTaxonomyDropdown() {
 		}
 
 		// Selection Logic (Clicking text selects the category)
-		text.onclick = (e) => {
+		text.onclick = () => {
 			// Note: Filter allows selecting Folders (e.g. "Inorganic")
 			selectCategory(node.label, node.label);
 		};
@@ -139,6 +144,42 @@ function renderTaxonomyDropdown() {
 	TAXONOMY_TREE.forEach(node => {
 		list.appendChild(createNode(node, 0));
 	});
+}
+
+function filterTaxonomyList(term) {
+    term = term.toLowerCase();
+    const roots = document.querySelectorAll('#taxonomy-list > .branch-container');
+
+    function processNode(container) {
+        const label = container.querySelector('.item-label').textContent.toLowerCase();
+        const childrenContainer = container.querySelector('div[style]'); // The nested children div
+        
+        let childMatched = false;
+        if (childrenContainer) {
+            // Check all direct children branches
+            const childBranches = childrenContainer.querySelectorAll(':scope > .branch-container');
+            childBranches.forEach(branch => {
+                if (processNode(branch)) childMatched = true;
+            });
+        }
+
+        const selfMatch = label.includes(term);
+        const shouldShow = selfMatch || childMatched;
+
+        // Toggle visibility
+        container.style.display = shouldShow ? 'block' : 'none';
+        
+        // If children matched, ensure this folder is expanded
+        if (childMatched && childrenContainer) {
+            childrenContainer.style.display = 'block';
+            const icon = container.querySelector('.toggle-icon');
+            if (icon) icon.innerText = '▼';
+        }
+
+        return shouldShow;
+    }
+
+    roots.forEach(processNode);
 }
 
 /**
