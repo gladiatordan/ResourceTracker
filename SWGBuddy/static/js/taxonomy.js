@@ -51,6 +51,16 @@ function flattenTree(nodes) {
  * Renders the nested dropdown for filtering.
  */
 function renderTaxonomyDropdown() {
+	const container = document.getElementById('taxonomy-dropdown');
+	container.innerHTML = `
+		<input type="text" 
+               class="dropdown-search-input" 
+               placeholder="Filter Category..." 
+               onfocus="this.value=''; toggleDropdown(true)"
+               oninput="filterTaxonomyList(this.value)">
+        <div class="dropdown-list" id="taxonomy-list"></div>
+	`;
+
 	const list = document.getElementById('taxonomy-list');
 	if (!list) return;
 
