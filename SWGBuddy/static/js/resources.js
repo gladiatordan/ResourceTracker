@@ -131,24 +131,26 @@ async function togglePlanet(selectElement, resourceName) {
 	const resource = rawResourceData.find(r => r.name === resourceName);
 	if (!resource) return;
 
+	// 1. Optimistic Update: Update local data immediately
+	if (!resource.planet) resource.planet = [];
+	if (!resource.planet.includes(newPlanter)) {
+		resource.planet.push(newPlanet);
+	}
+	applyAllTableTransforms();
+
 	try {
-		const payload = {
-			...resource,
-			planet: newPlanet 
-		};
-
+		const payload = {...resource, planet: newPlanet };
 		await API.updateResource(payload);
-
 		selectElement.value = "";
+
 		// Efficient Delta Reload
 		await loadResources(true); 
 		
 	} catch (error) {
 		console.error("Failed to add planet:", error);
 		alert("Error: " + error.message);
-		await loadResources(true);
+		await loadResources(false);
 	}
-	// toggleSort();
 }
 
 async function handleBadgeClick(event, resourceName, planetValue) {
@@ -168,6 +170,12 @@ async function handleBadgeClick(event, resourceName, planetValue) {
 		if (!confirm(`Remove ${planetValue} from ${resourceName}?`)) return;
 	}
 
+	// Update Optimistically here
+	if (resource.planet) {
+		resource.planet = resource.planet.filter(p => p !== planetValue);
+	}
+	applyAllTableTransforms();
+
 	try {
 		const payload = {
 			...resource,
@@ -181,6 +189,7 @@ async function handleBadgeClick(event, resourceName, planetValue) {
 	} catch (error) {
 		console.error("Failed to remove planet:", error);
 		alert("Error: " + error.message);
+		await loadResources(false);
 	}
 	// toggleSort();
 }
