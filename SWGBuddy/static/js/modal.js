@@ -359,13 +359,26 @@ const Modal = {
 			if (!isLeaf) {
 				childrenContainer = document.createElement('div');
 				childrenContainer.className = 'modal-tree-children collapsed';
-				node.children.forEach(child => childrenContainer.appendChild(createNode(child, depth + 1)));
-				container.appendChild(childrenContainer);
+
+				let hasVisibleChildren = false;
+				// node.children.forEach(child => childrenContainer.appendChild(createNode(child, depth + 1)));
+				// container.appendChild(childrenContainer);
+				
+				node.children.forEach(child => {
+					const childNode = createNode(child, depth + 1);
+					if (childNode) {
+						childrenContainer.appendChild(childNode);
+						hasVisibleChildren = true;
+					}
+				})
+				
 				icon.onclick = (e) => {
 					e.stopPropagation();
 					childrenContainer.classList.toggle('collapsed');
 					icon.innerText = childrenContainer.classList.contains('collapsed') ? '▶' : '▼';
 				};
+
+				if (!hasVisibleChildren && !isValid) return null;
 			}
 			return container;
 		};
