@@ -1,4 +1,6 @@
 import os
+import re
+import io
 import uuid
 import json
 import threading
@@ -10,6 +12,9 @@ from queue import Queue, Empty
 from flask import Flask, jsonify, request, render_template, redirect, url_for, session, current_app, abort
 from flask_cors import CORS
 from core.database import DatabaseContext
+
+from PIL import Image
+import pytesseract
 
 app = Flask(__name__)
 CORS(app)
