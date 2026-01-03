@@ -372,12 +372,12 @@ class ValidationService(Core):
 		res_class_id = rules.get('id')
 		allowed_planets = rules.get('planets')
 		# Get Reporter ID
-		reporter_id = user_ctx.get('id') if user_ctx else None
-
+		reporter_id = user_ctx.get('id') if user_ctx else None)
 		# FIX: Wrap planet string in a list so psycopg2 adapts it to SQL ARRAY
 		planet_val = data.get('planet')
-		if len(planet_val) == 0 and len(allowed_planets) == 1:
-			# This resource type has only 1 available potential planet, just add it automatically.
+
+		if len(allowed_planets) == 1:
+			# This resource type has only 1 available potential planet, just add it automatically and ignore whatever they tried to add
 			planet_arr = allowed_planets
 		else:
 			# Push whatever planets were assigned from the frontend
