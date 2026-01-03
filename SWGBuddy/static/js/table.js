@@ -7,7 +7,7 @@ function renderTable(data) {
 	const tableBody = document.getElementById('resource-log-body');
 	tableBody.innerHTML = '';
 
-	const canEdit = window.Auth && Auth.hasPermission('USER');
+	const canEdit = window.Auth && Auth.hasPermission('EDITOR');
 
 	let allPlanets = window.ALL_PLANETS || [];
 	if (allPlanets.length === 0 && window.validResources) {
@@ -54,21 +54,34 @@ function renderTable(data) {
 		
 		let planetControlHtml = '';
 		if (canEdit) {
+			const resourceConfig = window.validResources && window.validResources[res.type];
+			const allowedPlanets = resourceConfig ? resourceConfig.planets : allPlanets;
 			const availableOptions = allPlanets
 				.filter(p => !assignedPlanetsLower.includes(p.toLowerCase()))
+				.sort()
 				.map(p => `<option value="${p}">${p}</option>`)
 				.join('');
 			
-			planetControlHtml = `
-				<div class="planet-controls">
-					<select class="planet-select" onchange="togglePlanet(this, '${res.name.replace(/'/g, "\\'")}')">
-						<option value="" disabled selected>+</option>
-						${availableOptions}
-					</select>
-				</div>`;
+			// Hide button if no options available
+			if (availableOptions.length > 0) {
+				planetControlHtml = `
+					<div class="planet-controls">
+						<select class="planet-select" onchange="togglePlanet(this, '${res.name.replace(/'/g, "\\'")}')">
+							<option value="" disabled selected>+</option>
+							${availableOptions}
+						</select>
+					</div>`;
+			}
+			// planetControlHtml = `
+			// 	<div class="planet-controls">
+			// 		<select class="planet-select" onchange="togglePlanet(this, '${res.name.replace(/'/g, "\\'")}')">
+			// 			<option value="" disabled selected>+</option>
+			// 			${availableOptions}
+			// 		</select>
+			// 	</div>`;
 		}
 
-		// FIX: Generate badges from the sorted list and display full name
+		// Generate badges from the sorted list and display full name
 		const planetBadges = sortedPlanets.map(p => {
 			const planetLower = p.toLowerCase();
 			return `<span class="planet ${planetLower}" 
@@ -162,11 +175,13 @@ function renderPageNumbers() {
 
 function goToPage(destination) {
 	const totalPages = Math.ceil(filteredData.length / resultsPerPage);
+
 	if (destination === 'first') currentPage = 1;
 	else if (destination === 'last') currentPage = totalPages;
 	else if (destination === 'prev') currentPage = Math.max(1, currentPage - 1);
 	else if (destination === 'next') currentPage = Math.min(totalPages, currentPage + 1);
 	else currentPage = parseInt(destination);
+	
 	renderPaginatedTable();
 }
 

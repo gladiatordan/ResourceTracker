@@ -146,6 +146,7 @@ async function togglePlanet(selectElement, resourceName) {
 	} catch (error) {
 		console.error("Failed to add planet:", error);
 		alert("Error: " + error.message);
+		await loadResources(true);
 	}
 	// toggleSort();
 }
