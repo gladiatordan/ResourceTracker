@@ -485,6 +485,7 @@ def scan_image():
 		
 		# Heuristic: Line 1 is usually Name, Line 2 is usually Type
 		if len(lines) > 0: extracted['name'] = lines[0]
+		print(lines)
 		# We don't set Type automatically from OCR as it often misreads complex names.
 		# Instead, we rely on the user or fuzzy matching if you wanted to go deeper.
 		
