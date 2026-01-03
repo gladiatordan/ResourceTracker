@@ -56,7 +56,7 @@ function renderTable(data) {
 		if (canEdit) {
 			const resourceConfig = window.validResources && window.validResources[res.type];
 			const allowedPlanets = resourceConfig ? resourceConfig.planets : allPlanets;
-			const availableOptions = allPlanets
+			const availableOptions = allowedPlanets
 				.filter(p => !assignedPlanetsLower.includes(p.toLowerCase()))
 				.sort()
 				.map(p => `<option value="${p}">${p}</option>`)
@@ -84,9 +84,13 @@ function renderTable(data) {
 		// Generate badges from the sorted list and display full name
 		const planetBadges = sortedPlanets.map(p => {
 			const planetLower = p.toLowerCase();
+			const clickAttr = canEdit
+				? `onclick="handleBadgeClick(event, '${res.name.replace(/'/g, "\\'")}', '${p}')" style="cursor: pointer;"` 
+        		: '';
+
 			return `<span class="planet ${planetLower}" 
 							data-tooltip="${p}" 
-							onclick="handleBadgeClick(event, '${res.name.replace(/'/g, "\\'")}', '${p}')">
+							${clickAttr}>
 							${p.charAt(0)}
 					</span>`;
 		}).join(' ');
@@ -181,7 +185,7 @@ function goToPage(destination) {
 	else if (destination === 'prev') currentPage = Math.max(1, currentPage - 1);
 	else if (destination === 'next') currentPage = Math.min(totalPages, currentPage + 1);
 	else currentPage = parseInt(destination);
-	
+
 	renderPaginatedTable();
 }
 
