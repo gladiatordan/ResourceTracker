@@ -382,7 +382,11 @@ const Modal = {
 			}
 			return container;
 		};
-		window.TAXONOMY_TREE.forEach(rootNode => list.appendChild(createNode(rootNode, 0)));
+		// window.TAXONOMY_TREE.forEach(rootNode => list.appendChild(createNode(rootNode, 0)));
+		window.TAXONOMY_TREE.forEach(rootNode => {
+			const root = createNode(rootNode, 0);
+			if (root) list.appendChild(root);
+		})
 	},
 
 	selectType(label) {
