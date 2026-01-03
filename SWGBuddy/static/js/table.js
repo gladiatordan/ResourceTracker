@@ -35,7 +35,7 @@ function renderTable(data) {
 		const row = document.createElement('tr');
 		const safeName = res.name.replace(/['\s]/g, '-');
 
-		const rawDate = new Date(res.date_reported);
+		// const rawDate = new Date(res.date_reported);
 		const dObj = (!isNaN(res.date_reported) && res.date_reported < 1e12) 
 					 ? new Date(res.date_reported * 1000) 
 					 : new Date(res.date_reported);
@@ -110,7 +110,7 @@ function renderTable(data) {
 			let tooltipAttr = '';
 			if (!isEmpty && rating !== null && rating !== undefined) {
 				const pct = (rating * 100).toFixed(1) + '%';
-				tooltipAttr = `data-tooltip="${pct}"`;
+				tooltipAttr = `title="Rating: ${pct}"`;
 			}
 
 			return `<td class="col-stat ${colorClass}" ${tooltipAttr}>${displayVal}</td>`;
