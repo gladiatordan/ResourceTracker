@@ -54,7 +54,12 @@ function renderTaxonomyDropdown() {
 	const list = document.getElementById('taxonomy-list');
 	if (!list) return;
 
-	list.innerHTML = '';
+	list.innerHTML = `
+        <div class="dropdown-search-wrapper">
+            <input type="text" placeholder="Search categories..." class="dropdown-search" 
+                   oninput="filterDropdown(this)" onclick="event.stopPropagation()">
+        </div>
+    `;
 
 	// Root Option
 	const rootDiv = document.createElement('div');
