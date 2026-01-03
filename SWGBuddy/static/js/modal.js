@@ -328,6 +328,7 @@ const Modal = {
 
 			const container = document.createElement('div');
 			container.className = 'modal-tree-node';
+			
 			const header = document.createElement('div');
 			header.className = 'modal-tree-label';
 			header.style.paddingLeft = (depth * 15 + 5) + 'px';
