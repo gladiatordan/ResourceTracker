@@ -96,6 +96,12 @@
                     <button id="btn-add-resource" class="add-resource-btn hidden" onclick="openAddResourceModal()">Add Resource</button>
 					
                     <div class="pagination-stack">
+						<div class="confirmation-toggle">
+							<label style="font-size: 11px; color: var(--text-dim); cursor: pointer;">
+								<input type="checkbox" id="skip-confirm-toggle" onchange="toggleConfirmPreference(this)">
+								SKIP REMOVAL CONFIRMATIONS
+							</label>
+						</div>
 						<div class="pagination-controls">
 							<label for="results-per-page">Show Results:</label>
 							<select id="results-per-page" class="results-select" onchange="changeResultsPerPage()">

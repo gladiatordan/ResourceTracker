@@ -80,6 +80,16 @@ function initTabs() {
 function initListeners() {
 	document.querySelector('.search-input').addEventListener('input', applyAllTableTransforms);
     document.querySelector('.dropdown-selected').addEventListener('change', applyAllTableTransforms);
+
+	const skipToggle = document.getElementById('skip-confirm-toggle');
+	if (skipToggle) {
+		const isSet = localStorage.getItem('swgbuddy_skip_planet_confirm') === "true";
+		skipToggle.checked = isSet;
+	}
+}
+
+window.toggleConfirmPreference = function(checkbox) {
+	localStorage.setItem('swgbuddy_skip_planet_confirm', checkbox.checked);
 }
 
 // Global UI toggle for dropdown
